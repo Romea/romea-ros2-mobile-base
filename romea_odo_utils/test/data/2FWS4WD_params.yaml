@@ -1,0 +1,42 @@
+test_kinematic_params:
+  ros__parameters:
+    chassis:
+      track:
+          front: 1.5
+          rear: 1.5
+      wheelbase: 2.
+      wheel_radius:
+          front: 0.36
+          rear: 0.36
+      wheel_width:
+          front: 0.2
+          rear: 0.2
+      hub_carrier_offset:
+          front: 0.1
+          rear: 0.1
+      aabb :
+          length: 2.6
+          width: 1.68
+          height: 1.5
+          center: [0., 0., 1.]
+      mass: 800
+      mass_center_position: [0.9, 0.0, 0.2]
+      ground_clearance: 0.45
+    kinematic:
+      maximal_wheel_speed: 2.
+      maximal_wheel_acceleration: 1.
+      maximal_wheel_angle: 0.93
+      maximal_wheel_angular_speed: 0.349065
+      maximal_emergency_stop_deceleration: 1.
+      command_delay: 0.
+      front_steering_angle_offset: 0
+      rear_steering_angle_offset: 0
+      z_inertial_moment: 239
+      body_reference_x: -1.0
+    odometry:
+      rate: 10
+      wheel_speed_std: 0.1
+      wheel_speed_resolution: 0.1
+      wheel_angle_std: 0.017453
+      wheel_angle_resolution: 0.017453
+      frame: 2FWS4WD

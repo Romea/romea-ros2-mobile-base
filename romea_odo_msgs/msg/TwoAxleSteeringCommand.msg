@@ -1,0 +1,3 @@
+float64 longitudinal_speed
+float64 front_steering_angle
+float64 rear_steering_angle

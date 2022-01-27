@@ -1,0 +1,6 @@
+float64 longitudinal_speed
+float64 lateral_speed
+float64 angular_speed
+float64 instantaneous_curvature
+float64[16] covariance
+bool parking_station

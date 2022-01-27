@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="chassis">
+
+<!--  <xacro:include filename="$(find four_wheel_steering_description)/urdf/wheel_steered.xacro" />-->
+  <xacro:include filename="$(find romea_odo_description)/urdf/wheel_steered.xacro" />
+
+  <xacro:macro name="common" params="*visual_chassis">
+
+    <link name="${prefix}${base_footprint_link}"/>
+
+    <gazebo reference="${prefix}${base_link}">
+      <material>Gazebo/Grey</material>
+    </gazebo>
+
+    <!-- Base link is the center of the robot -->
+    <link name="${prefix}${base_link}">
+      <xacro:insert_block name="visual_chassis"/>
+      <collision>
+        <geometry>
+          <box size="${aabb_length} ${aabb_width} ${aabb_height}"/>
+        </geometry>
+        <origin xyz="${-body_reference_x} 0 ${ground_clearance+aabb_height/2-chassis_height}" rpy="0 0 0" />
+      </collision>
+    </link>
+
+    <joint name="${prefix}${base_footprint_joint}" type="fixed">
+      <origin xyz="0 0 ${chassis_height}" rpy="0 0 0" />
+      <child link="${prefix}${base_link}" />
+      <parent link="${prefix}${base_footprint_link}" />
+    </joint>
+
+    <!-- Interial link stores the robot's inertial information -->
+    <link name="${prefix}${inertial_link}">
+      <inertial>
+        <mass value="${mass_base}" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="${mass_base/12.0 * (aabb_width*aabb_width + aabb_height*aabb_height)}" ixy="0" ixz="0"
+                 iyy="${mass_base/12.0 * (aabb_length*aabb_length + aabb_height*aabb_height)}" iyz="0"
+                 izz="${mass_base/12.0 * (aabb_width*aabb_width + aabb_length*aabb_length)}" />
+      </inertial>
+    </link>
+
+    <joint name="${prefix}${inertial_joint}" type="fixed">
+      <origin xyz="${mass_center_x-body_reference_x} ${mass_center_y} ${mass_center_z-chassis_height}" rpy="0 0 0" />
+      <parent link="${prefix}${base_link}" />
+      <child link="${prefix}${inertial_link}" />
+    </joint>
+
+  </xacro:macro>
+
+</robot>

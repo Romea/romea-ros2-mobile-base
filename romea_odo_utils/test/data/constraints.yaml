@@ -1,0 +1,9 @@
+test_constraints:
+  ros__parameters:
+    toto: toto
+    skid_steering:
+      minimal_linear_speed: -1.
+      maximal_linear_speed: 2.
+      maximal_angular_speed: 0.5
+    foo:
+      bar: titi
