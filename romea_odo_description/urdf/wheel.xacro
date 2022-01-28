@@ -1,4 +1,4 @@
- <?xml version="1.0"?>
+<?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="wheel">
 
   <xacro:macro name="wheel" params="parent_link wheel_spinning_link wheel_spinning_joint wheel_mass wheel_width wheel_radius left_right *joint_origin *visual_wheel">

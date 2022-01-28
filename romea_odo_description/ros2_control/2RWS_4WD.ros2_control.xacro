@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="base_control">
+
+    <ros2_control name="${prefix}base" type="system">
+
+        <hardware>
+          <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+        </hardware>
+
+        <joint name="${prefix}${rear_left_wheel_steering_joint}">
+          <command_interface name="position">
+            <param name="min">-1</param>
+            <param name="max">1</param>
+          </command_interface>
+          <state_interface name="position"/>
+        </joint>
+
+        <joint name="${rear_right_wheel_steering_joint}">
+          <command_interface name="position">
+            <param name="min">-1</param>
+            <param name="max">1</param>
+          </command_interface>
+          <state_interface name="position"/>
+        </joint>
+
+         <joint name="${front_left_wheel_spining_joint}">
+           <command_interface name="position">
+             <param name="min">-1</param>
+             <param name="max">1</param>
+           </command_interface>
+           <state_interface name="position"/>
+         </joint>
+
+        <joint name="${front_right_wheel_spining_joint}">
+          <command_interface name="position">
+            <param name="min">-1</param>
+            <param name="max">1</param>
+          </command_interface>
+          <state_interface name="position"/>
+        </joint>
+
+        <joint name="${rear_right_wheel_spining_joint}">
+          <command_interface name="position">
+            <param name="min">-1</param>
+            <param name="max">1</param>
+          </command_interface>
+          <state_interface name="position"/>
+        </joint>
+
+        <joint name="${rear_right_wheel_spining_joint}">
+          <command_interface name="position">
+            <param name="min">-1</param>
+            <param name="max">1</param>
+          </command_interface>
+          <state_interface name="position"/>
+        </joint>
+
+    </ros2_control>
+
+  </xacro:macro>
+
+</robot>
+
+
