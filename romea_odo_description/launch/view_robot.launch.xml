@@ -1,0 +1,22 @@
+<launch>
+
+  <arg name="urdf_file"/>
+  <arg name="prefix" default=""/>
+
+  <node name="joint_state_publisher"
+        pkg="joint_state_publisher_gui"
+        exec="joint_state_publisher_gui"/>
+
+   <node name="robot_state_publisher"
+        pkg="robot_state_publisher"
+        exec="robot_state_publisher"
+        output="screen">
+        <param name="robot_description" value="$(command '$(find-exec xacro) $(var urdf_file) prefix:=$(var prefix)')" type="str"/>
+  </node>
+
+  <node name="rviz"
+        pkg="rviz2"
+        exec="rviz2"
+        args="-d $(find-pkg-share romea_odo_description)/config/urdf.rviz prefix:=$(var prefix)"/>
+
+</launch>

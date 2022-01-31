@@ -4,7 +4,7 @@ project(romea_odo_description)
 find_package(ament_cmake REQUIRED)
 
 install(
-  DIRECTORY launch ros2_control urdf
+  DIRECTORY config launch ros2_control urdf
   DESTINATION share/${PROJECT_NAME}
 )
 
