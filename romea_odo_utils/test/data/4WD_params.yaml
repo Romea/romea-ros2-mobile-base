@@ -1,7 +1,7 @@
 test_kinematic_params:
   ros__parameters:
     chassis:
-      track:
+      wheel_track:
          front: 0.515
          rear: 0.515
       wheelbase: 0.392

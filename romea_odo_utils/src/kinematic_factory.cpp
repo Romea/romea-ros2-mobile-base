@@ -28,11 +28,11 @@ void load_kinematic_params(NodeParameters & node_parameters,
   if(frameType.compare("4WD")==0)
   {
 
-    double frontTrack =  node_parameters.loadParam<double>("chassis.track.front")+ 2*node_parameters.loadParam<double>("chassis.hub_carrier_offset.front");
-    double rearTrack =  node_parameters.loadParam<double>("chassis.track.rear") + 2*node_parameters.loadParam<double>("chassis.hub_carrier_offset.rear") ;
-    kinematic_parameters.track=frontTrack;
+    double frontWheelTrack =  node_parameters.loadParam<double>("chassis.wheel_track.front")+ 2*node_parameters.loadParam<double>("chassis.hub_carrier_offset.front");
+    double rearWheelTrack =  node_parameters.loadParam<double>("chassis.wheel_track.rear") + 2*node_parameters.loadParam<double>("chassis.hub_carrier_offset.rear") ;
+    kinematic_parameters.wheelTrack=frontWheelTrack;
 
-    if(!romea::near(frontTrack,rearTrack))
+    if(!romea::near(frontWheelTrack,rearWheelTrack))
     {
       throw(std::runtime_error("Cannot handle a 4WD vehicle with two differents track"));
     }
@@ -40,7 +40,7 @@ void load_kinematic_params(NodeParameters & node_parameters,
   }
   else if(frameType.compare("2WD")==0)
   {
-    kinematic_parameters.track=node_parameters.loadParam<double>("chassis.track")+ 2*node_parameters.loadParam<double>("chassis.hub_carrier_offset");
+    kinematic_parameters.wheelTrack=node_parameters.loadParam<double>("chassis.wheel_track")+ 2*node_parameters.loadParam<double>("chassis.hub_carrier_offset");
   }
   else
   {
@@ -59,8 +59,8 @@ void load_kinematic_params(NodeParameters & node_parameters,
 {
 
   loadWheelbases(node_parameters,kinematic_parameters);
-  kinematic_parameters.frontTrack = node_parameters.loadParam<double>("chassis.track.front");
-  kinematic_parameters.rearTrack = node_parameters.loadParam<double>("chassis.track.rear");
+  kinematic_parameters.frontWheelTrack = node_parameters.loadParam<double>("chassis.wheel_track.front");
+  kinematic_parameters.rearWheelTrack = node_parameters.loadParam<double>("chassis.wheel_track.rear");
   kinematic_parameters.frontHubCarrierOffset = node_parameters.loadParam<double>("chassis.hub_carrier_offset.front");
   kinematic_parameters.rearHubCarrierOffset = node_parameters.loadParam<double>("chassis.hub_carrier_offset.rear");
 
@@ -103,7 +103,7 @@ void load_kinematic_params(NodeParameters & node_parameters,
   }
   else
   {
-    double halfTrack = kinematic_parameters.frontTrack/2.;
+    double halfTrack = kinematic_parameters.frontWheelTrack/2.;
     double wheelbase = kinematic_parameters.frontWheelBase+kinematic_parameters.rearWheelBase;
     double maximalWheelAngle = node_parameters.loadParam<double>("kinematic.maximal_wheel_angle");
     double maximalInstantaneousCurvature = TwoWheelSteeringKinematic::
@@ -125,8 +125,8 @@ void load_kinematic_params(NodeParameters & node_parameters,
 {
 
   loadWheelbases(node_parameters,kinematic_parameters);
-  kinematic_parameters.frontTrack= node_parameters.loadParam<double>("chassis.track.front");
-  kinematic_parameters.rearTrack= node_parameters.loadParam<double>("chassis.track.rear");
+  kinematic_parameters.frontWheelTrack= node_parameters.loadParam<double>("chassis.wheel_track.front");
+  kinematic_parameters.rearWheelTrack= node_parameters.loadParam<double>("chassis.wheel_track.rear");
   kinematic_parameters.frontHubCarrierOffset=node_parameters.loadParam<double>("chassis.hub_carrier_offset.front");
   kinematic_parameters.rearHubCarrierOffset= node_parameters.loadParam<double>("chassis.hub_carrier_offset.rear");
 
@@ -176,8 +176,8 @@ void load_kinematic_params(NodeParameters & node_parameters,
 {
 
   loadWheelbases(node_parameters,kinematic_parameters);
-  kinematic_parameters.frontTrack= node_parameters.loadParam<double>("chassis.track.front");
-  kinematic_parameters.rearTrack= node_parameters.loadParam<double>("chassis.track.rear");
+  kinematic_parameters.frontWheelTrack= node_parameters.loadParam<double>("chassis.wheel_track.front");
+  kinematic_parameters.rearWheelTrack= node_parameters.loadParam<double>("chassis.wheel_track.rear");
   kinematic_parameters.frontHubCarrierOffset=node_parameters.loadParam<double>("chassis.hub_carrier_offset.front");
   kinematic_parameters.rearHubCarrierOffset= node_parameters.loadParam<double>("chassis.hub_carrier_offset.rear");
 
@@ -218,11 +218,11 @@ void load_kinematic_params(NodeParameters & node_parameters,
 
   loadWheelbases(node_parameters,kinematic_parameters);
 
-  double frontTrack= node_parameters.loadParam<double>("chassis.track.front");
-  double rearTrack= node_parameters.loadParam<double>("chassis.track.rear");
-  kinematic_parameters.track= frontTrack;
+  double frontWheelTrack= node_parameters.loadParam<double>("chassis.wheel_track.front");
+  double rearWheelTrack= node_parameters.loadParam<double>("chassis.wheel_track.rear");
+  kinematic_parameters.wheelTrack= frontWheelTrack;
 
-  if(!romea::near(frontTrack,rearTrack))
+  if(!romea::near(frontWheelTrack,rearWheelTrack))
   {
     throw(std::runtime_error("Cannot handle a 4WS4WD vehicle with two differents track"));
   }
@@ -261,11 +261,11 @@ void load_kinematic_params(NodeParameters & node_parameters,
   if(frameType.compare("4MWD")==0)
   {
 
-    double frontTrack =  node_parameters.loadParam<double>("chassis.track.front")+ 2*node_parameters.loadParam<double>("chassis.hub_carrier_offset.front");
-    double rearTrack =  node_parameters.loadParam<double>("chassis.track.rear") + 2*node_parameters.loadParam<double>("chassis.hub_carrier_offset.rear") ;
-    kinematic_parameters.track=frontTrack;
+    double frontWheelTrack =  node_parameters.loadParam<double>("chassis.track.front")+ 2*node_parameters.loadParam<double>("chassis.hub_carrier_offset.front");
+    double rearWheelTrack =  node_parameters.loadParam<double>("chassis.track.rear") + 2*node_parameters.loadParam<double>("chassis.hub_carrier_offset.rear") ;
+    kinematic_parameters.wheelTrack=frontWheelTrack;
 
-    if(!romea::near(frontTrack,rearTrack))
+    if(!romea::near(frontWheelTrack,rearWheelTrack))
     {
       throw(std::runtime_error("Cannot handle a 4MWD vehicle with two differents track"));
     }

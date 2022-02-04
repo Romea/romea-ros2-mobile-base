@@ -43,7 +43,7 @@ TEST_F(TestKinematicParams, load4WDtoSkidSteeringKinematicParams)
   romea::SkidSteeringKinematic::Parameters kinematic_parameters;
   load_kinematic_params(node_parameters,kinematic_parameters);
 
-  EXPECT_DOUBLE_EQ(kinematic_parameters.track,0.515);
+  EXPECT_DOUBLE_EQ(kinematic_parameters.wheelTrack,0.515);
   EXPECT_DOUBLE_EQ(kinematic_parameters.maximalWheelSpeed,3);
   EXPECT_DOUBLE_EQ(kinematic_parameters.maximalWheelAcceleration,1.);
   EXPECT_DOUBLE_EQ(kinematic_parameters.wheelSpeedVariance,0.1*0.1);
@@ -60,7 +60,7 @@ TEST_F(TestKinematicParams, load4WS4WDtoFourWheelSteeringKinematicParams)
 
   EXPECT_DOUBLE_EQ(kinematic_parameters.frontWheelBase,1.2);
   EXPECT_DOUBLE_EQ(kinematic_parameters.rearWheelBase,0.);
-  EXPECT_DOUBLE_EQ(kinematic_parameters.track,0.9);
+  EXPECT_DOUBLE_EQ(kinematic_parameters.wheelTrack,0.9);
   EXPECT_DOUBLE_EQ(kinematic_parameters.hubCarrierOffset,0.1);
   EXPECT_DOUBLE_EQ(kinematic_parameters.maximalWheelSpeed,1.99);
   EXPECT_DOUBLE_EQ(kinematic_parameters.maximalWheelAcceleration,1.);
@@ -80,8 +80,8 @@ TEST_F(TestKinematicParams, load4WS4WDtoTwoAxleKinematicParams) {
 
   EXPECT_DOUBLE_EQ(kinematic_parameters.frontWheelBase,1.2);
   EXPECT_DOUBLE_EQ(kinematic_parameters.rearWheelBase,0.);
-  EXPECT_DOUBLE_EQ(kinematic_parameters.frontTrack,0.9);
-  EXPECT_DOUBLE_EQ(kinematic_parameters.rearTrack,0.9);
+  EXPECT_DOUBLE_EQ(kinematic_parameters.frontWheelTrack,0.9);
+  EXPECT_DOUBLE_EQ(kinematic_parameters.rearWheelTrack,0.9);
   EXPECT_DOUBLE_EQ(kinematic_parameters.frontHubCarrierOffset,0.1);
   EXPECT_DOUBLE_EQ(kinematic_parameters.rearHubCarrierOffset,0.1);
   EXPECT_DOUBLE_EQ(kinematic_parameters.frontMaximalWheelSpeed,1.99);
@@ -101,8 +101,8 @@ TEST_F(TestKinematicParams, load2WS4WDtoTwoWheelSteeringKinematicParams) {
 
   EXPECT_DOUBLE_EQ(kinematic_parameters.frontWheelBase,2);
   EXPECT_DOUBLE_EQ(kinematic_parameters.rearWheelBase,0);
-  EXPECT_DOUBLE_EQ(kinematic_parameters.frontTrack,1.5);
-  EXPECT_DOUBLE_EQ(kinematic_parameters.rearTrack,1.5);
+  EXPECT_DOUBLE_EQ(kinematic_parameters.frontWheelTrack,1.5);
+  EXPECT_DOUBLE_EQ(kinematic_parameters.rearWheelTrack,1.5);
   EXPECT_DOUBLE_EQ(kinematic_parameters.frontHubCarrierOffset,0.1);
   EXPECT_DOUBLE_EQ(kinematic_parameters.rearHubCarrierOffset,0.1);
   EXPECT_DOUBLE_EQ(kinematic_parameters.frontMaximalWheelSpeed,2.);
@@ -123,8 +123,8 @@ TEST_F(TestKinematicParams, load2WS4WDtoOneSteeringKinematicParams) {
 
   EXPECT_DOUBLE_EQ(kinematic_parameters.frontWheelBase,2);
   EXPECT_DOUBLE_EQ(kinematic_parameters.rearWheelBase,0);
-  EXPECT_DOUBLE_EQ(kinematic_parameters.frontTrack,1.5);
-  EXPECT_DOUBLE_EQ(kinematic_parameters.rearTrack,1.5);
+  EXPECT_DOUBLE_EQ(kinematic_parameters.frontWheelTrack,1.5);
+  EXPECT_DOUBLE_EQ(kinematic_parameters.rearWheelTrack,1.5);
   EXPECT_DOUBLE_EQ(kinematic_parameters.frontHubCarrierOffset,0.1);
   EXPECT_DOUBLE_EQ(kinematic_parameters.rearHubCarrierOffset,0.1);
   EXPECT_DOUBLE_EQ(kinematic_parameters.frontMaximalWheelSpeed,2.);
