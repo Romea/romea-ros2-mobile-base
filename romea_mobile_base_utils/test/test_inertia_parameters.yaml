@@ -1,0 +1,9 @@
+test_inertia_paramerters:
+  ros__parameters:
+    inertia:
+      mass: 1.
+      center: [2., 3., 4.]
+      z_moment: 5.
+    inertia_miss_center:
+      mass: 1.
+      z_moment: 5.

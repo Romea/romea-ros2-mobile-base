@@ -1,0 +1,40 @@
+test_mobile_base_parameters1FAS2FWD:
+  ros__parameters:
+
+    geometry:
+      axle_distance: 101.
+      front_axle:
+        wheels_distance: 102
+        wheels:
+          radius: 103
+          width: 104
+          hub_carrier_offset: 105
+      rear_axle:
+        wheels_distance: 106
+        wheels:
+          radius: 107
+          width: 108
+          hub_carrier_offset: 109
+
+    front_axle_steering_control:
+      command:
+        maximal_angle: 200
+        maximal_angular_speed: 201
+      sensor:
+        angle_std: 202
+        angle_range: 203;
+
+    front_wheels_speed_control:
+       command:
+         maximal_speed: 301
+         maximal_acceleration: 302
+       sensor:
+         angle_std: 303
+         angle_range: 304;
+
+    inertia:
+      mass: 401
+      center: [402, 403, 404]
+      zMoment: 405
+
+    control_point : [501, 502, 503]

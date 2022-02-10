@@ -1,0 +1,20 @@
+test_geometry_paramerters:
+  ros__parameters:
+    geometry:
+      axles_distance: 101.
+      front_axle:
+        wheels_distance: 102.
+        wheels:
+          radius: 103.
+          width: 104.
+          hub_carrier_offset: 105.
+      rear_axle:
+        wheels_distance: 106.
+        wheels:
+          radius: 107.
+          width: 108.
+          hub_carrier_offset: 109.
+
+      tracks_distance: 110.
+      tracks:
+        width: 111.
