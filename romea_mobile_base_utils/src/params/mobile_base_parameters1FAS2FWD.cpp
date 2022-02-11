@@ -15,9 +15,8 @@ const std::string inertia_param_name="inertia";
 namespace romea {
 
 //-----------------------------------------------------------------------------
-void declare_mobile_base_info(std::shared_ptr<rclcpp::Node> node,
-                              const std::string & parameters_ns,
-                              const MobileBaseInfo1FAS2FWD & )
+void declare_mobile_base_info_1FAS2FWD(std::shared_ptr<rclcpp::Node> node,
+                                       const std::string & parameters_ns)
 {
   declare_two_wheeled_axles_info(
         node,full_param_name(parameters_ns,geometry_param_name));
@@ -37,9 +36,9 @@ void declare_mobile_base_info(std::shared_ptr<rclcpp::Node> node,
 }
 
 //-----------------------------------------------------------------------------
-void get_mobile_base_info(std::shared_ptr<rclcpp::Node> node,
-                          const std::string & parameters_ns,
-                          MobileBaseInfo1FAS2FWD & mobile_base_info)
+void get_mobile_base_info_1FAS2FWD(std::shared_ptr<rclcpp::Node> node,
+                                   const std::string & parameters_ns,
+                                   MobileBaseInfo1FAS2FWD & mobile_base_info)
 {
   get_two_wheeled_axles_info(
         node,full_param_name(parameters_ns,geometry_param_name),

@@ -50,7 +50,7 @@ TEST_F(TestGeometryParams, GetWheeInfo)
 
 TEST_F(TestGeometryParams, GetContinousTrackInfo)
 {
-  loadYaml(std::string(TEST_DIR)+"/test_geometry_parameters.yaml");
+  loadYaml(std::string(TEST_DIR)+"/test_mobile_base_geometry_parameters.yaml");
 
   romea::ContinuousTrack track;
   romea::declare_continuous_track_info(node,"geometry.tracks");

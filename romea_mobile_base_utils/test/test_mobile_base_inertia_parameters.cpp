@@ -8,7 +8,7 @@
 //romea
 #include <romea_mobile_base_utils/params/mobile_base_inertia_parameters.hpp>
 
-class TestInertiaParams : public ::testing::Test
+class TestMobileBaseInertiaParams : public ::testing::Test
 {
 protected:
   static void SetUpTestCase()
@@ -29,16 +29,16 @@ protected:
   {
     rclcpp::NodeOptions no;
     no.arguments({"--ros-args","--params-file",config_filename});
-    node = std::make_shared<rclcpp::Node>("test_inertia_paramerters", no);
+    node = std::make_shared<rclcpp::Node>("test_mobile_base_inertia_paramerters", no);
   }
 
   std::shared_ptr<rclcpp::Node> node;
 };
 
 
-TEST_F(TestInertiaParams, GetFullDescription)
+TEST_F(TestMobileBaseInertiaParams, GetFullDescription)
 {
-  loadYaml(std::string(TEST_DIR)+"/test_inertia_parameters.yaml");
+  loadYaml(std::string(TEST_DIR)+"/test_mobile_base_inertia_parameters.yaml");
 
   romea::declare_inertia_info(node,"inertia");
   romea::MobileBaseInertia inertia = romea::get_inertia_info(node,"inertia");
@@ -50,7 +50,7 @@ TEST_F(TestInertiaParams, GetFullDescription)
 }
 
 
-TEST_F(TestInertiaParams, GetDescriptionWithoutCenterPosition)
+TEST_F(TestMobileBaseInertiaParams, GetDescriptionWithoutCenterPosition)
 {
   loadYaml(std::string(TEST_DIR)+"/test_inertia_parameters.yaml");
 

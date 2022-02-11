@@ -1,4 +1,4 @@
-test_geometry_paramerters:
+test_mobile_base_geometry_paramerters:
   ros__parameters:
     geometry:
       axles_distance: 101.

@@ -1,4 +1,4 @@
-test_mobile_base_parameters_1FAS2FWD:
+test_mobile_base_parameters_4WD :
   ros__parameters:
     base:
       geometry:
@@ -16,15 +16,7 @@ test_mobile_base_parameters_1FAS2FWD:
             width: 108.
             hub_carrier_offset: 109.
 
-      front_axle_steering_control:
-        command:
-          maximal_angle: 200.
-          maximal_angular_speed: 201.
-        sensor:
-          angle_std: 202.
-          angle_range: 203.
-
-      front_wheels_speed_control:
+      wheels_speed_control:
          command:
            maximal_speed: 300.
            maximal_acceleration: 301.

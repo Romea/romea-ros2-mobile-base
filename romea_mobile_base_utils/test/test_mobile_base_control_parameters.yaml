@@ -1,4 +1,4 @@
-test_control_paramerters:
+test_mobile_base_control_paramerters:
   ros__parameters:
     steering_control:
       command:

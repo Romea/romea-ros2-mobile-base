@@ -1,4 +1,4 @@
-test_inertia_paramerters:
+test_mobile_base_inertia_paramerters:
   ros__parameters:
     inertia:
       mass: 1.

@@ -8,7 +8,7 @@
 //romea
 #include "romea_mobile_base_utils/params/mobile_base_control_parameters.hpp"
 
-class TestControlParams : public ::testing::Test
+class TestMobileBaseControlParams : public ::testing::Test
 {
 protected:
   static void SetUpTestCase()
@@ -18,21 +18,21 @@ protected:
 
   static void TearDownTestCase()
   {
-    rclcpp::shutdown();
+    rclcpp::shutdown( );
   }
 
   void SetUp() override
   {
     rclcpp::NodeOptions no;
-    no.arguments({"--ros-args","--params-file",std::string(TEST_DIR)+"/test_control_parameters.yaml"});
-    node = std::make_shared<rclcpp::Node>("test_control_paramerters", no);
+    no.arguments({"--ros-args","--params-file",std::string(TEST_DIR)+"/test_mobile_base_control_parameters.yaml"});
+    node = std::make_shared<rclcpp::Node>("test_mobile_base_control_paramerters", no);
   }
 
   std::shared_ptr<rclcpp::Node> node;
 };
 
 
-TEST_F(TestControlParams, getSteeringControl)
+TEST_F(TestMobileBaseControlParams, getSteeringControl)
 {
   romea::SteeringAngleControl control;
   romea::declare_steering_angle_control_info(node,"steering_control");
@@ -43,7 +43,7 @@ TEST_F(TestControlParams, getSteeringControl)
   EXPECT_DOUBLE_EQ(control.sensor.angleRange,4);
 }
 
-TEST_F(TestControlParams, getSpeedControl)
+TEST_F(TestMobileBaseControlParams, getSpeedControl)
 {
   romea::WheelSpeedControl control;
   romea::declare_wheel_speed_control_info(node,"speed_control");

@@ -1,0 +1,22 @@
+test_mobile_base_parameters_2TD :
+  ros__parameters:
+    base:
+      geometry:
+        tracks_distance: 100.
+        tracks:
+          width: 102.
+
+      tracks_speed_control:
+         command:
+           maximal_speed: 300.
+           maximal_acceleration: 301.
+         sensor:
+           speed_std: 302.
+           speed_range: 303.
+
+      inertia:
+        mass: 400.
+        center: [401., 402., 403.]
+        z_moment: 404.
+
+      control_point : [500., 501., 502.]
