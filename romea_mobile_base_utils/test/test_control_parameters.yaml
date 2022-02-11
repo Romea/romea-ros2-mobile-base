@@ -1,0 +1,18 @@
+test_control_paramerters:
+  ros__parameters:
+    steering_control:
+      command:
+        maximal_angle: 1.
+        maximal_angular_speed: 2.
+      sensor:
+        angle_std: 3.
+        angle_range: 4.
+
+    speed_control:
+       command:
+         maximal_speed: 5.
+         maximal_acceleration: 6.
+       sensor:
+         speed_std: 7.
+         speed_range: 8.
+

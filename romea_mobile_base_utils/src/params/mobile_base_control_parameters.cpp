@@ -7,6 +7,7 @@ const std::string sensor_angle_std_param_name = "sensor.angle_std";
 const std::string sensor_angle_range_param_name = "sensor.angle_range";
 const std::string command_maximal_angle_param_name = "command.maximal_angle";
 const std::string command_maximal_angular_speed_param_name = "command.maximal_angular_speed";
+
 const std::string sensor_speed_std_param_name = "sensor.speed_std";
 const std::string sensor_speed_range_param_name = "sensor.speed_range";
 const std::string command_maximal_speed_param_name = "command.maximal_speed";
