@@ -30,7 +30,7 @@ void get_skid_steering_command_limits(std::shared_ptr<rclcpp::Node> node,
 
 void get_omni_steering_command_limits(std::shared_ptr<rclcpp::Node> node,
                                       const std::string & parameters_ns,
-                                      Omni  SteeringCommandLimits & limits);
+                                      OmniSteeringCommandLimits & limits);
 
 void get_one_axle_steering_command_limits(std::shared_ptr<rclcpp::Node> node,
                                           const std::string & parameters_ns,
@@ -38,12 +38,12 @@ void get_one_axle_steering_command_limits(std::shared_ptr<rclcpp::Node> node,
 
 void get_two_axle_steering_command_limits(std::shared_ptr<rclcpp::Node> node,
                                           const std::string & parameters_ns,
-                                          OmniSteeringCommandLimits & limits);
+                                          TwoAxleSteeringCommandLimits & limits);
 
 
 template <typename Limits>
-void get_command_limits(std::shared_ptr<rclcpp::Node> node,
-                        const std::string & parameters_ns)
+void declare_command_limits(std::shared_ptr<rclcpp::Node> node,
+                            const std::string & parameters_ns)
 {
   if constexpr(std::is_same_v<Limits,SkidSteeringCommandLimits>)
       declare_skid_steering_command_limits(node,parameters_ns);

@@ -9,13 +9,13 @@ test_command_limits_paramerters:
       maximal_longitudinal_speed: 1.
       maximal_lateral_speed: 1.
       maximal_angular_speed: 0.5
-    one_axle_command_limits:
-      minimal_longitudinal_speed: -1
-      maximal_longitudinal_speed: 2
-      maximal_steering_angle: 0.5
-    two_axle_command_limits:
-      minimal_longitudinal_speed: -1
-      maximal_longitudinal_speed: 2
-      maximal_front_steering_angle: 1
+    one_axle_steering_command_limits:
+      minimal_longitudinal_speed: -2.
+      maximal_longitudinal_speed: 0.
+      maximal_steering_angle: 0.7
+    two_axle_steering_command_limits:
+      minimal_longitudinal_speed: -1.
+      maximal_longitudinal_speed: 2.
+      maximal_front_steering_angle: 1.
       maximal_rear_steering_angle: 0.3
 

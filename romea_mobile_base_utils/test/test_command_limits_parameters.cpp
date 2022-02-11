@@ -35,8 +35,13 @@ protected:
 TEST_F(TestCommandLimits, getSkidSteeringCommandLimits)
 {
   romea::SkidSteeringCommandLimits limits;
-  romea::declare_skid_steering_command_limits(node,"skid_steering_command_limits");
-  romea::get_skid_steering_command_limits(node,"skid_steering_command_limits",limits);
+
+  romea::declare_command_limits<romea::SkidSteeringCommandLimits>(
+        node,"skid_steering_command_limits");
+
+  romea::get_command_limits<romea::SkidSteeringCommandLimits>(
+        node,"skid_steering_command_limits",limits);
+
   EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.lower(),-1);
   EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.upper(),2);
   EXPECT_DOUBLE_EQ(limits.angularSpeed.upper(),0.3);
@@ -45,14 +50,50 @@ TEST_F(TestCommandLimits, getSkidSteeringCommandLimits)
 TEST_F(TestCommandLimits, getOmniSteeringCommandLimits)
 {
   romea::OmniSteeringCommandLimits limits;
-  romea::declare_omni_steering_command_limits(node,"omni_steering_command_limits");
-  romea::get_omni_steering_command_limits(node,"omni_steering_command_limits",limits);
+
+  romea::declare_command_limits<romea::OmniSteeringCommandLimits>(
+        node,"omni_steering_command_limits");
+
+  romea::get_command_limits<romea::OmniSteeringCommandLimits>(
+        node,"omni_steering_command_limits",limits);
+
   EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.lower(),0);
   EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.upper(),1);
   EXPECT_DOUBLE_EQ(limits.lateralSpeed.upper(),1);
   EXPECT_DOUBLE_EQ(limits.angularSpeed.upper(),0.5);
 }
 
+TEST_F(TestCommandLimits, getOneAxleSteeringCommandLimits)
+{
+  romea::OneAxleSteeringCommandLimits limits;
+
+  romea::declare_command_limits<romea::OneAxleSteeringCommandLimits>(
+        node,"one_axle_steering_command_limits");
+
+  romea::get_command_limits<romea::OneAxleSteeringCommandLimits>(
+        node,"one_axle_steering_command_limits",limits);
+
+  EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.lower(),-2);
+  EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.upper(),0);
+  EXPECT_DOUBLE_EQ(limits.steeringAngle.upper(),0.7);
+}
+
+TEST_F(TestCommandLimits, getTwoAxleSteeringCommandLimits)
+{
+  romea::TwoAxleSteeringCommandLimits limits;
+
+  romea::declare_command_limits<romea::TwoAxleSteeringCommandLimits>(
+        node,"two_axle_steering_command_limits");
+
+  romea::get_command_limits<romea::TwoAxleSteeringCommandLimits>(
+        node,"two_axle_steering_command_limits",limits);
+
+  EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.lower(),-1);
+  EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.upper(),2);
+  EXPECT_DOUBLE_EQ(limits.frontSteeringAngle.upper(),1.);
+  EXPECT_DOUBLE_EQ(limits.rearSteeringAngle.upper(),0.3);
+
+}
 
 //int main(int argc, char** argv)
 //{
