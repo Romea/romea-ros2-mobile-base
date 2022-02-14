@@ -35,9 +35,8 @@ protected:
 
 TEST_F(TestMobileBaseParams1FAS2FWD, checkGetInfo)
 {
-  romea::MobileBaseInfo1FAS2FWD base_info;
   romea::declare_mobile_base_info_1FAS2FWD(node,"base");
-  romea::get_mobile_base_info_1FAS2FWD(node,"base",base_info);
+  auto base_info =romea::get_mobile_base_info_1FAS2FWD(node,"base");
 
   EXPECT_DOUBLE_EQ(base_info.geometry.axlesDistance,101);
   EXPECT_DOUBLE_EQ(base_info.geometry.frontAxle.wheelsDistance,102);

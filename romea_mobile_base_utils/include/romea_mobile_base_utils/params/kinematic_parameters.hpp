@@ -3,12 +3,12 @@
 
 ////romea
 //#include <romea_common_utils/params/node_parameters.hpp>
-//#include <romea_mobile_base/kinematic/wheel_steering/FourWheelSteeringKinematic.hpp>
-//#include <romea_mobile_base/kinematic/wheel_steering/TwoWheelSteeringKinematic.hpp>
-//#include <romea_mobile_base/kinematic/axle_steering/OneAxleSteeringKinematic.hpp>
-//#include <romea_mobile_base/kinematic/axle_steering/TwoAxleSteeringKinematic.hpp>
-//#include <romea_mobile_base/kinematic/skid_steering/SkidSteeringKinematic.hpp>
-//#include <romea_mobile_base/kinematic/omni_steering/MecanumWheelSteeringKinematic.hpp>
+//#include <romea_core_mobile_base/kinematic/wheel_steering/FourWheelSteeringKinematic.hpp>
+//#include <romea_core_mobile_base/kinematic/wheel_steering/TwoWheelSteeringKinematic.hpp>
+//#include <romea_core_mobile_base/kinematic/axle_steering/OneAxleSteeringKinematic.hpp>
+//#include <romea_core_mobile_base/kinematic/axle_steering/TwoAxleSteeringKinematic.hpp>
+//#include <romea_core_mobile_base/kinematic/skid_steering/SkidSteeringKinematic.hpp>
+//#include <romea_core_mobile_base/kinematic/omni_steering/MecanumWheelSteeringKinematic.hpp>
 
 
 //namespace romea {

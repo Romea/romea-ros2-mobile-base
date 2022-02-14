@@ -4,15 +4,13 @@ namespace romea {
 
 
 void declare_mobile_base_info(std::shared_ptr<rclcpp::Node> node,
-                              const std::string & parameters_ns,
-                              const MobileBaseInfo1FWS2RWD & mobile_base_info)
+                              const std::string & parameters_ns)
 {
 
 }
 
-void get_mobile_base_info(std::shared_ptr<rclcpp::Node> node,
-                          const std::string & parameters_ns,
-                          MobileBaseInfo1FWS2RWD & mobile_base_info)
+MobileBaseInfo1FWS2RWD get_mobile_base_info(std::shared_ptr<rclcpp::Node> node,
+                                            const std::string & parameters_ns)
 {
 
 }

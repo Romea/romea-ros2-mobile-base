@@ -12,13 +12,11 @@ void declare_steering_angle_control_info(std::shared_ptr<rclcpp::Node> node,
 void declare_wheel_speed_control_info(std::shared_ptr<rclcpp::Node> node,
                                       const std::string & parameters_ns);
 
-void get_steering_angle_control_info(std::shared_ptr<rclcpp::Node> node,
-                                     const std::string & parameters_ns,
-                                     SteeringAngleControl & steering_angle_control);
+SteeringAngleControl get_steering_angle_control_info(std::shared_ptr<rclcpp::Node> node,
+                                                     const std::string & parameters_ns);
 
-void get_wheel_speed_control_info(std::shared_ptr<rclcpp::Node> node,
-                                  const std::string & parameters_ns,
-                                  WheelSpeedControl &wheel_speed_control);
+WheelSpeedControl get_wheel_speed_control_info(std::shared_ptr<rclcpp::Node> node,
+                                  const std::string & parameters_ns);
 
 }
 

@@ -33,15 +33,12 @@ void declare_wheel_info(std::shared_ptr<rclcpp::Node> node,
 }
 
 //-----------------------------------------------------------------------------
-void get_wheel_info(std::shared_ptr<rclcpp::Node> node,
-                    const std::string & parameters_ns,
-                    Wheel & wheel_info)
+Wheel get_wheel_info(std::shared_ptr<rclcpp::Node> node,
+                     const std::string & parameters_ns)
 {
-
-  wheel_info.radius = get_parameter<double>(node,parameters_ns,radius_param_name);
-  wheel_info.width = get_parameter<double>(node,parameters_ns,width_param_name);
-  wheel_info.hubCarrierOffset = get_parameter<double>(
-        node,parameters_ns,hub_carrier_offset_param_name);
+  return {get_parameter<double>(node,parameters_ns,radius_param_name),
+        get_parameter<double>(node,parameters_ns,width_param_name),
+        get_parameter<double>(node,parameters_ns,hub_carrier_offset_param_name)};
 
 }
 
@@ -54,12 +51,10 @@ void declare_continuous_track_info(std::shared_ptr<rclcpp::Node> node,
 }
 
 //-----------------------------------------------------------------------------
-void get_continuous_track_info(std::shared_ptr<rclcpp::Node> node,
-                               const std::string & parameters_ns,
-                               ContinuousTrack & track_info)
+ContinuousTrack get_continuous_track_info(std::shared_ptr<rclcpp::Node> node,
+                                          const std::string & parameters_ns)
 {
-  track_info.width = get_parameter<double>(
-        node,parameters_ns,width_param_name);
+  return {get_parameter<double>(node,parameters_ns,width_param_name)};
 }
 
 //-----------------------------------------------------------------------------
@@ -71,15 +66,11 @@ void declare_wheeled_axle_info(std::shared_ptr<rclcpp::Node> node,
 }
 
 //-----------------------------------------------------------------------------
-void get_wheeled_axle_info(std::shared_ptr<rclcpp::Node> node,
-                           const std::string & parameters_ns,
-                           WheeledAxle & axle_info)
+WheeledAxle get_wheeled_axle_info(std::shared_ptr<rclcpp::Node> node,
+                                  const std::string & parameters_ns)
 {
-  axle_info.wheelsDistance = get_parameter<double>(
-        node,parameters_ns,wheels_distance_param_name);
-
-  get_wheel_info(node,full_param_name(parameters_ns,wheels_param_name),
-                 axle_info.wheels);
+  return {get_parameter<double>(node,parameters_ns,wheels_distance_param_name),
+        get_wheel_info(node,full_param_name(parameters_ns,wheels_param_name))};
 }
 
 //-----------------------------------------------------------------------------
@@ -92,15 +83,11 @@ void declare_continuous_tracked_axle_info(std::shared_ptr<rclcpp::Node> node,
 
 
 //-----------------------------------------------------------------------------
-void get_continuous_tracked_axle_info(std::shared_ptr<rclcpp::Node> node,
-                                      const std::string & parameters_ns,
-                                      ContinuousTrackedAxle & axle_info)
+ContinuousTrackedAxle get_continuous_tracked_axle_info(std::shared_ptr<rclcpp::Node> node,
+                                                       const std::string & parameters_ns)
 {
-  axle_info.tracksDistance = get_parameter<double>(
-        node,parameters_ns,tracks_distance_param_name);
-
-  get_continuous_track_info(node,full_param_name(parameters_ns,tracks_param_name),
-                            axle_info.tracks);
+  return {get_parameter<double>(node,parameters_ns,tracks_distance_param_name),
+        get_continuous_track_info(node,full_param_name(parameters_ns,tracks_param_name))};
 }
 
 //-----------------------------------------------------------------------------
@@ -118,21 +105,13 @@ void declare_two_wheeled_axles_info(std::shared_ptr<rclcpp::Node> node,
 }
 
 //-----------------------------------------------------------------------------
-void get_two_wheeled_axles_info(std::shared_ptr<rclcpp::Node> node,
-                                const std::string & parameters_ns,
-                                TwoWheeledAxles & axles_info)
+TwoWheeledAxles get_two_wheeled_axles_info(std::shared_ptr<rclcpp::Node> node,
+                                           const std::string & parameters_ns)
 {
-  axles_info.axlesDistance = get_parameter<double>(
-        node,parameters_ns,axle_distance_param_name);
+  return {get_parameter<double>(node,parameters_ns,axle_distance_param_name),
+        get_wheeled_axle_info(node,full_param_name(parameters_ns,front_axle_param_name)),
+        get_wheeled_axle_info(node,full_param_name(parameters_ns,rear_axle_param_name))};
 
-  get_wheeled_axle_info(
-        node,full_param_name(parameters_ns,front_axle_param_name),
-        axles_info.frontAxle);
-
-  get_wheeled_axle_info(
-        node,full_param_name(parameters_ns,rear_axle_param_name),
-        axles_info.rearAxle);
-
-}
+  }
 
 }

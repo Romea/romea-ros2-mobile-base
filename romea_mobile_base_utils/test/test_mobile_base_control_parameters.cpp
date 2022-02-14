@@ -34,9 +34,8 @@ protected:
 
 TEST_F(TestMobileBaseControlParams, getSteeringControl)
 {
-  romea::SteeringAngleControl control;
   romea::declare_steering_angle_control_info(node,"steering_control");
-  romea::get_steering_angle_control_info(node,"steering_control",control);
+  auto control = romea::get_steering_angle_control_info(node,"steering_control");
   EXPECT_DOUBLE_EQ(control.command.maximalAngle,1);
   EXPECT_DOUBLE_EQ(control.command.maximalAngularSpeed,2);
   EXPECT_DOUBLE_EQ(control.sensor.angleStd,3);
@@ -45,9 +44,8 @@ TEST_F(TestMobileBaseControlParams, getSteeringControl)
 
 TEST_F(TestMobileBaseControlParams, getSpeedControl)
 {
-  romea::WheelSpeedControl control;
   romea::declare_wheel_speed_control_info(node,"speed_control");
-  romea::get_wheel_speed_control_info(node,"speed_control",control);
+  auto control = romea::get_wheel_speed_control_info(node,"speed_control");
   EXPECT_DOUBLE_EQ(control.command.maximalSpeed,5);
   EXPECT_DOUBLE_EQ(control.command.maximalAcceleration,6);
   EXPECT_DOUBLE_EQ(control.sensor.speedStd,7);

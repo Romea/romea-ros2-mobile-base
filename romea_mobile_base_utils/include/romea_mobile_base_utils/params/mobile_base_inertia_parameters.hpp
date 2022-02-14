@@ -9,12 +9,8 @@ namespace romea {
 void declare_inertia_info(std::shared_ptr<rclcpp::Node> node,
                           const std::string & parameters_ns);
 
-void get_inertia_info(std::shared_ptr<rclcpp::Node> node,
-                      const std::string & parameters_ns,
-                      MobileBaseInertia & inertia_info);
-
 MobileBaseInertia get_inertia_info(std::shared_ptr<rclcpp::Node> node,
-                                   const std::string & parameters_ns);
+                      const std::string & parameters_ns);
 
 }
 

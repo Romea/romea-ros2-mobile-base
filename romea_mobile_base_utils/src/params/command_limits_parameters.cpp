@@ -73,49 +73,6 @@ void declare_rear_steering_angle_command_limits(std::shared_ptr<rclcpp::Node> no
 }
 
 
-romea::Interval1D<double> get_longitudinal_speed_command_limits(std::shared_ptr<rclcpp::Node> node,
-                                                                const std::string & parameters_ns)
-{
-  return romea::makeLongitudinalSpeedCommandLimits(
-        romea::get_parameter<double>(node,parameters_ns,MINIMAL_LONGITUDINAL_SPEED_PARAM_NAME),
-        romea::get_parameter<double>(node,parameters_ns,MAXIMAL_LONGITUDINAL_SPEED_PARAM_NAME));
-}
-
-romea::Interval1D<double> get_lateral_speed_command_limits(std::shared_ptr<rclcpp::Node> node,
-                                                           const std::string & parameters_ns)
-{
-  return romea::makeSymmetricCommandLimits(
-        romea::get_parameter<double>(node,parameters_ns,MAXIMAL_LATERAL_SPEED_PARAM_NAME));
-}
-
-romea::Interval1D<double> get_angular_speed_command_limits(std::shared_ptr<rclcpp::Node> node,
-                                                           const std::string & parameters_ns)
-{
-  return romea::makeSymmetricCommandLimits(
-        romea::get_parameter<double>(node,parameters_ns,MAXIMAL_ANGULAR_SPEED_PARAM_NAME));
-}
-
-romea::Interval1D<double> get_steering_angle_command_limits(std::shared_ptr<rclcpp::Node> node,
-                                                            const std::string & parameters_ns)
-{
-  return romea::makeSymmetricCommandLimits(
-        romea::get_parameter<double>(node,parameters_ns,MAXIMAL_STEERING_ANGLE_PARAM_NAME));
-}
-
-romea::Interval1D<double> get_front_steering_angle_command_limits(std::shared_ptr<rclcpp::Node> node,
-                                                                  const std::string & parameters_ns)
-{
-  return romea::makeSymmetricCommandLimits(
-        romea::get_parameter<double>(node,parameters_ns,MAXIMAL_FRONT_STEERING_ANGLE_PARAM_NAME));
-}
-
-romea::Interval1D<double> get_rear_steering_angle_command_limits(std::shared_ptr<rclcpp::Node> node,
-                                                                 const std::string & parameters_ns)
-{
-  return romea::makeSymmetricCommandLimits(
-        romea::get_parameter<double>(node,parameters_ns,MAXIMAL_REAR_STEERING_ANGLE_PARAM_NAME));
-}
-
 }
 
 namespace romea
@@ -157,43 +114,45 @@ void declare_omni_steering_command_limits(std::shared_ptr<rclcpp::Node> node,
 
 
 //-----------------------------------------------------------------------------
-void get_one_axle_steering_command_limits(std::shared_ptr<rclcpp::Node> node,
-                                          const std::string & parameters_ns,
-                                          OneAxleSteeringCommandLimits &limits)
+OneAxleSteeringCommandLimits get_one_axle_steering_command_limits(std::shared_ptr<rclcpp::Node> node,
+                                                                  const std::string & parameters_ns)
 {
-  limits.longitudinalSpeed = get_longitudinal_speed_command_limits(node,parameters_ns);
-  limits.steeringAngle = get_steering_angle_command_limits(node,parameters_ns);
-
+  return OneAxleSteeringCommandLimits(
+        romea::get_parameter<double>(node,parameters_ns,MINIMAL_LONGITUDINAL_SPEED_PARAM_NAME),
+        romea::get_parameter<double>(node,parameters_ns,MAXIMAL_LONGITUDINAL_SPEED_PARAM_NAME),
+        romea::get_parameter<double>(node,parameters_ns,MAXIMAL_STEERING_ANGLE_PARAM_NAME));
 }
 
 //-----------------------------------------------------------------------------
-void get_two_axle_steering_command_limits(std::shared_ptr<rclcpp::Node> node,
-                                          const std::string & parameters_ns,
-                                          TwoAxleSteeringCommandLimits &limits)
+TwoAxleSteeringCommandLimits get_two_axle_steering_command_limits(std::shared_ptr<rclcpp::Node> node,
+                                                                  const std::string & parameters_ns)
 {
-  limits.longitudinalSpeed = get_longitudinal_speed_command_limits(node,parameters_ns);
-  limits.frontSteeringAngle = get_front_steering_angle_command_limits(node,parameters_ns);
-  limits.rearSteeringAngle = get_rear_steering_angle_command_limits(node,parameters_ns);
-
+  return TwoAxleSteeringCommandLimits(
+        romea::get_parameter<double>(node,parameters_ns,MINIMAL_LONGITUDINAL_SPEED_PARAM_NAME),
+        romea::get_parameter<double>(node,parameters_ns,MAXIMAL_LONGITUDINAL_SPEED_PARAM_NAME),
+        romea::get_parameter<double>(node,parameters_ns,MAXIMAL_FRONT_STEERING_ANGLE_PARAM_NAME),
+        romea::get_parameter<double>(node,parameters_ns,MAXIMAL_REAR_STEERING_ANGLE_PARAM_NAME));
 }
 
 //-----------------------------------------------------------------------------
-void get_skid_steering_command_limits(std::shared_ptr<rclcpp::Node> node,
-                                      const std::string & parameters_ns,
-                                      SkidSteeringCommandLimits &limits)
+SkidSteeringCommandLimits get_skid_steering_command_limits(std::shared_ptr<rclcpp::Node> node,
+                                                           const std::string & parameters_ns)
 {
-  limits.longitudinalSpeed = get_longitudinal_speed_command_limits(node,parameters_ns);
-  limits.angularSpeed = get_angular_speed_command_limits(node,parameters_ns);
+  return SkidSteeringCommandLimits(
+        romea::get_parameter<double>(node,parameters_ns,MINIMAL_LONGITUDINAL_SPEED_PARAM_NAME),
+        romea::get_parameter<double>(node,parameters_ns,MAXIMAL_LONGITUDINAL_SPEED_PARAM_NAME),
+        romea::get_parameter<double>(node,parameters_ns,MAXIMAL_ANGULAR_SPEED_PARAM_NAME));
 }
 
 //-----------------------------------------------------------------------------
-void get_omni_steering_command_limits(std::shared_ptr<rclcpp::Node> node,
-                                      const std::string & parameters_ns,
-                                      OmniSteeringCommandLimits &limits)
+OmniSteeringCommandLimits get_omni_steering_command_limits(std::shared_ptr<rclcpp::Node> node,
+                                                           const std::string & parameters_ns)
 {
-  limits.longitudinalSpeed = get_longitudinal_speed_command_limits(node,parameters_ns);
-  limits.lateralSpeed = get_lateral_speed_command_limits(node,parameters_ns);
-  limits.angularSpeed = get_angular_speed_command_limits(node,parameters_ns);
+  return OmniSteeringCommandLimits(
+        romea::get_parameter<double>(node,parameters_ns,MINIMAL_LONGITUDINAL_SPEED_PARAM_NAME),
+        romea::get_parameter<double>(node,parameters_ns,MAXIMAL_LONGITUDINAL_SPEED_PARAM_NAME),
+        romea::get_parameter<double>(node,parameters_ns,MAXIMAL_LATERAL_SPEED_PARAM_NAME),
+        romea::get_parameter<double>(node,parameters_ns,MAXIMAL_ANGULAR_SPEED_PARAM_NAME));
 }
 
 

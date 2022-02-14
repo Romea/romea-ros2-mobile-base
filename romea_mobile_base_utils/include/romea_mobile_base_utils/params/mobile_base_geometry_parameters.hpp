@@ -22,26 +22,20 @@ void declare_two_wheeled_axles_info(std::shared_ptr<rclcpp::Node> node,
                                     const std::string & parameters_ns);
 
 
+Wheel get_wheel_info(std::shared_ptr<rclcpp::Node> node,
+                     const std::string & parameters_ns);
 
-void get_wheel_info(std::shared_ptr<rclcpp::Node> node,
-                    const std::string & parameters_ns,
-                    Wheel & wheel_info);
+ContinuousTrack get_continuous_track_info(std::shared_ptr<rclcpp::Node> node,
+                                          const std::string & parameters_ns);
 
-void get_continuous_track_info(std::shared_ptr<rclcpp::Node> node,
-                               const std::string & parameters_ns,
-                               ContinuousTrack & track_info);
+WheeledAxle get_wheeled_axle_info(std::shared_ptr<rclcpp::Node> node,
+                                  const std::string & parameters_ns);
 
-void get_wheeled_axle_info(std::shared_ptr<rclcpp::Node> node,
-                           const std::string & parameters_ns,
-                           WheeledAxle & axle_info);
+ContinuousTrackedAxle get_continuous_tracked_axle_info(std::shared_ptr<rclcpp::Node> node,
+                                                       const std::string & parameters_ns);
 
-void get_continuous_tracked_axle_info(std::shared_ptr<rclcpp::Node> node,
-                                      const std::string & parameters_ns,
-                                      ContinuousTrackedAxle & axle_info);
-
-void get_two_wheeled_axles_info(std::shared_ptr<rclcpp::Node> node,
-                                const std::string & parameters_ns,
-                                TwoWheeledAxles & axles_info);
+TwoWheeledAxles get_two_wheeled_axles_info(std::shared_ptr<rclcpp::Node> node,
+                                           const std::string & parameters_ns);
 
 
 
