@@ -16,36 +16,21 @@ namespace romea {
 void declare_mobile_base_info_2WD(std::shared_ptr<rclcpp::Node> node,
                                   const std::string & parameters_ns)
 {
-  declare_wheeled_axle_info(
-        node,full_param_name(parameters_ns,geometry_param_name));
-
-  declare_wheel_speed_control_info(
-        node,full_param_name(parameters_ns,wheels_speed_control_param_name));
-
-  declare_inertia_info(
-        node,full_param_name(parameters_ns,inertia_param_name));
-
-  declare_eigen_vector_parameter<Eigen::Vector3d>(
-        node,parameters_ns,control_point_param_name);
+  declare_wheeled_axle_info(node,full_param_name(parameters_ns,geometry_param_name));
+  declare_wheel_speed_control_info(node,full_param_name(parameters_ns,wheels_speed_control_param_name));
+  declare_inertia_info(node,full_param_name(parameters_ns,inertia_param_name));
+  declare_eigen_vector_parameter<Eigen::Vector3d>(node,parameters_ns,control_point_param_name);
 }
 
-void get_mobile_base_info_2WD(std::shared_ptr<rclcpp::Node> node,
-                              const std::string & parameters_ns,
-                              MobileBaseInfo2WD & mobile_base_info)
+MobileBaseInfo2WD get_mobile_base_info_2WD(std::shared_ptr<rclcpp::Node> node,
+                                           const std::string & parameters_ns)
 {
-  mobile_base_info.geometry =get_wheeled_axle_info(
-        node,full_param_name(parameters_ns,geometry_param_name));
+  return {get_wheeled_axle_info(node,full_param_name(parameters_ns,geometry_param_name)),
+        get_wheel_speed_control_info(node,full_param_name(parameters_ns,wheels_speed_control_param_name)),
+        get_inertia_info(node,full_param_name(parameters_ns,inertia_param_name)),
+        get_eigen_vector_parameter<Eigen::Vector3d>(node,parameters_ns,control_point_param_name)};
 
-  mobile_base_info.wheelsSpeedControl=get_wheel_speed_control_info(
-        node,full_param_name(parameters_ns,wheels_speed_control_param_name));
-
-  mobile_base_info.inertia = get_inertia_info(
-        node,full_param_name(parameters_ns,inertia_param_name));
-
-  mobile_base_info.controlPoint = get_eigen_vector_parameter<Eigen::Vector3d>(
-        node,parameters_ns,control_point_param_name);
-
-}
+  }
 
 }
 
