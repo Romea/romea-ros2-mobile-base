@@ -3,7 +3,7 @@
 
   <xacro:property name="M_PI" value="3.14159"/>
 
-  <xacro:include filename="$(find romea_odo_description)/urdf/wheel.xacro" />
+  <xacro:include filename="$(find romea_mobile_base_description)/urdf/wheel.xacro" />
 
   <xacro:macro name="wheel_steered" params="parent_link wheel_steering_link wheel_steering_joint wheel_spinning_link wheel_spinning_joint wheel_origin_y wheel_mass wheel_width wheel_radius left_right *joint_origin *visual_steering *visual_wheel">
 

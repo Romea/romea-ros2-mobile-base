@@ -2,7 +2,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="chassis">
 
 <!--  <xacro:include filename="$(find four_wheel_steering_description)/urdf/wheel_steered.xacro" />-->
-  <xacro:include filename="$(find romea_odo_description)/urdf/wheel_steered.xacro" />
+  <xacro:include filename="$(find romea_mobile_base_description)/urdf/wheel_steered.xacro" />
 
   <xacro:macro name="common" params="*visual_chassis">
 
