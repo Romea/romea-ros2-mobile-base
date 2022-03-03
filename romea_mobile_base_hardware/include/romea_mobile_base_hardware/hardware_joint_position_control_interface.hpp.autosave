@@ -1,0 +1,21 @@
+#ifndef _romea_HardwareJointPositionInterface_hpp_
+#define _romea_HardwareJointPositionInterface_hpp_
+
+#include "hardware_handle_command_handle.hpp"
+#include "hardware_handle_state_handle.hpp"
+
+namespace romea
+{
+
+struct HardwareJointPositionInterface
+{
+
+  HardwareJointPositionInterface(const hardware_interface::ComponentInfo & joint_info);
+  JointCommandInterface position_command_interface;
+  JointStateInterface position_state_interface;
+
+};
+
+
+}
+#endif
