@@ -11,6 +11,13 @@ namespace romea
 struct HardwareInterface1FWS2RWD
 {
 
+  enum JointIDs  {
+    FRONT_WHEEL_STEERING_JOINT_ID=0,
+    FRONT_WHEEL_SPINNING_JOINT_ID=1,
+    REAR_LEFT_WHEEL_SPINNING_JOINT_ID=2,
+    REAR_RIGHT_WHEEL_SPINNING_JOINT_ID=3
+  };
+
   HardwareInterface1FWS2RWD(const hardware_interface::HardwareInfo & hardware_info,
                             const std::string & spinning_joint_command_interface_type);
 

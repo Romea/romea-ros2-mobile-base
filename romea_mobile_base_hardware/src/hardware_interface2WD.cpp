@@ -1,9 +1,9 @@
 #include "romea_mobile_base_hardware/hardware_interface2WD.hpp"
 
-namespace  {
-const size_t LEFT_WHEEL_SPINNING_JOINT_ID=0;
-const size_t RIGHT_WHEEL_SPINNING_JOINT_ID=1;
-}
+//namespace  {
+//const size_t LEFT_WHEEL_SPINNING_JOINT_ID=0;
+//const size_t RIGHT_WHEEL_SPINNING_JOINT_ID=1;
+//}
 
 namespace romea
 {

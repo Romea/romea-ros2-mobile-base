@@ -1,11 +1,11 @@
 #include "romea_mobile_base_hardware/hardware_interface4WD.hpp"
 
-namespace  {
-const size_t FRONT_LEFT_WHEEL_SPINNING_JOINT_ID=0;
-const size_t FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID=1;
-const size_t REAR_LEFT_WHEEL_SPINNING_JOINT_ID=2;
-const size_t REAR_RIGHT_WHEEL_SPINNING_JOINT_ID=3;
-}
+//namespace  {
+//const size_t FRONT_LEFT_WHEEL_SPINNING_JOINT_ID=0;
+//const size_t FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID=1;
+//const size_t REAR_LEFT_WHEEL_SPINNING_JOINT_ID=2;
+//const size_t REAR_RIGHT_WHEEL_SPINNING_JOINT_ID=3;
+//}
 
 namespace romea
 {

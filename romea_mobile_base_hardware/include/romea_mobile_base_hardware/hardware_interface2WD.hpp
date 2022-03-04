@@ -8,6 +8,11 @@ namespace romea
 
 struct HardwareInterface2WD{
 
+  enum JointIDs  {
+    LEFT_WHEEL_SPINNING_JOINT_ID=0,
+    RIGHT_WHEEL_SPINNING_JOINT_ID=1
+  };
+
   HardwareInterface2WD(const hardware_interface::HardwareInfo & hardware_info,
                        const std::string & command_interface_type);
 
