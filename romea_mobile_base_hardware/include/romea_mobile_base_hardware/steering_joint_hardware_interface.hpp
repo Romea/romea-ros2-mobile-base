@@ -6,12 +6,12 @@
 namespace romea
 {
 
-struct HardwareSteeringJointInterface
+struct SteeringJointHardwareInterface
 {
   using Command = HardwareCommandInterface;
   using Feedback = HardwareStateInterface;
 
-  HardwareSteeringJointInterface(const hardware_interface::ComponentInfo &joint_info);
+  SteeringJointHardwareInterface(const hardware_interface::ComponentInfo &joint_info);
 
   Command command;
   Feedback feedback;

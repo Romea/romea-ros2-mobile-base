@@ -1,7 +1,7 @@
 #ifndef _romea_HardwareInterface2WD_hpp_
 #define _romea_HardwareInterface2WD_hpp_
 
-#include "hardware_spinning_joint_interface.hpp"
+#include "spinning_joint_hardware_interface.hpp"
 
 namespace romea
 {
@@ -11,8 +11,8 @@ struct HardwareInterface2WD{
   HardwareInterface2WD(const hardware_interface::HardwareInfo & hardware_info,
                        const std::string & command_interface_type);
 
-  HardwareSpinningJointInterface left_wheel_spinning_joint;
-  HardwareSpinningJointInterface right_wheel_spinning_joint;
+  SpinningJointHardwareInterface left_wheel_spinning_joint;
+  SpinningJointHardwareInterface right_wheel_spinning_joint;
 
   std::vector<hardware_interface::StateInterface> export_state_interfaces();
   std::vector<hardware_interface::CommandInterface> export_command_interfaces();

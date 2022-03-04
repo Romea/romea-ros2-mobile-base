@@ -6,7 +6,7 @@
 namespace romea
 {
 
-struct HardwareSpinningJointInterface
+struct SpinningJointHardwareInterface
 {
   using Command = HardwareCommandInterface;
 
@@ -19,7 +19,7 @@ struct HardwareSpinningJointInterface
     void export_state_interfaces(std::vector<hardware_interface::StateInterface> & state_interfaces);
   };
 
-  HardwareSpinningJointInterface(const hardware_interface::ComponentInfo & joint_info,
+  SpinningJointHardwareInterface(const hardware_interface::ComponentInfo & joint_info,
                                  const std::string & command_interface_type = hardware_interface::HW_IF_VELOCITY);
 
   Command command;

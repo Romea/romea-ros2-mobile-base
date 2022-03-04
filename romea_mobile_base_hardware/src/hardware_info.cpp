@@ -1,4 +1,4 @@
-#include "romea_mobile_base_hardware/hardware_joint_info.hpp"
+#include "romea_mobile_base_hardware/hardware_info.hpp"
 
 #include <algorithm>
 #include <sstream>

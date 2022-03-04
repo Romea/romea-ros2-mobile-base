@@ -27,6 +27,7 @@ find_package(hardware_interface REQUIRED)
 
 add_library(${PROJECT_NAME}
  src/hardware_handle.cpp
+ src/hardware_info.cpp
  src/hardware_interface1FAS2FWD.cpp
  src/hardware_interface1FAS2RWD.cpp
  src/hardware_interface1FWS2RWD.cpp
@@ -37,10 +38,9 @@ add_library(${PROJECT_NAME}
  src/hardware_interface2WD.cpp
  src/hardware_interface4WD.cpp
  src/hardware_interface4WS4WD.cpp
- src/hardware_joint_info.cpp
- src/hardware_spinning_joint_interface.cpp
- src/hardware_steering_joint_interface.cpp
  src/hardware_system_interface.cpp
+ src/spinning_joint_hardware_interface.cpp
+ src/steering_joint_hardware_interface.cpp
  )
 
 ament_target_dependencies(${PROJECT_NAME}
