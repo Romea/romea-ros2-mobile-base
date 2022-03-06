@@ -11,13 +11,10 @@
 namespace romea
 {
 
-class HardwareInterface2AS4WD
+struct HardwareInterface2AS4WD
 {
-public:
 
   using Parameters = HardwareInterfaceConfiguration2AS4WD;
-
-public:
 
   HardwareInterface2AS4WD(const Parameters & parameters,
                           const std::string & joints_prefix,

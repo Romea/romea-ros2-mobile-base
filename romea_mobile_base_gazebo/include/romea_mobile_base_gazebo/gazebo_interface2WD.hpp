@@ -7,13 +7,14 @@
 namespace romea
 {
 
-class GazeboInterface2WD{
+struct GazeboInterface2WD{
 
-public:
+  using HardwareInterface = HardwareInterface2WD;
 
   GazeboInterface2WD(gazebo::physics::ModelPtr parent_model,
                      const hardware_interface::HardwareInfo & hardware_info,
                      const std::string & command_interface_type);
+
   SpinningJointGazeboInterface left_wheel_spinning_joint;
   SpinningJointGazeboInterface right_wheel_spinning_joint;
 

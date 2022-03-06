@@ -9,9 +9,9 @@
 namespace romea
 {
 
-class GazeboInterface2FWS4WD{
+struct GazeboInterface2FWS4WD{
 
-public:
+  using HardwareInterface = HardwareInterface2FWS4WD;
 
   GazeboInterface2FWS4WD(gazebo::physics::ModelPtr parent_model,
                         const hardware_interface::HardwareInfo & hardware_info,

@@ -10,6 +10,11 @@ namespace romea
 
 class GazeboInterface4WD{
 
+
+public:
+
+using HardwareInterface = HardwareInterface4WD;
+
 public:
 
   GazeboInterface4WD(gazebo::physics::ModelPtr parent_model,

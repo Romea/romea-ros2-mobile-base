@@ -1,5 +1,5 @@
-#ifndef _romea_GazeboInterface2FWS2RWD_hpp_
-#define _romea_GazeboInterface2FWS2RWD_hpp_
+#ifndef _romea_GazeboInterface2FWS2FWD_hpp_
+#define _romea_GazeboInterface2FWS2FWD_hpp_
 
 
 #include "spinning_joint_gazebo_interface.hpp"
@@ -9,13 +9,14 @@
 namespace romea
 {
 
-class GazeboInterface2FWS2FWD{
+struct GazeboInterface2FWS2FWD{
 
-public:
+  using HardwareInterface = HardwareInterface2FWS2FWD;
 
   GazeboInterface2FWS2FWD(gazebo::physics::ModelPtr parent_model,
-                        const hardware_interface::HardwareInfo & hardware_info,
-                        const std::string & command_interface_type);
+                          const hardware_interface::HardwareInfo & hardware_info,
+                          const std::string & command_interface_type);
+
   SteeringJointGazeboInterface front_left_wheel_steering_joint;
   SteeringJointGazeboInterface front_right_wheel_steering_joint;
   SpinningJointGazeboInterface front_left_wheel_spinning_joint;

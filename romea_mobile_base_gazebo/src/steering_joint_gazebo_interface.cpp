@@ -1,59 +1,47 @@
-#include "romea_mobile_base_gazebo_interfaces/steering_joint_gazebo_interface.hpp"
-#include "romea_mobile_base_gazebo_interfaces/hardware_interface_info.hpp"
+#include "romea_mobile_base_gazebo/steering_joint_gazebo_interface.hpp"
 
 namespace romea
 {
 
 //-----------------------------------------------------------------------------
-SteeringJointGazeboInterface::SteeringJointGazeboInterface(const std::string & joint_name,
-                                                           gazebo::physics::JointPtr sim_joint):
-  JointGazeboInterface(joint_name,sim_joint)
+SteeringJointGazeboInterface::SteeringJointGazeboInterface(
+    gazebo::physics::ModelPtr parent_model,
+    const hardware_interface::ComponentInfo & joint_info)
 {
-
+  sim_joint_ = parent_model->GetJoint(joint_info.name);
 }
 
 //-----------------------------------------------------------------------------
-void SteeringJointGazeboInterface::read()
+void SteeringJointGazeboInterface::setCommand(const double & command)
 {
-  measurement_=sim_joint_->Position(0);
+  sim_joint_->SetPosition(0,command);
 }
 
 //-----------------------------------------------------------------------------
-void SteeringJointGazeboInterface::write()
+double SteeringJointGazeboInterface::getFeedback()const
 {
-  sim_joint_->SetPosition(0,command_);
+  return sim_joint_->Position(0);
 }
 
 //-----------------------------------------------------------------------------
-hardware_interface::CommandInterface SteeringJointGazeboInterface::exportCommandInterface()
+void write(const SteeringJointHardwareInterface & hardware_joint,
+           SteeringJointGazeboInterface & gazebo_joint)
 {
-  return hardware_interface::CommandInterface(joint_name_,
-                                              hardware_interface::HW_IF_POSITION,
-                                              & command_);
+  gazebo_joint.setCommand(hardware_joint.command.get());
 }
 
 //-----------------------------------------------------------------------------
-hardware_interface::StateInterface SteeringJointGazeboInterface::exportStateInterface()
+void read(const SteeringJointGazeboInterface & gazebo_joint,
+          SteeringJointHardwareInterface & hardware_joint)
 {
-  return hardware_interface::StateInterface(joint_name_,
-                                            hardware_interface::HW_IF_POSITION,
-                                            & measurement_);
+  read(gazebo_joint,hardware_joint.feedback);
 }
 
 //-----------------------------------------------------------------------------
-std::unique_ptr<SteeringJointGazeboInterface>
-makeSteeringJointHarwareInterface(gazebo::physics::ModelPtr parent_model,
-                                  const hardware_interface::ComponentInfo & joint_info)
+void read(const SteeringJointGazeboInterface & gazebo_joint,
+          SteeringJointHardwareInterface::Feedback & hardware_joint_feedback)
 {
-  auto command_interface_info = get_command_interface_info(
-        joint_info,hardware_interface::HW_IF_VELOCITY);
-  auto state_interface_info = get_state_interface_info(
-        joint_info,hardware_interface::HW_IF_VELOCITY);
-  //TODO extract info
-  return std::make_unique<SteeringJointGazeboInterface>(
-        joint_info.name,parent_model->GetJoint(joint_info.name));
-
+  hardware_joint_feedback.set(gazebo_joint.getFeedback());
 }
-
 
 }

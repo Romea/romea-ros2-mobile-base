@@ -42,7 +42,7 @@ add_library(${PROJECT_NAME}
  src/gazebo_interface2WD.cpp
  src/gazebo_interface4WD.cpp
  src/gazebo_interface4WS4WD.cpp
- # src/gazebo_interface_base.cpp
+ src/gazebo_system_interface.cpp
  )
 
 ament_target_dependencies(${PROJECT_NAME}

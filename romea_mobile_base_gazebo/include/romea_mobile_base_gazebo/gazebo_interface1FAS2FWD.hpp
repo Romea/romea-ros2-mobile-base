@@ -9,13 +9,14 @@
 namespace romea
 {
 
-class GazeboInterface1FAS2FWD{
+struct GazeboInterface1FAS2FWD{
 
-public:
+  using HardwareInterface = HardwareInterface1FAS2FWD;
 
   GazeboInterface1FAS2FWD(gazebo::physics::ModelPtr parent_model,
                           const hardware_interface::HardwareInfo & hardware_info,
                           const std::string & command_interface_type);
+
   SteeringJointGazeboInterface front_axle_steering_joint;
   SteeringJointGazeboInterface front_left_wheel_steering_joint;
   SteeringJointGazeboInterface front_right_wheel_steering_joint;
