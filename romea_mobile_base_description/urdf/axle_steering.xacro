@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="axle_steering">
+
+  <xacro:macro name="axle_steering" params="parent_link axle_steering_link axle_steering_joint *joint_origin">
+
+    <link name="${prefix}${axle_steering_link}"/>
+
+    <joint name="${prefix}${axle_steering_joint}" type="revolute">
+      <limit lower="${minimal_axle_steering_angle}" upper="${maximal_axle_steering_angle}" effort="10000000" velocity="1000000"/>
+      <parent link="${prefix}${parent_link}"/>
+      <child link="${prefix}${axle_steering_link}"/>
+      <xacro:insert_block name="joint_origin"/>
+      <axis xyz="0 0 1" rpy="0 0 0" />
+    </joint>
+
+  </xacro:macro>
+
+</robot>

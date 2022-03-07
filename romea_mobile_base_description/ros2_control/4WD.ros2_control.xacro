@@ -16,7 +16,9 @@
              <param name="min">-1</param>
              <param name="max">1</param>
            </command_interface>
+           <state_interface name="position"/>
            <state_interface name="velocity"/>
+           <state_interface name="effort"/>
          </joint>
 
         <joint name="${prefix}${front_right_wheel_spinning_joint}">
@@ -24,7 +26,9 @@
             <param name="min">-1</param>
             <param name="max">1</param>
           </command_interface>
+          <state_interface name="position"/>
           <state_interface name="velocity"/>
+          <state_interface name="effort"/>
         </joint>
 
         <joint name="${prefix}${rear_left_wheel_spinning_joint}">
@@ -32,7 +36,9 @@
             <param name="min">-1</param>
             <param name="max">1</param>
           </command_interface>
+          <state_interface name="position"/>
           <state_interface name="velocity"/>
+          <state_interface name="effort"/>
         </joint>
 
         <joint name="${prefix}${rear_right_wheel_spinning_joint}">
@@ -40,7 +46,9 @@
             <param name="min">-1</param>
             <param name="max">1</param>
           </command_interface>
+          <state_interface name="position"/>
           <state_interface name="velocity"/>
+          <state_interface name="effort"/>
         </joint>
 
     </ros2_control>
