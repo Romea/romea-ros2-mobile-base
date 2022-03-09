@@ -1,4 +1,4 @@
-#include "romea_mobile_base_controllers/joint_controller_interface.hpp"
+#include "romea_mobile_base_controllers/interfaces/joint_controller_interface.hpp"
 
 namespace  {
 

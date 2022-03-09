@@ -22,22 +22,27 @@ find_package(rclcpp REQUIRED)
 find_package(romea_core_common REQUIRED)
 find_package(romea_core_mobile_base REQUIRED)
 find_package(romea_common_utils REQUIRED)
+find_package(romea_mobile_base_msgs REQUIRED)
+find_package(romea_mobile_base_utils REQUIRED)
 find_package(controller_interface REQUIRED)
 
 add_library(${PROJECT_NAME}
- src/joint_controller_interface.cpp
- src/spinning_joint_controller_interface.cpp
- src/steering_joint_controller_interface.cpp
- src/controller_interface1FAS2FWD.cpp
- src/controller_interface1FAS2RWD.cpp
- src/controller_interface1FWS2RWD.cpp
- src/controller_interface2AS4WD.cpp
- src/controller_interface2FWS2FWD.cpp
- src/controller_interface2FWS2RWD.cpp
- src/controller_interface2FWS4WD.cpp
- src/controller_interface2WD.cpp
- src/controller_interface4WD.cpp
- src/controller_interface4WS4WD.cpp
+ src/interfaces/joint_controller_interface.cpp
+ src/interfaces/spinning_joint_controller_interface.cpp
+ src/interfaces/steering_joint_controller_interface.cpp
+ src/interfaces/controller_interface1FAS2FWD.cpp
+ src/interfaces/controller_interface1FAS2RWD.cpp
+ src/interfaces/controller_interface1FWS2RWD.cpp
+ src/interfaces/controller_interface2AS4WD.cpp
+ src/interfaces/controller_interface2FWS2FWD.cpp
+ src/interfaces/controller_interface2FWS2RWD.cpp
+ src/interfaces/controller_interface2FWS4WD.cpp
+ src/interfaces/controller_interface2WD.cpp
+ src/interfaces/controller_interface4WD.cpp
+ src/interfaces/controller_interface4WS4WD.cpp
+ src/dead_reckoning.cpp
+ src/dead_reckoning_publisher.cpp
+
  )
 
 ament_target_dependencies(${PROJECT_NAME}
@@ -45,6 +50,8 @@ ament_target_dependencies(${PROJECT_NAME}
  romea_core_common
  romea_core_mobile_base
  romea_common_utils
+ romea_mobile_base_msgs
+ romea_mobile_base_utils
  controller_interface
  )
 
@@ -56,6 +63,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 ament_export_dependencies(romea_core_common)
 ament_export_dependencies(romea_core_mobile_base)
 ament_export_dependencies(romea_common_utils)
+ament_export_dependencies(romea_mobile_msgs)
+ament_export_dependencies(romea_mobile_base_utils)
 ament_export_dependencies(controller_interface)
 
 ament_export_include_directories(include)

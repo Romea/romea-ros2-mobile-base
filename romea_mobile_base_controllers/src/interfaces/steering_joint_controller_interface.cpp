@@ -1,4 +1,4 @@
-#include "romea_mobile_base_controllers/steering_joint_controller_interface.hpp"
+#include "romea_mobile_base_controllers/interfaces/steering_joint_controller_interface.hpp"
 
 namespace romea
 {

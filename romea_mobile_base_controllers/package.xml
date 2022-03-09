@@ -16,6 +16,8 @@
   <depend>romea_core_common</depend>
   <depend>romea_core_mobile_base</depend>
   <depend>romea_common_utils</depend>
+  <depend>romea_mobile_base_msgs</depend>
+  <depend>romea_mobile_base_utils</depend>
   <depend>controller_interface</depend>
 
   <test_depend>ament_lint_auto</test_depend>

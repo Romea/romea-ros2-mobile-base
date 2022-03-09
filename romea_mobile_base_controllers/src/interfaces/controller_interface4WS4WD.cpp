@@ -1,4 +1,4 @@
-#include "romea_mobile_base_controllers/controller_interface4WS4WD.hpp"
+#include "romea_mobile_base_controllers/interfaces/controller_interface4WS4WD.hpp"
 
 namespace romea
 {
