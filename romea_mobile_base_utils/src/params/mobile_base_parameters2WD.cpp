@@ -9,6 +9,9 @@ const std::string geometry_param_name = "geometry";
 const std::string wheels_speed_control_param_name = "wheels_speed_control";
 const std::string control_point_param_name="control_point";
 const std::string inertia_param_name="inertia";
+
+const std::string left_wheel_spinning_joint_param_name="left_wheel_spinning_joint_name";
+const std::string right_wheel_spinning_joint_param_name="right_wheel_spinning_joint_name";
 }
 
 namespace romea {
@@ -30,7 +33,25 @@ MobileBaseInfo2WD get_mobile_base_info_2WD(std::shared_ptr<rclcpp::Node> node,
         get_inertia_info(node,full_param_name(parameters_ns,inertia_param_name)),
         get_eigen_vector_parameter<Eigen::Vector3d>(node,parameters_ns,control_point_param_name)};
 
-  }
+}
+
+//-----------------------------------------------------------------------------
+void declare_joint_mappings_2WD(std::shared_ptr<rclcpp::Node> node,
+                                    const std::string & parameters_ns)
+{
+  declare_parameter<std::string>(node,parameters_ns,left_wheel_spinning_joint_param_name);
+  declare_parameter<std::string>(node,parameters_ns,right_wheel_spinning_joint_param_name);
+}
+
+//-----------------------------------------------------------------------------
+std::map<std::string,std::string> get_joint_mappings_2WD(std::shared_ptr<rclcpp::Node> node,
+                                                              const std::string & parameters_ns)
+{
+  std::map<std::string,std::string> joint_mappings;
+  insert_parameter_to_map(node,parameters_ns,left_wheel_spinning_joint_param_name,joint_mappings);
+  insert_parameter_to_map(node,parameters_ns,right_wheel_spinning_joint_param_name,joint_mappings);
+  return joint_mappings;
+}
 
 }
 

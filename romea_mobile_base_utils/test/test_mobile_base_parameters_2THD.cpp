@@ -6,10 +6,10 @@
 #include <rclcpp/node.hpp>
 
 //romea
-#include "romea_mobile_base_utils/params/mobile_base_parameters2TD.hpp"
+#include "romea_mobile_base_utils/params/mobile_base_parameters2THD.hpp"
 
 
-class TestMobileBaseParams2TD : public ::testing::Test
+class TestMobileBaseParams2THD : public ::testing::Test
 {
 protected:
   static void SetUpTestCase()
@@ -25,24 +25,26 @@ protected:
   void SetUp() override
   {
     rclcpp::NodeOptions no;
-    no.arguments({"--ros-args","--params-file",std::string(TEST_DIR)+"/test_mobile_base_parameters_2TD.yaml"});
-    node = std::make_shared<rclcpp::Node>("test_mobile_base_parameters_2TD", no);
+    no.arguments({"--ros-args","--params-file",std::string(TEST_DIR)+"/test_mobile_base_parameters_2THD.yaml"});
+    node = std::make_shared<rclcpp::Node>("test_mobile_base_parameters_2THD", no);
   }
 
   std::shared_ptr<rclcpp::Node> node;
 };
 
 
-TEST_F(TestMobileBaseParams2TD, checkGetInfo)
+TEST_F(TestMobileBaseParams2THD, checkGetInfo)
 {
-  romea::declare_mobile_base_info_2TD(node,"base");
-  auto base_info = romea::get_mobile_base_info_2TD(node,"base");
+  romea::declare_mobile_base_info_2THD(node,"base");
+  auto base_info = romea::get_mobile_base_info_2THD(node,"base");
   EXPECT_DOUBLE_EQ(base_info.geometry.tracksDistance,100);
   EXPECT_DOUBLE_EQ(base_info.geometry.tracks.width,102);
-  EXPECT_DOUBLE_EQ(base_info.geometry.tracks.sprocket_wheel.radius,103);
-  EXPECT_DOUBLE_EQ(base_info.geometry.tracks.sprocket_wheel.x,104);
-  EXPECT_DOUBLE_EQ(base_info.geometry.tracks.idler_wheel.radius,105);
-  EXPECT_DOUBLE_EQ(base_info.geometry.tracks.idler_wheel.x,106);
+  EXPECT_DOUBLE_EQ(base_info.geometry.tracks.high_sprocket_wheel.radius,103);
+  EXPECT_DOUBLE_EQ(base_info.geometry.tracks.high_sprocket_wheel.x,104);
+  EXPECT_DOUBLE_EQ(base_info.geometry.tracks.front_idler_wheel.radius,105);
+  EXPECT_DOUBLE_EQ(base_info.geometry.tracks.front_idler_wheel.x,106);
+  EXPECT_DOUBLE_EQ(base_info.geometry.tracks.rear_idler_wheel.radius,107);
+  EXPECT_DOUBLE_EQ(base_info.geometry.tracks.rear_idler_wheel.x,108);
   EXPECT_DOUBLE_EQ(base_info.tracksSpeedControl.command.maximalSpeed,300);
   EXPECT_DOUBLE_EQ(base_info.tracksSpeedControl.command.maximalAcceleration,301);
   EXPECT_DOUBLE_EQ(base_info.tracksSpeedControl.sensor.speedStd,302);
@@ -57,8 +59,8 @@ TEST_F(TestMobileBaseParams2TD, checkGetInfo)
   EXPECT_DOUBLE_EQ(base_info.controlPoint.z(),502);
 }
 
-TEST_F(TestMobileBaseParams2TD, checkGetJointMappings)
+TEST_F(TestMobileBaseParams2THD, checkGetJointMappings)
 {
-  romea::declare_joint_mappings_2TD(node,"base.joints");
-  auto base_info =romea::get_joint_mappings_2TD(node,"base.joints");
+  romea::declare_joint_mappings_2THD(node,"base.joints");
+  auto base_info =romea::get_joint_mappings_2THD(node,"base.joints");
 }

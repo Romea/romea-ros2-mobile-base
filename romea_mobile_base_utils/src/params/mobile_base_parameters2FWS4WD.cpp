@@ -10,6 +10,14 @@ const std::string front_wheels_steering_control_param_name = "front_wheels_steer
 const std::string wheels_speed_control_param_name = "wheels_speed_control";
 const std::string control_point_param_name="control_point";
 const std::string inertia_param_name="inertia";
+
+const std::string front_left_wheel_steering_joint_param_name="front_left_wheel_steering_joint_name";
+const std::string front_right_wheel_steering_joint_param_name="front_right_wheel_steering_joint_name";
+const std::string front_left_wheel_spinning_joint_param_name="front_left_wheel_spinning_joint_name";
+const std::string front_right_wheel_spinning_joint_param_name="front_right_wheel_spinning_joint_name";
+const std::string rear_left_wheel_spinning_joint_param_name="rear_left_wheel_spinning_joint_name";
+const std::string rear_right_wheel_spinning_joint_param_name="rear_right_wheel_spinning_joint_name";
+
 }
 
 namespace romea {
@@ -33,6 +41,32 @@ MobileBaseInfo2FWS4WD get_mobile_base_info_2FWS4WD(std::shared_ptr<rclcpp::Node>
         get_inertia_info(node,full_param_name(parameters_ns,inertia_param_name)),
         get_eigen_vector_parameter<Eigen::Vector3d>(node,parameters_ns,control_point_param_name)};
 
+}
+
+//-----------------------------------------------------------------------------
+void declare_joint_mappings_2FWS4WD(std::shared_ptr<rclcpp::Node> node,
+                                     const std::string & parameters_ns)
+{
+  declare_parameter<std::string>(node,parameters_ns,front_left_wheel_steering_joint_param_name);
+  declare_parameter<std::string>(node,parameters_ns,front_right_wheel_steering_joint_param_name);
+  declare_parameter<std::string>(node,parameters_ns,front_left_wheel_spinning_joint_param_name);
+  declare_parameter<std::string>(node,parameters_ns,front_right_wheel_spinning_joint_param_name);
+  declare_parameter<std::string>(node,parameters_ns,rear_left_wheel_spinning_joint_param_name);
+  declare_parameter<std::string>(node,parameters_ns,rear_right_wheel_spinning_joint_param_name);
+}
+
+//-----------------------------------------------------------------------------
+std::map<std::string,std::string> get_joint_mappings_2FWS4WD(std::shared_ptr<rclcpp::Node> node,
+                                                              const std::string & parameters_ns)
+{
+  std::map<std::string,std::string> joint_mappings;
+  insert_parameter_to_map(node,parameters_ns,front_left_wheel_steering_joint_param_name,joint_mappings);
+  insert_parameter_to_map(node,parameters_ns,front_right_wheel_steering_joint_param_name,joint_mappings);
+  insert_parameter_to_map(node,parameters_ns,front_left_wheel_spinning_joint_param_name,joint_mappings);
+  insert_parameter_to_map(node,parameters_ns,front_right_wheel_spinning_joint_param_name,joint_mappings);
+  insert_parameter_to_map(node,parameters_ns,rear_left_wheel_spinning_joint_param_name,joint_mappings);
+  insert_parameter_to_map(node,parameters_ns,rear_right_wheel_spinning_joint_param_name,joint_mappings);
+  return joint_mappings;
 }
 
 }

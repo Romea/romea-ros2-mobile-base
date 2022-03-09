@@ -1,4 +1,5 @@
 #include "romea_mobile_base_utils/params/mobile_base_parameters2FWS2RWD.hpp"
+#include "romea_mobile_base_utils/params/mobile_base_parameters2FWS4WD.hpp"
 #include "romea_mobile_base_utils/params/mobile_base_control_parameters.hpp"
 #include "romea_mobile_base_utils/params/mobile_base_geometry_parameters.hpp"
 #include "romea_mobile_base_utils/params/mobile_base_inertia_parameters.hpp"
@@ -32,6 +33,20 @@ MobileBaseInfo2FWS2RWD get_mobile_base_info_2FWS2RWD(std::shared_ptr<rclcpp::Nod
          get_wheel_speed_control_info(node,full_param_name(parameters_ns,rear_wheels_speed_control_param_name)),
          get_inertia_info(node,full_param_name(parameters_ns,inertia_param_name)),
          get_eigen_vector_parameter<Eigen::Vector3d>(node,parameters_ns,control_point_param_name)};
+}
+
+//-----------------------------------------------------------------------------
+void declare_joint_mappings_2FWS2RWD(std::shared_ptr<rclcpp::Node> node,
+                                     const std::string & parameters_ns)
+{
+  declare_joint_mappings_2FWS4WD(node,parameters_ns);
+}
+
+//-----------------------------------------------------------------------------
+std::map<std::string,std::string> get_joint_mappings_2FWS2RWD(std::shared_ptr<rclcpp::Node> node,
+                                                              const std::string & parameters_ns)
+{
+  return get_joint_mappings_2FWS4WD(node,parameters_ns);
 }
 
 }

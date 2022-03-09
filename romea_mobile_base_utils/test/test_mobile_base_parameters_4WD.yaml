@@ -30,3 +30,9 @@ test_mobile_base_parameters_4WD :
         z_moment: 404.
 
       control_point : [500., 501., 502.]
+
+      joints:
+        front_left_wheel_spinning_joint_name: J1
+        front_right_wheel_spinning_joint_name: J2
+        rear_left_wheel_spinning_joint_name: J3
+        rear_right_wheel_spinning_joint_name: J4

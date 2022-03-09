@@ -13,6 +13,12 @@ void declare_mobile_base_info_2FWS2FWD(std::shared_ptr<rclcpp::Node> node,
 MobileBaseInfo2FWS2FWD get_mobile_base_info_2FWS2FWD(std::shared_ptr<rclcpp::Node> node,
                                                      const std::string & parameters_ns);
 
+void declare_joint_mappings_2FWS2FWD(std::shared_ptr<rclcpp::Node> node,
+                                     const std::string & parameters_ns);
+
+std::map<std::string,std::string> get_joint_mappings_2FWS2FWD(std::shared_ptr<rclcpp::Node> node,
+                                                              const std::string & parameters_ns);
+
 }
 
 #endif

@@ -1,6 +1,6 @@
 test_mobile_base_geometry_paramerters:
   ros__parameters:
-    geometry:
+    wheeled_geometry:
       axles_distance: 101.
       front_axle:
         wheels_distance: 102.
@@ -15,6 +15,27 @@ test_mobile_base_geometry_paramerters:
           width: 108.
           hub_carrier_offset: 109.
 
-      tracks_distance: 110.
-      tracks:
-        width: 111.
+    tracked_geometry:
+      front_axle:
+        tracks_distance: 110.
+        tracks:
+          width: 111.
+          sprocket_wheel:
+            radius: 112.
+            x: 113.
+          idler_wheel:
+            radius: 114.
+            x: 115.
+      rear_axle:
+        tracks_distance: 116.
+        tracks:
+          width: 117.
+          high_sprocket_wheel:
+            radius: 118.
+            x: 119.
+          front_idler_wheel:
+            radius: 120.
+            x: 121.
+          rear_axle_idler_wheel:
+            radius: 122.
+            x: 123.
