@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="chassis">
+
+  <xacro:include filename="$(find romea_mobile_base_description)/urdf/common.xacro" />
+  <xacro:include filename="$(find romea_mobile_base_description)/urdf/wheel.xacro" />
+
+  <xacro:macro name="chassis" params="*visual_chassis *visual_wheel">
+
+    <xacro:common>
+      <xacro:insert_block name="visual_chassis"/>
+    </xacro:common>
+
+   <xacro:wheel parent_link="${base_link}"
+                wheel_spinning_link="${high_left_sprocket_wheel_spinning_link}"
+                wheel_spinning_joint="${high_left_sprocket_wheel_spinning_joint}"
+                wheel_mass="${sprocket_wheel_mass}"
+                wheel_width="${track_width}"
+                wheel_radius="${sprocket_wheel_radius}"
+                left_right="-1">
+
+      <origin xyz="${sprocket_wheel_x} ${track/2} ${sprocket_wheel_radius - chassis_height}" rpy="${-M_PI/2} 0 0" />
+      <xacro:insert_block name="visual_wheel"/>
+    </xacro:wheel>
+
+    <xacro:wheel parent_link="${base_link}"
+                 wheel_spinning_link="${high_right_sprocket_wheel_spinning_link}"
+                 wheel_spinning_joint="${high_right_sprocket_wheel_spinning_joint}"
+                 wheel_mass="${sprocket_wheel_mass}"
+                 wheel_width="${track_width}"
+                 wheel_radius="${sprocket_wheel_radius}"
+                 left_right="1">
+      <origin xyz="${sprocket_wheel_x} ${-track/2} ${sprocket_wheel_radius - chassis_height}" rpy="${-M_PI/2} 0 0" />
+      <xacro:insert_block name="visual_wheel"/>
+    </xacro:wheel>
+
+    <xacro:wheel parent_link="${base_link}"
+                 wheel_spinning_link="${front_left_idler_spinning_link}"
+                 wheel_spinning_joint="${front_left_idler_spinning_joint}"
+                 wheel_mass="${front_idler_wheel_mass}"
+                 wheel_width="${track_width}"
+                 wheel_radius="${idler_wheel_radius}"
+                 left_right="-1">
+      <origin xyz="${idler_wheel_x} ${track/2} ${idler_wheel_radius - chassis_height}" rpy="${-M_PI/2} 0 0" />
+      <xacro:insert_block name="visual_wheel"/>
+    </xacro:wheel>
+
+    <xacro:wheel parent_link="${base_link}"
+                 wheel_spinning_link="${right_idler_wheel_spinning_link}"
+                 wheel_spinning_joint="${right_idler_wheel_spinning_joint}"
+                 wheel_mass="${idler_wheel_mass}"
+                 wheel_width="${track_width}"
+                 wheel_radius="${idler_wheel_radius}"
+                 left_right="1">
+      <origin xyz="${idler_wheel_x} ${-track/2} ${idler_wheel_radius - chassis_height}" rpy="${-M_PI/2} 0 0" />
+      <xacro:insert_block name="visual_wheel"/>
+    </xacro:wheel>
+
+  </xacro:macro>
+
+</robot>
