@@ -39,8 +39,9 @@ TEST_F(TestMobileBaseParams2THD, checkGetInfo)
   auto base_info = romea::get_mobile_base_info_2THD(node,"base");
   EXPECT_DOUBLE_EQ(base_info.geometry.tracksDistance,100);
   EXPECT_DOUBLE_EQ(base_info.geometry.tracks.width,102);
-  EXPECT_DOUBLE_EQ(base_info.geometry.tracks.high_sprocket_wheel.radius,103);
-  EXPECT_DOUBLE_EQ(base_info.geometry.tracks.high_sprocket_wheel.x,104);
+  EXPECT_DOUBLE_EQ(base_info.geometry.tracks.thickness,102.5);
+  EXPECT_DOUBLE_EQ(base_info.geometry.tracks.sprocket_wheel.radius,103);
+  EXPECT_DOUBLE_EQ(base_info.geometry.tracks.sprocket_wheel.x,104);
   EXPECT_DOUBLE_EQ(base_info.geometry.tracks.front_idler_wheel.radius,105);
   EXPECT_DOUBLE_EQ(base_info.geometry.tracks.front_idler_wheel.x,106);
   EXPECT_DOUBLE_EQ(base_info.geometry.tracks.rear_idler_wheel.radius,107);

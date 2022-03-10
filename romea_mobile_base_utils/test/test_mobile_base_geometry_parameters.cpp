@@ -47,32 +47,47 @@ TEST_F(TestMobileBaseGeometryParams, GetWheeInfo)
   EXPECT_DOUBLE_EQ(wheel.hubCarrierOffset,105);
 }
 
-TEST_F(TestMobileBaseGeometryParams, GetFlatContinousTrackInfo)
+TEST_F(TestMobileBaseGeometryParams, GetContinousTrackInfo)
 {
   loadYaml(std::string(TEST_DIR)+"/test_mobile_base_geometry_parameters.yaml");
 
-  romea::declare_flat_continuous_track_info(node,"tracked_geometry.front_axle.tracks");
-  auto track =romea::get_flat_continuous_track_info(node,"tracked_geometry.front_axle.tracks");
+  romea::declare_continuous_track_info<romea::ContinuousTrack>(node,"tracked_geometry.front_axle.tracks");
+  auto track =romea::get_continuous_track_info<romea::ContinuousTrack>(node,"tracked_geometry.front_axle.tracks");
   EXPECT_DOUBLE_EQ(track.width,111);
+  EXPECT_DOUBLE_EQ(track.thickness,111.5);
   EXPECT_DOUBLE_EQ(track.sprocket_wheel.radius,112);
+  EXPECT_DOUBLE_EQ(track.sprocket_wheel.z,112);
   EXPECT_DOUBLE_EQ(track.sprocket_wheel.x,113);
   EXPECT_DOUBLE_EQ(track.idler_wheel.radius,114);
+  EXPECT_DOUBLE_EQ(track.idler_wheel.z,114);
   EXPECT_DOUBLE_EQ(track.idler_wheel.x,115);
+  EXPECT_DOUBLE_EQ(track.rollers.radius,115.1);
+  EXPECT_DOUBLE_EQ(track.rollers.x[0],115.2);
+  EXPECT_DOUBLE_EQ(track.rollers.x[1],115.3);
+  EXPECT_DOUBLE_EQ(track.rollers.z,115.4);
 }
 
-TEST_F(TestMobileBaseGeometryParams, GetTriangularContinousTrackInfo)
+TEST_F(TestMobileBaseGeometryParams, GetTriangleContinousTrackInfo)
 {
   loadYaml(std::string(TEST_DIR)+"/test_mobile_base_geometry_parameters.yaml");
 
-  romea::declare_triangular_continuous_track_info(node,"tracked_geometry.rear_axle.tracks");
-  auto track =romea::get_triangular_continuous_track_info(node,"tracked_geometry.rear_axle.tracks");
+  romea::declare_continuous_track_info<romea::TriangleContinuousTrack>(node,"tracked_geometry.rear_axle.tracks");
+  auto track =romea::get_continuous_track_info<romea::TriangleContinuousTrack>(node,"tracked_geometry.rear_axle.tracks");
   EXPECT_DOUBLE_EQ(track.width,117);
-  EXPECT_DOUBLE_EQ(track.high_sprocket_wheel.radius,118);
-  EXPECT_DOUBLE_EQ(track.high_sprocket_wheel.x,119);
+  EXPECT_DOUBLE_EQ(track.thickness,117.5);
+  EXPECT_DOUBLE_EQ(track.sprocket_wheel.radius,118);
+  EXPECT_DOUBLE_EQ(track.sprocket_wheel.x,119);
+  EXPECT_DOUBLE_EQ(track.sprocket_wheel.z,119.5);
   EXPECT_DOUBLE_EQ(track.front_idler_wheel.radius,120);
+  EXPECT_DOUBLE_EQ(track.front_idler_wheel.z,120);
   EXPECT_DOUBLE_EQ(track.front_idler_wheel.x,121);
   EXPECT_DOUBLE_EQ(track.rear_idler_wheel.radius,122);
+  EXPECT_DOUBLE_EQ(track.rear_idler_wheel.z,122);
   EXPECT_DOUBLE_EQ(track.rear_idler_wheel.x,123);
+  EXPECT_DOUBLE_EQ(track.rollers.radius,123.1);
+  EXPECT_DOUBLE_EQ(track.rollers.x[0],123.2);
+  EXPECT_DOUBLE_EQ(track.rollers.x[1],123.3);
+  EXPECT_DOUBLE_EQ(track.rollers.radius,123.1);
 }
 
 TEST_F(TestMobileBaseGeometryParams, GetWheeledAxleInfo)
@@ -87,18 +102,25 @@ TEST_F(TestMobileBaseGeometryParams, GetWheeledAxleInfo)
   EXPECT_DOUBLE_EQ(axle.wheels.hubCarrierOffset,105);
 }
 
-TEST_F(TestMobileBaseGeometryParams, GetFlatContinuousTrackedAxleInfo)
+TEST_F(TestMobileBaseGeometryParams, GetContinuousTrackedAxleInfo)
 {
   loadYaml(std::string(TEST_DIR)+"/test_mobile_base_geometry_parameters.yaml");
 
-  romea::declare_flat_continuous_tracked_axle_info(node,"tracked_geometry.front_axle");
-  auto axle =romea::get_flat_continuous_tracked_axle_info(node,"tracked_geometry.front_axle");
+  romea::declare_continuous_tracked_axle_info<romea::ContinuousTrack>(node,"tracked_geometry.front_axle");
+  auto axle = romea::get_continuous_tracked_axle_info<romea::ContinuousTrack>(node,"tracked_geometry.front_axle");
   EXPECT_DOUBLE_EQ(axle.tracksDistance,110);
   EXPECT_DOUBLE_EQ(axle.tracks.width,111);
+  EXPECT_DOUBLE_EQ(axle.tracks.thickness,111.5);
   EXPECT_DOUBLE_EQ(axle.tracks.sprocket_wheel.radius,112);
+  EXPECT_DOUBLE_EQ(axle.tracks.sprocket_wheel.z,112);
   EXPECT_DOUBLE_EQ(axle.tracks.sprocket_wheel.x,113);
   EXPECT_DOUBLE_EQ(axle.tracks.idler_wheel.radius,114);
+  EXPECT_DOUBLE_EQ(axle.tracks.idler_wheel.z,114);
   EXPECT_DOUBLE_EQ(axle.tracks.idler_wheel.x,115);
+  EXPECT_DOUBLE_EQ(axle.tracks.rollers.radius,115.1);
+  EXPECT_DOUBLE_EQ(axle.tracks.rollers.z,115.4);
+  EXPECT_DOUBLE_EQ(axle.tracks.rollers.x[0],115.2);
+  EXPECT_DOUBLE_EQ(axle.tracks.rollers.x[1],115.3);
 
 }
 
@@ -106,15 +128,19 @@ TEST_F(TestMobileBaseGeometryParams, GetTriangularContinuousTrackedAxleInfo)
 {
   loadYaml(std::string(TEST_DIR)+"/test_mobile_base_geometry_parameters.yaml");
 
-  romea::declare_triangular_continuous_tracked_axle_info(node,"tracked_geometry.rear_axle");
-  auto axle =romea::get_triangular_continuous_tracked_axle_info(node,"tracked_geometry.rear_axle");
+  romea::declare_continuous_tracked_axle_info<romea::TriangleContinuousTrack>(node,"tracked_geometry.rear_axle");
+  auto axle =romea::get_continuous_tracked_axle_info<romea::TriangleContinuousTrack>(node,"tracked_geometry.rear_axle");
   EXPECT_DOUBLE_EQ(axle.tracksDistance,116);
   EXPECT_DOUBLE_EQ(axle.tracks.width,117);
-  EXPECT_DOUBLE_EQ(axle.tracks.high_sprocket_wheel.radius,118);
-  EXPECT_DOUBLE_EQ(axle.tracks.high_sprocket_wheel.x,119);
+  EXPECT_DOUBLE_EQ(axle.tracks.thickness,117.5);
+  EXPECT_DOUBLE_EQ(axle.tracks.sprocket_wheel.radius,118);
+  EXPECT_DOUBLE_EQ(axle.tracks.sprocket_wheel.x,119);
+  EXPECT_DOUBLE_EQ(axle.tracks.sprocket_wheel.z,119.5);
   EXPECT_DOUBLE_EQ(axle.tracks.front_idler_wheel.radius,120);
+  EXPECT_DOUBLE_EQ(axle.tracks.front_idler_wheel.z,120);
   EXPECT_DOUBLE_EQ(axle.tracks.front_idler_wheel.x,121);
   EXPECT_DOUBLE_EQ(axle.tracks.rear_idler_wheel.radius,122);
+  EXPECT_DOUBLE_EQ(axle.tracks.rear_idler_wheel.z,122);
   EXPECT_DOUBLE_EQ(axle.tracks.rear_idler_wheel.x,123);
 
 }

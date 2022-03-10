@@ -20,22 +20,33 @@ test_mobile_base_geometry_paramerters:
         tracks_distance: 110.
         tracks:
           width: 111.
+          thickness: 111.5
           sprocket_wheel:
             radius: 112.
             x: 113.
           idler_wheel:
             radius: 114.
             x: 115.
+          rollers:
+            radius: 115.1
+            x: [115.2, 115.3]
+            z: 115.4
+
       rear_axle:
         tracks_distance: 116.
         tracks:
           width: 117.
-          high_sprocket_wheel:
+          thickness: 117.5
+          sprocket_wheel:
             radius: 118.
             x: 119.
+            z: 119.5
           front_idler_wheel:
             radius: 120.
             x: 121.
-          rear_axle_idler_wheel:
+          rear_idler_wheel:
             radius: 122.
             x: 123.
+          rollers:
+            radius: 123.1
+            x: [123.2, 123.3]

@@ -5,12 +5,16 @@ test_mobile_base_parameters_2TD :
         tracks_distance: 100.
         tracks:
           width: 102.
+          thickness: 102.5
           sprocket_wheel:
             radius: 103.
             x: 104.
           idler_wheel:
             radius: 105.
             x: 106.
+          rollers:
+            radius: 107.
+            x: [108.,109.]
 
       tracks_speed_control:
          command:
@@ -32,3 +36,16 @@ test_mobile_base_parameters_2TD :
         right_sprocket_wheel_spinning_joint_name: J2
         left_idler_wheel_spinning_joint_name: J3
         right_idler_wheel_spinning_joint_name: J4
+
+      tracks:
+        width: 102.
+        thickness: 102.5
+        sprocket_wheel:
+          radius: 103.
+          x: 104.
+        idler_wheel:
+          radius: 105.
+          x: 106.
+        rollers:
+          radius: 107.
+          x: [108.,109.]

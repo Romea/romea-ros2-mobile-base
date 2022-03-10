@@ -39,6 +39,7 @@ TEST_F(TestMobileBaseParams2TD, checkGetInfo)
   auto base_info = romea::get_mobile_base_info_2TD(node,"base");
   EXPECT_DOUBLE_EQ(base_info.geometry.tracksDistance,100);
   EXPECT_DOUBLE_EQ(base_info.geometry.tracks.width,102);
+  EXPECT_DOUBLE_EQ(base_info.geometry.tracks.thickness,102.5);
   EXPECT_DOUBLE_EQ(base_info.geometry.tracks.sprocket_wheel.radius,103);
   EXPECT_DOUBLE_EQ(base_info.geometry.tracks.sprocket_wheel.x,104);
   EXPECT_DOUBLE_EQ(base_info.geometry.tracks.idler_wheel.radius,105);

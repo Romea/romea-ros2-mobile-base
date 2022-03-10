@@ -5,15 +5,20 @@ test_mobile_base_parameters_2THD :
         tracks_distance: 100.
         tracks:
           width: 102.
-          high_sprocket_wheel:
+          thickness: 102.5
+          sprocket_wheel:
             radius: 103.
             x: 104.
+            z: 104.5
           front_idler_wheel:
             radius: 105.
             x: 106.
           rear_idler_wheel:
             radius: 107.
             x: 108.
+          rollers:
+            radius: 107.
+            x: [108.,109.]
 
       tracks_speed_control:
          command:
@@ -31,8 +36,8 @@ test_mobile_base_parameters_2THD :
       control_point : [500., 501., 502.]
 
       joints:
-        high_left_sprocket_wheel_spinning_joint_name: J1
-        high_right_sprocket_wheel_spinning_joint_name: J2
+        left_sprocket_wheel_spinning_joint_name: J1
+        right_sprocket_wheel_spinning_joint_name: J2
         front_left_idler_wheel_spinning_joint_name: J3
         front_right_idler_wheel_spinning_joint_name: J4
         rear_left_idler_wheel_spinning_joint_name: J5
