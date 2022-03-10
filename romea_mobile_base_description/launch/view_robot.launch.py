@@ -45,7 +45,7 @@ def generate_launch_description():
     robot_description = {"robot_description": robot_description_content}
 
     rviz_config_file = PathJoinSubstitution(
-        [FindPackageShare("romea_odo_description"), "config", "urdf.rviz"]
+        [FindPackageShare("romea_mobile_base_description"), "config", "urdf.rviz"]
     )
 
     joint_state_publisher_node = Node(

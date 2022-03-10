@@ -17,6 +17,6 @@
   <node name="rviz"
         pkg="rviz2"
         exec="rviz2"
-        args="-d $(find-pkg-share romea_odo_description)/config/urdf.rviz prefix:=$(var prefix)"/>
+        args="-d $(find-pkg-share romea_mobile_base_description)/config/urdf.rviz prefix:=$(var prefix)"/>
 
 </launch>
