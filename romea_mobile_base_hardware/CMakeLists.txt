@@ -36,6 +36,9 @@ add_library(${PROJECT_NAME}
  src/hardware_interface2FWS2RWD.cpp
  src/hardware_interface2FWS4WD.cpp
  src/hardware_interface2WD.cpp
+ src/hardware_interface2TD.cpp
+ src/hardware_interface2THD.cpp
+ src/hardware_interface2TTD.cpp
  src/hardware_interface4WD.cpp
  src/hardware_interface4WS4WD.cpp
  src/hardware_system_interface.cpp

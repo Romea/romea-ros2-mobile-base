@@ -19,6 +19,9 @@ const hardware_interface::InterfaceInfo &
 get_state_interface_info(const hardware_interface::ComponentInfo &component_info,
                          const std::string & interface_name);
 
+const std::string & get_parameter(const hardware_interface::HardwareInfo & hardware_info,
+                                  const std::string & parameter_name);
+
 }
 
 #endif

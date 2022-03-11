@@ -94,4 +94,11 @@ get_state_interface_info(const hardware_interface::ComponentInfo & component_inf
 }
 
 
+//-----------------------------------------------------------------------------
+const std::string & get_parameter(const hardware_interface::HardwareInfo & hardware_info,
+                                  const std::string & parameter_name)
+{
+  return hardware_info.hardware_parameters.at(parameter_name);
+}
+
 }
