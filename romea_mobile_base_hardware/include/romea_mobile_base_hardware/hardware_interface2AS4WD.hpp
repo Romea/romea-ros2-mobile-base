@@ -11,6 +11,19 @@ namespace romea
 
 struct HardwareInterface2AS4WD
 {
+  enum JointIds {
+     FRONT_AXLE_STEERING_JOINT_ID=0,
+     REAR_AXLE_STEERING_JOINT_ID=1,
+     FRONT_LEFT_WHEEL_STEERING_JOINT_ID=2,
+     FRONT_RIGHT_WHEEL_STEERING_JOINT_ID=3,
+     REAR_LEFT_WHEEL_STEERING_JOINT_ID=4,
+     REAR_RIGHT_WHEEL_STEERING_JOINT_ID=5,
+     FRONT_LEFT_WHEEL_SPINNING_JOINT_ID=6,
+     FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID=7,
+     REAR_LEFT_WHEEL_SPINNING_JOINT_ID=8,
+     REAR_RIGHT_WHEEL_SPINNING_JOINT_ID=9
+  };
+
   HardwareInterface2AS4WD(const hardware_interface::HardwareInfo & hardware_info,
                           const std::string & spinning_joint_command_interface_type);
 

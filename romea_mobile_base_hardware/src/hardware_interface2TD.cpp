@@ -9,8 +9,8 @@ HardwareInterface2TD::HardwareInterface2TD(
     const std::string & command_interface_type):
   left_sprocket_wheel_spinning_joint(hardware_info.joints[LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID],command_interface_type),
   right_sprocket_wheel_spinning_joint(hardware_info.joints[RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID],command_interface_type),
-  left_idler_wheel_spinning_joint(hardware_info.joints[LEFT_IDLER_WHEEL_SPINNING_JOINT_ID],command_interface_type),
-  right_idler_wheel_spinning_joint(hardware_info.joints[RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID],command_interface_type)
+  left_idler_wheel_spinning_joint_feedback(hardware_info.joints[LEFT_IDLER_WHEEL_SPINNING_JOINT_ID]),
+  right_idler_wheel_spinning_joint_feedback(hardware_info.joints[RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID])
 {
 }
 
@@ -22,8 +22,8 @@ HardwareInterface2TD::export_state_interfaces()
   std::vector<hardware_interface::StateInterface> state_interfaces;
   left_sprocket_wheel_spinning_joint.export_state_interfaces(state_interfaces);
   right_sprocket_wheel_spinning_joint.export_state_interfaces(state_interfaces);
-  left_idler_wheel_spinning_joint.export_state_interfaces(state_interfaces);
-  right_idler_wheel_spinning_joint.export_state_interfaces(state_interfaces);
+  left_idler_wheel_spinning_joint_feedback.export_state_interfaces(state_interfaces);
+  right_idler_wheel_spinning_joint_feedback.export_state_interfaces(state_interfaces);
   return state_interfaces;
 }
 
@@ -34,8 +34,6 @@ HardwareInterface2TD::export_command_interfaces()
   std::vector<hardware_interface::CommandInterface> command_interfaces;
   left_sprocket_wheel_spinning_joint.export_command_interface(command_interfaces);
   right_sprocket_wheel_spinning_joint.export_command_interface(command_interfaces);
-  left_idler_wheel_spinning_joint.export_command_interface(command_interfaces);
-  right_idler_wheel_spinning_joint.export_command_interface(command_interfaces);
   return command_interfaces;
 }
 

@@ -1,5 +1,11 @@
 #include "romea_mobile_base_hardware/hardware_interface1FWS2RWD.hpp"
 
+namespace  {
+const std::string front_wheel_steering_joint_param_name="front_wheel_steering_joint_name";
+const std::string rear_left_wheel_spinning_joint_param_name="rear_left_wheel_spinning_joint_name";
+const std::string rear_right_wheel_spinning_joint_param_name="rear_right_wheel_spinning_joint_name";
+}
+
 namespace romea
 {
 
