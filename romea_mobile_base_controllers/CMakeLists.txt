@@ -37,12 +37,13 @@ add_library(${PROJECT_NAME}
  src/interfaces/controller_interface2FWS2FWD.cpp
  src/interfaces/controller_interface2FWS2RWD.cpp
  src/interfaces/controller_interface2FWS4WD.cpp
+ src/interfaces/controller_interface2TD.cpp
  src/interfaces/controller_interface2WD.cpp
  src/interfaces/controller_interface4WD.cpp
  src/interfaces/controller_interface4WS4WD.cpp
  src/dead_reckoning.cpp
  src/dead_reckoning_publisher.cpp
-
+ src/mobile_base_controller.cpp
  )
 
 ament_target_dependencies(${PROJECT_NAME}

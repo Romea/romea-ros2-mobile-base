@@ -18,10 +18,17 @@ public:
   using LoanedCommandInterfaces = JointControllerInterface::LoanedCommandInterfaces;
   using LoanedStateInterfaces = JointControllerInterface::LoanedStateInterfaces;
 
+  enum JointIds {
+     FRONT_LEFT_WHEEL_STEERING_JOINT_ID,
+     FRONT_RIGHT_WHEEL_STEERING_JOINT_ID,
+     FRONT_LEFT_WHEEL_SPINNING_JOINT_ID,
+     FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID,
+  };
+
 public:
 
   ControllerInterface2FWS2FWD(const MobileBaseInfo2FWS2FWD & mobile_base_info,
-                              const std::map<std::string,std::string> & joint_mappings,
+                              const std::map<int,std::string> & joint_mappings,
                               LoanedCommandInterfaces & loaned_command_interfaces,
                               LoanedStateInterfaces & loaned_state_interfaces);
 
@@ -32,6 +39,12 @@ public:
   std::vector<std::string> getCommandInterfaceNames()const;
 
   std::vector<std::string> getStateInterfaceNames()const;
+
+  static void declare_joints_mapping(std::shared_ptr<rclcpp::Node> node,
+                                     const std::string & parameters_ns);
+
+  static std::map<int,std::string> get_joints_mapping(std::shared_ptr<rclcpp::Node> node,
+                                                      const std::string & parameters_ns);
 
 private :
 
