@@ -1,5 +1,5 @@
-#ifndef _romea_MobileBaseParameters2TD_hpp_
-#define _romea_MobileBaseParameters2TD_hpp_
+#ifndef _romea_MobileBaseParameters2THD_hpp_
+#define _romea_MobileBaseParameters2THD_hpp_
 
 #include <rclcpp/node.hpp>
 #include <romea_core_mobile_base/info/MobileBaseInfo2THD.hpp>

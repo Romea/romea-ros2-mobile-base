@@ -40,10 +40,10 @@ TEST_F(TestMobileBaseParams2TD, checkGetInfo)
   EXPECT_DOUBLE_EQ(base_info.geometry.tracksDistance,100);
   EXPECT_DOUBLE_EQ(base_info.geometry.tracks.width,102);
   EXPECT_DOUBLE_EQ(base_info.geometry.tracks.thickness,102.5);
-  EXPECT_DOUBLE_EQ(base_info.geometry.tracks.sprocket_wheel.radius,103);
-  EXPECT_DOUBLE_EQ(base_info.geometry.tracks.sprocket_wheel.x,104);
-  EXPECT_DOUBLE_EQ(base_info.geometry.tracks.idler_wheel.radius,105);
-  EXPECT_DOUBLE_EQ(base_info.geometry.tracks.idler_wheel.x,106);
+  EXPECT_DOUBLE_EQ(base_info.geometry.tracks.sprocketWheel.radius,103);
+  EXPECT_DOUBLE_EQ(base_info.geometry.tracks.sprocketWheel.x,104);
+  EXPECT_DOUBLE_EQ(base_info.geometry.tracks.idlerWheel.radius,105);
+  EXPECT_DOUBLE_EQ(base_info.geometry.tracks.idlerWheel.x,106);
   EXPECT_DOUBLE_EQ(base_info.tracksSpeedControl.command.maximalSpeed,300);
   EXPECT_DOUBLE_EQ(base_info.tracksSpeedControl.command.maximalAcceleration,301);
   EXPECT_DOUBLE_EQ(base_info.tracksSpeedControl.sensor.speedStd,302);
@@ -58,8 +58,14 @@ TEST_F(TestMobileBaseParams2TD, checkGetInfo)
   EXPECT_DOUBLE_EQ(base_info.controlPoint.z(),502);
 }
 
-TEST_F(TestMobileBaseParams2TD, checkGetJointMappings)
+TEST_F(TestMobileBaseParams2TD, checkGetJointMappingsForTDVehicle)
 {
   romea::declare_joint_mappings_2TD(node,"base.joints");
   auto base_info =romea::get_joint_mappings_2TD(node,"base.joints");
+}
+
+TEST_F(TestMobileBaseParams2TD, checkGetJointMappingsForTTDVehicle)
+{
+  romea::declare_joint_mappings_2TTD(node,"base.joints");
+  auto base_info =romea::get_joint_mappings_2TTD(node,"base.joints");
 }

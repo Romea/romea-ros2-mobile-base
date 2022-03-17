@@ -104,11 +104,11 @@ void write(const HardwareInterface1FAS2RWD & hardware_interface,
 
 //-----------------------------------------------------------------------------
 void read(const GazeboInterface1FAS2RWD & gazebo_interface,
-          const double & front_axle_steering_angle_command,
+          const double & front_axle_steering_angle_state,
           HardwareInterface1FAS2RWD & hardware_interface)
 {
   hardware_interface.front_axle_steering_joint.feedback.
-      set(front_axle_steering_angle_command);
+      set(front_axle_steering_angle_state);
 
   read(gazebo_interface.rear_left_wheel_spinning_joint,
        hardware_interface.rear_left_wheel_spinning_joint);
@@ -141,13 +141,13 @@ void read(const GazeboInterface1FAS2RWD & gazebo_interface,
   double front_right_wheel_steering_angle = gazebo_interface.
       front_right_wheel_spinning_joint.getFeedback().position;
 
-  double front_axle_steering_angle_command = TwoWheelSteeringKinematic::
+  double front_axle_steering_angle_state = TwoWheelSteeringKinematic::
       computeSteeringAngle(front_left_wheel_steering_angle,
                            front_right_wheel_steering_angle,
                            wheelbase,front_track);
 
   read(gazebo_interface,
-       front_axle_steering_angle_command,
+       front_axle_steering_angle_state,
        hardware_interface);
 }
 

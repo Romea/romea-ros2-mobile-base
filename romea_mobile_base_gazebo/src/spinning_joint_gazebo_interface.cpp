@@ -48,7 +48,7 @@ SpinningJointGazeboInterface::Feedback SpinningJointGazeboInterface::getFeedback
 void write(const SpinningJointHardwareInterface & hardware_joint,
            SpinningJointGazeboInterface & gazebo_joint)
 {
-   gazebo_joint.setCommand(hardware_joint.command.get());
+  gazebo_joint.setCommand(hardware_joint.command.get());
 }
 
 //-----------------------------------------------------------------------------
@@ -59,13 +59,89 @@ void read(const SpinningJointGazeboInterface & gazebo_joint,
 }
 
 //-----------------------------------------------------------------------------
+void read(const SpinningJointGazeboInterface::Feedback & gazebo_joint_feed_back,
+          SpinningJointHardwareInterface::Feedback & hardware_joint_feedback)
+{
+  hardware_joint_feedback.position.set(gazebo_joint_feed_back.position);
+  hardware_joint_feedback.velocity.set(gazebo_joint_feed_back.velocity);
+  hardware_joint_feedback.torque.set(gazebo_joint_feed_back.effort);
+}
+
+//-----------------------------------------------------------------------------
 void read(const SpinningJointGazeboInterface & gazebo_joint,
           SpinningJointHardwareInterface::Feedback & hardware_joint_feedback)
 {
-  auto feedback = gazebo_joint.getFeedback();
-  hardware_joint_feedback.position.set(feedback.position);
-  hardware_joint_feedback.velocity.set(feedback.velocity);
-  hardware_joint_feedback.torque.set(feedback.effort);
+  read(gazebo_joint.getFeedback(),hardware_joint_feedback);
+}
+
+
+SpinningJointGazeboInterface::Feedback
+drive_wheel_feedback(const SpinningJointGazeboInterface & drive_wheel_spinning_joint,
+                     const SpinningJointGazeboInterface & idler_wheel_spinning_joint)
+{
+  SpinningJointGazeboInterface::Feedback drive_wheel_feedback =
+      drive_wheel_spinning_joint.getFeedback();
+  SpinningJointGazeboInterface::Feedback idle_wheel_feedback =
+      idler_wheel_spinning_joint.getFeedback();
+
+  if(std::signbit(drive_wheel_feedback.velocity)==
+     std::signbit(idle_wheel_feedback.velocity))
+  {
+    if(std::abs(idle_wheel_feedback.velocity)<
+       std::abs(drive_wheel_feedback.velocity))
+    {
+      drive_wheel_feedback.velocity=idle_wheel_feedback.velocity;
+      drive_wheel_feedback.effort=idle_wheel_feedback.effort;
+    }
+  }
+  else
+  {
+    drive_wheel_feedback.velocity=0;
+    drive_wheel_feedback.effort=0;
+  }
+
+  return drive_wheel_feedback;
+
+}
+
+SpinningJointGazeboInterface::Feedback
+drive_wheel_feedback(const SpinningJointGazeboInterface & high_drive_wheel_spinning_joint,
+                     const SpinningJointGazeboInterface & front_ground_idler_wheel_spinning_joint,
+                     const SpinningJointGazeboInterface & rear_ground_idler_wheel_spinning_joint,
+                     const double & high_wheel_radius,
+                     const double & ground_wheel_radius)
+{
+  const double ratio = ground_wheel_radius/high_wheel_radius;
+
+  SpinningJointGazeboInterface::Feedback high_drive_wheel_feedback=
+      high_drive_wheel_spinning_joint.getFeedback();
+  SpinningJointGazeboInterface::Feedback front_ground_wheel_feedback =
+      front_ground_idler_wheel_spinning_joint.getFeedback();
+  SpinningJointGazeboInterface::Feedback rear_ground_wheel_feedback =
+      rear_ground_idler_wheel_spinning_joint.getFeedback();
+
+  if(std::signbit(front_ground_wheel_feedback.velocity)==
+     std::signbit(rear_ground_wheel_feedback.velocity))
+  {
+    if(std::abs(front_ground_wheel_feedback.velocity)<
+       std::abs(rear_ground_wheel_feedback.velocity))
+    {
+      high_drive_wheel_feedback.velocity=ratio*front_ground_wheel_feedback.velocity;
+      high_drive_wheel_feedback.effort=ratio*front_ground_wheel_feedback.effort;
+    }
+    else
+    {
+      high_drive_wheel_feedback.velocity=ratio*rear_ground_wheel_feedback.velocity;
+      high_drive_wheel_feedback.effort=ratio*rear_ground_wheel_feedback.effort;
+    }
+  }
+  else
+  {
+    high_drive_wheel_feedback.velocity=0;
+    high_drive_wheel_feedback.effort=0;
+  }
+
+  return high_drive_wheel_feedback;
 }
 
 }

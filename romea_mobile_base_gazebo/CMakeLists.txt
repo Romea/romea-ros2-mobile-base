@@ -40,6 +40,9 @@ add_library(${PROJECT_NAME}
  src/gazebo_interface2FWS2RWD.cpp
  src/gazebo_interface2FWS4WD.cpp
  src/gazebo_interface2WD.cpp
+ src/gazebo_interface2TD.cpp
+ src/gazebo_interface2THD.cpp
+ src/gazebo_interface2TTD.cpp
  src/gazebo_interface4WD.cpp
  src/gazebo_interface4WS4WD.cpp
  src/gazebo_system_interface.cpp

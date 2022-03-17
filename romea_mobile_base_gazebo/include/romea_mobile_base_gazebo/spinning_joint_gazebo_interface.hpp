@@ -52,5 +52,19 @@ void read(const SpinningJointGazeboInterface & gazebo_joint,
 void read(const SpinningJointGazeboInterface & gazebo_joint,
           SpinningJointHardwareInterface::Feedback & hardware_joint_feedback);
 
+void read(const SpinningJointGazeboInterface::Feedback & gazebo_joint_feedback,
+          SpinningJointHardwareInterface::Feedback & hardware_joint_feedback);
+
+
+SpinningJointGazeboInterface::Feedback
+drive_wheel_feedback(const SpinningJointGazeboInterface & drive_wheel_spinning_joint,
+                     const SpinningJointGazeboInterface & idler_wheel_spinning_joint);
+
+SpinningJointGazeboInterface::Feedback
+drive_wheel_feedback(const SpinningJointGazeboInterface & high_drive_wheel_spinning_joint,
+                     const SpinningJointGazeboInterface & front_ground_idler_wheel_spinning_joint,
+                     const SpinningJointGazeboInterface & rear_ground_idler_wheel_spinning_joint,
+                     const double & high_wheel_radius,
+                     const double & ground_wheel_radius);
 }
 #endif

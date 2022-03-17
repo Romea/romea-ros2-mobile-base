@@ -15,6 +15,11 @@ const std::string right_sprocket_wheel_spinning_joint_param_name="right_sprocket
 const std::string left_idler_wheel_spinning_joint_param_name="left_idler_wheel_spinning_joint_name";
 const std::string right_idler_wheel_spinning_joint_param_name="right_idler_wheel_spinning_joint_name";
 
+const std::string front_left_roller_wheel_spinning_joint_param_name="front_left_roller_wheel_spinning_joint_name";
+const std::string front_right_roller_wheel_spinning_joint_param_name="front_right_roller_idler_wheel_spinning_joint_name";
+const std::string rear_left_roller_wheel_spinning_joint_param_name="rear_left_roller_wheel_spinning_joint_name";
+const std::string rear_right_roller_wheel_spinning_joint_param_name="rear_right_roller_idler_wheel_spinning_joint_name";
+
 }
 
 namespace romea {
@@ -61,6 +66,36 @@ std::map<std::string,std::string> get_joint_mappings_2TD(std::shared_ptr<rclcpp:
   return joint_mappings;
 }
 
+
+//-----------------------------------------------------------------------------
+void declare_joint_mappings_2TTD(std::shared_ptr<rclcpp::Node> node,
+                                 const std::string & parameters_ns)
+{
+  declare_parameter<std::string>(node,parameters_ns,left_sprocket_wheel_spinning_joint_param_name);
+  declare_parameter<std::string>(node,parameters_ns,right_sprocket_wheel_spinning_joint_param_name);
+  declare_parameter<std::string>(node,parameters_ns,left_idler_wheel_spinning_joint_param_name);
+  declare_parameter<std::string>(node,parameters_ns,right_idler_wheel_spinning_joint_param_name);
+  declare_parameter<std::string>(node,parameters_ns,front_left_roller_wheel_spinning_joint_param_name);
+  declare_parameter<std::string>(node,parameters_ns,front_right_roller_wheel_spinning_joint_param_name);
+  declare_parameter<std::string>(node,parameters_ns,rear_left_roller_wheel_spinning_joint_param_name);
+  declare_parameter<std::string>(node,parameters_ns,rear_right_roller_wheel_spinning_joint_param_name);
+
+}
+
+std::map<std::string,std::string> get_joint_mappings_2TTD(std::shared_ptr<rclcpp::Node> node,
+                                                          const std::string & parameters_ns)
+{
+  std::map<std::string,std::string> joint_mappings;
+  insert_parameter_to_map<std::string>(node,parameters_ns,left_sprocket_wheel_spinning_joint_param_name,joint_mappings);
+  insert_parameter_to_map<std::string>(node,parameters_ns,right_sprocket_wheel_spinning_joint_param_name,joint_mappings);
+  insert_parameter_to_map<std::string>(node,parameters_ns,left_idler_wheel_spinning_joint_param_name,joint_mappings);
+  insert_parameter_to_map<std::string>(node,parameters_ns,right_idler_wheel_spinning_joint_param_name,joint_mappings);
+  insert_parameter_to_map<std::string>(node,parameters_ns,front_left_roller_wheel_spinning_joint_param_name,joint_mappings);
+  insert_parameter_to_map<std::string>(node,parameters_ns,front_right_roller_wheel_spinning_joint_param_name,joint_mappings);
+  insert_parameter_to_map<std::string>(node,parameters_ns,rear_left_roller_wheel_spinning_joint_param_name,joint_mappings);
+  insert_parameter_to_map<std::string>(node,parameters_ns,rear_right_roller_wheel_spinning_joint_param_name,joint_mappings);
+  return joint_mappings;
+}
 
 
 }

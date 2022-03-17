@@ -9,6 +9,7 @@
 #include "mobile_base_parameters2FWS2RWD.hpp"
 #include "mobile_base_parameters2FWS4WD.hpp"
 #include "mobile_base_parameters2TD.hpp"
+#include "mobile_base_parameters2THD.hpp"
 #include "mobile_base_parameters2WD.hpp"
 #include "mobile_base_parameters4WD.hpp"
 #include "mobile_base_parameters4WS4WD.hpp"
