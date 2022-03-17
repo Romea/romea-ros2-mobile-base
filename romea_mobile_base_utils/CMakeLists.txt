@@ -43,7 +43,6 @@ add_library(${PROJECT_NAME}
     src/params/mobile_base_parameters2FWS2RWD.cpp
     src/params/mobile_base_parameters2FWS4WD.cpp
     src/params/mobile_base_parameters2TD.cpp
-    src/params/mobile_base_parameters2THD.cpp
     src/params/mobile_base_parameters2WD.cpp
     src/params/mobile_base_parameters4WD.cpp
     src/params/mobile_base_parameters4WS4WD.cpp

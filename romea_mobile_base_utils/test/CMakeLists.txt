@@ -46,5 +46,5 @@ target_link_libraries(${PROJECT_NAME}_test_mobile_base_parameters_2WD ${PROJECT_
 ament_add_gtest(${PROJECT_NAME}_test_mobile_base_parameters_2TD test_mobile_base_parameters_2TD.cpp)
 target_link_libraries(${PROJECT_NAME}_test_mobile_base_parameters_2TD ${PROJECT_NAME})
 
-ament_add_gtest(${PROJECT_NAME}_test_mobile_base_parameters_2THD test_mobile_base_parameters_2THD.cpp)
-target_link_libraries(${PROJECT_NAME}_test_mobile_base_parameters_2THD ${PROJECT_NAME})
+#ament_add_gtest(${PROJECT_NAME}_test_mobile_base_parameters_2THD test_mobile_base_parameters_2THD.cpp)
+#target_link_libraries(${PROJECT_NAME}_test_mobile_base_parameters_2THD ${PROJECT_NAME})

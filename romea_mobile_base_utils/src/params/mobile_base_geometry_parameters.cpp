@@ -4,6 +4,7 @@
 
 namespace
 {
+
 const std::string radius_param_name="radius";
 const std::string width_param_name="width";
 const std::string hub_carrier_offset_param_name="hub_carrier_offset";
@@ -29,20 +30,112 @@ const std::string front_axle_param_name="front_axle";
 const std::string rear_axle_param_name="rear_axle";
 const std::string axle_distance_param_name="axles_distance";
 
-void declare_continuous_track_common_info(std::shared_ptr<rclcpp::Node> node,
-                                          const std::string & parameters_ns)
+//-----------------------------------------------------------------------------
+void declare_track_wheel_info(std::shared_ptr<rclcpp::Node> node,
+                              const std::string & parameters_ns)
 {
-  romea::declare_parameter<double>(node,parameters_ns,width_param_name);
-  romea::declare_parameter<double>(node,parameters_ns,thickness_param_name);
-  romea::declare_track_wheels_info(node,romea::full_param_name(parameters_ns,rollers_param_name));
+  romea::declare_parameter<double>(node,parameters_ns,radius_param_name);
+  romea::declare_parameter<double>(node,parameters_ns,x_param_name);
+  romea::declare_parameter_with_default<double>(node,parameters_ns,z_param_name,std::numeric_limits<double>::quiet_NaN());
 }
 
-romea::ContinuousTrackBase get_continuous_track_common_info(std::shared_ptr<rclcpp::Node> node,
-                                                            const std::string & parameters_ns)
+//-----------------------------------------------------------------------------
+void try_declare_track_wheel_info(std::shared_ptr<rclcpp::Node> node,
+                                  const std::string & parameters_ns)
 {
-  return {romea::get_parameter<double>(node,parameters_ns,width_param_name),
-        romea::get_parameter<double>(node,parameters_ns,thickness_param_name),
-        romea::get_track_wheels_info(node,romea::full_param_name(parameters_ns,rollers_param_name))};
+  try {
+    declare_track_wheel_info(node,parameters_ns);
+  }
+  catch (...)
+  {
+  }
+}
+
+//-----------------------------------------------------------------------------
+void declare_track_idlers_info(std::shared_ptr<rclcpp::Node> node,
+                               const std::string & parameters_ns)
+{
+  try_declare_track_wheel_info(node,romea::full_param_name(parameters_ns,idler_wheel_param_name));
+  try_declare_track_wheel_info(node,romea::full_param_name(parameters_ns,front_idler_wheel_param_name));
+  try_declare_track_wheel_info(node,romea::full_param_name(parameters_ns,rear_idler_wheel_param_name));
+}
+
+//-----------------------------------------------------------------------------
+void declare_track_rollers_info(std::shared_ptr<rclcpp::Node> node,
+                                const std::string & parameters_ns)
+{
+  romea::declare_parameter<double>(node,parameters_ns,radius_param_name);
+  romea::declare_vector_parameter<double>(node,parameters_ns,x_param_name);
+  romea::declare_parameter_with_default<double>(node,parameters_ns,z_param_name,std::numeric_limits<double>::quiet_NaN());
+}
+
+//-----------------------------------------------------------------------------
+romea::TrackWheel get_track_wheel_info(std::shared_ptr<rclcpp::Node> node,
+                                       const std::string & parameters_ns)
+{
+  auto radius = romea::get_parameter<double>(node,parameters_ns,radius_param_name);
+  auto x = romea::get_parameter<double>(node,parameters_ns,x_param_name);
+  auto z = romea::get_parameter<double>(node,parameters_ns,z_param_name);
+  z = std::isfinite(z) ? z : radius;
+  return {radius,x,z};
+}
+
+//-----------------------------------------------------------------------------
+std::optional<romea::TrackWheel> try_get_track_wheel_info(std::shared_ptr<rclcpp::Node> node,
+                                                          const std::string & parameters_ns)
+{
+  try
+  {
+    return get_track_wheel_info(node,parameters_ns);
+  }
+  catch (...)
+  {
+    return {};
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+std::vector<romea::TrackWheel> get_track_idlers_info(std::shared_ptr<rclcpp::Node> node,
+                                                     const std::string & parameters_ns)
+{
+  auto idler_wheel = try_get_track_wheel_info(
+        node,romea::full_param_name(parameters_ns,idler_wheel_param_name));
+
+  if(idler_wheel)
+  {
+    return {*idler_wheel};
+  }
+
+  auto front_idler_wheel = try_get_track_wheel_info(
+        node,romea::full_param_name(parameters_ns,front_idler_wheel_param_name));
+  auto rear_idler_wheel = try_get_track_wheel_info(
+        node,romea::full_param_name(parameters_ns,rear_idler_wheel_param_name));
+
+  if( front_idler_wheel &&  rear_idler_wheel)
+  {
+    return {*front_idler_wheel,*rear_idler_wheel};
+  }
+
+  return {};
+}
+
+//-----------------------------------------------------------------------------
+std::vector<romea::TrackWheel> get_track_rollers_info(std::shared_ptr<rclcpp::Node> node,
+                                                      const std::string & parameters_ns)
+{
+  auto radius =romea::get_parameter<double>(node,parameters_ns,radius_param_name);
+  auto x_vector = romea::get_vector_parameter<double>(node,parameters_ns,x_param_name);
+  auto z = romea::get_parameter<double>(node,parameters_ns,z_param_name);
+  z=  std::isfinite(z) ? z : radius;
+
+  std::vector<romea::TrackWheel> roller_wheels;
+  for(const double & x : x_vector)
+  {
+    romea::TrackWheel wheel = {radius,x,z};
+    roller_wheels.push_back(wheel);
+  }
+  return roller_wheels;
 }
 
 }
@@ -56,8 +149,7 @@ void declare_wheel_info(std::shared_ptr<rclcpp::Node> node,
 {
   declare_parameter<double>(node,parameters_ns,radius_param_name);
   declare_parameter<double>(node,parameters_ns,width_param_name);
-  declare_parameter_with_default<double>(
-        node,parameters_ns,hub_carrier_offset_param_name,0.0);
+  declare_parameter_with_default<double>(node,parameters_ns,hub_carrier_offset_param_name,0.0);
 }
 
 //-----------------------------------------------------------------------------
@@ -67,90 +159,28 @@ Wheel get_wheel_info(std::shared_ptr<rclcpp::Node> node,
   return {get_parameter<double>(node,parameters_ns,radius_param_name),
         get_parameter<double>(node,parameters_ns,width_param_name),
         get_parameter<double>(node,parameters_ns,hub_carrier_offset_param_name)};
-
-}
-
-
-//-----------------------------------------------------------------------------
-void declare_track_wheel_info(std::shared_ptr<rclcpp::Node> node,
-                              const std::string & parameters_ns)
-{
-  declare_parameter<double>(node,parameters_ns,radius_param_name);
-  declare_parameter<double>(node,parameters_ns,x_param_name);
-  declare_parameter_with_default<double>(node,parameters_ns,z_param_name,std::numeric_limits<double>::quiet_NaN());
 }
 
 //-----------------------------------------------------------------------------
-TrackWheel get_track_wheel_info(std::shared_ptr<rclcpp::Node> node,
-                                const std::string & parameters_ns)
+void declare_continuous_track_info(std::shared_ptr<rclcpp::Node> node,
+                                   const std::string & parameters_ns)
 {
-  auto radius = get_parameter<double>(node,parameters_ns,radius_param_name);
-  auto x = get_parameter<double>(node,parameters_ns,x_param_name);
-  auto z = get_parameter<double>(node,parameters_ns,z_param_name);
-  return {radius,x,std::isfinite(z) ? z : radius};
-}
-
-
-//-----------------------------------------------------------------------------
-void declare_track_wheels_info(std::shared_ptr<rclcpp::Node> node,
-                               const std::string & parameters_ns)
-{
-  declare_parameter<double>(node,parameters_ns,radius_param_name);
-  declare_vector_parameter<double>(node,parameters_ns,x_param_name);
-  declare_parameter_with_default<double>(node,parameters_ns,z_param_name,std::numeric_limits<double>::quiet_NaN());
-}
-
-//-----------------------------------------------------------------------------
-TrackWheels get_track_wheels_info(std::shared_ptr<rclcpp::Node> node,
-                                  const std::string & parameters_ns)
-{
-  auto radius = get_parameter<double>(node,parameters_ns,radius_param_name);
-  auto x = get_vector_parameter<double>(node,parameters_ns,x_param_name);
-  auto z = get_parameter<double>(node,parameters_ns,z_param_name);
-  return {radius,x,std::isfinite(z) ? z : radius};
-}
-
-
-//-----------------------------------------------------------------------------
-template<>
-void declare_continuous_track_info<ContinuousTrack>(std::shared_ptr<rclcpp::Node> node,
-                                                    const std::string & parameters_ns)
-{
-  declare_continuous_track_common_info(node,parameters_ns);
+  declare_parameter<double>(node,parameters_ns,width_param_name);
+  declare_parameter<double>(node,parameters_ns,thickness_param_name);
   declare_track_wheel_info(node,full_param_name(parameters_ns,sprocket_wheel_param_name));
-  declare_track_wheel_info(node,full_param_name(parameters_ns,idler_wheel_param_name));
+  declare_track_idlers_info(node,parameters_ns);
+  declare_track_rollers_info(node,full_param_name(parameters_ns,rollers_param_name));
 }
 
 //-----------------------------------------------------------------------------
-template<>
-ContinuousTrack get_continuous_track_info<ContinuousTrack>(std::shared_ptr<rclcpp::Node> node,
-                                                           const std::string & parameters_ns)
+ContinuousTrack get_continuous_track_info(std::shared_ptr<rclcpp::Node> node,
+                                          const std::string & parameters_ns)
 {
-  return {get_continuous_track_common_info(node,parameters_ns),
+  return {get_parameter<double>(node,parameters_ns,width_param_name),
+        get_parameter<double>(node,parameters_ns,thickness_param_name),
         get_track_wheel_info(node,full_param_name(parameters_ns,sprocket_wheel_param_name)),
-        get_track_wheel_info(node,full_param_name(parameters_ns,idler_wheel_param_name))};
-}
-
-//-----------------------------------------------------------------------------
-template<>
-void declare_continuous_track_info<TriangleContinuousTrack>(std::shared_ptr<rclcpp::Node> node,
-                                                            const std::string & parameters_ns)
-{
-  declare_continuous_track_common_info(node,parameters_ns);
-  declare_track_wheel_info(node,full_param_name(parameters_ns,sprocket_wheel_param_name));
-  declare_track_wheel_info(node,full_param_name(parameters_ns,front_idler_wheel_param_name));
-  declare_track_wheel_info(node,full_param_name(parameters_ns,rear_idler_wheel_param_name));
-}
-
-//-----------------------------------------------------------------------------
-template<>
-TriangleContinuousTrack get_continuous_track_info<TriangleContinuousTrack>(std::shared_ptr<rclcpp::Node> node,
-                                                                           const std::string & parameters_ns)
-{
-  return {get_continuous_track_common_info(node,parameters_ns),
-        get_track_wheel_info(node,full_param_name(parameters_ns,sprocket_wheel_param_name)),
-        get_track_wheel_info(node,full_param_name(parameters_ns,front_idler_wheel_param_name)),
-        get_track_wheel_info(node,full_param_name(parameters_ns,rear_idler_wheel_param_name))};
+        get_track_idlers_info(node,parameters_ns),
+        get_track_rollers_info(node,full_param_name(parameters_ns,rollers_param_name))};
 }
 
 //-----------------------------------------------------------------------------
@@ -170,21 +200,19 @@ WheeledAxle get_wheeled_axle_info(std::shared_ptr<rclcpp::Node> node,
 }
 
 //-----------------------------------------------------------------------------
-template <typename Track>
 void declare_continuous_tracked_axle_info(std::shared_ptr<rclcpp::Node> node,
                                           const std::string & parameters_ns)
 {
   declare_parameter<double>(node,parameters_ns,tracks_distance_param_name);
-  declare_continuous_track_info<Track>(node,full_param_name(parameters_ns,tracks_param_name));
+  declare_continuous_track_info(node,full_param_name(parameters_ns,tracks_param_name));
 }
 
 //-----------------------------------------------------------------------------
-template <typename Track>
-ContinuousTrackedAxle<Track> get_continuous_tracked_axle_info(std::shared_ptr<rclcpp::Node> node,
-                                                              const std::string & parameters_ns)
+ContinuousTrackedAxle get_continuous_tracked_axle_info(std::shared_ptr<rclcpp::Node> node,
+                                                       const std::string & parameters_ns)
 {
   return {get_parameter<double>(node,parameters_ns,tracks_distance_param_name),
-        get_continuous_track_info<Track>(node,full_param_name(parameters_ns,tracks_param_name))};
+        get_continuous_track_info(node,full_param_name(parameters_ns,tracks_param_name))};
 }
 
 //-----------------------------------------------------------------------------
@@ -210,11 +238,5 @@ TwoWheeledAxles get_two_wheeled_axles_info(std::shared_ptr<rclcpp::Node> node,
         get_wheeled_axle_info(node,full_param_name(parameters_ns,rear_axle_param_name))};
 
 }
-
-
-template void declare_continuous_tracked_axle_info<ContinuousTrack>(std::shared_ptr<rclcpp::Node> node,const std::string & parameters_ns);
-template void declare_continuous_tracked_axle_info<TriangleContinuousTrack>(std::shared_ptr<rclcpp::Node> node,const std::string & parameters_ns);
-template ContinuousTrackedAxle<ContinuousTrack> get_continuous_tracked_axle_info<ContinuousTrack>(std::shared_ptr<rclcpp::Node> node,const std::string & parameters_ns);
-template ContinuousTrackedAxle<TriangleContinuousTrack> get_continuous_tracked_axle_info<TriangleContinuousTrack>(std::shared_ptr<rclcpp::Node> node,const std::string & parameters_ns);
 
 }

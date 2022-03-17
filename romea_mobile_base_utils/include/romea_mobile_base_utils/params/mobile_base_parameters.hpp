@@ -38,8 +38,6 @@ void declare_mobile_base_info(std::shared_ptr<rclcpp::Node> node,
       declare_mobile_base_info_2FWS4WD(node,parameters_ns);
   else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo2TD>)
       declare_mobile_base_info_2TD(node,parameters_ns);
-  else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo2THD>)
-      declare_mobile_base_info_2THD(node,parameters_ns);
   else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo2WD>)
       declare_mobile_base_info_2WD(node,parameters_ns);
   else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo4WD>)
@@ -70,8 +68,6 @@ MobileBaseInfo get_mobile_base_info(std::shared_ptr<rclcpp::Node> node,
       return get_mobile_base_info_2FWS4WD(node,parameters_ns);
   else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo2TD>)
       return get_mobile_base_info_2TD(node,parameters_ns);
-  else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo2THD>)
-      return get_mobile_base_info_2THD(node,parameters_ns);
   else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo2WD>)
       return get_mobile_base_info_2WD(node,parameters_ns);
   else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo4WD>)
