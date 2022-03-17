@@ -9,9 +9,8 @@ namespace romea {
 void declare_mobile_base_info_4WS4WD(std::shared_ptr<rclcpp::Node> node,
                                      const std::string & parameters_ns);
 
-void get_mobile_base_info_4WS4WD(std::shared_ptr<rclcpp::Node> node,
-                                 const std::string & parameters_ns,
-                                 MobileBaseInfo4WS4WD & mobile_base_info);
+MobileBaseInfo4WS4WD get_mobile_base_info_4WS4WD(std::shared_ptr<rclcpp::Node> node,
+                                                 const std::string & parameters_ns);
 
 void declare_joint_mappings_4WS4WD(std::shared_ptr<rclcpp::Node> node,
                                    const std::string & parameters_ns);

@@ -55,29 +55,29 @@ MobileBaseInfo get_mobile_base_info(std::shared_ptr<rclcpp::Node> node,
                                     const std::string & parameters_ns)
 {
   if constexpr(std::is_same_v<MobileBaseInfo,MobileBaseInfo1FAS2FWD>)
-      get_mobile_base_info_1FAS2FWD(node,parameters_ns);
+      return get_mobile_base_info_1FAS2FWD(node,parameters_ns);
   else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo1FAS2RWD>)
-      get_mobile_base_info_1FAS2RWD(node,parameters_ns);
+      return get_mobile_base_info_1FAS2RWD(node,parameters_ns);
   else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo1FWS2RWD>)
-      get_mobile_base_info_1FWS2RWD(node,parameters_ns);
+      return get_mobile_base_info_1FWS2RWD(node,parameters_ns);
   else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo2AS4WD>)
-      get_mobile_base_info_2AS4WD(node,parameters_ns);
+      return get_mobile_base_info_2AS4WD(node,parameters_ns);
   else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo2FWS2FWD>)
-      get_mobile_base_info_2FWS2FWD(node,parameters_ns);
+      return get_mobile_base_info_2FWS2FWD(node,parameters_ns);
   else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo2FWS2RWD>)
-      get_mobile_base_info_2FWS2RWD(node,parameters_ns);
+      return get_mobile_base_info_2FWS2RWD(node,parameters_ns);
   else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo2FWS4WD>)
-      get_mobile_base_info_2FWS4WD(node,parameters_ns);
+      return get_mobile_base_info_2FWS4WD(node,parameters_ns);
   else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo2TD>)
-      get_mobile_base_info_2TD(node,parameters_ns);
+      return get_mobile_base_info_2TD(node,parameters_ns);
   else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo2THD>)
-      get_mobile_base_info_2THD(node,parameters_ns);
+      return get_mobile_base_info_2THD(node,parameters_ns);
   else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo2WD>)
-      get_mobile_base_info_2WD(node,parameters_ns);
+      return get_mobile_base_info_2WD(node,parameters_ns);
   else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo4WD>)
-      get_mobile_base_info_4WD(node,parameters_ns);
+      return get_mobile_base_info_4WD(node,parameters_ns);
   else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo4WS4WD>)
-      declare_mobile_base_info_4WS4WD(node,parameters_ns);
+      return get_mobile_base_info_4WS4WD(node,parameters_ns);
 
 }
 

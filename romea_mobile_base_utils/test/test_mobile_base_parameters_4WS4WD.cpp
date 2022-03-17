@@ -35,9 +35,8 @@ protected:
 
 TEST_F(TestMobileBaseParams4WS4WD, checkGetInfo)
 {
-  romea::MobileBaseInfo4WS4WD base_info;
   romea::declare_mobile_base_info_4WS4WD(node,"base");
-  romea::get_mobile_base_info_4WS4WD(node,"base",base_info);
+  auto base_info = romea::get_mobile_base_info_4WS4WD(node,"base");
 
   EXPECT_DOUBLE_EQ(base_info.geometry.axlesDistance,101);
   EXPECT_DOUBLE_EQ(base_info.geometry.frontAxle.wheelsDistance,102);

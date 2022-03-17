@@ -25,43 +25,23 @@ const std::string rear_right_wheel_spinning_joint_param_name="rear_right_wheel_s
 namespace romea {
 
 void declare_mobile_base_info_4WS4WD(std::shared_ptr<rclcpp::Node> node,
-                                      const std::string & parameters_ns)
+                                     const std::string & parameters_ns)
 {
-  declare_two_wheeled_axles_info(
-        node,full_param_name(parameters_ns,geometry_param_name));
-
-  declare_steering_angle_control_info(
-        node,full_param_name(parameters_ns,wheels_steering_control_param_name));
-
-  declare_wheel_speed_control_info(
-        node,full_param_name(parameters_ns,wheels_speed_control_param_name));
-
-  declare_inertia_info(
-        node,full_param_name(parameters_ns,inertia_param_name));
-
-  declare_eigen_vector_parameter<Eigen::Vector3d>(
-        node,parameters_ns,control_point_param_name);
+  declare_two_wheeled_axles_info(node,full_param_name(parameters_ns,geometry_param_name));
+  declare_steering_angle_control_info(node,full_param_name(parameters_ns,wheels_steering_control_param_name));
+  declare_wheel_speed_control_info(node,full_param_name(parameters_ns,wheels_speed_control_param_name));
+  declare_inertia_info(node,full_param_name(parameters_ns,inertia_param_name));
+  declare_eigen_vector_parameter<Eigen::Vector3d>(node,parameters_ns,control_point_param_name);
 }
 
-void get_mobile_base_info_4WS4WD(std::shared_ptr<rclcpp::Node> node,
-                                  const std::string & parameters_ns,
-                                  MobileBaseInfo4WS4WD & mobile_base_info)
+MobileBaseInfo4WS4WD get_mobile_base_info_4WS4WD(std::shared_ptr<rclcpp::Node> node,
+                                                 const std::string & parameters_ns)
 {
-  mobile_base_info.geometry= get_two_wheeled_axles_info(
-        node,full_param_name(parameters_ns,geometry_param_name));
-
-  mobile_base_info.wheelsSteeringControl = get_steering_angle_control_info(
-        node,full_param_name(parameters_ns,wheels_steering_control_param_name));
-
-  mobile_base_info.wheelsSpeedControl = get_wheel_speed_control_info(
-        node,full_param_name(parameters_ns,wheels_speed_control_param_name));
-
-  mobile_base_info.inertia = get_inertia_info(
-        node,full_param_name(parameters_ns,inertia_param_name));
-
-  mobile_base_info.controlPoint = get_eigen_vector_parameter<Eigen::Vector3d>(
-        node,parameters_ns,control_point_param_name);
-
+  return {get_two_wheeled_axles_info(node,full_param_name(parameters_ns,geometry_param_name)),
+    get_steering_angle_control_info(node,full_param_name(parameters_ns,wheels_steering_control_param_name)),
+    get_wheel_speed_control_info(node,full_param_name(parameters_ns,wheels_speed_control_param_name)),
+    get_inertia_info(node,full_param_name(parameters_ns,inertia_param_name)),
+    get_eigen_vector_parameter<Eigen::Vector3d>(node,parameters_ns,control_point_param_name)};
 }
 
 //-----------------------------------------------------------------------------
