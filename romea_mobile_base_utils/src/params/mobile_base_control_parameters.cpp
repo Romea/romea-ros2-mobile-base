@@ -36,10 +36,10 @@ void declare_steering_angle_control_info(std::shared_ptr<rclcpp::Node> node,
 SteeringAngleControl get_steering_angle_control_info(std::shared_ptr<rclcpp::Node> node,
                                                      const std::string & parameters_ns)
 {
-  return {get_parameter<double>(node,parameters_ns,sensor_angle_std_param_name),
-        get_parameter<double>(node,parameters_ns,sensor_angle_range_param_name),
-        get_parameter<double>(node,parameters_ns,command_maximal_angle_param_name),
-        get_parameter<double>(node,parameters_ns,command_maximal_angular_speed_param_name)};
+  return {{get_parameter<double>(node,parameters_ns,sensor_angle_std_param_name),
+        get_parameter<double>(node,parameters_ns,sensor_angle_range_param_name)},
+        {get_parameter<double>(node,parameters_ns,command_maximal_angle_param_name),
+        get_parameter<double>(node,parameters_ns,command_maximal_angular_speed_param_name)}};
 
 }
 
@@ -63,10 +63,10 @@ void declare_wheel_speed_control_info(std::shared_ptr<rclcpp::Node> node,
 WheelSpeedControl get_wheel_speed_control_info(std::shared_ptr<rclcpp::Node> node,
                                                const std::string & parameters_ns)
 {
-  return {get_parameter<double>(node,parameters_ns,sensor_speed_std_param_name),
-        get_parameter<double>(node,parameters_ns,sensor_speed_range_param_name),
-        get_parameter<double>(node,parameters_ns,command_maximal_speed_param_name),
-        get_parameter<double>(node,parameters_ns,command_maximal_acceleration_param_name)};
+  return {{get_parameter<double>(node,parameters_ns,sensor_speed_std_param_name),
+        get_parameter<double>(node,parameters_ns,sensor_speed_range_param_name)},
+        {get_parameter<double>(node,parameters_ns,command_maximal_speed_param_name),
+        get_parameter<double>(node,parameters_ns,command_maximal_acceleration_param_name)}};
 
 }
 

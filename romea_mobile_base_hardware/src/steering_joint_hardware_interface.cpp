@@ -20,6 +20,12 @@ void SteeringJointHardwareInterface::export_command_interface(
   command.export_interface(command_interfaces);
 }
 
+//-----------------------------------------------------------------------------
+void SteeringJointHardwareInterface::export_state_interface(
+    std::vector<hardware_interface::StateInterface> & state_interfaces)
+{
+  feedback.export_interface(state_interfaces);
+}
 
 
 }

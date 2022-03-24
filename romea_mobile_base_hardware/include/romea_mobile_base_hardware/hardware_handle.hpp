@@ -19,6 +19,10 @@ public:
   HardwareCommandInterface(const hardware_interface::ComponentInfo & joint_info,
                            const std::string & interface_type);
 
+  HardwareCommandInterface(const hardware_interface::InterfaceInfo & joint_info,
+                           const std::string & joint_name);
+
+
   void export_interface(std::vector<hardware_interface::CommandInterface> & hardware_interfaces);
 
   const std::string & get_interface_type() const;
@@ -45,6 +49,9 @@ public:
 
   HardwareStateInterface(const hardware_interface::ComponentInfo &joint_info,
                          const std::string & interface_type);
+
+  HardwareStateInterface(const hardware_interface::InterfaceInfo & interface_info,
+                         const std::string & joint_name);
 
   void export_interface(std::vector<hardware_interface::StateInterface> & state_interfaces);
 

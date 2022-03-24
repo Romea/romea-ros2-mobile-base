@@ -8,7 +8,8 @@ template <typename HardwareInterface>
 HardwareSystemInterface<HardwareInterface>::HardwareSystemInterface():
   hardware_interface_(nullptr)
 {
-
+  RCLCPP_FATAL_STREAM(rclcpp::get_logger("HardwareSystemInterface"),"HardwareSystemInterface");
+  std::cout << " HardwareSystemInterface "<< std::endl;
 }
 
 //-----------------------------------------------------------------------------
@@ -36,14 +37,14 @@ CallbackReturn HardwareSystemInterface<HardwareInterface>::on_init(const hardwar
 
 //-----------------------------------------------------------------------------
 template <typename HardwareInterface>
-CallbackReturn on_activate(const rclcpp_lifecycle::State & /*previous_state*/)
+CallbackReturn HardwareSystemInterface<HardwareInterface>::on_activate(const rclcpp_lifecycle::State & /*previous_state*/)
 {
   return CallbackReturn::SUCCESS;
 }
 
 //-----------------------------------------------------------------------------
 template <typename HardwareInterface>
-CallbackReturn on_deactivate(const rclcpp_lifecycle::State & /*previous_state*/)
+CallbackReturn HardwareSystemInterface<HardwareInterface>::on_deactivate(const rclcpp_lifecycle::State & /*previous_state*/)
 {
   return CallbackReturn::SUCCESS;
 }

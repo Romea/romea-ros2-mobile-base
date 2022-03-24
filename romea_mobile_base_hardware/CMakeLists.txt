@@ -25,7 +25,7 @@ find_package(romea_common_utils REQUIRED)
 find_package(romea_mobile_base_utils REQUIRED)
 find_package(hardware_interface REQUIRED)
 
-add_library(${PROJECT_NAME}
+add_library(${PROJECT_NAME} SHARED
  src/hardware_handle.cpp
  src/hardware_info.cpp
  src/hardware_interface1FAS2FWD.cpp
@@ -90,13 +90,13 @@ install(
 
 #install(TARGETS ${PROJECT_NAME}_node DESTINATION lib/${PROJECT_NAME})
 
-#if(BUILD_TESTING)
+if(BUILD_TESTING)
 
-#    find_package(ament_lint_auto REQUIRED)
-#    ament_lint_auto_find_test_dependencies()
-#    add_subdirectory(test)
+    find_package(ament_lint_auto REQUIRED)
+    ament_lint_auto_find_test_dependencies()
+    add_subdirectory(test)
 
-#endif()
+endif()
 
 ament_package()
 

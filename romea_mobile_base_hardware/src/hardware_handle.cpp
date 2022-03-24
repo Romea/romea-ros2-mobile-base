@@ -5,15 +5,22 @@ namespace romea
 {
 
 //-----------------------------------------------------------------------------
+HardwareCommandInterface::HardwareCommandInterface(const hardware_interface::InterfaceInfo & interface_info,
+                                                   const std::string & joint_name):
+  command_(0.0),
+  command_min_(romea::get_min(interface_info)),
+  command_max_(romea::get_max(interface_info)),
+  joint_name_(joint_name),
+  interface_type_(interface_info.name)
+{
+
+}
+
+//-----------------------------------------------------------------------------
 HardwareCommandInterface::HardwareCommandInterface(const hardware_interface::ComponentInfo &joint_info,
                                                    const std::string & interface_type):
-  command_(std::numeric_limits<double>::quiet_NaN()),
-  command_min_(-std::numeric_limits<double>::max()),
-  command_max_( std::numeric_limits<double>::max()),
-  joint_name_(joint_info.name),
-  interface_type_(interface_type)
+  HardwareCommandInterface(get_command_interface_info(joint_info,interface_type),joint_info.name)
 {
-  //TODO initialize
 }
 
 //-----------------------------------------------------------------------------
@@ -45,14 +52,23 @@ const std::string & HardwareCommandInterface::get_joint_name() const
 //-----------------------------------------------------------------------------
 HardwareStateInterface::HardwareStateInterface(const hardware_interface::ComponentInfo & joint_info,
                                                const std::string & interface_type):
-  state_(std::numeric_limits<double>::quiet_NaN()),
-  state_min_(-std::numeric_limits<double>::max()),
-  state_max_( std::numeric_limits<double>::max()),
-  joint_name_(joint_info.name),
-  interface_type_(interface_type)
+  HardwareStateInterface(get_state_interface_info(joint_info,interface_type),joint_info.name)
 {
-  //TODO initialize
 }
+
+//-----------------------------------------------------------------------------
+HardwareStateInterface::HardwareStateInterface(const hardware_interface::InterfaceInfo & interface_info,
+                                               const std::string & joint_name):
+  state_(0.0),
+  state_min_(romea::get_min(interface_info)),
+  state_max_(romea::get_max(interface_info)),
+  joint_name_(joint_name),
+  interface_type_(interface_info.name)
+
+{
+
+}
+
 
 //-----------------------------------------------------------------------------
 void HardwareStateInterface::set(const double & state)

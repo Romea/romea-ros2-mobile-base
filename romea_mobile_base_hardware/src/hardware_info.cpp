@@ -95,10 +95,45 @@ get_state_interface_info(const hardware_interface::ComponentInfo & component_inf
 
 
 //-----------------------------------------------------------------------------
+bool has_parameter(const hardware_interface::HardwareInfo & hardware_info,
+                   const std::string & parameter_name)
+{
+  return hardware_info.hardware_parameters.find(parameter_name)!=
+      hardware_info.hardware_parameters.end();
+}
+
+//-----------------------------------------------------------------------------
 const std::string & get_parameter(const hardware_interface::HardwareInfo & hardware_info,
                                   const std::string & parameter_name)
 {
   return hardware_info.hardware_parameters.at(parameter_name);
 }
+
+//-----------------------------------------------------------------------------
+double get_min(const hardware_interface::InterfaceInfo & interface_info)
+{
+  if(!interface_info.min.empty())
+  {
+    return std::stod(interface_info.min);
+  }
+  else
+  {
+    return -std::numeric_limits<double>::max();
+  }
+}
+
+//-----------------------------------------------------------------------------
+double get_max(const hardware_interface::InterfaceInfo & interface_info)
+{
+  if(!interface_info.max.empty())
+  {
+    return std::stod(interface_info.min);
+  }
+  else
+  {
+    return std::numeric_limits<double>::max();
+  }
+}
+
 
 }
