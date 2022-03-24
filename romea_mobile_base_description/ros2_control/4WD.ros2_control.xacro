@@ -1,13 +1,14 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:macro name="base_control" params="use_sim">
+  <xacro:macro name="base_control" params="use_sim:=true">
 
     <ros2_control name="${prefix}base" type="system">
 
-        <xacro:if value="$(arg use_sim)">
+        <xacro:if value="${use_sim}">
             <hardware>
-              <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+<!--              <plugin>gazebo_ros2_control/GazeboSystem</plugin>-->
+              <plugin>romea_mobile_base_gazebo/GazeboSystemInterface4WD</plugin>
             </hardware>
          </xacro:if>
 

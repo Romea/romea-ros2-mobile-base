@@ -19,6 +19,7 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(rclcpp_lifecycle REQUIRED)
 find_package(romea_core_common REQUIRED)
 find_package(romea_core_mobile_base REQUIRED)
 find_package(romea_common_utils REQUIRED)
@@ -29,7 +30,7 @@ find_package(gazebo_ros REQUIRED)
 find_package(gazebo_ros2_control REQUIRED)
 find_package(hardware_interface REQUIRED)
 
-add_library(${PROJECT_NAME}
+add_library(${PROJECT_NAME} SHARED
  src/spinning_joint_gazebo_interface.cpp
  src/steering_joint_gazebo_interface.cpp
  src/gazebo_interface1FAS2FWD.cpp
@@ -59,6 +60,7 @@ ament_target_dependencies(${PROJECT_NAME}
  gazebo_ros
  gazebo_ros2_control
  hardware_interface
+ rclcpp_lifecycle
  )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
@@ -66,6 +68,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC
  $<INSTALL_INTERFACE:include>)
 
 
+ament_export_dependencies(rclcpp)
+ament_export_dependencies(rclcpp_lifecycle)
 ament_export_dependencies(romea_core_common)
 ament_export_dependencies(romea_core_mobile_base)
 ament_export_dependencies(romea_common_utils)
@@ -78,7 +82,7 @@ ament_export_dependencies(hardware_interface)
 
 ament_export_include_directories(include)
 ament_export_libraries(${PROJECT_NAME})
-#ament_export_targets(${PROJECT_NAME})
+ament_export_targets(export_${PROJECT_NAME})
 
 install(TARGETS
  ${PROJECT_NAME}
@@ -100,13 +104,15 @@ install(
 
 #install(TARGETS ${PROJECT_NAME}_node DESTINATION lib/${PROJECT_NAME})
 
-#if(BUILD_TESTING)
+if(BUILD_TESTING)
 
-#    find_package(ament_lint_auto REQUIRED)
-#    ament_lint_auto_find_test_dependencies()
-#    add_subdirectory(test)
+    find_package(ament_lint_auto REQUIRED)
+    ament_lint_auto_find_test_dependencies()
+    add_subdirectory(test)
 
-#endif()
+endif()
+
+pluginlib_export_plugin_description_file(gazebo_ros2_control plugins.xml)
 
 ament_package()
 

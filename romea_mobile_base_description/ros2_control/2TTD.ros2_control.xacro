@@ -1,49 +1,57 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:macro name="base_control" params="use_sim:=true">
+  <xacro:macro name="base_control" params="use_sim">
 
     <ros2_control name="${prefix}base" type="system">
 
-        <xacro:if value="${use_sim}">
+        <xacro:if value="$(arg use_sim)">
             <hardware>
               <plugin>gazebo_ros2_control/GazeboSystem</plugin>
             </hardware>
         </xacro:if>
 
-        <joint name="${prefix}${front_left_wheel_steering_joint}">
-          <command_interface name="position">
+        <joint name="${prefix}${high_left_sprocket_wheel_spinning_joint}">
+          <command_interface name="velocity">
             <param name="min">-1</param>
             <param name="max">1</param>
           </command_interface>
           <state_interface name="position"/>
+          <state_interface name="velocity"/>
+          <state_interface name="effort"/>
         </joint>
 
-        <joint name="${prefix}${front_right_wheel_steering_joint}">
-          <command_interface name="position">
+        <joint name="${prefix}${high_right_sprocket_wheel_spinning_joint}">
+          <command_interface name="velocity">
             <param name="min">-1</param>
             <param name="max">1</param>
           </command_interface>
           <state_interface name="position"/>
+          <state_interface name="velocity"/>
+          <state_interface name="effort"/>
         </joint>
 
-        <joint name="${prefix}${rear_left_wheel_steering_joint}">
-          <command_interface name="position">
+        <joint name="${prefix}${left_idler_wheel_spinning_joint}">
+          <command_interface name="velocity">
             <param name="min">-1</param>
             <param name="max">1</param>
           </command_interface>
           <state_interface name="position"/>
+          <state_interface name="velocity"/>
+          <state_interface name="effort"/>
         </joint>
 
-        <joint name="${prefix}${rear_right_wheel_steering_joint}">
-          <command_interface name="position">
-            <param name="min">-1</param>
-            <param name="max">1</param>
-          </command_interface>
-          <state_interface name="position"/>
+        <joint name="${prefix}${right_idler_wheel_spinning_joint}">
+         <command_interface name="velocity">
+           <param name="min">-1</param>
+           <param name="max">1</param>
+         </command_interface>
+         <state_interface name="position"/>
+         <state_interface name="velocity"/>
+         <state_interface name="effort"/>
         </joint>
 
-         <joint name="${prefix}${front_left_wheel_spinning_joint}">
+         <joint name="${prefix}${front_left_roller_wheel_spinning_joint}">
            <command_interface name="velocity">
              <param name="min">-1</param>
              <param name="max">1</param>
@@ -53,7 +61,7 @@
            <state_interface name="effort"/>
          </joint>
 
-        <joint name="${prefix}${front_right_wheel_spinning_joint}">
+        <joint name="${prefix}${front_right_roller_wheel_spinning_joint}">
           <command_interface name="velocity">
             <param name="min">-1</param>
             <param name="max">1</param>
@@ -63,7 +71,7 @@
           <state_interface name="effort"/>
         </joint>
 
-        <joint name="${prefix}${rear_left_wheel_spinning_joint}">
+        <joint name="${prefix}${rear_left_roller_wheel_spinning_joint}">
           <command_interface name="velocity">
             <param name="min">-1</param>
             <param name="max">1</param>
@@ -73,15 +81,16 @@
           <state_interface name="effort"/>
         </joint>
 
-        <joint name="${prefix}${rear_right_wheel_spinning_joint}">
-          <command_interface name="velocity">
-            <param name="min">-1</param>
-            <param name="max">1</param>
-          </command_interface>
-          <state_interface name="position"/>
-          <state_interface name="velocity"/>
-          <state_interface name="effort"/>
-        </joint>
+       <joint name="${prefix}${rear_right_roller_wheel_spinning_joint}">
+         <command_interface name="velocity">
+           <param name="min">-1</param>
+           <param name="max">1</param>
+         </command_interface>
+         <state_interface name="position"/>
+         <state_interface name="velocity"/>
+         <state_interface name="effort"/>
+       </joint>
+
 
     </ros2_control>
 
