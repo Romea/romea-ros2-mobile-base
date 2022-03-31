@@ -1,0 +1,21 @@
+<library path="romea_mobile_base_gazebo">
+
+  <class
+    name="romea_mobile_base_gazebo/GazeboSystemInterface4WD"
+    type="romea::GazeboSystemInterface4WD"
+    base_class_type="gazebo_ros2_control::GazeboSystemInterface">
+      <description>
+        GazeboSystemInterface for 4WD Vehicle
+      </description>
+  </class>
+
+  <class
+    name="romea_mobile_base_gazebo/GazeboSystemInterface4WS4WD"
+    type="romea::GazeboSystemInterface4WS4WD"
+    base_class_type="gazebo_ros2_control::GazeboSystemInterface">
+      <description>
+        GazeboSystemInterface for 4WS4WD Vehicle
+      </description>
+  </class>
+
+</library>
