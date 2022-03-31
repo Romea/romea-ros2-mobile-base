@@ -14,7 +14,7 @@ SteeringJointGazeboInterface::SteeringJointGazeboInterface(
 //-----------------------------------------------------------------------------
 void SteeringJointGazeboInterface::setCommand(const double & command)
 {
-  sim_joint_->SetPosition(0,command);
+  sim_joint_->SetPosition(0,command,true);
 }
 
 //-----------------------------------------------------------------------------
