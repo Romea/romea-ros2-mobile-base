@@ -26,7 +26,7 @@ find_package(romea_mobile_base_msgs REQUIRED)
 find_package(romea_mobile_base_utils REQUIRED)
 find_package(controller_interface REQUIRED)
 
-add_library(${PROJECT_NAME}
+add_library(${PROJECT_NAME} SHARED
  src/interfaces/joint_controller_interface.cpp
  src/interfaces/spinning_joint_controller_interface.cpp
  src/interfaces/steering_joint_controller_interface.cpp
@@ -92,13 +92,15 @@ install(
 
 #install(TARGETS ${PROJECT_NAME}_node DESTINATION lib/${PROJECT_NAME})
 
-#if(BUILD_TESTING)
+if(BUILD_TESTING)
 
-#    find_package(ament_lint_auto REQUIRED)
-#    ament_lint_auto_find_test_dependencies()
-#    add_subdirectory(test)
+    find_package(ament_lint_auto REQUIRED)
+    ament_lint_auto_find_test_dependencies()
+    add_subdirectory(test)
 
-#endif()
+endif()
+
+pluginlib_export_plugin_description_file(controller_interface plugins.xml)
 
 ament_package()
 

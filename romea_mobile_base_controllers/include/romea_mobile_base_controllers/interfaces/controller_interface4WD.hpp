@@ -26,23 +26,27 @@ public:
 public:
 
   ControllerInterface4WD(const MobileBaseInfo4WD & mobile_base_info,
-                         const std::map<int,std::string> & joint_mappings,
-                         LoanedCommandInterfaces & loaned_command_interfaces,
-                         LoanedStateInterfaces & loaned_state_interfaces);
+                         const std::vector<std::string> & joints_names);
 
-  void setCommand(const OdometryFrame4WD & cmd);
+  void set_command(const OdometryFrame4WD & cmd);
 
-  OdometryFrame4WD getOdometryFrame() const;
+  OdometryFrame4WD get_odometry_frame() const;
 
-  std::vector<std::string> getCommandInterfaceNames()const;
+  std::vector<std::string> get_command_interface_names()const;
 
-  std::vector<std::string> getStateInterfaceNames()const;
+  std::vector<std::string> get_state_interface_names()const;
 
-  static void declare_joints_mapping(std::shared_ptr<rclcpp::Node> node,
-                                     const std::string & parameters_ns);
+  void register_loaned_command_interfaces(LoanedCommandInterfaces & loaned_command_interfaces);
 
-  static std::map<int,std::string> get_joints_mapping(std::shared_ptr<rclcpp::Node> node,
-                                                      const std::string & parameters_ns);
+  void register_loaned_state_interfaces(LoanedStateInterfaces & loaned_state_interfaces);
+
+public :
+
+  static void declare_joints_names(std::shared_ptr<rclcpp::Node> node,
+                                   const std::string & parameters_ns);
+
+  static std::vector<std::string> get_joints_names(std::shared_ptr<rclcpp::Node> node,
+                                                   const std::string & parameters_ns);
 
 private :
 

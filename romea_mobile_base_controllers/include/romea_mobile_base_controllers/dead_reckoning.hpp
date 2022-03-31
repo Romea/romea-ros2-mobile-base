@@ -28,7 +28,8 @@ public:
 
 private:
 
-    rclcpp::Time previous_update_time_;
+    std::optional<rclcpp::Time> previous_update_time_;
+
     double x_;
     double y_;
     double heading_;

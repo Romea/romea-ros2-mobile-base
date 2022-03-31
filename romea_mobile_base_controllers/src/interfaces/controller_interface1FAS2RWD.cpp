@@ -13,61 +13,76 @@ namespace romea
 //-----------------------------------------------------------------------------
 ControllerInterface1FAS2RWD::
 ControllerInterface1FAS2RWD(const MobileBaseInfo1FAS2RWD & mobile_base_info,
-                            const std::map<int,std::string> & joint_mappings,
-                            LoanedCommandInterfaces & loaned_command_interfaces,
-                            LoanedStateInterfaces & loaned_state_interfaces):
-  front_steering_joint_(loaned_command_interfaces,
-                        loaned_state_interfaces,
-                        joint_mappings.at(FRONT_AXLE_STEERING_JOINT_ID)),
-  rear_left_spinning_joint_(loaned_command_interfaces,
-                            loaned_state_interfaces,
-                            joint_mappings.at(REAR_LEFT_WHEEL_SPINNING_JOINT_ID),
+                            const std::vector<std::string> & joints_names):
+  front_steering_joint_(joints_names[FRONT_AXLE_STEERING_JOINT_ID]),
+  rear_left_spinning_joint_(joints_names[REAR_LEFT_WHEEL_SPINNING_JOINT_ID],
                             mobile_base_info.geometry.rearAxle.wheels.radius),
-  rear_right_spinning_joint_(loaned_command_interfaces,
-                             loaned_state_interfaces,
-                             joint_mappings.at(REAR_RIGHT_WHEEL_SPINNING_JOINT_ID),
+  rear_right_spinning_joint_(joints_names[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID],
                              mobile_base_info.geometry.rearAxle.wheels.radius)
 {
 
 }
 
 //-----------------------------------------------------------------------------
-void ControllerInterface1FAS2RWD::setCommand(const OdometryFrame1FAS2RWD &command)
+void ControllerInterface1FAS2RWD::register_loaned_command_interfaces(LoanedCommandInterfaces & loaned_command_interfaces)
 {
-  front_steering_joint_.setCommand(command.frontAxleSteeringAngle);
-  rear_left_spinning_joint_.setCommand(command.rearLeftWheelSpeed);
-  rear_right_spinning_joint_.setCommand(command.rearRightWheelSpeed);
+  front_steering_joint_.register_command_interface(
+        loaned_command_interfaces[FRONT_AXLE_STEERING_JOINT_ID]);
+
+  rear_left_spinning_joint_.register_command_interface(
+        loaned_command_interfaces[REAR_LEFT_WHEEL_SPINNING_JOINT_ID]);
+  rear_right_spinning_joint_.register_command_interface(
+        loaned_command_interfaces[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID]);
 }
 
 //-----------------------------------------------------------------------------
-OdometryFrame1FAS2RWD ControllerInterface1FAS2RWD::getOdometryFrame() const
+void ControllerInterface1FAS2RWD::register_loaned_state_interfaces(LoanedStateInterfaces & loaned_state_interfaces)
+{
+  front_steering_joint_.register_state_interface(
+        loaned_state_interfaces[FRONT_AXLE_STEERING_JOINT_ID]);
+
+  rear_left_spinning_joint_.register_state_interface(
+        loaned_state_interfaces[REAR_LEFT_WHEEL_SPINNING_JOINT_ID]);
+  rear_right_spinning_joint_.register_state_interface(
+        loaned_state_interfaces[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID]);
+}
+
+//-----------------------------------------------------------------------------
+void ControllerInterface1FAS2RWD::set_command(const OdometryFrame1FAS2RWD &command)
+{
+  front_steering_joint_.set_command(command.frontAxleSteeringAngle);
+  rear_left_spinning_joint_.set_command(command.rearLeftWheelSpeed);
+  rear_right_spinning_joint_.set_command(command.rearRightWheelSpeed);
+}
+
+//-----------------------------------------------------------------------------
+OdometryFrame1FAS2RWD ControllerInterface1FAS2RWD::get_odometry_frame() const
 {
   OdometryFrame1FAS2RWD odometry;
-  odometry.frontAxleSteeringAngle = front_steering_joint_.getMeasurement();
-  odometry.rearLeftWheelSpeed = rear_left_spinning_joint_.getMeasurement();
-  odometry.rearRightWheelSpeed = rear_right_spinning_joint_.getMeasurement();
+  odometry.frontAxleSteeringAngle = front_steering_joint_.get_measurement();
+  odometry.rearLeftWheelSpeed = rear_left_spinning_joint_.get_measurement();
+  odometry.rearRightWheelSpeed = rear_right_spinning_joint_.get_measurement();
   return odometry;
 }
 
 //-----------------------------------------------------------------------------
-std::vector<std::string> ControllerInterface1FAS2RWD::getCommandInterfaceNames()const
+std::vector<std::string> ControllerInterface1FAS2RWD::get_command_interface_names()const
 {
-  return {front_steering_joint_.getCommandInterfaceName(),
-        rear_left_spinning_joint_.getCommandInterfaceName(),
-        rear_right_spinning_joint_.getCommandInterfaceName()};
+  return {front_steering_joint_.get_command_interface_name(),
+        rear_left_spinning_joint_.get_command_interface_name(),
+        rear_right_spinning_joint_.get_command_interface_name()};
 }
 
 //-----------------------------------------------------------------------------
-std::vector<std::string> ControllerInterface1FAS2RWD::getStateInterfaceNames()const
+std::vector<std::string> ControllerInterface1FAS2RWD::get_state_interface_names()const
 {
-  return {front_steering_joint_.getStateInterfaceName(),
-        rear_left_spinning_joint_.getStateInterfaceName(),
-        rear_right_spinning_joint_.getStateInterfaceName()};
+  return {front_steering_joint_.get_state_interface_name(),
+        rear_left_spinning_joint_.get_state_interface_name(),
+        rear_right_spinning_joint_.get_state_interface_name()};
 }
 
-
 //-----------------------------------------------------------------------------
-void ControllerInterface1FAS2RWD::declare_joints_mapping(
+void ControllerInterface1FAS2RWD::declare_joints_names(
     std::shared_ptr<rclcpp::Node> node, const std::string & parameters_ns)
 {
   declare_parameter<std::string>(node,parameters_ns,front_axle_steering_joint_param_name);
@@ -76,17 +91,12 @@ void ControllerInterface1FAS2RWD::declare_joints_mapping(
 }
 
 //-----------------------------------------------------------------------------
-std::map<int,std::string> ControllerInterface1FAS2RWD::get_joints_mapping(
+std::vector<std::string> ControllerInterface1FAS2RWD::get_joints_names(
     std::shared_ptr<rclcpp::Node> node, const std::string & parameters_ns)
 {
-  std::map<int,std::string> joint_mappings;
-  joint_mappings[FRONT_AXLE_STEERING_JOINT_ID]=
-      get_parameter<std::string>(node,parameters_ns,front_axle_steering_joint_param_name);
-  joint_mappings[REAR_LEFT_WHEEL_SPINNING_JOINT_ID]=
-      get_parameter<std::string>(node,parameters_ns,rear_left_wheel_spinning_joint_param_name);
-  joint_mappings[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID]=
-      get_parameter<std::string>(node,parameters_ns,rear_right_wheel_spinning_joint_param_name);
-  return joint_mappings;
+  return{get_parameter<std::string>(node,parameters_ns,front_axle_steering_joint_param_name),
+        get_parameter<std::string>(node,parameters_ns,rear_left_wheel_spinning_joint_param_name),
+        get_parameter<std::string>(node,parameters_ns,rear_right_wheel_spinning_joint_param_name)};
 }
 
 }

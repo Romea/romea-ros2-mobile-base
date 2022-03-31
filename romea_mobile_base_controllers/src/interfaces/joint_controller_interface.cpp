@@ -1,98 +1,69 @@
 #include "romea_mobile_base_controllers/interfaces/joint_controller_interface.hpp"
-
-namespace  {
-
-
-}
-
+#include <sstream>
 
 namespace romea
 {
 
 //-----------------------------------------------------------------------------
-JointControllerInterface::JointControllerInterface(LoanedCommandInterfaces &loaned_command_interfaces,
-                                                   LoanedStateInterfaces &loaned_state_interfaces,
-                                                   const std::string &interface_type,
-                                                   const std::string &joint_name):
-  state_handle_(find_state_handle_(loaned_state_interfaces,interface_type,joint_name)),
-  command_handle_(find_command_handle_(loaned_command_interfaces,interface_type,joint_name))
+JointControllerInterface::JointControllerInterface(const std::string &joint_name,
+                                                   const std::string &interface_type):
+  joint_name_(joint_name),
+  interface_type_(interface_type),
+  state_handle_(nullptr),
+  command_handle_(nullptr)
 {
-
 }
 
 //-----------------------------------------------------------------------------
-std::reference_wrapper<const JointControllerInterface::LoanedStateInterface>
-JointControllerInterface::find_state_handle_(LoanedStateInterfaces &loaned_state_interface,
-                                             const std::string & interface_type,
-                                             const std::string & joint_name)
+void JointControllerInterface::register_command_interface(LoanedCommandInterface & loaned_command_interface)
 {
-
-  const auto state_handle = std::find_if(
-        loaned_state_interface.cbegin(),
-        loaned_state_interface.cend(),
-        [&joint_name, &interface_type](const auto & interface)
+  if(loaned_command_interface.get_name()==joint_name_ &&
+     loaned_command_interface.get_interface_name() == interface_type_)
   {
-    return interface.get_name() == joint_name &&
-        interface.get_interface_name() == interface_type;
+    command_handle_ = & loaned_command_interface;
   }
-  );
-
-  if (state_handle == loaned_state_interface.cend())
+  else
   {
     std::stringstream ss;
-    ss << " Unable to obtain joint ";
-    ss <<  interface_type ;
-    ss << " state handle for ";
-    ss <<  joint_name;
-    throw(std::runtime_error(ss.str()));
+    ss << " Joint interface ";
+    ss << get_command_interface_name();
+    ss << " : unable to register command interface ";
+    ss << loaned_command_interface.get_full_name();
+    throw std::runtime_error(ss.str());
   }
-
-  return std::ref(*state_handle);
 }
 
 //-----------------------------------------------------------------------------
-std::reference_wrapper<JointControllerInterface::LoanedCommandInterface>
-JointControllerInterface::find_command_handle_(LoanedCommandInterfaces & loaned_command_interfaces,
-                                               const std::string & interface_type,
-                                               const std::string & joint_name)
+void JointControllerInterface::register_state_interface(LoanedStateInterface & loaned_state_interface)
 {
-
-
-  const auto comman_handle = std::find_if(
-        loaned_command_interfaces.begin(),
-        loaned_command_interfaces.end(),
-        [&joint_name, &interface_type](const auto & interface)
+  if(loaned_state_interface.get_name()==joint_name_ &&
+     loaned_state_interface.get_interface_name() == interface_type_)
   {
-    return interface.get_name() == joint_name &&
-        interface.get_interface_name() == interface_type;
+    state_handle_ = & loaned_state_interface;
   }
-  );
-
-  if (comman_handle == loaned_command_interfaces.cend())
+  else
   {
     std::stringstream ss;
-    ss << " Unable to obtain joint ";
-    ss <<  interface_type ;
-    ss << " command handle for ";
-    ss <<  joint_name;
-    throw(std::runtime_error(ss.str()));
+    ss << " Joint interface ";
+    ss << get_command_interface_name();
+    ss << " : unable to register state interface ";
+    ss << loaned_state_interface.get_full_name();
+    throw std::runtime_error(ss.str());
   }
-
-  return std::ref(*comman_handle);
-
-}
-
-
-//-----------------------------------------------------------------------------
-const std::string JointControllerInterface::getCommandInterfaceName()const
-{
-  return command_handle_.get().get_full_name();
 }
 
 //-----------------------------------------------------------------------------
-const std::string  JointControllerInterface::getStateInterfaceName()const
+const std::string JointControllerInterface::get_command_interface_name()const
 {
-  return state_handle_.get().get_full_name();
+  return joint_name_+"/"+interface_type_;
+  //  return command_handle_.get().get_full_name();
+}
+
+//-----------------------------------------------------------------------------
+const std::string  JointControllerInterface::get_state_interface_name()const
+{
+  return joint_name_+"/"+interface_type_;
+  //  return state_handle_.get().get_full_name();
 }
 
 

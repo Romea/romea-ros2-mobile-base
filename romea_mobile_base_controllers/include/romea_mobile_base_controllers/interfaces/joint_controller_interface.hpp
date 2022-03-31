@@ -21,37 +21,45 @@ public:
 
 public:
 
-  JointControllerInterface(LoanedCommandInterfaces & loaned_command_interfaces,
-                           LoanedStateInterfaces & loaned_state_interfaces,
-                           const std::string & interface_type,
-                           const std::string & joint_name);
+  JointControllerInterface(const std::string &joint_name,
+                           const std::string &interface_type);
 
   virtual ~JointControllerInterface()=default;
 
-  virtual void setCommand(const double & command)=0;
+  virtual void set_command(const double & command)=0;
 
-  virtual double getMeasurement()const=0;
+  virtual double get_measurement()const=0;
 
-  const std::string getCommandInterfaceName()const;
+  const std::string get_command_interface_name()const;
 
-  const std::string getStateInterfaceName()const;
+  const std::string get_state_interface_name()const;
 
-protected:
+  void register_command_interface(LoanedCommandInterface & loaned_command_interface);
 
-  std::reference_wrapper<const LoanedStateInterface>
-  find_state_handle_(LoanedStateInterfaces & loaned_state_interfaces,
-                     const std::string & interface_type,
-                     const std::string & joint_name);
-
-  std::reference_wrapper<LoanedCommandInterface>
-  find_command_handle_(LoanedCommandInterfaces &loaned_command_interfaces,
-                       const std::string & interface_type,
-                       const std::string & joint_name);
+  void register_state_interface(LoanedStateInterface & loaned_state_interface);
 
 protected:
 
-  std::reference_wrapper<const LoanedStateInterface> state_handle_;
-  std::reference_wrapper<LoanedCommandInterface> command_handle_  ;
+  std::string joint_name_;
+  std::string interface_type_;
+
+  //TODO use optional_ref
+  LoanedStateInterface * state_handle_;
+  LoanedCommandInterface * command_handle_  ;
+
+//  std::reference_wrapper<const LoanedStateInterface>
+//  find_state_handle_(LoanedStateInterfaces & loaned_state_interfaces,
+//                     const std::string & interface_type,
+//                     const std::string & joint_name);
+
+//  std::reference_wrapper<LoanedCommandInterface>
+//  find_command_handle_(LoanedCommandInterfaces &loaned_command_interfaces,
+//                       const std::string & interface_type,
+//                       const std::string & joint_name);
+
+//protected:
+
+
 };
 
 

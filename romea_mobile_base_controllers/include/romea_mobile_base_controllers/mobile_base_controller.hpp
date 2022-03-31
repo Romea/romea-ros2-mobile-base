@@ -11,6 +11,7 @@
 #include "dead_reckoning.hpp"
 #include "dead_reckoning_publisher.hpp"
 #include "mobile_base_controller_traits.hpp"
+#include <romea_core_common/concurrency/SharedOptionalVariable.hpp>
 #include <romea_common_utils/realtime_publishers/stamped_message_publisher.hpp>
 
 
@@ -40,7 +41,7 @@ class MobileBaseController : public controller_interface::ControllerInterface
     rclcpp::Time stamp;
   };
 
-  using StampedCommandBuffer= realtime_tools::RealtimeBuffer<StampedCommand>;
+  using StampedCommandBuffer= SharedOptionalVariable<StampedCommand>;
 
 public:
 
@@ -68,21 +69,21 @@ public:
 
 protected:
 
-  void declare_joints_mapping_();
-  void declare_mobile_base_info_();
-  void declare_command_constraints_();
-  void declare_publish_period_();
-  void declare_command_timeout_();
-  void declare_base_frame_id_();
-  void declare_odom_frame_id_();
-  void declare_enable_odom_tf_();
+  //  void declare_joints_names_();
+  //  void declare_mobile_base_info_();
+  //  void declare_command_limits_();
+  //  void declare_publish_period_();
+  //  void declare_command_timeout_();
+  //  void declare_base_frame_id_();
+  //  void declare_odom_frame_id_();
+  //  void declare_enable_odom_tf_();
 
-  std::map<int,std::string> load_joints_mapping_();
+  std::vector<std::string> load_joints_names_();
   MobileBaseInfo load_mobile_base_info_();
   std::string load_base_frame_id_();
   std::string load_odom_frame_id_();
   bool load_enable_odom_tf_();
-  void load_command_constraints_();
+  void load_command_limits_();
   void load_publish_period_();
   void load_command_timeout_();
 
@@ -92,14 +93,13 @@ protected:
 
 
   void reset_();
-  void brake_();
+  void send_null_command();
   bool timeout_();
   void update_controller_state_();
   void publish_controller_state_();
-  bool new_command_available_();
   void clamp_current_command_();
   void send_current_command_();
-  void command_callback_(const typename CommandMsg::ConstPtr & cmd_msg);
+  void command_callback_(typename CommandMsg::ConstSharedPtr cmd_msg);
 
 protected:
 
@@ -111,7 +111,7 @@ protected:
   OdometryFrame odometry_frame_;
   std::atomic<bool> is_running_;
 
-  typename rclcpp::Subscription<CommandMsg>::SharedPtr command_sub;
+  typename rclcpp::Subscription<CommandMsg>::SharedPtr command_sub_;
   StampedCommand previous_command_;
   StampedCommand current_command_;
   StampedCommandBuffer command_buffer_;
@@ -136,7 +136,7 @@ using MobileBaseController2FWS2FWD = MobileBaseController<ControllerInterface2FW
 using MobileBaseController2FWS2RWD = MobileBaseController<ControllerInterface2FWS2RWD,TwoWheelSteeringKinematic>;
 using MobileBaseController2FWS4WD = MobileBaseController<ControllerInterface2FWS4WD,TwoWheelSteeringKinematic>;
 using MobileBaseController2WD = MobileBaseController<ControllerInterface2WD,SkidSteeringKinematic>;
-using MobileBaseController4TD = MobileBaseController<ControllerInterface2TD,SkidSteeringKinematic>;
+using MobileBaseController2TD = MobileBaseController<ControllerInterface2TD,SkidSteeringKinematic>;
 using MobileBaseController4WD = MobileBaseController<ControllerInterface4WD,SkidSteeringKinematic>;
 using MobileBaseController4WS4WD = MobileBaseController<ControllerInterface4WS4WD,FourWheelSteeringKinematic>;
 

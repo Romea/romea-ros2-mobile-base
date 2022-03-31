@@ -2,83 +2,98 @@
 #include <romea_common_utils/params/node_parameters.hpp>
 
 namespace  {
-const std::string front_left_wheel_steering_joint_param_name="front_left_wheel_steering_joint_name";
-const std::string front_right_wheel_steering_joint_param_name="front_right_wheel_steering_joint_name";
-const std::string rear_left_wheel_steering_joint_param_name="rear_left_wheel_steering_joint_name";
-const std::string rear_right_wheel_steering_joint_param_name="rear_right_wheel_steering_joint_name";
+const std::string front_left_wheel_steering_joint_param_name="front_left_wheel_spinning_joint_name";
+const std::string front_right_wheel_steering_joint_param_name="front_right_wheel_spinning_joint_name";
+const std::string rear_left_wheel_steering_joint_param_name="rear_left_wheel_spinning_joint_name";
+const std::string rear_right_wheel_steering_joint_param_name="rear_right_wheel_spinning_joint_name";
 }
 
 namespace romea
 {
 
 //-----------------------------------------------------------------------------
-ControllerInterface4WD::
-ControllerInterface4WD(const MobileBaseInfo4WD & mobile_base_info,
-                       const std::map<int, std::string> &joint_mappings,
-                       LoanedCommandInterfaces & loaned_command_interfaces,
-                       LoanedStateInterfaces & loaned_state_interfaces):
-  front_left_spinning_joint_(loaned_command_interfaces,
-                             loaned_state_interfaces,
-                             joint_mappings.at(FRONT_LEFT_WHEEL_SPINNING_JOINT_ID),
+ControllerInterface4WD::ControllerInterface4WD(const MobileBaseInfo4WD & mobile_base_info,
+                                               const std::vector<std::string> &joint_names):
+  front_left_spinning_joint_(joint_names[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID],
                              mobile_base_info.geometry.frontAxle.wheels.radius),
-  front_right_spinning_joint_(loaned_command_interfaces,
-                              loaned_state_interfaces,
-                              joint_mappings.at(FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID),
+  front_right_spinning_joint_(joint_names[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID],
                               mobile_base_info.geometry.frontAxle.wheels.radius),
-  rear_left_spinning_joint_(loaned_command_interfaces,
-                            loaned_state_interfaces,
-                            joint_mappings.at(REAR_LEFT_WHEEL_SPINNING_JOINT_ID),
+  rear_left_spinning_joint_(joint_names[REAR_LEFT_WHEEL_SPINNING_JOINT_ID],
                             mobile_base_info.geometry.rearAxle.wheels.radius),
-  rear_right_spinning_joint_(loaned_command_interfaces,
-                             loaned_state_interfaces,
-                             joint_mappings.at(REAR_RIGHT_WHEEL_SPINNING_JOINT_ID),
+  rear_right_spinning_joint_(joint_names[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID],
                              mobile_base_info.geometry.rearAxle.wheels.radius)
 {
 
 }
 
 //-----------------------------------------------------------------------------
-void ControllerInterface4WD::setCommand(const OdometryFrame4WD &command)
+void ControllerInterface4WD::register_loaned_command_interfaces(LoanedCommandInterfaces & loaned_command_interfaces)
 {
-  front_left_spinning_joint_.setCommand(command.frontLeftWheelSpeed);
-  front_right_spinning_joint_.setCommand(command.frontRightWheelSpeed);
-  rear_left_spinning_joint_.setCommand(command.rearLeftWheelSpeed);
-  rear_right_spinning_joint_.setCommand(command.rearRightWheelSpeed);
+  front_left_spinning_joint_.register_command_interface(
+        loaned_command_interfaces[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID]);
+  front_right_spinning_joint_.register_command_interface(
+        loaned_command_interfaces[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID]);
+  rear_left_spinning_joint_.register_command_interface(
+        loaned_command_interfaces[REAR_LEFT_WHEEL_SPINNING_JOINT_ID]);
+  rear_right_spinning_joint_.register_command_interface(
+        loaned_command_interfaces[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID]);
+}
+
+//-----------------------------------------------------------------------------
+void ControllerInterface4WD::register_loaned_state_interfaces(LoanedStateInterfaces & loaned_state_interfaces)
+{
+  front_left_spinning_joint_.register_state_interface(
+        loaned_state_interfaces[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID]);
+  front_right_spinning_joint_.register_state_interface(
+        loaned_state_interfaces[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID]);
+  rear_left_spinning_joint_.register_state_interface(
+        loaned_state_interfaces[REAR_LEFT_WHEEL_SPINNING_JOINT_ID]);
+  rear_right_spinning_joint_.register_state_interface(
+        loaned_state_interfaces[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID]);
+}
+
+//-----------------------------------------------------------------------------
+void ControllerInterface4WD::set_command(const OdometryFrame4WD &command)
+{
+  front_left_spinning_joint_.set_command(command.frontLeftWheelSpeed);
+  front_right_spinning_joint_.set_command(command.frontRightWheelSpeed);
+  rear_left_spinning_joint_.set_command(command.rearLeftWheelSpeed);
+  rear_right_spinning_joint_.set_command(command.rearRightWheelSpeed);
 }
 
 
 //-----------------------------------------------------------------------------
-OdometryFrame4WD ControllerInterface4WD::getOdometryFrame() const
+OdometryFrame4WD ControllerInterface4WD::get_odometry_frame() const
 {
   OdometryFrame4WD odometry;
-  odometry.frontLeftWheelSpeed = front_left_spinning_joint_.getMeasurement();
-  odometry.frontRightWheelSpeed = front_right_spinning_joint_.getMeasurement();
-  odometry.rearLeftWheelSpeed = rear_left_spinning_joint_.getMeasurement();
-  odometry.rearRightWheelSpeed = rear_right_spinning_joint_.getMeasurement();
+  odometry.frontLeftWheelSpeed = front_left_spinning_joint_.get_measurement();
+  odometry.frontRightWheelSpeed = front_right_spinning_joint_.get_measurement();
+  odometry.rearLeftWheelSpeed = rear_left_spinning_joint_.get_measurement();
+  odometry.rearRightWheelSpeed = rear_right_spinning_joint_.get_measurement();
   return odometry;
 }
 
 //-----------------------------------------------------------------------------
-std::vector<std::string> ControllerInterface4WD::getCommandInterfaceNames()const
+std::vector<std::string> ControllerInterface4WD::get_command_interface_names()const
 {
-  return {front_left_spinning_joint_.getCommandInterfaceName(),
-        front_right_spinning_joint_.getCommandInterfaceName(),
-        rear_left_spinning_joint_.getCommandInterfaceName(),
-        rear_right_spinning_joint_.getCommandInterfaceName()};
+
+  return {front_left_spinning_joint_.get_command_interface_name(),
+        front_right_spinning_joint_.get_command_interface_name(),
+        rear_left_spinning_joint_.get_command_interface_name(),
+        rear_right_spinning_joint_.get_command_interface_name()};
 }
 
 //-----------------------------------------------------------------------------
-std::vector<std::string> ControllerInterface4WD::getStateInterfaceNames()const
+std::vector<std::string> ControllerInterface4WD::get_state_interface_names()const
 {
-  return {front_left_spinning_joint_.getStateInterfaceName(),
-        front_right_spinning_joint_.getStateInterfaceName(),
-        rear_left_spinning_joint_.getStateInterfaceName(),
-        rear_right_spinning_joint_.getStateInterfaceName()};
+  return {front_left_spinning_joint_.get_state_interface_name(),
+        front_right_spinning_joint_.get_state_interface_name(),
+        rear_left_spinning_joint_.get_state_interface_name(),
+        rear_right_spinning_joint_.get_state_interface_name()};
 }
 
 //-----------------------------------------------------------------------------
-void ControllerInterface4WD::declare_joints_mapping(
-    std::shared_ptr<rclcpp::Node> node, const std::string & parameters_ns)
+void ControllerInterface4WD::declare_joints_names(std::shared_ptr<rclcpp::Node> node, const std::string &parameters_ns)
 {
   declare_parameter<std::string>(node,parameters_ns,front_left_wheel_steering_joint_param_name);
   declare_parameter<std::string>(node,parameters_ns,front_right_wheel_steering_joint_param_name);
@@ -87,19 +102,14 @@ void ControllerInterface4WD::declare_joints_mapping(
 }
 
 //-----------------------------------------------------------------------------
-std::map<int,std::string> ControllerInterface4WD::get_joints_mapping(
+std::vector<std::string> ControllerInterface4WD::get_joints_names(
     std::shared_ptr<rclcpp::Node> node, const std::string & parameters_ns)
 {
-  std::map<int,std::string> joint_mappings;
-  joint_mappings[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID]=
-      get_parameter<std::string>(node,parameters_ns,front_left_wheel_steering_joint_param_name);
-  joint_mappings[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID]=
-      get_parameter<std::string>(node,parameters_ns,front_left_wheel_steering_joint_param_name);
-  joint_mappings[REAR_LEFT_WHEEL_SPINNING_JOINT_ID]=
-      get_parameter<std::string>(node,parameters_ns,rear_left_wheel_steering_joint_param_name);
-  joint_mappings[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID]=
-      get_parameter<std::string>(node,parameters_ns,rear_left_wheel_steering_joint_param_name);
-  return joint_mappings;
+  return {get_parameter<std::string>(node,parameters_ns,front_left_wheel_steering_joint_param_name),
+        get_parameter<std::string>(node,parameters_ns,front_right_wheel_steering_joint_param_name),
+        get_parameter<std::string>(node,parameters_ns,rear_left_wheel_steering_joint_param_name),
+        get_parameter<std::string>(node,parameters_ns,rear_right_wheel_steering_joint_param_name)};
 }
+
 
 }

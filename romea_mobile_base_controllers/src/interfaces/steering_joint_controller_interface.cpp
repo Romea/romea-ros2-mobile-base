@@ -4,27 +4,23 @@ namespace romea
 {
 
 //-----------------------------------------------------------------------------
-SteeringJointControllerInterface::SteeringJointControllerInterface(LoanedCommandInterfaces &loaned_command_interfaces,
-                                                                   LoanedStateInterfaces &loaned_state_interfaces,
-                                                                   const std::string & joint_name):
-  JointControllerInterface (loaned_command_interfaces,
-                            loaned_state_interfaces,
-                            hardware_interface::HW_IF_POSITION,
-                            joint_name)
+SteeringJointControllerInterface::SteeringJointControllerInterface(const std::string & joint_name):
+  JointControllerInterface (joint_name,hardware_interface::HW_IF_POSITION)
 {
-
 }
 
 //-----------------------------------------------------------------------------
-void SteeringJointControllerInterface::setCommand(const double & command)
+void SteeringJointControllerInterface::set_command(const double & command)
 {
-  command_handle_.get().set_value(command);
+  assert(command_handle_);
+  command_handle_->set_value(command);
 }
 
 //-----------------------------------------------------------------------------
-double SteeringJointControllerInterface::getMeasurement()const
+double SteeringJointControllerInterface::get_measurement()const
 {
-  return state_handle_.get().get_value();
+  assert(state_handle_);
+  return state_handle_->get_value();
 }
 
 

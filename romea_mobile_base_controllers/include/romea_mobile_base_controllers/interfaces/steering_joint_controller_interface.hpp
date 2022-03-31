@@ -11,15 +11,13 @@ class SteeringJointControllerInterface : public JointControllerInterface
 
 public :
 
-  SteeringJointControllerInterface(LoanedCommandInterfaces & loaned_command_interfaces,
-                                   LoanedStateInterfaces & loaned_state_interfaces,
-                                   const std::string & joint_name);
+  SteeringJointControllerInterface(const std::string & joint_name);
 
   virtual ~SteeringJointControllerInterface()=default;
 
-  virtual double getMeasurement()const override;
+  virtual double get_measurement()const override;
 
-  virtual void setCommand(const double & command) override;
+  virtual void set_command(const double & command) override;
 
 };
 

@@ -11,16 +11,14 @@ class SpinningJointControllerInterface : public JointControllerInterface
 
 public :
 
-  SpinningJointControllerInterface(LoanedCommandInterfaces & loaned_command_interfaces,
-                                   LoanedStateInterfaces & loaned_state_interfaces,
-                                   const std::string & joint_name,
+  SpinningJointControllerInterface(const std::string & joint_name,
                                    const double & wheel_radius);
 
   virtual ~SpinningJointControllerInterface()=default;
 
-  virtual void setCommand(const double & command) override;
+  virtual void set_command(const double & command) override;
 
-  virtual double getMeasurement()const override;
+  virtual double get_measurement()const override;
 
 private:
 

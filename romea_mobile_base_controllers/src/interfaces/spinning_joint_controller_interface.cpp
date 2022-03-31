@@ -4,28 +4,26 @@ namespace romea
 {
 
 //-----------------------------------------------------------------------------
-SpinningJointControllerInterface::SpinningJointControllerInterface(LoanedCommandInterfaces &loaned_command_interfaces,
-                                                                   LoanedStateInterfaces &loaned_state_interfaces,
-                                                                   const std::string & joint_name, const double &wheel_radius):
-  JointControllerInterface (loaned_command_interfaces,
-                            loaned_state_interfaces,
-                            hardware_interface::HW_IF_VELOCITY,
-                            joint_name),
+SpinningJointControllerInterface::SpinningJointControllerInterface(const std::string & joint_name,
+                                                                   const double &wheel_radius):
+  JointControllerInterface (joint_name,hardware_interface::HW_IF_VELOCITY),
   wheel_radius_(wheel_radius)
 {
 }
 
 //-----------------------------------------------------------------------------
-void SpinningJointControllerInterface::setCommand(const double & command)
+void SpinningJointControllerInterface::set_command(const double & command)
 {
-    command_handle_.get().set_value(command/wheel_radius_);
+  assert(command_handle_);
+  command_handle_->set_value(command/wheel_radius_);
 }
 
 
 //-----------------------------------------------------------------------------
-double SpinningJointControllerInterface::getMeasurement()const
+double SpinningJointControllerInterface::get_measurement()const
 {
-    return  state_handle_.get().get_value()*wheel_radius_;
+  assert(state_handle_);
+  return state_handle_->get_value()*wheel_radius_;
 }
 
 }
