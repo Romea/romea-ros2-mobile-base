@@ -28,7 +28,7 @@ find_package(romea_common_utils REQUIRED)
 find_package(romea_mobile_base_msgs REQUIRED)
 
 
-add_library(${PROJECT_NAME}
+add_library(${PROJECT_NAME} SHARED
     src/conversions/command_conversions.cpp
     src/conversions/kinematic_conversions.cpp
     src/params/command_limits_parameters.cpp
