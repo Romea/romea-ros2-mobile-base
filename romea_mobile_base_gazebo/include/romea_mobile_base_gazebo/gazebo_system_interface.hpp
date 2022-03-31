@@ -42,6 +42,10 @@ public:
 
   virtual CallbackReturn on_deactivate(const rclcpp_lifecycle::State & previous_state) override;
 
+  virtual std::vector<hardware_interface::StateInterface> export_state_interfaces() override;
+
+  virtual std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
+
   virtual hardware_interface::return_type read();
 
   virtual hardware_interface::return_type write();
@@ -65,15 +69,15 @@ private :
 
 };
 
-using GazeboInterfaceBase1FAS2FWD = GazeboSystemInterface<GazeboInterface1FAS2FWD>;
-using GazeboInterfaceBase1FAS2RWD = GazeboSystemInterface<GazeboInterface1FAS2RWD>;
-using GazeboInterfaceBase1FWS2FWD = GazeboSystemInterface<GazeboInterface1FWS2RWD>;
-using GazeboInterfaceBase2FWS2FWD = GazeboSystemInterface<GazeboInterface2FWS2FWD>;
-using GazeboInterfaceBase2FWS2RWD = GazeboSystemInterface<GazeboInterface2FWS2RWD>;
-using GazeboInterfaceBase2FWS4WD = GazeboSystemInterface<GazeboInterface2FWS4WD>;
-using GazeboInterfaceBase2WD = GazeboSystemInterface<GazeboInterface2WD>;
-using GazeboInterfaceBase4WD = GazeboSystemInterface<GazeboInterface4WD>;
-using GazeboInterfaceBase4WS4WD = GazeboSystemInterface<GazeboInterface4WS4WD>;
+using GazeboSystemInterface1FAS2FWD = GazeboSystemInterface<GazeboInterface1FAS2FWD>;
+using GazeboSystemInterface1FAS2RWD = GazeboSystemInterface<GazeboInterface1FAS2RWD>;
+using GazeboSystemInterface1FWS2FWD = GazeboSystemInterface<GazeboInterface1FWS2RWD>;
+using GazeboSystemInterface2FWS2FWD = GazeboSystemInterface<GazeboInterface2FWS2FWD>;
+using GazeboSystemInterface2FWS2RWD = GazeboSystemInterface<GazeboInterface2FWS2RWD>;
+using GazeboSystemInterface2FWS4WD = GazeboSystemInterface<GazeboInterface2FWS4WD>;
+using GazeboSystemInterface2WD = GazeboSystemInterface<GazeboInterface2WD>;
+using GazeboSystemInterface4WD = GazeboSystemInterface<GazeboInterface4WD>;
+using GazeboSystemInterface4WS4WD = GazeboSystemInterface<GazeboInterface4WS4WD>;
 
 }
 

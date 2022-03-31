@@ -24,6 +24,7 @@ bool GazeboSystemInterface<GazeboInterface>::initSim(
 {
   nh_=model_nh;
   parent_model_ = parent_model;
+
   return(check_physics_engine_configuration_() &&
         init_gazebo_interfaces_(hardware_info) &&
         init_hardware_interfaces_(hardware_info));
@@ -72,6 +73,22 @@ CallbackReturn GazeboSystemInterface<GazeboInterface>::
 on_deactivate(const rclcpp_lifecycle::State & previous_state)
 {
   return CallbackReturn::SUCCESS;
+}
+
+//-----------------------------------------------------------------------------
+template <typename GazeboInterface>
+std::vector<hardware_interface::StateInterface>
+GazeboSystemInterface<GazeboInterface>::export_state_interfaces()
+{
+  return hardware_interface_->export_state_interfaces();
+}
+
+//-----------------------------------------------------------------------------
+template <typename GazeboInterface>
+std::vector<hardware_interface::CommandInterface>
+GazeboSystemInterface<GazeboInterface>::export_command_interfaces()
+{
+  return hardware_interface_->export_command_interfaces();
 }
 
 
@@ -128,7 +145,7 @@ hardware_interface::return_type GazeboSystemInterface<GazeboInterface>::write()
 
 template class GazeboSystemInterface<GazeboInterface1FAS2FWD>;
 template class GazeboSystemInterface<GazeboInterface1FAS2RWD>;
-template class GazeboSystemInterface<GazeboInterface1FWS2RWD>;
+//template class GazeboSystemInterface<GazeboInterface1FWS2RWD>;
 template class GazeboSystemInterface<GazeboInterface2FWS2FWD>;
 template class GazeboSystemInterface<GazeboInterface2FWS2RWD>;
 template class GazeboSystemInterface<GazeboInterface2FWS4WD>;
@@ -137,3 +154,7 @@ template class GazeboSystemInterface<GazeboInterface4WD>;
 template class GazeboSystemInterface<GazeboInterface4WS4WD>;
 
 }
+
+#include "pluginlib/class_list_macros.hpp"  // NOLINT
+PLUGINLIB_EXPORT_CLASS(romea::GazeboSystemInterface4WD, gazebo_ros2_control::GazeboSystemInterface)
+PLUGINLIB_EXPORT_CLASS(romea::GazeboSystemInterface4WS4WD, gazebo_ros2_control::GazeboSystemInterface)
