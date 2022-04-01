@@ -52,9 +52,7 @@ protected:
     mobile_info.geometry.tracks.thickness=0.1;
     mobile_info.geometry.tracks.sprocketWheel.radius=0.4;
 
-    controller_interface = std::make_unique<romea::ControllerInterface2TD>(mobile_info,joints_names);
-    controller_interface->register_loaned_command_interfaces(command_loaned_interfaces);
-    controller_interface->register_loaned_state_interfaces(state_loaned_interfaces);
+    controller_interface = std::make_unique<romea::ControllerInterface2TD>(mobile_info);
   }
 
   std::shared_ptr<rclcpp::Node> node;
@@ -73,37 +71,31 @@ protected:
 };
 
 
-TEST_F(TestControllerInterface2TD, checkStateInterfaceNames)
+TEST_F(TestControllerInterface2TD, checkHardwareInterfaceNames)
 {
-  auto state_interface_names =controller_interface->get_state_interface_names();
-  EXPECT_STREQ(state_interface_names[0].c_str(),"J1/velocity");
-  EXPECT_STREQ(state_interface_names[1].c_str(),"J2/velocity");
+  auto hardware_interface_names = romea::ControllerInterface2TD::hardware_interface_names(joints_names);
+  EXPECT_STREQ(hardware_interface_names[0].c_str(),"J1/velocity");
+  EXPECT_STREQ(hardware_interface_names[1].c_str(),"J2/velocity");
 }
 
-TEST_F(TestControllerInterface2TD, checkCommandInterfaceNames)
-{
-  auto command_interface_names =controller_interface->get_command_interface_names();
-  EXPECT_STREQ(command_interface_names[0].c_str(),"J1/velocity");
-  EXPECT_STREQ(command_interface_names[1].c_str(),"J2/velocity");
-}
-
-TEST_F(TestControllerInterface2TD, checkSetCommand)
+TEST_F(TestControllerInterface2TD, checkWrite)
 {
   romea::OdometryFrame2WD command;
   command.leftWheelSpeed=1;
   command.rightWheelSpeed=2;
 
-  controller_interface->set_command(command);
+  controller_interface->write(command,command_loaned_interfaces);
   EXPECT_EQ(command_values[0],2);
   EXPECT_EQ(command_values[1],4);
 }
 
-TEST_F(TestControllerInterface2TD, checkGetMeasurement)
+TEST_F(TestControllerInterface2TD, checkRead)
 {
    state_values[0]=2;
    state_values[1]=4;
 
-   auto measure = controller_interface->get_odometry_frame();
+   romea::OdometryFrame2WD measure;
+   controller_interface->read(state_loaned_interfaces,measure);
    EXPECT_EQ(measure.leftWheelSpeed,1);
    EXPECT_EQ(measure.rightWheelSpeed,2);
 }

@@ -16,77 +16,40 @@ namespace romea
 {
 
 //-----------------------------------------------------------------------------
-ControllerInterface4WS4WD::ControllerInterface4WS4WD(const MobileBaseInfo4WS4WD & mobile_base_info,
-                                                     const std::vector<std::string> &joints_names):
-  front_left_steering_joint_(joints_names[FRONT_LEFT_WHEEL_STEERING_JOINT_ID]),
-  front_right_steering_joint_(joints_names[FRONT_RIGHT_WHEEL_STEERING_JOINT_ID]),
-  rear_left_steering_joint_(joints_names[REAR_LEFT_WHEEL_STEERING_JOINT_ID]),
-  rear_right_steering_joint_(joints_names[REAR_RIGHT_WHEEL_STEERING_JOINT_ID]),
-  front_left_spinning_joint_(joints_names[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID],
-                             mobile_base_info.geometry.frontAxle.wheels.radius),
-  front_right_spinning_joint_(joints_names[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID],
-                              mobile_base_info.geometry.frontAxle.wheels.radius),
-  rear_left_spinning_joint_(joints_names[REAR_LEFT_WHEEL_SPINNING_JOINT_ID],
-                            mobile_base_info.geometry.rearAxle.wheels.radius),
-  rear_right_spinning_joint_(joints_names[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID],
-                             mobile_base_info.geometry.rearAxle.wheels.radius)
+ControllerInterface4WS4WD::ControllerInterface4WS4WD(const MobileBaseInfo4WS4WD & mobile_base_info):
+  steering_joints_(),
+  front_spinning_joints_(mobile_base_info.geometry.frontAxle.wheels.radius),
+  rear_spinning_joints_(mobile_base_info.geometry.frontAxle.wheels.radius)
 {
-
 }
 
 //-----------------------------------------------------------------------------
-void ControllerInterface4WS4WD::set_command(const OdometryFrame4WS4WD &command)
+void ControllerInterface4WS4WD::write(const OdometryFrame4WS4WD & command,
+                                       LoanedCommandInterfaces & loaned_command_interfaces)const
 {
-  front_left_steering_joint_.set_command(command.frontLeftWheelAngle);
-  front_right_steering_joint_.set_command(command.frontRightWheelAngle);
-  rear_left_steering_joint_.set_command(command.rearLeftWheelAngle);
-  rear_right_steering_joint_.set_command(command.rearRightWheelAngle);
-  front_left_spinning_joint_.set_command(command.frontLeftWheelSpeed);
-  front_right_spinning_joint_.set_command(command.frontRightWheelSpeed);
-  rear_left_spinning_joint_.set_command(command.rearLeftWheelSpeed);
-  rear_right_spinning_joint_.set_command(command.rearRightWheelSpeed);
-}
-
-
-//-----------------------------------------------------------------------------
-OdometryFrame4WS4WD ControllerInterface4WS4WD::get_odometry_frame() const
-{
-  OdometryFrame4WS4WD odometry;
-  odometry.frontLeftWheelAngle = front_left_steering_joint_.get_measurement();
-  odometry.frontRightWheelAngle = front_right_steering_joint_.get_measurement();
-  odometry.rearLeftWheelAngle = rear_left_steering_joint_.get_measurement();
-  odometry.rearRightWheelAngle = rear_right_steering_joint_.get_measurement();
-  odometry.frontLeftWheelSpeed = front_left_spinning_joint_.get_measurement();
-  odometry.frontRightWheelSpeed = front_right_spinning_joint_.get_measurement();
-  odometry.rearLeftWheelSpeed = rear_left_spinning_joint_.get_measurement();
-  odometry.rearRightWheelSpeed = rear_right_spinning_joint_.get_measurement();
-  return odometry;
+  steering_joints_.write(command.frontLeftWheelAngle,loaned_command_interfaces[FRONT_LEFT_WHEEL_STEERING_JOINT_ID]);
+  steering_joints_.write(command.frontRightWheelAngle,loaned_command_interfaces[FRONT_RIGHT_WHEEL_STEERING_JOINT_ID]);
+  steering_joints_.write(command.rearLeftWheelAngle,loaned_command_interfaces[REAR_LEFT_WHEEL_STEERING_JOINT_ID]);
+  steering_joints_.write(command.rearRightWheelAngle,loaned_command_interfaces[REAR_RIGHT_WHEEL_STEERING_JOINT_ID]);
+  front_spinning_joints_.write(command.frontLeftWheelSpeed,loaned_command_interfaces[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID]);
+  front_spinning_joints_.write(command.frontRightWheelSpeed,loaned_command_interfaces[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID]);
+  rear_spinning_joints_.write(command.rearLeftWheelSpeed,loaned_command_interfaces[REAR_LEFT_WHEEL_SPINNING_JOINT_ID]);
+  rear_spinning_joints_.write(command.rearRightWheelSpeed,loaned_command_interfaces[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID]);
 }
 
 //-----------------------------------------------------------------------------
-std::vector<std::string> ControllerInterface4WS4WD::get_command_interface_names()const
+void ControllerInterface4WS4WD::read(const LoanedStateInterfaces & loaned_state_interfaces,
+                                      OdometryFrame4WS4WD & measurement)const
 {
-  return {front_left_steering_joint_.get_command_interface_name(),
-        front_right_steering_joint_.get_command_interface_name(),
-        rear_left_steering_joint_.get_command_interface_name(),
-        rear_right_steering_joint_.get_command_interface_name(),
-        front_left_spinning_joint_.get_command_interface_name(),
-        front_right_spinning_joint_.get_command_interface_name(),
-        rear_left_spinning_joint_.get_command_interface_name(),
-        rear_right_spinning_joint_.get_command_interface_name()};
-}
+  steering_joints_.read(loaned_state_interfaces[FRONT_LEFT_WHEEL_STEERING_JOINT_ID],measurement.frontLeftWheelAngle);
+  steering_joints_.read(loaned_state_interfaces[FRONT_RIGHT_WHEEL_STEERING_JOINT_ID],measurement.frontRightWheelAngle);
+  steering_joints_.read(loaned_state_interfaces[REAR_LEFT_WHEEL_STEERING_JOINT_ID],measurement.rearLeftWheelAngle);
+  steering_joints_.read(loaned_state_interfaces[REAR_RIGHT_WHEEL_STEERING_JOINT_ID],measurement.rearRightWheelAngle);
+  front_spinning_joints_.read(loaned_state_interfaces[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID],measurement.frontLeftWheelSpeed);
+  front_spinning_joints_.read(loaned_state_interfaces[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID],measurement.frontRightWheelSpeed);
+  rear_spinning_joints_.read(loaned_state_interfaces[REAR_LEFT_WHEEL_SPINNING_JOINT_ID],measurement.rearLeftWheelSpeed);
+  rear_spinning_joints_.read(loaned_state_interfaces[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID],measurement.rearRightWheelSpeed);
 
-//-----------------------------------------------------------------------------
-std::vector<std::string> ControllerInterface4WS4WD::get_state_interface_names()const
-{
-  return {front_left_steering_joint_.get_state_interface_name(),
-        front_right_steering_joint_.get_state_interface_name(),
-        rear_left_steering_joint_.get_state_interface_name(),
-        rear_right_steering_joint_.get_state_interface_name(),
-        front_left_spinning_joint_.get_state_interface_name(),
-        front_right_spinning_joint_.get_state_interface_name(),
-        rear_left_spinning_joint_.get_state_interface_name(),
-        rear_right_spinning_joint_.get_state_interface_name()};
 }
 
 //-----------------------------------------------------------------------------
@@ -119,47 +82,27 @@ std::vector<std::string> ControllerInterface4WS4WD::get_joints_names(
 }
 
 //-----------------------------------------------------------------------------
-void ControllerInterface4WS4WD::register_loaned_command_interfaces(LoanedCommandInterfaces & loaned_command_interfaces)
+std::vector<std::string> ControllerInterface4WS4WD::hardware_interface_names(
+    const std::vector<std::string> & joints_names)
 {
-  front_left_steering_joint_.register_command_interface(
-        loaned_command_interfaces[FRONT_LEFT_WHEEL_STEERING_JOINT_ID]);
-  front_right_steering_joint_.register_command_interface(
-        loaned_command_interfaces[FRONT_RIGHT_WHEEL_STEERING_JOINT_ID]);
-  rear_left_steering_joint_.register_command_interface(
-        loaned_command_interfaces[REAR_LEFT_WHEEL_STEERING_JOINT_ID]);
-  rear_right_steering_joint_.register_command_interface(
-        loaned_command_interfaces[REAR_RIGHT_WHEEL_STEERING_JOINT_ID]);
-
-  front_left_spinning_joint_.register_command_interface(
-        loaned_command_interfaces[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID]);
-  front_right_spinning_joint_.register_command_interface(
-        loaned_command_interfaces[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID]);
-  rear_left_spinning_joint_.register_command_interface(
-        loaned_command_interfaces[REAR_LEFT_WHEEL_SPINNING_JOINT_ID]);
-  rear_right_spinning_joint_.register_command_interface(
-        loaned_command_interfaces[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID]);
+  return {SteeringJointControllerInterface::hardware_interface_name(
+          joints_names[FRONT_LEFT_WHEEL_STEERING_JOINT_ID]),
+        SteeringJointControllerInterface::hardware_interface_name(
+          joints_names[FRONT_RIGHT_WHEEL_STEERING_JOINT_ID]),
+        SteeringJointControllerInterface::hardware_interface_name(
+          joints_names[REAR_LEFT_WHEEL_STEERING_JOINT_ID]),
+        SteeringJointControllerInterface::hardware_interface_name(
+          joints_names[REAR_RIGHT_WHEEL_STEERING_JOINT_ID]),
+        SpinningJointControllerInterface::hardware_interface_name(
+          joints_names[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID]),
+        SpinningJointControllerInterface::hardware_interface_name(
+          joints_names[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID]),
+        SpinningJointControllerInterface::hardware_interface_name(
+          joints_names[REAR_LEFT_WHEEL_SPINNING_JOINT_ID]),
+        SpinningJointControllerInterface::hardware_interface_name(
+          joints_names[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID])};
 }
 
-//-----------------------------------------------------------------------------
-void ControllerInterface4WS4WD::register_loaned_state_interfaces(LoanedStateInterfaces & loaned_state_interfaces)
-{
-  front_left_steering_joint_.register_state_interface(
-        loaned_state_interfaces[FRONT_LEFT_WHEEL_STEERING_JOINT_ID]);
-  front_right_steering_joint_.register_state_interface(
-        loaned_state_interfaces[FRONT_RIGHT_WHEEL_STEERING_JOINT_ID]);
-  rear_left_steering_joint_.register_state_interface(
-        loaned_state_interfaces[REAR_LEFT_WHEEL_STEERING_JOINT_ID]);
-  rear_right_steering_joint_.register_state_interface(
-        loaned_state_interfaces[REAR_RIGHT_WHEEL_STEERING_JOINT_ID]);
+}
 
-  front_left_spinning_joint_.register_state_interface(
-        loaned_state_interfaces[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID]);
-  front_right_spinning_joint_.register_state_interface(
-        loaned_state_interfaces[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID]);
-  rear_left_spinning_joint_.register_state_interface(
-        loaned_state_interfaces[REAR_LEFT_WHEEL_SPINNING_JOINT_ID]);
-  rear_right_spinning_joint_.register_state_interface(
-        loaned_state_interfaces[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID]);
-}
-}
 

@@ -12,82 +12,30 @@ namespace romea
 {
 
 //-----------------------------------------------------------------------------
-ControllerInterface2FWS2FWD::ControllerInterface2FWS2FWD(const MobileBaseInfo2FWS2FWD & mobile_base_info,
-                                                         const std::vector<std::string> &joints_names):
-  front_left_steering_joint_(joints_names[FRONT_LEFT_WHEEL_STEERING_JOINT_ID]),
-  front_right_steering_joint_(joints_names[FRONT_RIGHT_WHEEL_STEERING_JOINT_ID]),
-  front_left_spinning_joint_(joints_names[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID],
-                             mobile_base_info.geometry.frontAxle.wheels.radius),
-  front_right_spinning_joint_(joints_names[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID],
-                              mobile_base_info.geometry.frontAxle.wheels.radius)
+ControllerInterface2FWS2FWD::ControllerInterface2FWS2FWD(const MobileBaseInfo2FWS2FWD & mobile_base_info):
+  front_steering_joints_(),
+  front_spinning_joints_(mobile_base_info.geometry.frontAxle.wheels.radius)
 {
 }
 
 //-----------------------------------------------------------------------------
-void ControllerInterface2FWS2FWD::register_loaned_command_interfaces(LoanedCommandInterfaces & loaned_command_interfaces)
+void ControllerInterface2FWS2FWD::write(const OdometryFrame2FWS2FWD & command,
+                                        LoanedCommandInterfaces & loaned_command_interfaces)const
 {
-  front_left_steering_joint_.register_command_interface(
-        loaned_command_interfaces[FRONT_LEFT_WHEEL_STEERING_JOINT_ID]);
-  front_right_steering_joint_.register_command_interface(
-        loaned_command_interfaces[FRONT_RIGHT_WHEEL_STEERING_JOINT_ID]);
-
-  front_left_spinning_joint_.register_command_interface(
-        loaned_command_interfaces[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID]);
-  front_right_spinning_joint_.register_command_interface(
-        loaned_command_interfaces[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID]);
+  front_steering_joints_.write(command.frontLeftWheelAngle,loaned_command_interfaces[FRONT_LEFT_WHEEL_STEERING_JOINT_ID]);
+  front_steering_joints_.write(command.frontRightWheelAngle,loaned_command_interfaces[FRONT_RIGHT_WHEEL_STEERING_JOINT_ID]);
+  front_spinning_joints_.write(command.frontLeftWheelSpeed,loaned_command_interfaces[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID]);
+  front_spinning_joints_.write(command.frontRightWheelSpeed,loaned_command_interfaces[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID]);
 }
 
 //-----------------------------------------------------------------------------
-void ControllerInterface2FWS2FWD::register_loaned_state_interfaces(LoanedStateInterfaces & loaned_state_interfaces)
+void ControllerInterface2FWS2FWD::read(const LoanedStateInterfaces & loaned_state_interfaces,
+                                       OdometryFrame2FWS2FWD & measurement)const
 {
-  front_left_steering_joint_.register_state_interface(
-        loaned_state_interfaces[FRONT_LEFT_WHEEL_STEERING_JOINT_ID]);
-  front_right_steering_joint_.register_state_interface(
-        loaned_state_interfaces[FRONT_RIGHT_WHEEL_STEERING_JOINT_ID]);
-
-  front_left_spinning_joint_.register_state_interface(
-        loaned_state_interfaces[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID]);
-  front_right_spinning_joint_.register_state_interface(
-        loaned_state_interfaces[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID]);
-}
-
-//-----------------------------------------------------------------------------
-void ControllerInterface2FWS2FWD::set_command(const OdometryFrame2FWS2FWD &command)
-{
-  front_left_steering_joint_.set_command(command.frontLeftWheelAngle);
-  front_right_steering_joint_.set_command(command.frontRightWheelAngle);
-  front_left_spinning_joint_.set_command(command.frontLeftWheelSpeed);
-  front_right_spinning_joint_.set_command(command.frontRightWheelSpeed);
-}
-
-
-//-----------------------------------------------------------------------------
-OdometryFrame2FWS2FWD ControllerInterface2FWS2FWD::get_odometry_frame() const
-{
-  OdometryFrame2FWS2FWD odometry;
-  odometry.frontLeftWheelAngle = front_left_steering_joint_.get_measurement();
-  odometry.frontRightWheelAngle = front_right_steering_joint_.get_measurement();
-  odometry.frontLeftWheelSpeed = front_left_spinning_joint_.get_measurement();
-  odometry.frontRightWheelSpeed = front_right_spinning_joint_.get_measurement();
-  return odometry;
-}
-
-//-----------------------------------------------------------------------------
-std::vector<std::string> ControllerInterface2FWS2FWD::get_command_interface_names()const
-{
-  return {front_left_steering_joint_.get_command_interface_name(),
-        front_right_steering_joint_.get_command_interface_name(),
-        front_left_spinning_joint_.get_command_interface_name(),
-        front_right_spinning_joint_.get_command_interface_name()};
-}
-
-//-----------------------------------------------------------------------------
-std::vector<std::string> ControllerInterface2FWS2FWD::get_state_interface_names()const
-{
-  return {front_left_steering_joint_.get_state_interface_name(),
-        front_right_steering_joint_.get_state_interface_name(),
-        front_left_spinning_joint_.get_state_interface_name(),
-        front_right_spinning_joint_.get_state_interface_name()};
+  front_steering_joints_.read(loaned_state_interfaces[FRONT_LEFT_WHEEL_STEERING_JOINT_ID],measurement.frontLeftWheelAngle);
+  front_steering_joints_.read(loaned_state_interfaces[FRONT_RIGHT_WHEEL_STEERING_JOINT_ID],measurement.frontRightWheelAngle);
+  front_spinning_joints_.read(loaned_state_interfaces[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID],measurement.frontLeftWheelSpeed);
+  front_spinning_joints_.read(loaned_state_interfaces[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID],measurement.frontRightWheelSpeed);
 }
 
 //-----------------------------------------------------------------------------
@@ -110,6 +58,19 @@ std::vector<std::string> ControllerInterface2FWS2FWD::get_joints_names(
         get_parameter<std::string>(node,parameters_ns,front_right_wheel_spinning_joint_param_name)};
 }
 
+//-----------------------------------------------------------------------------
+std::vector<std::string> ControllerInterface2FWS2FWD::hardware_interface_names(
+    const std::vector<std::string> & joints_names)
+{
+  return {SteeringJointControllerInterface::hardware_interface_name(
+          joints_names[FRONT_LEFT_WHEEL_STEERING_JOINT_ID]),
+        SteeringJointControllerInterface::hardware_interface_name(
+          joints_names[FRONT_RIGHT_WHEEL_STEERING_JOINT_ID]),
+        SpinningJointControllerInterface::hardware_interface_name(
+          joints_names[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID]),
+        SpinningJointControllerInterface::hardware_interface_name(
+          joints_names[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID])};
+}
 
 }
 

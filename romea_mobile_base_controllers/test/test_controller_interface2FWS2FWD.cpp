@@ -57,10 +57,7 @@ protected:
     mobile_info.geometry.rearAxle.wheels.radius=0.5;
     mobile_info.geometry.frontAxle.wheels.radius=0.5;
 
-    controller_interface = std::make_unique<romea::ControllerInterface2FWS2FWD>(mobile_info,joints_names);
-    controller_interface->register_loaned_command_interfaces(command_loaned_interfaces);
-    controller_interface->register_loaned_state_interfaces(state_loaned_interfaces);
-
+    controller_interface = std::make_unique<romea::ControllerInterface2FWS2FWD>(mobile_info);
   }
 
   std::shared_ptr<rclcpp::Node> node;
@@ -79,24 +76,16 @@ protected:
 };
 
 
-TEST_F(TestControllerInterface2FWS2FWD, checkStateInterfaceNames)
+TEST_F(TestControllerInterface2FWS2FWD, checkHardwareInterfaceNames)
 {
-  auto state_interface_names =controller_interface->get_state_interface_names();
-  EXPECT_STREQ(state_interface_names[0].c_str(),"J1/position");
-  EXPECT_STREQ(state_interface_names[1].c_str(),"J2/position");
-  EXPECT_STREQ(state_interface_names[2].c_str(),"J3/velocity");
-  EXPECT_STREQ(state_interface_names[3].c_str(),"J4/velocity");
+  auto hardware_interface_names = romea::ControllerInterface2FWS2FWD::hardware_interface_names(joints_names);
+  EXPECT_STREQ(hardware_interface_names[0].c_str(),"J1/position");
+  EXPECT_STREQ(hardware_interface_names[1].c_str(),"J2/position");
+  EXPECT_STREQ(hardware_interface_names[2].c_str(),"J3/velocity");
+  EXPECT_STREQ(hardware_interface_names[3].c_str(),"J4/velocity");
 }
 
-TEST_F(TestControllerInterface2FWS2FWD, checkCommandInterfaceNames)
-{
-  auto command_interface_names =controller_interface->get_command_interface_names();
-  EXPECT_STREQ(command_interface_names[0].c_str(),"J1/position");
-  EXPECT_STREQ(command_interface_names[1].c_str(),"J2/position");
-  EXPECT_STREQ(command_interface_names[2].c_str(),"J3/velocity");
-  EXPECT_STREQ(command_interface_names[3].c_str(),"J4/velocity");
-}
-TEST_F(TestControllerInterface2FWS2FWD, checkSetCommand)
+TEST_F(TestControllerInterface2FWS2FWD, checkWrite)
 {
   romea::OdometryFrame2FWS2FWD command;
   command.frontLeftWheelAngle=11;
@@ -104,21 +93,22 @@ TEST_F(TestControllerInterface2FWS2FWD, checkSetCommand)
   command.frontLeftWheelSpeed=3;
   command.frontRightWheelSpeed=4;
 
-  controller_interface->set_command(command);
+  controller_interface->write(command,command_loaned_interfaces);
   EXPECT_EQ(command_values[0],11);
   EXPECT_EQ(command_values[1],12);
   EXPECT_EQ(command_values[2],6);
   EXPECT_EQ(command_values[3],8);
 }
 
-TEST_F(TestControllerInterface2FWS2FWD, checkGetMeasurement)
+TEST_F(TestControllerInterface2FWS2FWD, checkRead)
 {
   state_values[0]=11;
   state_values[1]=12;
   state_values[2]=6;
   state_values[3]=8;
 
-  auto measure = controller_interface->get_odometry_frame();
+  romea::OdometryFrame2FWS2FWD measure;
+  controller_interface->read(state_loaned_interfaces,measure);
   EXPECT_EQ(measure.frontLeftWheelAngle,11);
   EXPECT_EQ(measure.frontRightWheelAngle,12);
   EXPECT_EQ(measure.frontLeftWheelSpeed,3);

@@ -6,22 +6,25 @@
 namespace romea
 {
 
-class SpinningJointControllerInterface : public JointControllerInterface
+
+class SpinningJointControllerInterface
 {
+public:
 
-public :
+  using LoanedStateInterface = hardware_interface::LoanedStateInterface;
+  using LoanedCommandInterface = hardware_interface::LoanedCommandInterface;
 
-  SpinningJointControllerInterface(const std::string & joint_name,
-                                   const double & wheel_radius);
+public:
 
-  virtual ~SpinningJointControllerInterface()=default;
+  SpinningJointControllerInterface(const double & wheel_radius);
 
-  virtual void set_command(const double & command) override;
+  void write(const double & command, LoanedCommandInterface & loaned_command_interface)const;
 
-  virtual double get_measurement()const override;
+  void read(const LoanedStateInterface & loaned_state_interface, double & measurement) const;
+
+  static std::string hardware_interface_name(const std::string & joint_name);
 
 private:
-
 
   double wheel_radius_;
 };

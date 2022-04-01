@@ -17,39 +17,36 @@ public:
   using LoanedStateInterfaces = JointControllerInterface::LoanedStateInterfaces;
 
   enum JointIds {
-     LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID,
-     RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID
+    LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID,
+    RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID
   };
 
 public:
 
-  ControllerInterface2TD(const MobileBaseInfo2TD & mobile_base_info,
-                         const std::vector<std::string> & joints_names);
+  ControllerInterface2TD(const MobileBaseInfo2TD & mobile_base_info);
 
-  void set_command(const OdometryFrame2WD & cmd);
+  void write(const OdometryFrame2WD & command,
+             LoanedCommandInterfaces & loaned_command_interfaces)const;
 
-  OdometryFrame2WD get_odometry_frame() const;
-
-  std::vector<std::string> get_command_interface_names()const;
-
-  std::vector<std::string> get_state_interface_names()const;
-
-  void register_loaned_command_interfaces(LoanedCommandInterfaces & loaned_command_interfaces);
-
-  void register_loaned_state_interfaces(LoanedStateInterfaces & loaned_state_interfaces);
+  void read(const LoanedStateInterfaces & loaned_state_interfaces,
+            OdometryFrame2WD & measurement)const;
 
 public :
 
-  static void declare_joints_names(std::shared_ptr<rclcpp::Node> node,
-                                     const std::string & parameters_ns);
+  static void declare_joints_names(
+      std::shared_ptr<rclcpp::Node> node,
+      const std::string & parameters_ns);
 
-  static std::vector<std::string> get_joints_names(std::shared_ptr<rclcpp::Node> node,
-                                                      const std::string & parameters_ns);
+  static std::vector<std::string> get_joints_names(
+      std::shared_ptr<rclcpp::Node> node,
+      const std::string & parameters_ns);
+
+  static std::vector<std::string> hardware_interface_names(
+      const std::vector<std::string> & joints_names);
 
 private :
 
-  SpinningJointControllerInterface left_sprocket_spinning_joint_;
-  SpinningJointControllerInterface right_sprocket_spinning_joint_;
+  SpinningJointControllerInterface spinning_joints_;
 
 };
 

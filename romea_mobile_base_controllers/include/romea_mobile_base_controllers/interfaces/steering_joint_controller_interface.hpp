@@ -6,18 +6,22 @@
 namespace romea
 {
 
-class SteeringJointControllerInterface : public JointControllerInterface
+class SteeringJointControllerInterface
 {
+public:
 
-public :
+  using LoanedStateInterface = hardware_interface::LoanedStateInterface;
+  using LoanedCommandInterface = hardware_interface::LoanedCommandInterface;
 
-  SteeringJointControllerInterface(const std::string & joint_name);
+public:
 
-  virtual ~SteeringJointControllerInterface()=default;
+  SteeringJointControllerInterface();
 
-  virtual double get_measurement()const override;
+  void write(const double & command, LoanedCommandInterface & loaned_command_interface)const;
 
-  virtual void set_command(const double & command) override;
+  void read(const LoanedStateInterface & loaned_state_interface, double & measurement) const;
+
+  static std::string hardware_interface_name(const std::string & joint_name);
 
 };
 

@@ -80,10 +80,11 @@ template <typename InterfaceType, typename KinematicType>
 controller_interface::InterfaceConfiguration
 MobileBaseController<InterfaceType,KinematicType>::command_interface_configuration() const
 {
+  std::cout << " command_interface_configuration" << std::endl;
   if(controller_interface_)
   {
     return {controller_interface::interface_configuration_type::INDIVIDUAL,
-          controller_interface_->get_command_interface_names()};
+          InterfaceType::hardware_interface_names(joints_names_)};
   }
   else
   {
@@ -96,10 +97,12 @@ template <typename InterfaceType, typename KinematicType>
 controller_interface::InterfaceConfiguration
 MobileBaseController<InterfaceType,KinematicType>::state_interface_configuration() const
 {
+  std::cout << " state_interface_configuration" << std::endl;
+
   if(controller_interface_)
   {
     return {controller_interface::interface_configuration_type::INDIVIDUAL,
-          controller_interface_->get_state_interface_names()};
+          InterfaceType::hardware_interface_names(joints_names_)};
   }
   else
   {
@@ -117,6 +120,7 @@ CallbackReturn MobileBaseController<InterfaceType,KinematicType>::on_configure(c
     load_command_limits_();
     load_publish_period_();
     load_command_timeout_();
+    load_joints_names_();
     init_interface_();
     init_publishers_();
     init_cmd_subscriber_();
@@ -137,8 +141,8 @@ CallbackReturn MobileBaseController<InterfaceType,KinematicType>::on_activate(co
   std::cout << " on activate" << std::endl;
 
   try {
-    controller_interface_->register_loaned_command_interfaces(command_interfaces_);
-    controller_interface_->register_loaned_state_interfaces(state_interfaces_);
+//    controller_interface_->register_loaned_command_interfaces(command_interfaces_);
+//    controller_interface_->register_loaned_state_interfaces(state_interfaces_);
 
     auto now = node_->get_clock()->now();
     previous_command_.cmd = Command();
@@ -267,7 +271,7 @@ void MobileBaseController<OdometryFrameType,KinematicType>::publish_controller_s
 template <typename OdometryFrameType, typename KinematicType>
 void MobileBaseController<OdometryFrameType,KinematicType>::update_controller_state_()
 {
-  odometry_frame_ = controller_interface_->get_odometry_frame();
+  controller_interface_->read(state_interfaces_,odometry_frame_);
   //    RCLCPP_INFO_STREAM(node_->get_logger(),"odometry frame measured");
   //    RCLCPP_INFO_STREAM(node_->get_logger(),"\n"<<odometry_frame_);
 
@@ -313,7 +317,7 @@ void MobileBaseController<OdometryFrameType,KinematicType>::send_current_command
   RCLCPP_INFO_STREAM(node_->get_logger(),"odometry frame commad");
   RCLCPP_INFO_STREAM(node_->get_logger(),odometry_frame_);
 
-  controller_interface_->set_command(odometry_frame_);
+  controller_interface_->write(odometry_frame_,command_interfaces_);
 }
 
 
@@ -321,7 +325,7 @@ void MobileBaseController<OdometryFrameType,KinematicType>::send_current_command
 template <typename OdometryFrameType, typename KinematicType>
 void MobileBaseController<OdometryFrameType,KinematicType>::send_null_command()
 {
-  controller_interface_->set_command(OdometryFrame());
+  controller_interface_->write(OdometryFrame(),command_interfaces_);
 }
 
 
@@ -378,17 +382,17 @@ void MobileBaseController<OdometryFrameType,KinematicType>::reset_()
 
 //-----------------------------------------------------------------------------
 template <typename InterfaceType, typename KinematicType>
-std::vector<std::string> MobileBaseController<InterfaceType,KinematicType>::load_joints_names_()
+void MobileBaseController<InterfaceType,KinematicType>::load_joints_names_()
 {
   std::string prefix = get_parameter_or<std::string>(node_,JOINTS_PREFIX_PARAM_NAME,"");
-  auto joints_names = InterfaceType::get_joints_names(node_,JOINTS_MAPPING_PARAM_NAME);
+  joints_names_ = InterfaceType::get_joints_names(node_,JOINTS_MAPPING_PARAM_NAME);
 
-  for(auto & joint : joints_names)
+  std::cout << " joint_names "<< std::endl;
+  for(auto & joint_name : joints_names_)
   {
-    joint = prefix+ joint;
+    joint_name = prefix+ joint_name;
+    std::cout << joint_name << std::endl;
   }
-
-  return joints_names;
 }
 
 ////-----------------------------------------------------------------------------
@@ -519,14 +523,8 @@ template <typename InterfaceType, typename KinematicType>
 void MobileBaseController<InterfaceType,KinematicType>::init_interface_()
 {
   std::cout << "init_interface_ " << std::endl;
-  auto joints_names= load_joints_names_();
   auto mobile_base_info = load_mobile_base_info_();
-
-  std::cout << " joint_names "<< std::endl;
-  for(const auto & joint_name : joints_names)
-    std::cout << joint_name << std::endl;
-
-  controller_interface_= std::make_unique<InterfaceType>(mobile_base_info,joints_names);
+  controller_interface_= std::make_unique<InterfaceType>(mobile_base_info);
   to_kinematic_parameters(mobile_base_info,kinematic_parameters_);
 
 }
@@ -587,15 +585,15 @@ template class MobileBaseController<ControllerInterface4WS4WD,FourWheelSteeringK
 
 #include "class_loader/register_macro.hpp"
 
-CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController1FAS2FWD, controller_interface::ControllerInterface)
-CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController1FAS2RWD, controller_interface::ControllerInterface)
+//CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController1FAS2FWD, controller_interface::ControllerInterface)
+//CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController1FAS2RWD, controller_interface::ControllerInterface)
 //CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController1FWS2RWD, controller_interface::ControllerInterface)
-CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController2AS4WD, controller_interface::ControllerInterface)
-CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController2FWS2FWD, controller_interface::ControllerInterface)
-CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController2FWS2RWD, controller_interface::ControllerInterface)
-CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController2FWS4WD, controller_interface::ControllerInterface)
-CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController2TD, controller_interface::ControllerInterface)
-CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController2WD, controller_interface::ControllerInterface)
+//CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController2AS4WD, controller_interface::ControllerInterface)
+//CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController2FWS2FWD, controller_interface::ControllerInterface)
+//CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController2FWS2RWD, controller_interface::ControllerInterface)
+//CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController2FWS4WD, controller_interface::ControllerInterface)
+//CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController2TD, controller_interface::ControllerInterface)
+//CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController2WD, controller_interface::ControllerInterface)
 CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController4WD, controller_interface::ControllerInterface)
 CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController4WS4WD, controller_interface::ControllerInterface)
 

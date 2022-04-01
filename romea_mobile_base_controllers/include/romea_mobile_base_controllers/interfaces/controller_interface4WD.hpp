@@ -5,16 +5,17 @@
 #include <romea_core_mobile_base/odometry/OdometryFrame4WD.hpp>
 #include <romea_core_mobile_base/info/MobileBaseInfo4WD.hpp>
 
-namespace romea
-{
+namespace romea {
 
 class ControllerInterface4WD
 {
 
 public:
 
-  using LoanedCommandInterfaces = JointControllerInterface::LoanedCommandInterfaces;
-  using LoanedStateInterfaces = JointControllerInterface::LoanedStateInterfaces;
+  using LoanedCommandInterface =  hardware_interface::LoanedCommandInterface;
+  using LoanedCommandInterfaces = std::vector<LoanedCommandInterface>;
+  using LoanedStateInterface = hardware_interface::LoanedStateInterface;
+  using LoanedStateInterfaces = std::vector<LoanedStateInterface>;
 
   enum JointIds {
     FRONT_LEFT_WHEEL_SPINNING_JOINT_ID,
@@ -25,35 +26,31 @@ public:
 
 public:
 
-  ControllerInterface4WD(const MobileBaseInfo4WD & mobile_base_info,
-                         const std::vector<std::string> & joints_names);
+  ControllerInterface4WD(const MobileBaseInfo4WD & mobile_base_info);
 
-  void set_command(const OdometryFrame4WD & cmd);
+  void write(const OdometryFrame4WD & command,
+             LoanedCommandInterfaces & loaned_command_interfaces)const;
 
-  OdometryFrame4WD get_odometry_frame() const;
-
-  std::vector<std::string> get_command_interface_names()const;
-
-  std::vector<std::string> get_state_interface_names()const;
-
-  void register_loaned_command_interfaces(LoanedCommandInterfaces & loaned_command_interfaces);
-
-  void register_loaned_state_interfaces(LoanedStateInterfaces & loaned_state_interfaces);
+  void read(const LoanedStateInterfaces & loaned_state_interfaces,
+            OdometryFrame4WD & measurement)const;
 
 public :
 
-  static void declare_joints_names(std::shared_ptr<rclcpp::Node> node,
-                                   const std::string & parameters_ns);
+  static void declare_joints_names(
+      std::shared_ptr<rclcpp::Node> node,
+      const std::string & parameters_ns);
 
-  static std::vector<std::string> get_joints_names(std::shared_ptr<rclcpp::Node> node,
-                                                   const std::string & parameters_ns);
+  static std::vector<std::string> get_joints_names(
+      std::shared_ptr<rclcpp::Node> node,
+      const std::string & parameters_ns);
+
+  static std::vector<std::string> hardware_interface_names(
+      const std::vector<std::string> & joints_names);
 
 private :
 
-  SpinningJointControllerInterface front_left_spinning_joint_;
-  SpinningJointControllerInterface front_right_spinning_joint_;
-  SpinningJointControllerInterface rear_left_spinning_joint_;
-  SpinningJointControllerInterface rear_right_spinning_joint_;
+  SpinningJointControllerInterface front_spinning_joints_;
+  SpinningJointControllerInterface rear_spinning_joints_;
 
 };
 

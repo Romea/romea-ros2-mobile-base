@@ -63,9 +63,7 @@ protected:
     mobile_info.geometry.rearAxle.wheels.radius=0.5;
     mobile_info.geometry.frontAxle.wheels.radius=0.5;
 
-    controller_interface = std::make_unique<romea::ControllerInterface2AS4WD>(mobile_info,joints_names);
-    controller_interface->register_loaned_command_interfaces(command_loaned_interfaces);
-    controller_interface->register_loaned_state_interfaces(state_loaned_interfaces);
+    controller_interface = std::make_unique<romea::ControllerInterface2AS4WD>(mobile_info);
 
   }
 
@@ -85,28 +83,18 @@ protected:
 };
 
 
-TEST_F(TestControllerInterface2AS4WD, checkStateInterfaceNames)
+TEST_F(TestControllerInterface2AS4WD, checkHardwareInterfaceNames)
 {
-  auto state_interface_names =controller_interface->get_state_interface_names();
-  EXPECT_STREQ(state_interface_names[0].c_str(),"J1/position");
-  EXPECT_STREQ(state_interface_names[1].c_str(),"J2/position");
-  EXPECT_STREQ(state_interface_names[2].c_str(),"J3/velocity");
-  EXPECT_STREQ(state_interface_names[3].c_str(),"J4/velocity");
-  EXPECT_STREQ(state_interface_names[4].c_str(),"J5/velocity");
-  EXPECT_STREQ(state_interface_names[5].c_str(),"J6/velocity");
+  auto hardware_interface_names = romea::ControllerInterface2AS4WD::hardware_interface_names(joints_names);
+  EXPECT_STREQ(hardware_interface_names[0].c_str(),"J1/position");
+  EXPECT_STREQ(hardware_interface_names[1].c_str(),"J2/position");
+  EXPECT_STREQ(hardware_interface_names[2].c_str(),"J3/velocity");
+  EXPECT_STREQ(hardware_interface_names[3].c_str(),"J4/velocity");
+  EXPECT_STREQ(hardware_interface_names[4].c_str(),"J5/velocity");
+  EXPECT_STREQ(hardware_interface_names[5].c_str(),"J6/velocity");
 }
 
-TEST_F(TestControllerInterface2AS4WD, checkCommandInterfaceNames)
-{
-  auto command_interface_names =controller_interface->get_command_interface_names();
-  EXPECT_STREQ(command_interface_names[0].c_str(),"J1/position");
-  EXPECT_STREQ(command_interface_names[1].c_str(),"J2/position");
-  EXPECT_STREQ(command_interface_names[2].c_str(),"J3/velocity");
-  EXPECT_STREQ(command_interface_names[3].c_str(),"J4/velocity");
-  EXPECT_STREQ(command_interface_names[4].c_str(),"J5/velocity");
-  EXPECT_STREQ(command_interface_names[5].c_str(),"J6/velocity");
-}
-TEST_F(TestControllerInterface2AS4WD, checkSetCommand)
+TEST_F(TestControllerInterface2AS4WD, checkWrite)
 {
   romea::OdometryFrame2AS4WD command;
   command.frontAxleSteeringAngle=11;
@@ -116,7 +104,7 @@ TEST_F(TestControllerInterface2AS4WD, checkSetCommand)
   command.rearLeftWheelSpeed=3;
   command.rearRightWheelSpeed=4;
 
-  controller_interface->set_command(command);
+  controller_interface->write(command,command_loaned_interfaces);
   EXPECT_EQ(command_values[0],11);
   EXPECT_EQ(command_values[1],12);
   EXPECT_EQ(command_values[2],2);
@@ -135,7 +123,8 @@ TEST_F(TestControllerInterface2AS4WD, checkGetMeasurement)
   state_values[4]=6;
   state_values[5]=8;
 
-  auto measure = controller_interface->get_odometry_frame();
+  romea::OdometryFrame2AS4WD measure;
+  controller_interface->read(state_loaned_interfaces,measure);
   EXPECT_EQ(measure.frontAxleSteeringAngle,11);
   EXPECT_EQ(measure.rearAxleSteeringAngle,12);
   EXPECT_EQ(measure.frontLeftWheelSpeed,1);

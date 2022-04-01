@@ -19,42 +19,39 @@ public:
   using LoanedStateInterfaces = JointControllerInterface::LoanedStateInterfaces;
 
   enum JointIds {
-     FRONT_LEFT_WHEEL_STEERING_JOINT_ID,
-     FRONT_RIGHT_WHEEL_STEERING_JOINT_ID,
-     FRONT_LEFT_WHEEL_SPINNING_JOINT_ID,
-     FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID,
+    FRONT_LEFT_WHEEL_STEERING_JOINT_ID,
+    FRONT_RIGHT_WHEEL_STEERING_JOINT_ID,
+    FRONT_LEFT_WHEEL_SPINNING_JOINT_ID,
+    FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID,
   };
 
 public:
 
-  ControllerInterface2FWS2FWD(const MobileBaseInfo2FWS2FWD & mobile_base_info,
-                              const std::vector<std::string> & joints_names);
+  ControllerInterface2FWS2FWD(const MobileBaseInfo2FWS2FWD & mobile_base_info);
 
-  void set_command(const OdometryFrame2FWS2FWD & cmd);
+  void write(const OdometryFrame2FWS2FWD & command,
+             LoanedCommandInterfaces & loaned_command_interfaces)const;
 
-  OdometryFrame2FWS2FWD get_odometry_frame() const;
-
-  std::vector<std::string> get_command_interface_names()const;
-
-  std::vector<std::string> get_state_interface_names()const;
-
-  void register_loaned_command_interfaces(LoanedCommandInterfaces & loaned_command_interfaces);
-
-  void register_loaned_state_interfaces(LoanedStateInterfaces & loaned_state_interfaces);
+  void read(const LoanedStateInterfaces & loaned_state_interfaces,
+            OdometryFrame2FWS2FWD & measurement)const;
 
 public :
-  static void declare_joints_names(std::shared_ptr<rclcpp::Node> node,
-                                     const std::string & parameters_ns);
 
-  static std::vector<std::string> get_joints_names(std::shared_ptr<rclcpp::Node> node,
-                                                      const std::string & parameters_ns);
+  static void declare_joints_names(
+      std::shared_ptr<rclcpp::Node> node,
+      const std::string & parameters_ns);
+
+  static std::vector<std::string> get_joints_names(
+      std::shared_ptr<rclcpp::Node> node,
+      const std::string & parameters_ns);
+
+  static std::vector<std::string> hardware_interface_names(
+      const std::vector<std::string> & joints_names);
 
 private :
 
-  SteeringJointControllerInterface front_left_steering_joint_;
-  SteeringJointControllerInterface front_right_steering_joint_;
-  SpinningJointControllerInterface front_left_spinning_joint_;
-  SpinningJointControllerInterface front_right_spinning_joint_;
+  SteeringJointControllerInterface front_steering_joints_;
+  SpinningJointControllerInterface front_spinning_joints_;
 
 };
 

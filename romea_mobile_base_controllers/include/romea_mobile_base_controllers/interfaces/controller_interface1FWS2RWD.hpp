@@ -26,20 +26,13 @@ public:
 
 public:
 
-  ControllerInterface1FWS2RWD(const MobileBaseInfo1FWS2RWD & mobile_base_info,
-                              const std::vector<std::string> & joints_names);
+  ControllerInterface1FWS2RWD(const MobileBaseInfo1FWS2RWD & mobile_base_info);
 
-  void set_command(const OdometryFrame1FWS2RWD & cmd);
+  void write(const OdometryFrame1FWS2RWD & command,
+             LoanedCommandInterfaces & loaned_command_interfaces)const;
 
-  OdometryFrame1FWS2RWD get_odometry_frame() const;
-
-  std::vector<std::string> get_command_interface_names()const;
-
-  std::vector<std::string> get_state_interface_names()const;
-
-  void register_loaned_command_interfaces(LoanedCommandInterfaces & loaned_command_interfaces);
-
-  void register_loaned_state_interfaces(LoanedStateInterfaces & loaned_state_interfaces);
+  void read(const LoanedStateInterfaces & loaned_state_interfaces,
+            OdometryFrame1FWS2RWD & measurement)const;
 
 public :
 
@@ -49,11 +42,13 @@ public :
   static std::vector<std::string> get_joints_names(std::shared_ptr<rclcpp::Node> node,
                                                       const std::string & parameters_ns);
 
+  static std::vector<std::string> hardware_interface_names(
+      const std::vector<std::string> & joints_names);
+
 private :
 
   SteeringJointControllerInterface front_steering_joint_;
-  SpinningJointControllerInterface rear_left_spinning_joint_;
-  SpinningJointControllerInterface rear_right_spinning_joint_;
+  SpinningJointControllerInterface rear_spinning_joints_;
 
 };
 

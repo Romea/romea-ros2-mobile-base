@@ -78,7 +78,7 @@ protected:
   //  void declare_odom_frame_id_();
   //  void declare_enable_odom_tf_();
 
-  std::vector<std::string> load_joints_names_();
+  void load_joints_names_();
   MobileBaseInfo load_mobile_base_info_();
   std::string load_base_frame_id_();
   std::string load_odom_frame_id_();
@@ -103,6 +103,7 @@ protected:
 
 protected:
 
+  std::vector<std::string> joints_names_;
   std::unique_ptr<InterfaceType> controller_interface_;
   typename Kinematic::Parameters kinematic_parameters_;
   CommandLimits user_command_limits_;
@@ -128,15 +129,15 @@ protected:
 };
 
 
-using MobileBaseController1FAS2FWD = MobileBaseController<ControllerInterface1FAS2FWD,OneAxleSteeringKinematic>;
-using MobileBaseController1FAS2RWD = MobileBaseController<ControllerInterface1FAS2RWD,OneAxleSteeringKinematic>;
+//using MobileBaseController1FAS2FWD = MobileBaseController<ControllerInterface1FAS2FWD,OneAxleSteeringKinematic>;
+//using MobileBaseController1FAS2RWD = MobileBaseController<ControllerInterface1FAS2RWD,OneAxleSteeringKinematic>;
 //using MobileBaseController1FWS2RWD = MobileBaseController<ControllerInterface1FWS2RWD,OneAxleSteeringKinematic>;
-using MobileBaseController2AS4WD = MobileBaseController<ControllerInterface2AS4WD,TwoAxleSteeringKinematic>;
-using MobileBaseController2FWS2FWD = MobileBaseController<ControllerInterface2FWS2FWD,TwoWheelSteeringKinematic>;
-using MobileBaseController2FWS2RWD = MobileBaseController<ControllerInterface2FWS2RWD,TwoWheelSteeringKinematic>;
-using MobileBaseController2FWS4WD = MobileBaseController<ControllerInterface2FWS4WD,TwoWheelSteeringKinematic>;
-using MobileBaseController2WD = MobileBaseController<ControllerInterface2WD,SkidSteeringKinematic>;
-using MobileBaseController2TD = MobileBaseController<ControllerInterface2TD,SkidSteeringKinematic>;
+//using MobileBaseController2AS4WD = MobileBaseController<ControllerInterface2AS4WD,TwoAxleSteeringKinematic>;
+//using MobileBaseController2FWS2FWD = MobileBaseController<ControllerInterface2FWS2FWD,TwoWheelSteeringKinematic>;
+//using MobileBaseController2FWS2RWD = MobileBaseController<ControllerInterface2FWS2RWD,TwoWheelSteeringKinematic>;
+//using MobileBaseController2FWS4WD = MobileBaseController<ControllerInterface2FWS4WD,TwoWheelSteeringKinematic>;
+//using MobileBaseController2WD = MobileBaseController<ControllerInterface2WD,SkidSteeringKinematic>;
+//using MobileBaseController2TD = MobileBaseController<ControllerInterface2TD,SkidSteeringKinematic>;
 using MobileBaseController4WD = MobileBaseController<ControllerInterface4WD,SkidSteeringKinematic>;
 using MobileBaseController4WS4WD = MobileBaseController<ControllerInterface4WS4WD,FourWheelSteeringKinematic>;
 
