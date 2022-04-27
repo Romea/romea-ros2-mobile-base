@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:macro name="base_control" params="use_sim">
+  <xacro:macro name="base_control" params="use_sim:=true">
 
     <ros2_control name="${prefix}base" type="system">
 
-        <xacro:if value="$(arg use_sim)">
+        <xacro:if value="${use_sim}">
              <hardware>
                <plugin>gazebo_ros2_control/GazeboSystem</plugin>
              </hardware>
@@ -56,7 +56,7 @@
           <state_interface name="effort"/>
         </joint>
 
-        <joint name="${prefix}${rear_right_wheel_spining_joint}">
+        <joint name="${prefix}${rear_left_wheel_spinning_joint}">
           <command_interface name="velocity">
             <param name="min">-1</param>
             <param name="max">1</param>
@@ -66,7 +66,7 @@
           <state_interface name="effort"/>
         </joint>
 
-        <joint name="${rear_right_wheel_spining_joint}">
+        <joint name="${rear_right_wheel_spinning_joint}">
           <command_interface name="position">
             <param name="min">-1</param>
             <param name="max">1</param>
