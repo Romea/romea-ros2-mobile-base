@@ -35,13 +35,27 @@ public:
 
   CallbackReturn on_init(const hardware_interface::HardwareInfo & hardware_info) override ;
 
+  CallbackReturn on_configure(const rclcpp_lifecycle::State & previous_state) override;
+
+  CallbackReturn on_cleanup(const rclcpp_lifecycle::State & previous_state) override;
+
   CallbackReturn on_activate(const rclcpp_lifecycle::State & previous_state) override;
 
   CallbackReturn on_deactivate(const rclcpp_lifecycle::State & previous_state) override;
 
+  CallbackReturn on_shutdown(const rclcpp_lifecycle::State & previous_state) override;
+
+  CallbackReturn on_error(const rclcpp_lifecycle::State & previous_state) override;
+
   std::vector<hardware_interface::StateInterface> export_state_interfaces() override;
 
   std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
+
+protected :
+
+  virtual hardware_interface::return_type connect() = 0 ;
+
+  virtual hardware_interface::return_type disconnect() = 0 ;
 
 protected :
 

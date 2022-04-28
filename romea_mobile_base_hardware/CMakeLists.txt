@@ -19,6 +19,10 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(rclcpp_lifecycle REQUIRED)
+find_package(hardware_interface REQUIRED)
+find_package(pluginlib REQUIRED)
+
 find_package(romea_core_common REQUIRED)
 find_package(romea_core_mobile_base REQUIRED)
 find_package(romea_common_utils REQUIRED)
@@ -48,6 +52,9 @@ add_library(${PROJECT_NAME} SHARED
 
 ament_target_dependencies(${PROJECT_NAME}
  rclcpp
+ rclcpp_lifecycle
+ hardware_interface
+ pluginlib
  romea_core_common
  romea_core_mobile_base
  romea_common_utils
@@ -59,12 +66,14 @@ target_include_directories(${PROJECT_NAME} PUBLIC
  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
  $<INSTALL_INTERFACE:include>)
 
-
+ament_export_dependencies(hardware_interface)
+ament_export_dependencies(rclcpp)
+ament_export_dependencies(rclcpp_lifecycle)
+ament_export_dependencies(pluginlib)
 ament_export_dependencies(romea_core_common)
 ament_export_dependencies(romea_core_mobile_base)
 ament_export_dependencies(romea_common_utils)
 ament_export_dependencies(romea_mobile_base_utils)
-ament_export_dependencies(hardware_interface)
 
 ament_export_include_directories(include)
 ament_export_libraries(${PROJECT_NAME})

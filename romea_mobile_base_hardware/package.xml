@@ -13,11 +13,13 @@
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <depend>rclcpp</depend>
+  <depend>rclcpp_lifecycle</depend>
+  <depend>hardware_interface</depend>
+  <depend>pluginlib</depend>
   <depend>romea_core_common</depend>
   <depend>romea_core_mobile_base</depend>
   <depend>romea_common_utils</depend>
   <depend>romea_mobile_base_utils</depend>
-  <depend>hardware_interface</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
