@@ -39,6 +39,7 @@ def generate_launch_description():
             " ",
             "prefix:=",
             prefix,
+            " mode:=view",
         ]
     )
 
