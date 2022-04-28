@@ -1,15 +1,21 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:macro name="base_control" params="use_sim">
+  <xacro:macro name="base_control" params="mode">
 
     <ros2_control name="${prefix}base" type="system">
 
-        <xacro:if value="$(arg use_sim)">
-            <hardware>
-              <plugin>gazebo_ros2_control/GazeboSystem</plugin>
-            </hardware>
-        </xacro:if>
+      <xacro:if value="${mode == 'live'}">
+          <hardware>
+            <plugin>${live_hardware_plugin}</plugin>
+          </hardware>
+      </xacro:if>
+
+       <xacro:if value="${mode == 'simulation'}">
+           <hardware>
+             <plugin>${simulation_hardware_plugin}</plugin>
+           </hardware>
+       </xacro:if>
 
         <joint name="${prefix}${high_left_sprocket_wheel_spinning_joint}">
           <command_interface name="velocity">
