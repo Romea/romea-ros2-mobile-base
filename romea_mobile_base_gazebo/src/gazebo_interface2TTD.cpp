@@ -16,8 +16,8 @@ GazeboInterface2TTD::GazeboInterface2TTD(gazebo::physics::ModelPtr parent_model,
   front_right_roller_wheel_spinning_joint(parent_model,hardware_info.joints[HardwareInterface2TTD::FRONT_RIGHT_ROLLER_WHEEL_SPINNING_JOINT_ID],command_interface_type),
   rear_left_roller_wheel_spinning_joint(parent_model,hardware_info.joints[HardwareInterface2TTD::REAR_LEFT_ROLLER_WHEEL_SPINNING_JOINT_ID],command_interface_type),
   rear_right_roller_wheel_spinning_joint(parent_model,hardware_info.joints[HardwareInterface2TTD::REAR_RIGHT_ROLLER_WHEEL_SPINNING_JOINT_ID],command_interface_type),
-  roller_wheel_radius(std::stod(get_parameter(hardware_info,"roller_wheel_radius"))),
-  sprocket_wheel_radius(std::stod(get_parameter(hardware_info,"sprockect_wheel_radius")))
+  roller_wheel_radius(get_parameter<double>(hardware_info,"roller_wheel_radius")),
+  sprocket_wheel_radius(get_parameter<double>(hardware_info,"sprockect_wheel_radius"))
 {
 
 }

@@ -14,8 +14,8 @@ GazeboInterface2THD::GazeboInterface2THD(gazebo::physics::ModelPtr parent_model,
   front_right_idler_wheel_spinning_joint(parent_model,hardware_info.joints[HardwareInterface2THD::FRONT_RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID],command_interface_type),
   rear_left_idler_wheel_spinning_joint(parent_model,hardware_info.joints[HardwareInterface2THD::REAR_LEFT_IDLER_WHEEL_SPINNING_JOINT_ID],command_interface_type),
   rear_right_idler_wheel_spinning_joint(parent_model,hardware_info.joints[HardwareInterface2THD::REAR_RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID],command_interface_type),
-  idler_wheel_radius(std::stod(get_parameter(hardware_info,"idler_wheel_radius"))),
-  sprocket_wheel_radius(std::stod(get_parameter(hardware_info,"sprockect_wheel_radius")))
+  idler_wheel_radius(get_parameter<double>(hardware_info,"idler_wheel_radius")),
+  sprocket_wheel_radius(get_parameter<double>(hardware_info,"sprockect_wheel_radius"))
 {
 
 }
