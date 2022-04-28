@@ -59,7 +59,7 @@ CallbackReturn HardwareSystemInterface<HardwareInterface>::on_init(const hardwar
 template <typename HardwareInterface>
 CallbackReturn HardwareSystemInterface<HardwareInterface>::on_configure(const rclcpp_lifecycle::State & previous_state )
 {
-  RCLCPP_ERROR_STREAM(rclcpp::get_logger("HardwareSystemInterface"),"on_configure : previous state " <<previous_state.id()<<" "<<previous_state.label());
+  RCLCPP_ERROR_STREAM(rclcpp::get_logger("HardwareSystemInterface"),"on_configure : previous state " <<int(previous_state.id())<<" "<<previous_state.label());
   if(connect()==hardware_interface::return_type::OK)
   {
     return CallbackReturn::SUCCESS;
@@ -74,7 +74,7 @@ CallbackReturn HardwareSystemInterface<HardwareInterface>::on_configure(const rc
 template <typename HardwareInterface>
 CallbackReturn HardwareSystemInterface<HardwareInterface>::on_cleanup(const rclcpp_lifecycle::State & previous_state)
 {
-  RCLCPP_ERROR_STREAM(rclcpp::get_logger("HardwareSystemInterface"),"on_cleanup : previous state " <<previous_state.id()<<" "<<previous_state.label());
+  RCLCPP_ERROR_STREAM(rclcpp::get_logger("HardwareSystemInterface"),"on_cleanup : previous state " <<int(previous_state.id())<<" "<<previous_state.label());
   if(disconnect()==hardware_interface::return_type::OK)
   {
     return CallbackReturn::SUCCESS;
@@ -91,7 +91,7 @@ CallbackReturn HardwareSystemInterface<HardwareInterface>::on_cleanup(const rclc
 template <typename HardwareInterface>
 CallbackReturn HardwareSystemInterface<HardwareInterface>::on_activate(const rclcpp_lifecycle::State & previous_state)
 {
-  RCLCPP_ERROR_STREAM(rclcpp::get_logger("HardwareSystemInterface"),"on_activate : previous state " <<previous_state.id()<<" "<<previous_state.label());
+  RCLCPP_ERROR_STREAM(rclcpp::get_logger("HardwareSystemInterface"),"on_activate : previous state " <<int(previous_state.id())<<" "<<previous_state.label());
   return CallbackReturn::SUCCESS;
 }
 
@@ -100,7 +100,7 @@ template <typename HardwareInterface>
 CallbackReturn HardwareSystemInterface<HardwareInterface>::on_deactivate(const rclcpp_lifecycle::State & previous_state)
 {
   //send null command
-  RCLCPP_ERROR_STREAM(rclcpp::get_logger("HardwareSystemInterface"),"on_deactivate : previous state" <<previous_state.id()<<" "<<previous_state.label());
+  RCLCPP_ERROR_STREAM(rclcpp::get_logger("HardwareSystemInterface"),"on_deactivate : previous state" <<int(previous_state.id())<<" "<<previous_state.label());
   return CallbackReturn::SUCCESS;
 }
 
@@ -108,9 +108,9 @@ CallbackReturn HardwareSystemInterface<HardwareInterface>::on_deactivate(const r
 template <typename HardwareInterface>
 CallbackReturn HardwareSystemInterface<HardwareInterface>::on_shutdown(const rclcpp_lifecycle::State & previous_state)
 {
-  RCLCPP_ERROR_STREAM(rclcpp::get_logger("HardwareSystemInterface"),"on_shutdownn : previous state " <<previous_state.id()<<" "<<previous_state.label());
+  RCLCPP_ERROR_STREAM(rclcpp::get_logger("HardwareSystemInterface"),"on_shutdownn : previous state " <<int(previous_state.id())<<" "<<previous_state.label());
 
-  if(previous_state.id() == 0)
+  if(int(previous_state.id()) == 1)
   {
     return CallbackReturn::SUCCESS;
   }
@@ -128,7 +128,7 @@ CallbackReturn HardwareSystemInterface<HardwareInterface>::on_shutdown(const rcl
 template <typename HardwareInterface>
 CallbackReturn HardwareSystemInterface<HardwareInterface>::on_error(const rclcpp_lifecycle::State &  previous_state)
 {
-  RCLCPP_ERROR_STREAM(rclcpp::get_logger("HardwareSystemInterface"),"on_error : previous state " <<previous_state.id()<<" "<<previous_state.label());
+  RCLCPP_ERROR_STREAM(rclcpp::get_logger("HardwareSystemInterface"),"on_error : previous state " <<int(previous_state.id())<<" "<<previous_state.label());
   return CallbackReturn::FAILURE;
 }
 
