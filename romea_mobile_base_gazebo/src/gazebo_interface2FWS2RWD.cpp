@@ -1,4 +1,6 @@
 #include "romea_mobile_base_gazebo/gazebo_interface2FWS2RWD.hpp"
+#include <romea_mobile_base_hardware/hardware_info.hpp>
+
 #include <romea_core_mobile_base/kinematic/wheel_steering/TwoWheelSteeringKinematic.hpp>
 
 namespace romea
@@ -14,9 +16,9 @@ GazeboInterface2FWS2RWD::GazeboInterface2FWS2RWD(gazebo::physics::ModelPtr paren
   front_right_wheel_spinning_joint(parent_model,hardware_info.joints[HardwareInterface2FWS2RWD::FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID],command_interface_type),
   rear_left_wheel_spinning_joint(parent_model,hardware_info.joints[HardwareInterface2FWS2RWD::REAR_LEFT_WHEEL_SPINNING_JOINT_ID],command_interface_type),
   rear_right_wheel_spinning_joint(parent_model,hardware_info.joints[HardwareInterface2FWS2RWD::REAR_RIGHT_WHEEL_SPINNING_JOINT_ID],command_interface_type),
-  wheelbase(0),
-  front_track(0),
-  front_hub_carrier_offset(0)
+  wheelbase(get_parameter<double>(hardware_info,"wheelbase")),
+  front_track(get_parameter<double>(hardware_info,"front_track")),
+  front_hub_carrier_offset(get_parameter<double>(hardware_info,"front_hub_carrier_offset"))
 {
 
 }
