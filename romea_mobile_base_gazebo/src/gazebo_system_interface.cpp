@@ -146,6 +146,7 @@ hardware_interface::return_type GazeboSystemInterface<GazeboInterface>::write()
 template class GazeboSystemInterface<GazeboInterface1FAS2FWD>;
 template class GazeboSystemInterface<GazeboInterface1FAS2RWD>;
 //template class GazeboSystemInterface<GazeboInterface1FWS2RWD>;
+template class GazeboSystemInterface<GazeboInterface2AS4WD>;
 template class GazeboSystemInterface<GazeboInterface2FWS2FWD>;
 template class GazeboSystemInterface<GazeboInterface2FWS2RWD>;
 template class GazeboSystemInterface<GazeboInterface2FWS4WD>;

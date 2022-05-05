@@ -18,4 +18,13 @@
       </description>
   </class>
 
+  <class
+    name="romea_mobile_base_gazebo/GazeboSystemInterface2AS4WD"
+    type="romea::GazeboSystemInterface2AS4WD"
+    base_class_type="gazebo_ros2_control::GazeboSystemInterface">
+      <description>
+        GazeboSystemInterface for 2AS4WD Vehicle
+      </description>
+  </class>
+
 </library>

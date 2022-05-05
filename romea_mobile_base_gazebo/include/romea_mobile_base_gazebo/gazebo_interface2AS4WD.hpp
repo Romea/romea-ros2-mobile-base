@@ -1,43 +1,48 @@
-#ifndef _romea_BaseHardwareInterface2AS4WD_hpp_
-#define _romea_BaseHardwareInterface2AS4WD_hpp_
-
+#ifndef _romea_GazeboInterface2AS4WD_hpp_
+#define _romea_GazeboInterface2AS4WD_hpp_
 
 //romea
-#include "steering_joint_hardware_interface.hpp"
-#include "spinning_joint_hardware_interface.hpp"
-#include <romea_core_mobile_base/odometry/OdometryFrame2AS4WD.hpp>
-#include <romea_mobile_base_utils/params/hardware_interface_parameters2AS4WD.hpp>
+#include "spinning_joint_gazebo_interface.hpp"
+#include "steering_joint_gazebo_interface.hpp"
+#include <romea_mobile_base_hardware/hardware_interface2AS4WD.hpp>
 
 namespace romea
 {
 
-struct HardwareInterface2AS4WD
-{
+class GazeboInterface2AS4WD{
 
-  using Parameters = HardwareInterfaceConfiguration2AS4WD;
 
-  HardwareInterface2AS4WD(const Parameters & parameters,
-                          const std::string & joints_prefix,
-                          const hardware_interface::HardwareInfo &hardware_info);
+public:
 
-  void setMeasurement(const OdometryFrame2AS4WD & measurement);
+using HardwareInterface = HardwareInterface2AS4WD;
 
-  OdometryFrame2AS4WD getCommand() const;
+public:
 
-  std::vector<hardware_interface::StateInterface> export_state_interfaces();
+  GazeboInterface2AS4WD(gazebo::physics::ModelPtr parent_model,
+                        const hardware_interface::HardwareInfo & hardware_info,
+                        const std::string & command_interface_type);
 
-  std::vector<hardware_interface::CommandInterface> export_command_interfaces();
+  SteeringJointGazeboInterface front_axle_steering_joint;
+  SteeringJointGazeboInterface rear_axle_steering_joint;
+  SteeringJointGazeboInterface front_left_wheel_steering_joint;
+  SteeringJointGazeboInterface front_right_wheel_steering_joint;
+  SteeringJointGazeboInterface rear_left_wheel_steering_joint;
+  SteeringJointGazeboInterface rear_right_wheel_steering_joint;
+  SpinningJointGazeboInterface front_left_wheel_spinning_joint;
+  SpinningJointGazeboInterface front_right_wheel_spinning_joint;
+  SpinningJointGazeboInterface rear_left_wheel_spinning_joint;
+  SpinningJointGazeboInterface rear_right_wheel_spinning_joint;
 
-private :
-
-  std::unique_ptr<SteeringJointHardwareInterface> front_steering_joint_;
-  std::unique_ptr<SteeringJointHardwareInterface> rear_steering_joint_;
-  std::unique_ptr<SpinningJointHardwareInterface> front_left_spinning_joint_;
-  std::unique_ptr<SpinningJointHardwareInterface> front_right_spinning_joint_;
-  std::unique_ptr<SpinningJointHardwareInterface> rear_left_spinning_joint_;
-  std::unique_ptr<SpinningJointHardwareInterface> rear_right_spinning_joint_;
-
+  const double wheelbase;
+  const double front_track;
+  const double rear_track;
 };
+
+void write(const HardwareInterface2AS4WD & hardware_interface,
+           GazeboInterface2AS4WD & gazebo_interface);
+
+void read(const GazeboInterface2AS4WD & gazebo_interface,
+          HardwareInterface2AS4WD & hardware_interface);
 
 
 }
