@@ -17,7 +17,7 @@
            </hardware>
        </xacro:if>
 
-        <joint name="${prefix}${high_left_sprocket_wheel_spinning_joint}">
+        <joint name="${prefix}${left_sprocket_wheel_spinning_joint}">
           <command_interface name="velocity">
             <param name="min">-1</param>
             <param name="max">1</param>
@@ -27,7 +27,7 @@
           <state_interface name="effort"/>
         </joint>
 
-        <joint name="${prefix}${high_right_sprocket_wheel_spinning_joint}">
+        <joint name="${prefix}${right_sprocket_wheel_spinning_joint}">
           <command_interface name="velocity">
             <param name="min">-1</param>
             <param name="max">1</param>

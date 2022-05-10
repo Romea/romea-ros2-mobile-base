@@ -27,18 +27,10 @@
 
 
         <joint name="${prefix}${front_left_wheel_steering_joint}">
-          <command_interface name="position">
-            <param name="min">-1</param>
-            <param name="max">1</param>
-          </command_interface>
           <state_interface name="position"/>
         </joint>
 
         <joint name="${prefix}${front_right_wheel_steering_joint}">
-          <command_interface name="position">
-            <param name="min">-1</param>
-            <param name="max">1</param>
-          </command_interface>
           <state_interface name="position"/>
         </joint>
 

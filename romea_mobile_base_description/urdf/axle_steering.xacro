@@ -3,7 +3,15 @@
 
   <xacro:macro name="axle_steering" params="parent_link axle_steering_link axle_steering_joint *joint_origin">
 
-    <link name="${prefix}${axle_steering_link}"/>
+    <link name="${prefix}${axle_steering_link}">
+      <inertial>
+        <mass value="${steering_link_mass}" />
+        <origin xyz="0 0 0" />
+        <inertia  ixx="${steering_link_mass/12.0 * (steering_link_y*steering_link_y + steering_link_xz*steering_link_xz)}" ixy="0" ixz="0"
+                  iyy="${steering_link_mass/12.0 * (steering_link_xz*steering_link_xz + steering_link_xz*steering_link_xz)}" iyz="0"
+                  izz="${steering_link_mass/12.0 * (steering_link_y*steering_link_y + steering_link_xz*steering_link_xz)}" />
+      </inertial>
+   </link>
 
     <joint name="${prefix}${axle_steering_joint}" type="revolute">
       <limit lower="${minimal_axle_steering_angle}" upper="${maximal_axle_steering_angle}" effort="10000000" velocity="1000000"/>
@@ -12,6 +20,16 @@
       <xacro:insert_block name="joint_origin"/>
       <axis xyz="0 0 1" rpy="0 0 0" />
     </joint>
+
+   <transmission name="${prefix}${axle_steering_joint}_trans" type="SimpleTransmission">
+     <type>transmission_interface/SimpleTransmission</type>
+     <actuator name="${prefix}${axle_steering_joint}_motor">
+       <mechanicalReduction>1</mechanicalReduction>
+     </actuator>
+     <joint name="${prefix}${axle_steering_joint}">
+       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+     </joint>
+   </transmission>
 
   </xacro:macro>
 
