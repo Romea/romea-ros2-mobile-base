@@ -53,7 +53,7 @@ template <typename InterfaceType, typename KinematicType>
 CallbackReturn MobileBaseController<InterfaceType,KinematicType>::on_init()
 {
 
-  std::cout << " on init" << std::endl;
+//  std::cout << " on init" << std::endl;
   try
   {
     //    declare_command_limits_();
@@ -80,7 +80,7 @@ template <typename InterfaceType, typename KinematicType>
 controller_interface::InterfaceConfiguration
 MobileBaseController<InterfaceType,KinematicType>::command_interface_configuration() const
 {
-  std::cout << " command_interface_configuration" << std::endl;
+//  std::cout << " command_interface_configuration" << std::endl;
   if(controller_interface_)
   {
     return {controller_interface::interface_configuration_type::INDIVIDUAL,
@@ -97,7 +97,7 @@ template <typename InterfaceType, typename KinematicType>
 controller_interface::InterfaceConfiguration
 MobileBaseController<InterfaceType,KinematicType>::state_interface_configuration() const
 {
-  std::cout << " state_interface_configuration" << std::endl;
+//  std::cout << " state_interface_configuration" << std::endl;
 
   if(controller_interface_)
   {
@@ -114,7 +114,7 @@ MobileBaseController<InterfaceType,KinematicType>::state_interface_configuration
 template <typename InterfaceType, typename KinematicType>
 CallbackReturn MobileBaseController<InterfaceType,KinematicType>::on_configure(const rclcpp_lifecycle::State & /*previous_state*/)
 {
-  std::cout << " on configure" << std::endl;
+//  std::cout << " on configure" << std::endl;
 
   try {
     load_command_limits_();
@@ -124,7 +124,7 @@ CallbackReturn MobileBaseController<InterfaceType,KinematicType>::on_configure(c
     init_interface_();
     init_publishers_();
     init_cmd_subscriber_();
-    std::cout << " on configure OK" << std::endl;
+//    std::cout << " on configure OK" << std::endl;
     return CallbackReturn::SUCCESS;
   }
   catch (std::runtime_error & e)
@@ -138,7 +138,7 @@ CallbackReturn MobileBaseController<InterfaceType,KinematicType>::on_configure(c
 template <typename InterfaceType, typename KinematicType>
 CallbackReturn MobileBaseController<InterfaceType,KinematicType>::on_activate(const rclcpp_lifecycle::State & )
 {
-  std::cout << " on activate" << std::endl;
+//  std::cout << " on activate" << std::endl;
 
   try {
 //    controller_interface_->register_loaned_command_interfaces(command_interfaces_);
@@ -166,7 +166,7 @@ CallbackReturn MobileBaseController<InterfaceType,KinematicType>::on_activate(co
 template <typename InterfaceType, typename KinematicType>
 CallbackReturn MobileBaseController<InterfaceType,KinematicType>::on_deactivate(const rclcpp_lifecycle::State &)
 {
-  std::cout << " on deactivate" << std::endl;
+//  std::cout << " on deactivate" << std::endl;
 
   is_running_ = false;
   send_null_command();
@@ -177,7 +177,7 @@ CallbackReturn MobileBaseController<InterfaceType,KinematicType>::on_deactivate(
 template <typename InterfaceType, typename KinematicType>
 CallbackReturn MobileBaseController<InterfaceType,KinematicType>::on_cleanup(const rclcpp_lifecycle::State &)
 {
-  std::cout << " on cleanup" << std::endl;
+//  std::cout << " on cleanup" << std::endl;
 
   reset_();
   return CallbackReturn::SUCCESS;
@@ -187,7 +187,7 @@ CallbackReturn MobileBaseController<InterfaceType,KinematicType>::on_cleanup(con
 template <typename InterfaceType, typename KinematicType>
 CallbackReturn MobileBaseController<InterfaceType,KinematicType>::on_error(const rclcpp_lifecycle::State &)
 {
-  std::cout << " on error" << std::endl;
+//  std::cout << " on error" << std::endl;
   reset_();
   return CallbackReturn::SUCCESS;
 }
@@ -196,7 +196,7 @@ CallbackReturn MobileBaseController<InterfaceType,KinematicType>::on_error(const
 template <typename InterfaceType, typename KinematicType>
 CallbackReturn MobileBaseController<InterfaceType,KinematicType>::on_shutdown(const rclcpp_lifecycle::State &)
 {
-  std::cout << " on shutdown" << std::endl;
+//  std::cout << " on shutdown" << std::endl;
   return CallbackReturn::SUCCESS;
 }
 
@@ -208,7 +208,7 @@ controller_interface::return_type MobileBaseController<InterfaceType,KinematicTy
 update(const rclcpp::Time& time, const rclcpp::Duration & /*period*/)
 {
 
-  std::cout << "update" << std::endl;
+//  std::cout << "update" << std::endl;
   update_time_=node_->get_clock()->now(); //why not time?
 //  RCLCPP_INFO_STREAM(node_->get_logger(), "update_controller_state_");
   update_controller_state_();
@@ -231,7 +231,7 @@ update(const rclcpp::Time& time, const rclcpp::Duration & /*period*/)
     //    RCLCPP_INFO_STREAM(node_->get_logger(),"\n"<<current_command_.cmd);
 
     send_current_command_();
-    RCLCPP_INFO_STREAM(node_->get_logger(), "cooucou new command");
+//    RCLCPP_INFO_STREAM(node_->get_logger(), "cooucou new command");
 
   }
   else if(timeout_())
@@ -314,8 +314,8 @@ template <typename OdometryFrameType, typename KinematicType>
 void MobileBaseController<OdometryFrameType,KinematicType>::send_current_command_()
 {
   forwardKinematic(kinematic_parameters_,current_command_.cmd,odometry_frame_);
-  RCLCPP_INFO_STREAM(node_->get_logger(),"odometry frame commad");
-  RCLCPP_INFO_STREAM(node_->get_logger(),odometry_frame_);
+//  RCLCPP_INFO_STREAM(node_->get_logger(),"odometry frame commad");
+//  RCLCPP_INFO_STREAM(node_->get_logger(),odometry_frame_);
 
   controller_interface_->write(odometry_frame_,command_interfaces_);
 }
@@ -335,7 +335,7 @@ void MobileBaseController<OdometryFrameType,KinematicType>::
 command_callback_(typename CommandMsg::ConstSharedPtr cmd_msg)
 {
 
-  RCLCPP_INFO_STREAM(node_->get_logger(),"command_callback_");
+//  RCLCPP_INFO_STREAM(node_->get_logger(),"command_callback_");
   StampedCommand stamped_cmd;
   to_romea(*cmd_msg,stamped_cmd.cmd);
   stamped_cmd.stamp=node_->get_clock()->now();
@@ -387,12 +387,12 @@ void MobileBaseController<InterfaceType,KinematicType>::load_joints_names_()
   std::string prefix = get_parameter_or<std::string>(node_,JOINTS_PREFIX_PARAM_NAME,"");
   joints_names_ = InterfaceType::get_joints_names(node_,JOINTS_MAPPING_PARAM_NAME);
 
-  std::cout << " joint_names "<< std::endl;
-  for(auto & joint_name : joints_names_)
-  {
-    joint_name = prefix+ joint_name;
-    std::cout << joint_name << std::endl;
-  }
+//  std::cout << " joint_names "<< std::endl;
+//  for(auto & joint_name : joints_names_)
+//  {
+//    joint_name = prefix+ joint_name;
+//    std::cout << joint_name << std::endl;
+//  }
 }
 
 ////-----------------------------------------------------------------------------
@@ -522,7 +522,7 @@ void MobileBaseController<OdometryFrameType,KinematicType>::load_command_limits_
 template <typename InterfaceType, typename KinematicType>
 void MobileBaseController<InterfaceType,KinematicType>::init_interface_()
 {
-  std::cout << "init_interface_ " << std::endl;
+//  std::cout << "init_interface_ " << std::endl;
   auto mobile_base_info = load_mobile_base_info_();
   controller_interface_= std::make_unique<InterfaceType>(mobile_base_info);
   to_kinematic_parameters(mobile_base_info,kinematic_parameters_);

@@ -22,8 +22,11 @@ bool GazeboSystemInterface<GazeboInterface>::initSim(
     const hardware_interface::HardwareInfo & hardware_info,
     sdf::ElementPtr sdf)
 {
+
   nh_=model_nh;
   parent_model_ = parent_model;
+
+  RCLCPP_ERROR(this->nh_->get_logger(), "initSim");
 
   return(check_physics_engine_configuration_() &&
         init_gazebo_interfaces_(hardware_info) &&
@@ -42,6 +45,8 @@ bool GazeboSystemInterface<GazeboInterface>::check_physics_engine_configuration_
     RCLCPP_ERROR(this->nh_->get_logger(), "No physics engine configured in Gazebo.");
     return false;
   }
+
+  RCLCPP_ERROR(this->nh_->get_logger(), "check_physics_engine_configuration_ OK");
 
   return true;
 }
@@ -99,11 +104,15 @@ init_gazebo_interfaces_(const hardware_interface::HardwareInfo & hardware_info)
 {
   try
   {
+    std::cout << "  hardware_info.joints.size() " << hardware_info.joints.size() << std::endl;
     gazebo_interface_ = std::make_unique<GazeboInterface>(parent_model_,hardware_info,"velocity");
+    RCLCPP_ERROR(this->nh_->get_logger(), "init_gazebo_interfaces_ OK");
+
     return true;
   }
   catch (std::runtime_error &e)
   {
+    RCLCPP_ERROR(this->nh_->get_logger(), "init_gazebo_interfaces_ not OK");
     RCLCPP_ERROR_STREAM(nh_->get_logger(),e.what());
     return false;
   }
@@ -117,10 +126,12 @@ init_hardware_interfaces_(const hardware_interface::HardwareInfo & hardware_info
   try
   {
     hardware_interface_ = std::make_unique<HardwareInterface>(hardware_info,"velocity");
+    RCLCPP_ERROR(this->nh_->get_logger(), "init_hardware_interfaces_ OK");
     return true;
   }
   catch (std::runtime_error &e)
   {
+    RCLCPP_ERROR(this->nh_->get_logger(), "init_hardware_interfaces_ not OK");
     RCLCPP_ERROR_STREAM(nh_->get_logger(),e.what());
     return false;
   }
@@ -159,3 +170,4 @@ template class GazeboSystemInterface<GazeboInterface4WS4WD>;
 #include "pluginlib/class_list_macros.hpp"  // NOLINT
 PLUGINLIB_EXPORT_CLASS(romea::GazeboSystemInterface4WD, gazebo_ros2_control::GazeboSystemInterface)
 PLUGINLIB_EXPORT_CLASS(romea::GazeboSystemInterface4WS4WD, gazebo_ros2_control::GazeboSystemInterface)
+PLUGINLIB_EXPORT_CLASS(romea::GazeboSystemInterface2AS4WD, gazebo_ros2_control::GazeboSystemInterface)
