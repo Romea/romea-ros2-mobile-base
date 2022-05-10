@@ -11,16 +11,16 @@ namespace romea
 GazeboInterface2AS4WD::GazeboInterface2AS4WD(gazebo::physics::ModelPtr parent_model,
                                              const hardware_interface::HardwareInfo & hardware_info,
                                              const std::string & command_interface_type):
-  front_axle_steering_joint(parent_model,hardware_info.joints[HardwareInterface2AS4WD::FRONT_AXLE_STEERING_JOINT_ID]),
-  rear_axle_steering_joint(parent_model,hardware_info.joints[HardwareInterface2AS4WD::REAR_AXLE_STEERING_JOINT_ID]),
-  front_left_wheel_steering_joint(parent_model,hardware_info.joints[HardwareInterface2AS4WD::FRONT_LEFT_WHEEL_STEERING_JOINT_ID]),
-  front_right_wheel_steering_joint(parent_model,hardware_info.joints[HardwareInterface2AS4WD::FRONT_RIGHT_WHEEL_STEERING_JOINT_ID]),
-  rear_left_wheel_steering_joint(parent_model,hardware_info.joints[HardwareInterface2AS4WD::REAR_LEFT_WHEEL_STEERING_JOINT_ID]),
-  rear_right_wheel_steering_joint(parent_model,hardware_info.joints[HardwareInterface2AS4WD::REAR_RIGHT_WHEEL_STEERING_JOINT_ID]),
-  front_left_wheel_spinning_joint(parent_model,hardware_info.joints[HardwareInterface2AS4WD::FRONT_LEFT_WHEEL_SPINNING_JOINT_ID],command_interface_type),
-  front_right_wheel_spinning_joint(parent_model,hardware_info.joints[HardwareInterface2AS4WD::FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID],command_interface_type),
-  rear_left_wheel_spinning_joint(parent_model,hardware_info.joints[HardwareInterface2AS4WD::REAR_LEFT_WHEEL_SPINNING_JOINT_ID],command_interface_type),
-  rear_right_wheel_spinning_joint(parent_model,hardware_info.joints[HardwareInterface2AS4WD::REAR_RIGHT_WHEEL_SPINNING_JOINT_ID],command_interface_type),
+  front_axle_steering_joint(parent_model,hardware_info.joints.at(HardwareInterface2AS4WD::FRONT_AXLE_STEERING_JOINT_ID)),
+  rear_axle_steering_joint(parent_model,hardware_info.joints.at(HardwareInterface2AS4WD::REAR_AXLE_STEERING_JOINT_ID)),
+  front_left_wheel_steering_joint(parent_model,hardware_info.joints.at(HardwareInterface2AS4WD::FRONT_LEFT_WHEEL_STEERING_JOINT_ID)),
+  front_right_wheel_steering_joint(parent_model,hardware_info.joints.at(HardwareInterface2AS4WD::FRONT_RIGHT_WHEEL_STEERING_JOINT_ID)),
+  rear_left_wheel_steering_joint(parent_model,hardware_info.joints.at(HardwareInterface2AS4WD::REAR_LEFT_WHEEL_STEERING_JOINT_ID)),
+  rear_right_wheel_steering_joint(parent_model,hardware_info.joints.at(HardwareInterface2AS4WD::REAR_RIGHT_WHEEL_STEERING_JOINT_ID)),
+  front_left_wheel_spinning_joint(parent_model,hardware_info.joints.at(HardwareInterface2AS4WD::FRONT_LEFT_WHEEL_SPINNING_JOINT_ID),command_interface_type),
+  front_right_wheel_spinning_joint(parent_model,hardware_info.joints.at(HardwareInterface2AS4WD::FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID),command_interface_type),
+  rear_left_wheel_spinning_joint(parent_model,hardware_info.joints.at(HardwareInterface2AS4WD::REAR_LEFT_WHEEL_SPINNING_JOINT_ID),command_interface_type),
+  rear_right_wheel_spinning_joint(parent_model,hardware_info.joints.at(HardwareInterface2AS4WD::REAR_RIGHT_WHEEL_SPINNING_JOINT_ID),command_interface_type),
   wheelbase(get_parameter<double>(hardware_info,"wheelbase")),
   front_track(get_parameter<double>(hardware_info,"front_track")),
   rear_track(get_parameter<double>(hardware_info,"rear_track"))
@@ -76,7 +76,7 @@ void write(const HardwareInterface2AS4WD & hardware_interface,
       std::tan(hardware_interface.front_axle_steering_joint.command.get());
 
   double tan_rear_axle_steering_command =
-      std::tan(hardware_interface.rear_axle_steering_joint.command.get());
+      std::tan(-hardware_interface.rear_axle_steering_joint.command.get());
 
   double front_intantaneous_curvature_command = OneAxleSteeringKinematic::
       computeInstantaneousCurvature(tan_front_axle_steering_command,wheelbase);
@@ -94,15 +94,24 @@ void write(const HardwareInterface2AS4WD & hardware_interface,
                              front_intantaneous_curvature_command,
                              front_track/2.);
 
-  double rear_left_angle_command = TwoWheelSteeringKinematic::
+  double rear_left_angle_command = -TwoWheelSteeringKinematic::
       computeLeftWheelAngle(tan_rear_axle_steering_command,
                             rear_intantaneous_curvature_command,
                             rear_track/2.);
 
-  double rear_right_angle_command = TwoWheelSteeringKinematic::
+
+  double rear_right_angle_command = -TwoWheelSteeringKinematic::
       computeRightWheelAngle(tan_rear_axle_steering_command,
                              rear_intantaneous_curvature_command,
                              rear_track/2.);
+
+//  std::cout << " \n\n" << std::endl;
+//  std::cout << " front_steering_angle_command " << hardware_interface.front_axle_steering_joint.command.get()<< std::endl;
+//  std::cout << " rear_steering_angle_command " << hardware_interface.rear_axle_steering_joint.command.get()<< std::endl;
+//  std::cout << " front_left_angle_command " << front_left_angle_command<< std::endl;
+//  std::cout << " front_right_angle_command " << front_right_angle_command<< std::endl;
+//  std::cout << " rear_left_angle_command " << rear_left_angle_command<< std::endl;
+//  std::cout << " rear_right_angle_command " << rear_right_angle_command<< std::endl;
 
 
   write(hardware_interface,
@@ -154,16 +163,16 @@ void read(const GazeboInterface2AS4WD & gazebo_interface,
   const double & rear_track = gazebo_interface.rear_track;
 
   double front_left_wheel_steering_angle = gazebo_interface.
-      front_left_wheel_spinning_joint.getFeedback().position;
+      front_left_wheel_steering_joint.getFeedback();
 
   double front_right_wheel_steering_angle = gazebo_interface.
-      front_right_wheel_spinning_joint.getFeedback().position;
+      front_right_wheel_steering_joint.getFeedback();
 
   double rear_left_wheel_steering_angle = gazebo_interface.
-      rear_left_wheel_spinning_joint.getFeedback().position;
+      rear_left_wheel_steering_joint.getFeedback();
 
   double rear_right_wheel_steering_angle = gazebo_interface.
-      rear_right_wheel_spinning_joint.getFeedback().position;
+      rear_right_wheel_steering_joint.getFeedback();
 
   double front_axle_steering_angle_state = TwoWheelSteeringKinematic::
       computeSteeringAngle(front_left_wheel_steering_angle,
@@ -174,6 +183,13 @@ void read(const GazeboInterface2AS4WD & gazebo_interface,
       computeSteeringAngle(rear_left_wheel_steering_angle,
                            rear_right_wheel_steering_angle,
                            wheelbase,rear_track);
+
+//  std::cout << " front_left_wheel_steering_angle " << front_left_wheel_steering_angle<< std::endl;
+//  std::cout << " front_right_wheel_steering_angle " << front_right_wheel_steering_angle<< std::endl;
+//  std::cout << " rear_left_wheel_steering_angle " << rear_left_wheel_steering_angle<< std::endl;
+//  std::cout << " rear_right_wheel_steering_angle " << rear_right_wheel_steering_angle<< std::endl;
+//  std::cout << " front_axle_steering_angle_state " << front_axle_steering_angle_state<< std::endl;
+//  std::cout << " rear_axle_steering_angle_state " << rear_axle_steering_angle_state<< std::endl;
 
   read(gazebo_interface,
        front_axle_steering_angle_state,
