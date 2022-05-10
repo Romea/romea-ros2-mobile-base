@@ -16,4 +16,12 @@
      </description>
    </class>
 
+   <class name="romea_mobile_base_controllers/MobileBaseController2AS4WD"
+          type="romea::MobileBaseController2AS4WD"
+          base_class_type="controller_interface::ControllerInterface">
+     <description>
+       Controller for four wheel steering vehicle
+     </description>
+   </class>
+
 </library>

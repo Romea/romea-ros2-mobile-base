@@ -36,11 +36,13 @@ public:
 
 public :
 
-  static void declare_joints_names(std::shared_ptr<rclcpp::Node> node,
-                                     const std::string & parameters_ns);
+  static void declare_joints_names(
+      std::shared_ptr<rclcpp::Node> node,
+      const std::string & parameters_ns);
 
-  static std::vector<std::string> get_joints_names(std::shared_ptr<rclcpp::Node> node,
-                                                      const std::string & parameters_ns);
+  static std::vector<std::string> get_joints_names(
+      std::shared_ptr<rclcpp::Node> node,
+      const std::string & parameters_ns);
 
   static std::vector<std::string> hardware_interface_names(
       const std::vector<std::string> & joints_names);
