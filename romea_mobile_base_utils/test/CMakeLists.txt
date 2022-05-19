@@ -7,6 +7,9 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 ament_add_gtest(${PROJECT_NAME}_test_command_limits_parameters test_command_limits_parameters.cpp)
 target_link_libraries(${PROJECT_NAME}_test_command_limits_parameters ${PROJECT_NAME})
 
+ament_add_gtest(${PROJECT_NAME}_test_command_interface_parameters test_command_interface_parameters.cpp)
+target_link_libraries(${PROJECT_NAME}_test_command_interface_parameters ${PROJECT_NAME})
+
 ament_add_gtest(${PROJECT_NAME}_test_mobile_base_control_parameters test_mobile_base_control_parameters.cpp)
 target_link_libraries(${PROJECT_NAME}_test_mobile_base_control_parameters ${PROJECT_NAME})
 

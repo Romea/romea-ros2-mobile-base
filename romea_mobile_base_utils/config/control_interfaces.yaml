@@ -1,0 +1,11 @@
+skid_steering:
+  geometry::msg::Twist:
+    topic: cmd_vel
+    controllers:
+      -
+  romea_mobile_base_msgs::msg::SkidSteeringCommand:
+    topic: cmd_skid_steering
+    controllers:
+      - romea_mobile_base_controllers/MobileBaseController2TD
+      - romea_mobile_base_controllers/MobileBaseController2WD
+      - romea_mobile_base_controllers/MobileBaseController4WD

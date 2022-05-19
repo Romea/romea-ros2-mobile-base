@@ -26,12 +26,15 @@ find_package(romea_core_common REQUIRED)
 find_package(romea_core_mobile_base REQUIRED)
 find_package(romea_common_utils REQUIRED)
 find_package(romea_mobile_base_msgs REQUIRED)
+find_package(romea_cmd_mux_msgs REQUIRED)
+find_package(romea_cmd_mux_utils REQUIRED)
 
 
 add_library(${PROJECT_NAME} SHARED
     src/conversions/command_conversions.cpp
     src/conversions/kinematic_conversions.cpp
     src/params/command_limits_parameters.cpp
+    src/params/command_interface_parameters.cpp
     src/params/mobile_base_control_parameters.cpp
     src/params/mobile_base_geometry_parameters.cpp
     src/params/mobile_base_inertia_parameters.cpp
@@ -46,7 +49,8 @@ add_library(${PROJECT_NAME} SHARED
     src/params/mobile_base_parameters2WD.cpp
     src/params/mobile_base_parameters4WD.cpp
     src/params/mobile_base_parameters4WS4WD.cpp
-    src/command_publisher.cpp
+    src/control/command_publisher.cpp
+    src/control/command_interface.cpp
     )
 
 ament_target_dependencies(${PROJECT_NAME}
@@ -58,6 +62,8 @@ ament_target_dependencies(${PROJECT_NAME}
     geometry_msgs
     four_wheel_steering_msgs
     ackermann_msgs
+    romea_cmd_mux_msgs
+    romea_cmd_mux_utils
     )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
@@ -74,6 +80,8 @@ ament_export_dependencies(romea_common_utils)
 ament_export_dependencies(four_wheel_steering_msgs)
 ament_export_dependencies(ackermann_msgs)
 ament_export_dependencies(romea_mobile_base_msgs)
+ament_export_dependencies(romea_cmd_mux_msgs)
+ament_export_dependencies(romea_cmd_mux_utils)
 
 ament_export_include_directories(include)
 ament_export_libraries(${PROJECT_NAME})
