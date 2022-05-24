@@ -65,8 +65,8 @@ TEST_F(TestMobileBaseParams4WS4WD, checkGetInfo)
   EXPECT_DOUBLE_EQ(base_info.controlPoint.z(),502);
 }
 
-TEST_F(TestMobileBaseParams4WS4WD, checkGetJointMappings)
-{
-  romea::declare_joint_mappings_4WS4WD(node,"base.joints");
-  auto base_info =romea::get_joint_mappings_4WS4WD(node,"base.joints");
-}
+//TEST_F(TestMobileBaseParams4WS4WD, checkGetJointMappings)
+//{
+//  romea::declare_joint_mappings_4WS4WD(node,"base.joints");
+//  auto base_info =romea::get_joint_mappings_4WS4WD(node,"base.joints");
+//}

@@ -39,28 +39,28 @@ MobileBaseInfo4WD get_mobile_base_info_4WD(std::shared_ptr<rclcpp::Node> node,
 }
 
 
-//-----------------------------------------------------------------------------
-void declare_joint_mappings_4WD(std::shared_ptr<rclcpp::Node> node,
-                                    const std::string & parameters_ns)
-{
-  declare_parameter<std::string>(node,parameters_ns,front_left_wheel_spinning_joint_param_name);
-  declare_parameter<std::string>(node,parameters_ns,front_right_wheel_spinning_joint_param_name);
-  declare_parameter<std::string>(node,parameters_ns,rear_left_wheel_spinning_joint_param_name);
-  declare_parameter<std::string>(node,parameters_ns,rear_right_wheel_spinning_joint_param_name);
+////-----------------------------------------------------------------------------
+//void declare_joint_mappings_4WD(std::shared_ptr<rclcpp::Node> node,
+//                                    const std::string & parameters_ns)
+//{
+//  declare_parameter<std::string>(node,parameters_ns,front_left_wheel_spinning_joint_param_name);
+//  declare_parameter<std::string>(node,parameters_ns,front_right_wheel_spinning_joint_param_name);
+//  declare_parameter<std::string>(node,parameters_ns,rear_left_wheel_spinning_joint_param_name);
+//  declare_parameter<std::string>(node,parameters_ns,rear_right_wheel_spinning_joint_param_name);
 
-}
+//}
 
-//-----------------------------------------------------------------------------
-std::map<std::string,std::string> get_joint_mappings_4WD(std::shared_ptr<rclcpp::Node> node,
-                                                              const std::string & parameters_ns)
-{
-  std::map<std::string,std::string> joint_mappings;
-  insert_parameter_to_map(node,parameters_ns,front_left_wheel_spinning_joint_param_name,joint_mappings);
-  insert_parameter_to_map(node,parameters_ns,front_right_wheel_spinning_joint_param_name,joint_mappings);
-  insert_parameter_to_map(node,parameters_ns,rear_left_wheel_spinning_joint_param_name,joint_mappings);
-  insert_parameter_to_map(node,parameters_ns,rear_right_wheel_spinning_joint_param_name,joint_mappings);
-  return joint_mappings;
-}
+////-----------------------------------------------------------------------------
+//std::map<std::string,std::string> get_joint_mappings_4WD(std::shared_ptr<rclcpp::Node> node,
+//                                                              const std::string & parameters_ns)
+//{
+//  std::map<std::string,std::string> joint_mappings;
+//  insert_parameter_to_map(node,parameters_ns,front_left_wheel_spinning_joint_param_name,joint_mappings);
+//  insert_parameter_to_map(node,parameters_ns,front_right_wheel_spinning_joint_param_name,joint_mappings);
+//  insert_parameter_to_map(node,parameters_ns,rear_left_wheel_spinning_joint_param_name,joint_mappings);
+//  insert_parameter_to_map(node,parameters_ns,rear_right_wheel_spinning_joint_param_name,joint_mappings);
+//  return joint_mappings;
+//}
 
 
 }

@@ -35,23 +35,23 @@ MobileBaseInfo2WD get_mobile_base_info_2WD(std::shared_ptr<rclcpp::Node> node,
 
 }
 
-//-----------------------------------------------------------------------------
-void declare_joint_mappings_2WD(std::shared_ptr<rclcpp::Node> node,
-                                    const std::string & parameters_ns)
-{
-  declare_parameter<std::string>(node,parameters_ns,left_wheel_spinning_joint_param_name);
-  declare_parameter<std::string>(node,parameters_ns,right_wheel_spinning_joint_param_name);
-}
+////-----------------------------------------------------------------------------
+//void declare_joint_mappings_2WD(std::shared_ptr<rclcpp::Node> node,
+//                                    const std::string & parameters_ns)
+//{
+//  declare_parameter<std::string>(node,parameters_ns,left_wheel_spinning_joint_param_name);
+//  declare_parameter<std::string>(node,parameters_ns,right_wheel_spinning_joint_param_name);
+//}
 
-//-----------------------------------------------------------------------------
-std::map<std::string,std::string> get_joint_mappings_2WD(std::shared_ptr<rclcpp::Node> node,
-                                                              const std::string & parameters_ns)
-{
-  std::map<std::string,std::string> joint_mappings;
-  insert_parameter_to_map(node,parameters_ns,left_wheel_spinning_joint_param_name,joint_mappings);
-  insert_parameter_to_map(node,parameters_ns,right_wheel_spinning_joint_param_name,joint_mappings);
-  return joint_mappings;
-}
+////-----------------------------------------------------------------------------
+//std::map<std::string,std::string> get_joint_mappings_2WD(std::shared_ptr<rclcpp::Node> node,
+//                                                              const std::string & parameters_ns)
+//{
+//  std::map<std::string,std::string> joint_mappings;
+//  insert_parameter_to_map(node,parameters_ns,left_wheel_spinning_joint_param_name,joint_mappings);
+//  insert_parameter_to_map(node,parameters_ns,right_wheel_spinning_joint_param_name,joint_mappings);
+//  return joint_mappings;
+//}
 
 }
 
