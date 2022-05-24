@@ -1,6 +1,6 @@
 //romea
-#include "romea_mobile_base_utils/control/command_publisher.hpp"
-#include <romea_common_utils/publishers/data_publisher.hpp>
+#include "romea_mobile_base_utils/control/command_listener.hpp"
+#include <romea_common_utils/listeners/data_listener.hpp>
 
 //std
 #include <sstream>
@@ -33,11 +33,11 @@ template<class CommandType>
 void throw_exception(const std::string & message_type)
 {
   std::stringstream msg;
-  msg<< "Output message type ";
+  msg<< "Message type ";
   msg<< message_type;
   msg<< " is unsupported by ";
   msg<< command_type_name<CommandType>();
-  msg<< " command publisher";
+  msg<< " command listner";
   throw std::runtime_error(msg.str());
 }
 
@@ -47,41 +47,41 @@ namespace romea {
 
 //-----------------------------------------------------------------------------
 template<class CommandType>
-CommandPublisher<CommandType>::CommandPublisher(std::shared_ptr<rclcpp::Node> node,
-                                                const std::string & message_type):
-  publisher_(make_publisher_(node,message_type))
+CommandListener<CommandType>::CommandListener(std::shared_ptr<rclcpp::Node> node,
+                                              const std::string & message_type):
+  listener_(make_listener_(node,message_type))
 {
 }
 
 //-----------------------------------------------------------------------------
 template<class CommandType>
-void CommandPublisher<CommandType>::publish(const CommandType & command)
+CommandType CommandListener<CommandType>::get_command()const
 {
-  publisher_->publish(command);
+  return listener_->get_data();
 }
 
 //-----------------------------------------------------------------------------
 template<class CommandType>
-std::string CommandPublisher<CommandType>::get_topic_name() const
+std::string CommandListener<CommandType>::get_topic_name() const
 {
-  return publisher_->get_topic_name();
+  return listener_->get_topic_name();
 }
 
 //-----------------------------------------------------------------------------
 template<>
-CommandPublisher<SkidSteeringCommand>::PublisherBasePtr
-CommandPublisher<SkidSteeringCommand>::make_publisher_(std::shared_ptr<rclcpp::Node> node,
-                                                       const std::string & message_type)
+CommandListener<SkidSteeringCommand>::ListenerBasePtr
+CommandListener<SkidSteeringCommand>::make_listener_(std::shared_ptr<rclcpp::Node> node,
+                                                     const std::string & message_type)
 {
   if(message_type == "geometry_msgs::msg::Twist")
   {
     using MsgType = geometry_msgs::msg::Twist;
-    return make_publisher_<MsgType>(node,"cmd_vel",1);
+    return make_listener_<MsgType>(node,"cmd_vel",1);
   }
   else if( message_type == "romea_mobile_base_msgs::msg::SkidSteeringCommand")
   {
     using MsgType = romea_mobile_base_msgs::msg::SkidSteeringCommand;
-    return make_publisher_<MsgType>(node,"cmd_skid_steering",1);
+    return make_listener_<MsgType>(node,"cmd_skid_steering",1);
   }
   else
   {
@@ -92,19 +92,19 @@ CommandPublisher<SkidSteeringCommand>::make_publisher_(std::shared_ptr<rclcpp::N
 
 //-----------------------------------------------------------------------------
 template<>
-CommandPublisher<OneAxleSteeringCommand>::PublisherBasePtr
-CommandPublisher<OneAxleSteeringCommand>::make_publisher_(std::shared_ptr<rclcpp::Node> node,
-                                                          const std::string & message_type)
+CommandListener<OneAxleSteeringCommand>::ListenerBasePtr
+CommandListener<OneAxleSteeringCommand>::make_listener_(std::shared_ptr<rclcpp::Node> node,
+                                                        const std::string & message_type)
 {
   if(message_type == "geometry_msgs::msg::Twist")
   {
     using MsgType = geometry_msgs::msg::Twist;
-    return make_publisher_<MsgType>(node,"cmd_vel",1);
+    return make_listener_<MsgType>(node,"cmd_vel",1);
   }
   else if( message_type == "romea_mobile_base_msgs::msg::OneAxleSteeringCommand")
   {
     using MsgType = romea_mobile_base_msgs::msg::OneAxleSteeringCommand;
-    return make_publisher_<MsgType>(node,"cmd_one_axle_steering",1);
+    return make_listener_<MsgType>(node,"cmd_one_axle_steering",1);
   }
   else
   {
@@ -115,20 +115,18 @@ CommandPublisher<OneAxleSteeringCommand>::make_publisher_(std::shared_ptr<rclcpp
 
 //-----------------------------------------------------------------------------
 template<>
-CommandPublisher<OmniSteeringCommand>::PublisherBasePtr
-CommandPublisher<OmniSteeringCommand>::make_publisher_(std::shared_ptr<rclcpp::Node> node,
-                                                       const std::string & message_type)
+CommandListener<OmniSteeringCommand>::ListenerBasePtr
+CommandListener<OmniSteeringCommand>::make_listener_(std::shared_ptr<rclcpp::Node> node,
+                                                     const std::string & message_type)
 {
 
   if(message_type == "geometry_msgs::msg::Twist")
   {
-    using MsgType = geometry_msgs::msg::Twist;
-    return make_publisher_<MsgType>(node,"cmd_vel",1);
+    return make_listener_<geometry_msgs::msg::Twist>(node,"cmd_vel",1);
   }
   else if( message_type == "romea_mobile_base_msgs::msg::OmniSteeringCommand")
   {
-    using MsgType = romea_mobile_base_msgs::msg::OmniSteeringCommand;
-    return make_publisher_<MsgType>(node,"cmd_omni_steering",1);
+    return make_listener_<romea_mobile_base_msgs::msg::OmniSteeringCommand>(node,"cmd_omni_steering",1);
   }
   else
   {
@@ -139,19 +137,17 @@ CommandPublisher<OmniSteeringCommand>::make_publisher_(std::shared_ptr<rclcpp::N
 
 //-----------------------------------------------------------------------------
 template<>
-CommandPublisher<TwoAxleSteeringCommand>::PublisherBasePtr
-CommandPublisher<TwoAxleSteeringCommand>::make_publisher_(std::shared_ptr<rclcpp::Node> node,
-                                                          const std::string & message_type)
+CommandListener<TwoAxleSteeringCommand>::ListenerBasePtr
+CommandListener<TwoAxleSteeringCommand>::make_listener_(std::shared_ptr<rclcpp::Node> node,
+                                                        const std::string & message_type)
 {
   if(message_type == "four_wheel_steering_msgs::msg::FourWheelSteering")
   {
-    using MsgType = four_wheel_steering_msgs::msg::FourWheelSteering;
-    return make_publisher_<MsgType>(node,"cmd_vel",1);
+    return make_listener_<four_wheel_steering_msgs::msg::FourWheelSteering>(node,"cmd_vel",1);
   }
   else if( message_type == "romea_mobile_base_msgs::msg::TwoAxleSteeringCommand")
   {
-    using MsgType = romea_mobile_base_msgs::msg::TwoAxleSteeringCommand;
-    return make_publisher_<MsgType>(node,"cmd_omni_steering",1);
+    return make_listener_<romea_mobile_base_msgs::msg::TwoAxleSteeringCommand>(node,"cmd_omni_steering",1);
   }
   else
   {
@@ -161,10 +157,10 @@ CommandPublisher<TwoAxleSteeringCommand>::make_publisher_(std::shared_ptr<rclcpp
 }
 
 
-template class CommandPublisher<SkidSteeringCommand>;
-template class CommandPublisher<OmniSteeringCommand>;
-template class CommandPublisher<OneAxleSteeringCommand>;
-template class CommandPublisher<TwoAxleSteeringCommand>;
+template class CommandListener<SkidSteeringCommand>;
+template class CommandListener<OmniSteeringCommand>;
+template class CommandListener<OneAxleSteeringCommand>;
+template class CommandListener<TwoAxleSteeringCommand>;
 
 }
 

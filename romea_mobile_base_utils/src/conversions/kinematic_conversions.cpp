@@ -1,6 +1,6 @@
 //romea-ros
 #include "romea_mobile_base_utils/conversions/kinematic_conversions.hpp"
-#include <romea_common_utils/publishers/stamped_message_publisher.hpp>
+#include <romea_common_utils/publishers/stamped_data_publisher.hpp>
 
 namespace romea
 {
