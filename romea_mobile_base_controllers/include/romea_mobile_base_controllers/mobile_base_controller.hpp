@@ -12,7 +12,7 @@
 #include "dead_reckoning_publisher.hpp"
 #include "mobile_base_controller_traits.hpp"
 #include <romea_core_common/concurrency/SharedOptionalVariable.hpp>
-#include <romea_common_utils/realtime_publishers/stamped_message_publisher.hpp>
+#include <romea_common_utils/realtime_publishers/stamped_data_publisher.hpp>
 
 
 namespace romea{
