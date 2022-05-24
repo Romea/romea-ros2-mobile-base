@@ -28,11 +28,12 @@ class CommandInterface
 public :
 
   using CmdPubType = CommandPublisher<CommandType>;
+  using Configuration = CommandInterfaceConfiguration;
 
 public :
 
   CommandInterface(std::shared_ptr<rclcpp::Node> node,
-                   CommandInterfaceConfiguration & configuration);
+                   const Configuration & configuration);
 
   ~CommandInterface();
 
@@ -77,12 +78,12 @@ private:
   void create_publisher_(std::shared_ptr<rclcpp::Node> node,
                          const std::string & output_message_type);
 
-  void create_cmd_mux_client_(std::shared_ptr<rclcpp::Node> node);
+//  void create_cmd_mux_client_(std::shared_ptr<rclcpp::Node> node);
 
 private:
 
   std::unique_ptr<CmdPubType> cmd_pub_;
-  std::unique_ptr<CmdMuxClient> cmd_mux_client_;
+//  std::unique_ptr<CmdMuxClient> cmd_mux_client_;
 
   std::atomic<bool> is_started_;
   std::atomic<bool> is_emergency_stop_activated_;

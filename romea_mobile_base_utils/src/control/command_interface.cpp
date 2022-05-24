@@ -7,9 +7,9 @@ namespace romea {
 //-----------------------------------------------------------------------------
 template <typename CommandType>
 CommandInterface<CommandType>::CommandInterface(std::shared_ptr<rclcpp::Node> node,
-                                                CommandInterfaceConfiguration & configuration):
+                                                const Configuration & configuration):
   cmd_pub_(nullptr),
-  cmd_mux_client_(nullptr),
+//  cmd_mux_client_(nullptr),
   is_started_(false),
   is_emergency_stop_activated_(false),
   clock_(node->get_clock()),
@@ -29,21 +29,21 @@ CommandInterface<CommandType>::CommandInterface(std::shared_ptr<rclcpp::Node> no
   create_publisher_(node,output_message_type);
   create_timer_(node,period);
 
-  if(priority)
-  {
-    create_cmd_mux_client_(node);
-    subscribe_to_cmd_mux_(priority,timeout);
-  }
+//  if(priority)
+//  {
+//    create_cmd_mux_client_(node);
+//    subscribe_to_cmd_mux_(priority,timeout);
+//  }
 }
 
 //-----------------------------------------------------------------------------
 template <typename CommandType>
 CommandInterface<CommandType>::~CommandInterface()
 {
-  if(cmd_mux_client_ != nullptr)
-  {
-    unsubscribe_from_cmd_mux_();
-  }
+//  if(cmd_mux_client_ != nullptr)
+//  {
+//    unsubscribe_from_cmd_mux_();
+//  }
 }
 
 
@@ -64,57 +64,11 @@ void CommandInterface<CommandType>::create_timer_(std::shared_ptr<rclcpp::Node> 
   timer_ = node->create_wall_timer(durationFromSecond(period),timer_callback);
 }
 
-//-----------------------------------------------------------------------------
-template <typename CommandType>
-void CommandInterface<CommandType>::create_cmd_mux_client_(std::shared_ptr<rclcpp::Node> node)
-{
-  cmd_mux_client_ = std::make_unique<CmdMuxClient>(node);
-}
-
 ////-----------------------------------------------------------------------------
 //template <typename CommandType>
-//void CommandInterface<CommandType>::init(std::shared_ptr<rclcpp::Node>,
-//                                         CommandInterfaceConfiguration & configuration)
+//void CommandInterface<CommandType>::create_cmd_mux_client_(std::shared_ptr<rclcpp::Node> node)
 //{
-
-////  ros::Rate rate(private_nh.param("rate",10.));
-////  timeout_duration_ = rate.expectedCycleTime()+rate.expectedCycleTime();
-
-////  std::string controller_type = load_param<std::string>(robot_nh,"vehicle_controller/type");
-////  pub_.init(private_nh,controller_type);
-
-////#ifdef ROMEA_CMD_MUX
-////  //connect automatically to cmd_mux if romea ecosystem is used
-////  if(private_nh.hasParam("/demo/type"))
-////  {
-////    unsigned char cmd_priority = load_param<int>(private_nh,"cmd_priority");
-////    if(load_param<std::string>(private_nh,"/demo/type").compare("replay"))
-////    {
-////      ros::ServiceClient controller_cmd_mux_connect_service_client;
-////      controller_cmd_mux_connect_service_client = robot_nh.serviceClient<romea_cmd_mux_msgs::Connect>("vehicle_controller/cmd_mux/connect");
-////      if(controller_cmd_mux_connect_service_client.waitForExistence(ros::Duration(5.)))
-////      {
-////        romea_cmd_mux_msgs::Connect srv;
-////        srv.request.topic=pub_.get_topic();
-////        srv.request.priority=cmd_priority;
-////        srv.request.timeout=timeout_duration_.toSec();
-
-//////        std::cout << srv.request << std::endl;
-////        if(!controller_cmd_mux_connect_service_client.call(srv))
-////        {
-////          throw(std::runtime_error("Cannot connect to vehicle controller cmd mux"));
-////        }
-////      }
-////      else
-////      {
-////        throw(std::runtime_error("Cannot connect to cmd_mux service "+controller_cmd_mux_connect_service_client.getService()));
-////      }
-////    }
-////  }
-////#endif
-
-////  timer_ = private_nh.createTimer(rate, &CommandInterface<CommandType>::process_timer_, this,false,false);
-////  is_initialized_=true;
+//  cmd_mux_client_ = std::make_unique<CmdMuxClient>(node);
 //}
 
 //-----------------------------------------------------------------------------
@@ -222,13 +176,16 @@ void CommandInterface<CommandType>::publish_command_(const bool & timeout)
   //  commandPublisher_.publish(msg);
 
 
-  if(!timeout)
+  if(is_started())
   {
-    cmd_pub_->publish(command_);
-  }
-  else
-  {
-    cmd_pub_->publish(CommandType());
+    if(!timeout)
+    {
+      cmd_pub_->publish(command_);
+    }
+    else
+    {
+      cmd_pub_->publish(CommandType());
+    }
   }
 }
 
@@ -257,22 +214,22 @@ void CommandInterface<CommandType>::timer_callback_()
   }
 }
 
-//-----------------------------------------------------------------------------
-template <typename CommandType>
-void CommandInterface<CommandType>::subscribe_to_cmd_mux_(const int & priority,
-                                                          const double & timeout)
-{
-  cmd_mux_client_->subscribe_to_cmd_mux(cmd_pub_->get_topic_name(),
-                                        priority,
-                                        timeout);
-}
+////-----------------------------------------------------------------------------
+//template <typename CommandType>
+//void CommandInterface<CommandType>::subscribe_to_cmd_mux_(const int & priority,
+//                                                          const double & timeout)
+//{
+//  cmd_mux_client_->subscribe_to_cmd_mux(cmd_pub_->get_topic_name(),
+//                                        priority,
+//                                        timeout);
+//}
 
-//-----------------------------------------------------------------------------
-template <typename CommandType>
-void CommandInterface<CommandType>::unsubscribe_from_cmd_mux_()
-{
-  cmd_mux_client_->unsubscribe_from_cmd_mux(cmd_pub_->get_topic_name());
-}
+////-----------------------------------------------------------------------------
+//template <typename CommandType>
+//void CommandInterface<CommandType>::unsubscribe_from_cmd_mux_()
+//{
+//  cmd_mux_client_->unsubscribe_from_cmd_mux(cmd_pub_->get_topic_name());
+//}
 
 template class CommandInterface<SkidSteeringCommand>;
 template class CommandInterface<OneAxleSteeringCommand>;

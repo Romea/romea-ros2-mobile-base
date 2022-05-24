@@ -49,8 +49,9 @@ add_library(${PROJECT_NAME} SHARED
     src/params/mobile_base_parameters2WD.cpp
     src/params/mobile_base_parameters4WD.cpp
     src/params/mobile_base_parameters4WS4WD.cpp
-    src/control/command_publisher.cpp
     src/control/command_interface.cpp
+    src/control/command_listener.cpp
+    src/control/command_publisher.cpp
     )
 
 ament_target_dependencies(${PROJECT_NAME}

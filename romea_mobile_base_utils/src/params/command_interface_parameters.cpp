@@ -3,7 +3,7 @@
 
 namespace  {
 
-const std::string OUTPUT_MESSAGE_TYPE_PARAM_NAME = "output_message_type";
+const std::string OUTPUT_MESSAGE_TYPE_PARAM_NAME = "message_type";
 const std::string PRIORITY_PARAM_NAME = "priority";
 const std::string RATE_PARAM_NAME = "rate";
 
