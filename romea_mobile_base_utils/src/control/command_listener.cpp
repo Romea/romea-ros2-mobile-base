@@ -73,12 +73,12 @@ CommandListener<SkidSteeringCommand>::ListenerBasePtr
 CommandListener<SkidSteeringCommand>::make_listener_(std::shared_ptr<rclcpp::Node> node,
                                                      const std::string & message_type)
 {
-  if(message_type == "geometry_msgs::msg::Twist")
+  if(message_type == "geometry_msgs/Twist")
   {
     using MsgType = geometry_msgs::msg::Twist;
     return make_listener_<MsgType>(node,"cmd_vel",1);
   }
-  else if( message_type == "romea_mobile_base_msgs::msg::SkidSteeringCommand")
+  else if( message_type == "romea_mobile_base_msgs/SkidSteeringCommand")
   {
     using MsgType = romea_mobile_base_msgs::msg::SkidSteeringCommand;
     return make_listener_<MsgType>(node,"cmd_skid_steering",1);
@@ -96,12 +96,12 @@ CommandListener<OneAxleSteeringCommand>::ListenerBasePtr
 CommandListener<OneAxleSteeringCommand>::make_listener_(std::shared_ptr<rclcpp::Node> node,
                                                         const std::string & message_type)
 {
-  if(message_type == "geometry_msgs::msg::Twist")
+  if(message_type == "geometry_msgs/Twist")
   {
     using MsgType = geometry_msgs::msg::Twist;
     return make_listener_<MsgType>(node,"cmd_vel",1);
   }
-  else if( message_type == "romea_mobile_base_msgs::msg::OneAxleSteeringCommand")
+  else if( message_type == "romea_mobile_base_msgs/OneAxleSteeringCommand")
   {
     using MsgType = romea_mobile_base_msgs::msg::OneAxleSteeringCommand;
     return make_listener_<MsgType>(node,"cmd_one_axle_steering",1);
@@ -120,11 +120,11 @@ CommandListener<OmniSteeringCommand>::make_listener_(std::shared_ptr<rclcpp::Nod
                                                      const std::string & message_type)
 {
 
-  if(message_type == "geometry_msgs::msg::Twist")
+  if(message_type == "geometry_msgs/Twist")
   {
     return make_listener_<geometry_msgs::msg::Twist>(node,"cmd_vel",1);
   }
-  else if( message_type == "romea_mobile_base_msgs::msg::OmniSteeringCommand")
+  else if( message_type == "romea_mobile_base_msgs/OmniSteeringCommand")
   {
     return make_listener_<romea_mobile_base_msgs::msg::OmniSteeringCommand>(node,"cmd_omni_steering",1);
   }
@@ -141,11 +141,11 @@ CommandListener<TwoAxleSteeringCommand>::ListenerBasePtr
 CommandListener<TwoAxleSteeringCommand>::make_listener_(std::shared_ptr<rclcpp::Node> node,
                                                         const std::string & message_type)
 {
-  if(message_type == "four_wheel_steering_msgs::msg::FourWheelSteering")
+  if(message_type == "four_wheel_steering_msgs/FourWheelSteering")
   {
     return make_listener_<four_wheel_steering_msgs::msg::FourWheelSteering>(node,"cmd_vel",1);
   }
-  else if( message_type == "romea_mobile_base_msgs::msg::TwoAxleSteeringCommand")
+  else if( message_type == "romea_mobile_base_msgs/TwoAxleSteeringCommand")
   {
     return make_listener_<romea_mobile_base_msgs::msg::TwoAxleSteeringCommand>(node,"cmd_omni_steering",1);
   }
