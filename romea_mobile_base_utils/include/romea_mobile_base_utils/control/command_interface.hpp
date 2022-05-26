@@ -8,8 +8,8 @@
 #include <mutex>
 
 //romea
+#include <romea_cmd_mux_utils/cmd_mux_interface.hpp>
 #include "../conversions/kinematic_conversions.hpp"
-#include <romea_cmd_mux_utils/cmd_mux_client.hpp>
 #include "command_publisher.hpp"
 
 namespace romea {
@@ -34,8 +34,6 @@ public :
 
   CommandInterface(std::shared_ptr<rclcpp::Node> node,
                    const Configuration & configuration);
-
-  ~CommandInterface();
 
   void send_null_command();
 
@@ -78,12 +76,12 @@ private:
   void create_publisher_(std::shared_ptr<rclcpp::Node> node,
                          const std::string & output_message_type);
 
-//  void create_cmd_mux_client_(std::shared_ptr<rclcpp::Node> node);
-
+  void subscribe_to_cmd_mux(const int & priority,
+                            const double & timetout);
 private:
 
   std::unique_ptr<CmdPubType> cmd_pub_;
-//  std::unique_ptr<CmdMuxClient> cmd_mux_client_;
+  CmdMuxInterface cmd_mux_client_;
 
   std::atomic<bool> is_started_;
   std::atomic<bool> is_emergency_stop_activated_;

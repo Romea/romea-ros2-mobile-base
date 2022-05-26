@@ -17,7 +17,7 @@ void declare_command_interface_configuration(std::shared_ptr<rclcpp::Node> node,
 {
   declare_parameter<std::string>(node,parameters_ns,OUTPUT_MESSAGE_TYPE_PARAM_NAME);
 
-  declare_parameter_with_default<int>(node,parameters_ns,PRIORITY_PARAM_NAME,0);
+  declare_parameter_with_default<int>(node,parameters_ns,PRIORITY_PARAM_NAME,-1);
 
   declare_parameter<double>(node,parameters_ns,RATE_PARAM_NAME);
 }

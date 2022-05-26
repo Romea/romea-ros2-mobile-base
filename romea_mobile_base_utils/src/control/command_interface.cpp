@@ -9,7 +9,7 @@ template <typename CommandType>
 CommandInterface<CommandType>::CommandInterface(std::shared_ptr<rclcpp::Node> node,
                                                 const Configuration & configuration):
   cmd_pub_(nullptr),
-//  cmd_mux_client_(nullptr),
+  cmd_mux_client_(node),
   is_started_(false),
   is_emergency_stop_activated_(false),
   clock_(node->get_clock()),
@@ -27,25 +27,9 @@ CommandInterface<CommandType>::CommandInterface(std::shared_ptr<rclcpp::Node> no
 
   timeout_duration_=durationFromSecond(timeout);
   create_publisher_(node,output_message_type);
+  subscribe_to_cmd_mux(priority,timeout);
   create_timer_(node,period);
-
-//  if(priority)
-//  {
-//    create_cmd_mux_client_(node);
-//    subscribe_to_cmd_mux_(priority,timeout);
-//  }
 }
-
-//-----------------------------------------------------------------------------
-template <typename CommandType>
-CommandInterface<CommandType>::~CommandInterface()
-{
-//  if(cmd_mux_client_ != nullptr)
-//  {
-//    unsubscribe_from_cmd_mux_();
-//  }
-}
-
 
 //-----------------------------------------------------------------------------
 template <typename CommandType>
@@ -64,12 +48,16 @@ void CommandInterface<CommandType>::create_timer_(std::shared_ptr<rclcpp::Node> 
   timer_ = node->create_wall_timer(durationFromSecond(period),timer_callback);
 }
 
-////-----------------------------------------------------------------------------
-//template <typename CommandType>
-//void CommandInterface<CommandType>::create_cmd_mux_client_(std::shared_ptr<rclcpp::Node> node)
-//{
-//  cmd_mux_client_ = std::make_unique<CmdMuxClient>(node);
-//}
+//-----------------------------------------------------------------------------
+template <typename CommandType>
+void CommandInterface<CommandType>::subscribe_to_cmd_mux(const int & priority,
+                                                         const double & timeout)
+{
+  if(priority!=-1)
+  {
+    cmd_mux_client_.subscribe(cmd_pub_->get_topic_name(),priority,timeout);
+  }
+}
 
 //-----------------------------------------------------------------------------
 template <typename CommandType>
@@ -214,24 +202,8 @@ void CommandInterface<CommandType>::timer_callback_()
   }
 }
 
-////-----------------------------------------------------------------------------
-//template <typename CommandType>
-//void CommandInterface<CommandType>::subscribe_to_cmd_mux_(const int & priority,
-//                                                          const double & timeout)
-//{
-//  cmd_mux_client_->subscribe_to_cmd_mux(cmd_pub_->get_topic_name(),
-//                                        priority,
-//                                        timeout);
-//}
-
-////-----------------------------------------------------------------------------
-//template <typename CommandType>
-//void CommandInterface<CommandType>::unsubscribe_from_cmd_mux_()
-//{
-//  cmd_mux_client_->unsubscribe_from_cmd_mux(cmd_pub_->get_topic_name());
-//}
-
 template class CommandInterface<SkidSteeringCommand>;
+template class CommandInterface<OmniSteeringCommand>;
 template class CommandInterface<OneAxleSteeringCommand>;
 template class CommandInterface<TwoAxleSteeringCommand>;
 
