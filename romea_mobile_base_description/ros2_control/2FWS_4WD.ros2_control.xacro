@@ -1,4 +1,4 @@
- <?xml version="1.0"?>
+<?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <xacro:macro name="base_control" params="mode">
@@ -53,7 +53,7 @@
           <state_interface name="effort"/>
         </joint>
 
-        <joint name="${prefix}${rear_right_wheel_spinning_joint}">
+        <joint name="${prefix}${rear_left_wheel_spinning_joint}">
           <command_interface name="velocity">
             <param name="min">-1</param>
             <param name="max">1</param>
@@ -64,7 +64,7 @@
         </joint>
 
         <joint name="${prefix}${rear_right_wheel_spinning_joint}">
-          <command_interface name="position">
+          <command_interface name="velocity">
             <param name="min">-1</param>
             <param name="max">1</param>
           </command_interface>
