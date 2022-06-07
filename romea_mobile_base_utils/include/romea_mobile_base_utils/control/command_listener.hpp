@@ -4,6 +4,7 @@
 //romea
 #include "../conversions/command_conversions.hpp"
 #include <romea_common_utils/listeners/data_listener.hpp>
+#include <romea_common_utils/qos.hpp>
 
 namespace romea {
 
@@ -34,7 +35,7 @@ private :
                                  const size_t &queue_size)
   {
     using ListenerType = DataListener<CommandType,MessageType>;
-    return std::make_unique<ListenerType>(node,topic_name,queue_size);
+    return std::make_unique<ListenerType>(node,topic_name,best_effort(1));
   }
 
   ListenerBasePtr make_listener_(std::shared_ptr<rclcpp::Node> node,

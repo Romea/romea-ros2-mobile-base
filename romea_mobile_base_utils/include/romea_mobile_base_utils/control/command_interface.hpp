@@ -63,13 +63,6 @@ private :
 
   void publish_command_(const bool & timeout);
 
-  void subscribe_to_cmd_mux_(const int & priority,
-                             const double & timeout);
-
-  void unsubscribe_from_cmd_mux_();
-
-private:
-
   void create_timer_(std::shared_ptr<rclcpp::Node> node,
                      const double & period);
 

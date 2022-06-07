@@ -146,12 +146,12 @@ CommandPublisher<TwoAxleSteeringCommand>::make_publisher_(std::shared_ptr<rclcpp
   if(message_type == "four_wheel_steering_msgs/FourWheelSteering")
   {
     using MsgType = four_wheel_steering_msgs::msg::FourWheelSteering;
-    return make_publisher_<MsgType>(node,"cmd_vel",1);
+    return make_publisher_<MsgType>(node,"cmd_4ws",1);
   }
   else if( message_type == "romea_mobile_base_msgs/TwoAxleSteeringCommand")
   {
     using MsgType = romea_mobile_base_msgs::msg::TwoAxleSteeringCommand;
-    return make_publisher_<MsgType>(node,"cmd_omni_steering",1);
+    return make_publisher_<MsgType>(node,"cmd_two_axle_steering",1);
   }
   else
   {

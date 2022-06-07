@@ -16,7 +16,7 @@ SteeringAngleControl get_steering_angle_control_info(std::shared_ptr<rclcpp::Nod
                                                      const std::string & parameters_ns);
 
 WheelSpeedControl get_wheel_speed_control_info(std::shared_ptr<rclcpp::Node> node,
-                                  const std::string & parameters_ns);
+                                               const std::string & parameters_ns);
 
 }
 

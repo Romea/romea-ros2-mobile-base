@@ -4,6 +4,7 @@
 //romea
 #include "../conversions/command_conversions.hpp"
 #include <romea_common_utils/publishers/data_publisher.hpp>
+#include <romea_common_utils/qos.hpp>
 
 namespace romea {
 
@@ -36,7 +37,7 @@ private :
                                    const size_t &queue_size)
   {
     using PublisherType = DataPublisher<CommandType,MessageType>;
-    return std::make_unique<PublisherType>(node,topic_name,queue_size);
+    return std::make_unique<PublisherType>(node,topic_name,reliable(1));
   }
 
   PublisherBasePtr make_publisher_(std::shared_ptr<rclcpp::Node> node,
