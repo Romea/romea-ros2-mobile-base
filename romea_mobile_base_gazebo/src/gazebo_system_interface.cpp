@@ -171,3 +171,5 @@ template class GazeboSystemInterface<GazeboInterface4WS4WD>;
 PLUGINLIB_EXPORT_CLASS(romea::GazeboSystemInterface4WD, gazebo_ros2_control::GazeboSystemInterface)
 PLUGINLIB_EXPORT_CLASS(romea::GazeboSystemInterface4WS4WD, gazebo_ros2_control::GazeboSystemInterface)
 PLUGINLIB_EXPORT_CLASS(romea::GazeboSystemInterface2AS4WD, gazebo_ros2_control::GazeboSystemInterface)
+PLUGINLIB_EXPORT_CLASS(romea::GazeboSystemInterface2FWS4WD, gazebo_ros2_control::GazeboSystemInterface)
+PLUGINLIB_EXPORT_CLASS(romea::GazeboSystemInterface2FWS2RWD, gazebo_ros2_control::GazeboSystemInterface)
