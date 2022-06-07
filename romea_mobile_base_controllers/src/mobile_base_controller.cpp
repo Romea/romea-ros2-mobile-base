@@ -4,6 +4,8 @@
 #include <romea_mobile_base_utils/params/command_limits_parameters.hpp>
 #include <romea_mobile_base_utils/params/mobile_base_parameters.hpp>
 #include <romea_common_utils/params/node_parameters.hpp>
+#include <romea_common_utils/qos.hpp>
+
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 
 namespace  {
@@ -205,18 +207,19 @@ CallbackReturn MobileBaseController<InterfaceType,KinematicType>::on_shutdown(co
 //-----------------------------------------------------------------------------
 template <typename InterfaceType, typename KinematicType>
 controller_interface::return_type MobileBaseController<InterfaceType,KinematicType>::
-update(const rclcpp::Time& time, const rclcpp::Duration & /*period*/)
+update(const rclcpp::Time& time, const rclcpp::Duration & period)
 {
 
 //  std::cout << "update" << std::endl;
   update_time_=node_->get_clock()->now(); //why not time?
-//  RCLCPP_INFO_STREAM(node_->get_logger(), "update_controller_state_");
+  RCLCPP_INFO_STREAM(node_->get_logger(), "update_controller_state_");
   update_controller_state_();
-//  RCLCPP_INFO_STREAM(node_->get_logger(), "publish_controller_state_");
+  RCLCPP_INFO_STREAM(node_->get_logger(), "publish_controller_state_");
   publish_controller_state_();
-  //  RCLCPP_INFO_STREAM(node_->get_logger(), "read command");
+    RCLCPP_INFO_STREAM(node_->get_logger(), "read command");
 
   auto current_command = command_buffer_.consume();
+  std::cout << " update " << update_time_.seconds()<<" "<<period.seconds() <<std::endl;
   if(current_command.has_value())
   {
     current_command_ = *current_command;
@@ -260,9 +263,9 @@ void MobileBaseController<OdometryFrameType,KinematicType>::publish_controller_s
   if (last_state_publish_time_ + publish_period_ < update_time_)
   {
     last_state_publish_time_ += publish_period_;
-    dead_reckoning_publisher_.update(update_time_,kinematic_measure_);
-    odometry_measure_publisher_.publish(update_time_,odometry_measure_);
-    kinematic_measure_publisher_.publish(update_time_,kinematic_measure_);
+    dead_reckoning_publisher_->update(update_time_,kinematic_measure_);
+    odometry_measure_publisher_->publish(update_time_,odometry_measure_);
+    kinematic_measure_publisher_->publish(update_time_,kinematic_measure_);
   }
 
 }
@@ -335,10 +338,12 @@ void MobileBaseController<OdometryFrameType,KinematicType>::
 command_callback_(typename CommandMsg::ConstSharedPtr cmd_msg)
 {
 
-//  RCLCPP_INFO_STREAM(node_->get_logger(),"command_callback_");
+  RCLCPP_INFO_STREAM(node_->get_logger(),"command_callback_");
   StampedCommand stamped_cmd;
   to_romea(*cmd_msg,stamped_cmd.cmd);
   stamped_cmd.stamp=node_->get_clock()->now();
+
+
 
   if (is_running_)
   {
@@ -388,11 +393,11 @@ void MobileBaseController<InterfaceType,KinematicType>::load_joints_names_()
   joints_names_ = InterfaceType::get_joints_names(node_,JOINTS_MAPPING_PARAM_NAME);
 
 //  std::cout << " joint_names "<< std::endl;
-//  for(auto & joint_name : joints_names_)
-//  {
-//    joint_name = prefix+ joint_name;
+  for(auto & joint_name : joints_names_)
+  {
+    joint_name = prefix+ joint_name;
 //    std::cout << joint_name << std::endl;
-//  }
+  }
 }
 
 ////-----------------------------------------------------------------------------
@@ -553,7 +558,7 @@ void MobileBaseController<InterfaceType,KinematicType>::init_cmd_subscriber_()
   }
 
   auto callback = std::bind(&MobileBaseController::command_callback_,this,std::placeholders::_1);
-  command_sub_ = node_->create_subscription<CommandMsg>(cmd_topic,1,callback);
+  command_sub_ = node_->create_subscription<CommandMsg>(cmd_topic,best_effort(1),callback);
 }
 
 //-----------------------------------------------------------------------------
@@ -564,9 +569,12 @@ void MobileBaseController<OdometryFrameType,KinematicType>::init_publishers_()
   std::string odom_frame_id = load_odom_frame_id_();
   bool enable_odom_tf = load_enable_odom_tf_();
 
-  odometry_measure_publisher_.init(node_,"odometry",base_frame_id,100);
-  kinematic_measure_publisher_.init(node_,"kinematic",base_frame_id,100);
-  dead_reckoning_publisher_.init(node_,odom_frame_id,base_frame_id,enable_odom_tf);
+  odometry_measure_publisher_ = std::make_unique<OdometryMeasurePublisher>(
+        node_,"odometry",base_frame_id,sensor_data_qos());
+  kinematic_measure_publisher_ = std::make_unique<KinematicMeasurePublisher>(
+        node_,"kinematic",base_frame_id,sensor_data_qos());
+  dead_reckoning_publisher_ = std::make_unique<DeadReckoningPublisher>(
+        node_,odom_frame_id,base_frame_id,enable_odom_tf);
 }
 
 //template class MobileBaseController<ControllerInterface1FAS2FWD,OneAxleSteeringKinematic>;
@@ -590,8 +598,8 @@ template class MobileBaseController<ControllerInterface4WS4WD,FourWheelSteeringK
 //CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController1FWS2RWD, controller_interface::ControllerInterface)
 CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController2AS4WD, controller_interface::ControllerInterface)
 //CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController2FWS2FWD, controller_interface::ControllerInterface)
-//CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController2FWS2RWD, controller_interface::ControllerInterface)
-//CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController2FWS4WD, controller_interface::ControllerInterface)
+CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController2FWS2RWD, controller_interface::ControllerInterface)
+CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController2FWS4WD, controller_interface::ControllerInterface)
 //CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController2TD, controller_interface::ControllerInterface)
 //CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController2WD, controller_interface::ControllerInterface)
 CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController4WD, controller_interface::ControllerInterface)

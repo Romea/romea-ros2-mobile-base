@@ -16,26 +16,21 @@ namespace romea
 
 
 //-----------------------------------------------------------------------------
-DeadReckoningPublisher::DeadReckoningPublisher():
+DeadReckoningPublisher::DeadReckoningPublisher(std::shared_ptr<rclcpp::Node> node,
+                                               const std::string & odom_frame_id,
+                                               const std::string & base_frame_id,
+                                               const bool &enable_odom_tf):
     odom_pub_(nullptr),
     tf_odom_pub_(nullptr),
     dead_reckoning_()
 {
-}
+  initOdomPublisher_(node,odom_frame_id,base_frame_id);
 
+  if(enable_odom_tf)
+  {
+      initOdomTFPublisher_(node,odom_frame_id,base_frame_id);
+  }
 
-//-----------------------------------------------------------------------------
-void DeadReckoningPublisher::init(std::shared_ptr<rclcpp::Node> node,
-                                  const std::string & odom_frame_id,
-                                  const std::string & base_frame_id,
-                                  const bool & enable_odom_tf)
-{
-    initOdomPublisher_(node,odom_frame_id,base_frame_id);
-
-    if(enable_odom_tf)
-    {
-        initOdomTFPublisher_(node,odom_frame_id,base_frame_id);
-    }
 }
 
 //-----------------------------------------------------------------------------

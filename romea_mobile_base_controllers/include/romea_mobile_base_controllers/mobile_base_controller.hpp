@@ -122,9 +122,9 @@ protected:
   rclcpp::Duration publish_period_;
   rclcpp::Duration command_timeout_;
 
-  DeadReckoningPublisher dead_reckoning_publisher_;
-  OdometryMeasurePublisher odometry_measure_publisher_;
-  KinematicMeasurePublisher kinematic_measure_publisher_;
+  std::unique_ptr<DeadReckoningPublisher> dead_reckoning_publisher_;
+  std::unique_ptr<OdometryMeasurePublisher> odometry_measure_publisher_;
+  std::unique_ptr<KinematicMeasurePublisher> kinematic_measure_publisher_;
 
 };
 
@@ -134,8 +134,8 @@ protected:
 //using MobileBaseController1FWS2RWD = MobileBaseController<ControllerInterface1FWS2RWD,OneAxleSteeringKinematic>;
 using MobileBaseController2AS4WD = MobileBaseController<ControllerInterface2AS4WD,TwoAxleSteeringKinematic>;
 //using MobileBaseController2FWS2FWD = MobileBaseController<ControllerInterface2FWS2FWD,TwoWheelSteeringKinematic>;
-//using MobileBaseController2FWS2RWD = MobileBaseController<ControllerInterface2FWS2RWD,TwoWheelSteeringKinematic>;
-//using MobileBaseController2FWS4WD = MobileBaseController<ControllerInterface2FWS4WD,TwoWheelSteeringKinematic>;
+using MobileBaseController2FWS2RWD = MobileBaseController<ControllerInterface2FWS2RWD,TwoWheelSteeringKinematic>;
+using MobileBaseController2FWS4WD = MobileBaseController<ControllerInterface2FWS4WD,TwoWheelSteeringKinematic>;
 //using MobileBaseController2WD = MobileBaseController<ControllerInterface2WD,SkidSteeringKinematic>;
 //using MobileBaseController2TD = MobileBaseController<ControllerInterface2TD,SkidSteeringKinematic>;
 using MobileBaseController4WD = MobileBaseController<ControllerInterface4WD,SkidSteeringKinematic>;

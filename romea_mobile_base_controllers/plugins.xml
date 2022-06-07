@@ -4,7 +4,7 @@
          type="romea::MobileBaseController4WD"
          base_class_type="controller_interface::ControllerInterface">
     <description>
-      Controller for four wheel drive vehicle
+      Controller for 4WD vehicle
     </description>
   </class>
 
@@ -12,7 +12,7 @@
           type="romea::MobileBaseController4WS4WD"
           base_class_type="controller_interface::ControllerInterface">
      <description>
-       Controller for four wheel steering vehicle
+       Controller for 4WS4WD vehicle
      </description>
    </class>
 
@@ -20,7 +20,23 @@
           type="romea::MobileBaseController2AS4WD"
           base_class_type="controller_interface::ControllerInterface">
      <description>
-       Controller for four wheel steering vehicle
+       Controller for 2AS4WD vehicle
+     </description>
+   </class>
+
+   <class name="romea_mobile_base_controllers/MobileBaseController2FWS4WD"
+          type="romea::MobileBaseController2FWS4WD"
+          base_class_type="controller_interface::ControllerInterface">
+     <description>
+       Controller for 2FWS4WD vehicle
+     </description>
+   </class>
+
+   <class name="romea_mobile_base_controllers/MobileBaseController2FWS2RWD"
+          type="romea::MobileBaseController2FWS2RWD"
+          base_class_type="controller_interface::ControllerInterface">
+     <description>
+       Controller for 2FWS2RWD vehicle
      </description>
    </class>
 
