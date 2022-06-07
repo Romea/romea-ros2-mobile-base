@@ -25,12 +25,12 @@ struct HardwareInterface2TTD{
 
   SpinningJointHardwareInterface left_sprocket_wheel_spinning_joint;
   SpinningJointHardwareInterface right_sprocket_wheel_spinning_joint;
-  SpinningJointHardwareInterface left_idler_wheel_spinning_joint_feedback;
-  SpinningJointHardwareInterface right_idler_wheel_spinning_joint_feedback;
-  SpinningJointHardwareInterface front_left_roller_wheel_spinning_joint_feedback;
-  SpinningJointHardwareInterface front_right_roller_wheel_spinning_joint_feedback;
-  SpinningJointHardwareInterface rear_left_roller_wheel_spinning_joint_feedback;
-  SpinningJointHardwareInterface rear_right_roller_wheel_spinning_joint_feedback;
+  SpinningJointHardwareInterface::Feedback left_idler_wheel_spinning_joint_feedback;
+  SpinningJointHardwareInterface::Feedback right_idler_wheel_spinning_joint_feedback;
+  SpinningJointHardwareInterface::Feedback front_left_roller_wheel_spinning_joint_feedback;
+  SpinningJointHardwareInterface::Feedback front_right_roller_wheel_spinning_joint_feedback;
+  SpinningJointHardwareInterface::Feedback rear_left_roller_wheel_spinning_joint_feedback;
+  SpinningJointHardwareInterface::Feedback rear_right_roller_wheel_spinning_joint_feedback;
 
   std::vector<hardware_interface::StateInterface> export_state_interfaces();
   std::vector<hardware_interface::CommandInterface> export_command_interfaces();

@@ -7,8 +7,32 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 ament_add_gtest(${PROJECT_NAME}_test_hardware_interface1FAS2FWD test_hardware_interface1FAS2FWD.cpp)
 target_link_libraries(${PROJECT_NAME}_test_hardware_interface1FAS2FWD ${PROJECT_NAME})
 
+ament_add_gtest(${PROJECT_NAME}_test_hardware_interface1FAS2RWD test_hardware_interface1FAS2RWD.cpp)
+target_link_libraries(${PROJECT_NAME}_test_hardware_interface1FAS2RWD ${PROJECT_NAME})
+
+ament_add_gtest(${PROJECT_NAME}_test_hardware_interface1FWS2RWD test_hardware_interface1FWS2RWD.cpp)
+target_link_libraries(${PROJECT_NAME}_test_hardware_interface1FWS2RWD ${PROJECT_NAME})
+
 ament_add_gtest(${PROJECT_NAME}_test_hardware_interface2AS4WD test_hardware_interface2AS4WD.cpp)
 target_link_libraries(${PROJECT_NAME}_test_hardware_interface2AS4WD ${PROJECT_NAME})
+
+ament_add_gtest(${PROJECT_NAME}_test_hardware_interface2TD test_hardware_interface2TD.cpp)
+target_link_libraries(${PROJECT_NAME}_test_hardware_interface2TD ${PROJECT_NAME})
+
+ament_add_gtest(${PROJECT_NAME}_test_hardware_interface2THD test_hardware_interface2THD.cpp)
+target_link_libraries(${PROJECT_NAME}_test_hardware_interface2THD ${PROJECT_NAME})
+
+ament_add_gtest(${PROJECT_NAME}_test_hardware_interface2TTD test_hardware_interface2TTD.cpp)
+target_link_libraries(${PROJECT_NAME}_test_hardware_interface2TTD ${PROJECT_NAME})
+
+ament_add_gtest(${PROJECT_NAME}_test_hardware_interface2FWS4WD test_hardware_interface2FWS4WD.cpp)
+target_link_libraries(${PROJECT_NAME}_test_hardware_interface2FWS4WD ${PROJECT_NAME})
+
+ament_add_gtest(${PROJECT_NAME}_test_hardware_interface2FWS2RWD test_hardware_interface2FWS2RWD.cpp)
+target_link_libraries(${PROJECT_NAME}_test_hardware_interface2FWS2RWD ${PROJECT_NAME})
+
+ament_add_gtest(${PROJECT_NAME}_test_hardware_interface2FWS2FWD test_hardware_interface2FWS2FWD.cpp)
+target_link_libraries(${PROJECT_NAME}_test_hardware_interface2FWS2FWD ${PROJECT_NAME})
 
 ament_add_gtest(${PROJECT_NAME}_test_hardware_interface4WS4WD test_hardware_interface4WS4WD.cpp)
 target_link_libraries(${PROJECT_NAME}_test_hardware_interface4WS4WD ${PROJECT_NAME})

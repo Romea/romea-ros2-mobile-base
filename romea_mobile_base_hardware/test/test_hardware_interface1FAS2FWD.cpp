@@ -1,6 +1,7 @@
 //gtest
 #include <gtest/gtest.h>
 #include "test_helper.h"
+#include <fstream>
 
 //ros
 #include <rclcpp/node.hpp>
@@ -25,25 +26,58 @@ protected:
   void SetUp() override
   {
     std::string xacro_file =  std::string(TEST_DIR)+"/test_hardware_interface1FAS2FWD.xacro";
-    std::string urdf_file =  std::string(TEST_DIR)+"/test_hardware_interface1FAS2FWD.urdf";
+    std::string urdf_file =  "/tmp/test_hardware_interface1FAS2FWD.urdf";
     std::string cmd = "xacro "+xacro_file + " > " + urdf_file;
     std::system(cmd.c_str());
 
-    auto info = hardware_interface::parse_control_resources_from_urdf(urdf_file);
-    std::cout << info.size()<< std::endl;
-//    rclcpp::NodeOptions no;
-//    no.arguments({"--ros-args","--params-file",std::string(TEST_DIR)+"/test_command_limits_parameters.yaml"});
-//    node = std::make_shared<rclcpp::Node>("test_command_limits_paramerters", no);
+    std::ifstream file(urdf_file.c_str());
+    std::stringstream buffer;
+    buffer << file.rdbuf();
+    //    std::cout << buffer.str() <<std::endl;
+
+    info = hardware_interface::parse_control_resources_from_urdf(buffer.str());
   }
 
-//  std::shared_ptr<rclcpp::Node> node;
+  void MakeInterface(const std::string & command_interface_type)
+  {
+    interface = std::make_unique<romea::HardwareInterface1FAS2FWD>(info[0],command_interface_type);
+  }
 
   std::unique_ptr<romea::HardwareInterface1FAS2FWD> interface;
+  std::vector<hardware_interface::HardwareInfo> info;
 };
 
 
-TEST_F(TestHarwareInterface1FAS2FWD, Toto)
+TEST_F(TestHarwareInterface1FAS2FWD, checkJointNames)
 {
+  MakeInterface(hardware_interface::HW_IF_VELOCITY);
+  EXPECT_STREQ(interface->front_axle_steering_joint.command.get_joint_name().c_str(),"robot_joint1");
+  EXPECT_STREQ(interface->front_left_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint2");
+  EXPECT_STREQ(interface->front_right_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint3");
+
+  EXPECT_STREQ(interface->front_axle_steering_joint.feedback.get_joint_name().c_str(),"robot_joint1");
+  EXPECT_STREQ(interface->front_left_wheel_spinning_joint.feedback.velocity.get_joint_name().c_str(),"robot_joint2");
+  EXPECT_STREQ(interface->front_right_wheel_spinning_joint.feedback.velocity.get_joint_name().c_str(),"robot_joint3");
+
+  EXPECT_STREQ(interface->front_left_wheel_steering_joint_feedback.get_joint_name().c_str(),"robot_joint4");
+  EXPECT_STREQ(interface->front_right_wheel_steering_joint_feedback.get_joint_name().c_str(),"robot_joint5");
+  EXPECT_STREQ(interface->rear_left_wheel_spinning_joint_feedback.velocity.get_joint_name().c_str(),"robot_joint6");
+  EXPECT_STREQ(interface->rear_right_wheel_spinning_joint_feedback.velocity.get_joint_name().c_str(),"robot_joint7");
 
 }
+
+TEST_F(TestHarwareInterface1FAS2FWD, checkCommandInterfaceTypeWhenVelocityControlIsUsed)
+{
+  MakeInterface(hardware_interface::HW_IF_VELOCITY);
+  EXPECT_STREQ(interface->front_left_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_VELOCITY);
+  EXPECT_STREQ(interface->front_right_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_VELOCITY);
+}
+
+TEST_F(TestHarwareInterface1FAS2FWD, DISABLED_checkCommandInterfaceTypeWhenEffortControlIsUsed)
+{
+  MakeInterface(hardware_interface::HW_IF_EFFORT);
+  EXPECT_STREQ(interface->front_left_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_EFFORT);
+  EXPECT_STREQ(interface->front_right_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_EFFORT);
+}
+
 

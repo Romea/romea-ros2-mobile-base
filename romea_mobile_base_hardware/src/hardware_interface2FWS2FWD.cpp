@@ -8,10 +8,10 @@ HardwareInterface2FWS2FWD::HardwareInterface2FWS2FWD(const hardware_interface::H
                                                      const std::string & spinning_joint_command_interface_type):
   front_left_wheel_steering_joint(hardware_info.joints[FRONT_LEFT_WHEEL_STEERING_JOINT_ID]),
   front_right_wheel_steering_joint(hardware_info.joints[FRONT_RIGHT_WHEEL_STEERING_JOINT_ID]),
-  front_left_wheel_spinning_joint(hardware_info.joints[REAR_LEFT_WHEEL_SPINNING_JOINT_ID],spinning_joint_command_interface_type),
-  front_right_wheel_spinning_joint(hardware_info.joints[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID],spinning_joint_command_interface_type),
-  rear_left_wheel_spinning_joint_feedback(hardware_info.joints[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID]),
-  rear_right_wheel_spinning_joint_feedback(hardware_info.joints[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID])
+  front_left_wheel_spinning_joint(hardware_info.joints[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID],spinning_joint_command_interface_type),
+  front_right_wheel_spinning_joint(hardware_info.joints[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID],spinning_joint_command_interface_type),
+  rear_left_wheel_spinning_joint_feedback(hardware_info.joints[REAR_LEFT_WHEEL_SPINNING_JOINT_ID]),
+  rear_right_wheel_spinning_joint_feedback(hardware_info.joints[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID])
 {
 
 }

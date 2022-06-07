@@ -7,10 +7,10 @@
 #include <rclcpp/node.hpp>
 
 //romea
-#include "romea_mobile_base_hardware/hardware_interface4WD.hpp"
+#include "romea_mobile_base_hardware/hardware_interface2FWS4WD.hpp"
 #include <hardware_interface/component_parser.hpp>
 
-class TestHarwareInterface4WD : public ::testing::Test
+class TestHarwareInterface2FWS4WD : public ::testing::Test
 {
 protected:
   static void SetUpTestCase()
@@ -25,43 +25,41 @@ protected:
 
   void SetUp() override
   {
-    std::string xacro_file =  std::string(TEST_DIR)+"/test_hardware_interface4WD.xacro";
-    std::string urdf_file =  "/tmp/test_hardware_interface4WD.urdf";
+    std::string xacro_file =  std::string(TEST_DIR)+"/test_hardware_interface2FWS4WD.xacro";
+    std::string urdf_file =  "/tmp/test_hardware_interface2FWS4WD.urdf";
     std::string cmd = "xacro "+xacro_file + " > " + urdf_file;
     std::system(cmd.c_str());
 
     std::ifstream file(urdf_file.c_str());
     std::stringstream buffer;
     buffer << file.rdbuf();
-//    std::cout << buffer.str() <<std::endl;
+    //    std::cout << buffer.str() <<std::endl;
 
     info = hardware_interface::parse_control_resources_from_urdf(buffer.str());
   }
 
   void MakeInterface(const std::string & command_interface_type)
   {
-    interface = std::make_unique<romea::HardwareInterface4WD>(info[0],command_interface_type);
+    interface = std::make_unique<romea::HardwareInterface2FWS4WD>(info[0],command_interface_type);
   }
 
-  std::unique_ptr<romea::HardwareInterface4WD> interface;
+  std::unique_ptr<romea::HardwareInterface2FWS4WD> interface;
   std::vector<hardware_interface::HardwareInfo> info;
 };
 
 
-TEST_F(TestHarwareInterface4WD, checkJointNames)
+TEST_F(TestHarwareInterface2FWS4WD, checkJointNames)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
-  EXPECT_STREQ(interface->front_left_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint1");
-  EXPECT_STREQ(interface->front_right_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint2");
-  EXPECT_STREQ(interface->rear_left_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint3");
-  EXPECT_STREQ(interface->rear_right_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint4");
-  EXPECT_STREQ(interface->front_left_wheel_spinning_joint.feedback.position.get_joint_name().c_str(),"robot_joint1");
-  EXPECT_STREQ(interface->front_right_wheel_spinning_joint.feedback.position.get_joint_name().c_str(),"robot_joint2");
-  EXPECT_STREQ(interface->rear_left_wheel_spinning_joint.feedback.position.get_joint_name().c_str(),"robot_joint3");
-  EXPECT_STREQ(interface->rear_right_wheel_spinning_joint.feedback.position.get_joint_name().c_str(),"robot_joint4");
+  EXPECT_STREQ(interface->front_left_wheel_steering_joint.feedback.get_joint_name().c_str(),"robot_joint1");
+  EXPECT_STREQ(interface->front_right_wheel_steering_joint.feedback.get_joint_name().c_str(),"robot_joint2");
+  EXPECT_STREQ(interface->front_left_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint3");
+  EXPECT_STREQ(interface->front_right_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint4");
+  EXPECT_STREQ(interface->rear_left_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint5");
+  EXPECT_STREQ(interface->rear_right_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint6");
 }
 
-TEST_F(TestHarwareInterface4WD, checkCommandInterfaceTypeWhenVelocityControlIsUsed)
+TEST_F(TestHarwareInterface2FWS4WD, checkCommandInterfaceTypeWhenVelocityControlIsUsed)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
   EXPECT_STREQ(interface->front_left_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_VELOCITY);
@@ -70,7 +68,7 @@ TEST_F(TestHarwareInterface4WD, checkCommandInterfaceTypeWhenVelocityControlIsUs
   EXPECT_STREQ(interface->rear_right_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_VELOCITY);
 }
 
-TEST_F(TestHarwareInterface4WD, DISABLED_checkCommandInterfaceTypeWhenEffortControlIsUsed)
+TEST_F(TestHarwareInterface2FWS4WD, DISABLED_checkCommandInterfaceTypeWhenEffortControlIsUsed)
 {
   MakeInterface(hardware_interface::HW_IF_EFFORT);
   EXPECT_STREQ(interface->front_left_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_EFFORT);
