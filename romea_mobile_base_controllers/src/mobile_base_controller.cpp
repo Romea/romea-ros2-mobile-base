@@ -338,7 +338,7 @@ void MobileBaseController<OdometryFrameType,KinematicType>::
 command_callback_(typename CommandMsg::ConstSharedPtr cmd_msg)
 {
 
-  RCLCPP_INFO_STREAM(node_->get_logger(),"command_callback_");
+//  RCLCPP_INFO_STREAM(node_->get_logger(),"command_callback_");
   StampedCommand stamped_cmd;
   to_romea(*cmd_msg,stamped_cmd.cmd);
   stamped_cmd.stamp=node_->get_clock()->now();
@@ -582,8 +582,8 @@ void MobileBaseController<OdometryFrameType,KinematicType>::init_publishers_()
 //template class MobileBaseController<ControllerInterface1FWS2RWD,OneAxleSteeringKinematic>;
 template class MobileBaseController<ControllerInterface2AS4WD,TwoAxleSteeringKinematic>;
 //template class MobileBaseController<ControllerInterface2FWS2FWD,TwoWheelSteeringKinematic>;
-//template class MobileBaseController<ControllerInterface2FWS2RWD,TwoWheelSteeringKinematic>;
-//template class MobileBaseController<ControllerInterface2FWS4WD,TwoWheelSteeringKinematic>;
+template class MobileBaseController<ControllerInterface2FWS2RWD,TwoWheelSteeringKinematic>;
+template class MobileBaseController<ControllerInterface2FWS4WD,TwoWheelSteeringKinematic>;
 //template class MobileBaseController<ControllerInterface2TD,SkidSteeringKinematic>;
 //template class MobileBaseController<ControllerInterface2WD,SkidSteeringKinematic>;
 template class MobileBaseController<ControllerInterface4WD,SkidSteeringKinematic>;
