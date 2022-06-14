@@ -53,9 +53,16 @@ public:
 
 protected :
 
-  virtual hardware_interface::return_type connect() = 0 ;
+  virtual hardware_interface::return_type connect_() = 0 ;
 
-  virtual hardware_interface::return_type disconnect() = 0 ;
+  virtual hardware_interface::return_type disconnect_() = 0 ;
+
+  virtual hardware_interface::return_type load_interface_(
+      const hardware_interface::HardwareInfo & hardware_info) ;
+
+  virtual hardware_interface::return_type load_info_(
+      const hardware_interface::HardwareInfo & hardware_info);
+
 
 protected :
 
