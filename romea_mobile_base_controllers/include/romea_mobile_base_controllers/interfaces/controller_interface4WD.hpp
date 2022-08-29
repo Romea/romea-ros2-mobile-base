@@ -1,7 +1,7 @@
 #ifndef _romea_ControllerInterface4WD_hpp_
 #define _romea_ControllerInterface4WD_hpp_
 
-#include "spinning_joint_controller_interface.hpp"
+#include "controller_interface_common.hpp"
 #include <romea_core_mobile_base/odometry/OdometryFrame4WD.hpp>
 #include <romea_core_mobile_base/info/MobileBaseInfo4WD.hpp>
 
@@ -49,8 +49,8 @@ public :
 
 private :
 
-  SpinningJointControllerInterface front_spinning_joints_;
-  SpinningJointControllerInterface rear_spinning_joints_;
+  double front_wheels_radius_;
+  double rear_wheels_radius_;
 
 };
 

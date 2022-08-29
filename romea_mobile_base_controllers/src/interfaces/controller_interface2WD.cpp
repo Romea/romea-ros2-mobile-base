@@ -11,7 +11,7 @@ namespace romea
 
 //-----------------------------------------------------------------------------
 ControllerInterface2WD::ControllerInterface2WD(const MobileBaseInfo2WD & mobile_base_info):
-  spinning_joints_(mobile_base_info.geometry.wheels.radius)
+  wheels_radius_(mobile_base_info.geometry.wheels.radius)
 {
 
 }
@@ -19,15 +19,19 @@ ControllerInterface2WD::ControllerInterface2WD(const MobileBaseInfo2WD & mobile_
 //-----------------------------------------------------------------------------
 void ControllerInterface2WD::write(const OdometryFrame2WD &command, LoanedCommandInterfaces & loaned_command_interfaces)const
 {
-  spinning_joints_.write(command.leftWheelSpeed,loaned_command_interfaces[LEFT_WHEEL_SPINNING_JOINT_ID]);
-  spinning_joints_.write(command.rightWheelSpeed,loaned_command_interfaces[RIGHT_WHEEL_SPINNING_JOINT_ID]);
+  loaned_command_interfaces[LEFT_WHEEL_SPINNING_JOINT_ID].set_value(
+        command.leftWheelLinearSpeed/wheels_radius_);
+  loaned_command_interfaces[RIGHT_WHEEL_SPINNING_JOINT_ID].set_value(
+        command.rightWheelLinearSpeed/wheels_radius_);
 }
 
 //-----------------------------------------------------------------------------
 void ControllerInterface2WD::read(const LoanedStateInterfaces & loaned_state_interfaces, OdometryFrame2WD & measurement) const
 {
-  spinning_joints_.read(loaned_state_interfaces[LEFT_WHEEL_SPINNING_JOINT_ID],measurement.leftWheelSpeed);
-  spinning_joints_.read(loaned_state_interfaces[RIGHT_WHEEL_SPINNING_JOINT_ID],measurement.rightWheelSpeed);
+  measurement.leftWheelLinearSpeed = wheels_radius_*
+      loaned_state_interfaces[LEFT_WHEEL_SPINNING_JOINT_ID].get_value();
+  measurement.rightWheelLinearSpeed = wheels_radius_*
+      loaned_state_interfaces[RIGHT_WHEEL_SPINNING_JOINT_ID].get_value();
 }
 
 //-----------------------------------------------------------------------------
@@ -50,10 +54,8 @@ std::vector<std::string> ControllerInterface2WD::get_joints_names(
 std::vector<std::string> ControllerInterface2WD::hardware_interface_names(
     const std::vector<std::string> & joints_names)
 {
-  return {SpinningJointControllerInterface::hardware_interface_name(
-          joints_names[LEFT_WHEEL_SPINNING_JOINT_ID]),
-        SpinningJointControllerInterface::hardware_interface_name(
-          joints_names[RIGHT_WHEEL_SPINNING_JOINT_ID])};
+  return {hardware_velocity_interface_name(joints_names[LEFT_WHEEL_SPINNING_JOINT_ID]),
+        hardware_velocity_interface_name(joints_names[RIGHT_WHEEL_SPINNING_JOINT_ID])};
 }
 
 }

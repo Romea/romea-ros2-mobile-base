@@ -13,8 +13,8 @@ namespace romea
 
 //-----------------------------------------------------------------------------
 ControllerInterface4WD::ControllerInterface4WD(const MobileBaseInfo4WD & mobile_base_info):
-  front_spinning_joints_(mobile_base_info.geometry.frontAxle.wheels.radius),
-  rear_spinning_joints_(mobile_base_info.geometry.rearAxle.wheels.radius)
+  front_wheels_radius_(mobile_base_info.geometry.frontAxle.wheels.radius),
+  rear_wheels_radius_(mobile_base_info.geometry.rearAxle.wheels.radius)
 {
 
 }
@@ -22,34 +22,38 @@ ControllerInterface4WD::ControllerInterface4WD(const MobileBaseInfo4WD & mobile_
 //-----------------------------------------------------------------------------
 void ControllerInterface4WD::write(const OdometryFrame4WD &command, LoanedCommandInterfaces & loaned_command_interfaces)const
 {
-  front_spinning_joints_.write(command.frontLeftWheelSpeed,loaned_command_interfaces[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID]);
-  front_spinning_joints_.write(command.frontRightWheelSpeed,loaned_command_interfaces[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID]);
-  rear_spinning_joints_.write(command.rearLeftWheelSpeed,loaned_command_interfaces[REAR_LEFT_WHEEL_SPINNING_JOINT_ID]);
-  rear_spinning_joints_.write(command.rearRightWheelSpeed,loaned_command_interfaces[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID]);
+  loaned_command_interfaces[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID].set_value(
+        command.frontLeftWheelLinearSpeed/front_wheels_radius_);
+  loaned_command_interfaces[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID].set_value(
+        command.frontRightWheelLinearSpeed/front_wheels_radius_);
+  loaned_command_interfaces[REAR_LEFT_WHEEL_SPINNING_JOINT_ID].set_value(
+        command.rearLeftWheelLinearSpeed/rear_wheels_radius_);
+  loaned_command_interfaces[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID].set_value(
+        command.rearRightWheelLinearSpeed/rear_wheels_radius_);
 }
 
 
 //-----------------------------------------------------------------------------
 void ControllerInterface4WD::read(const LoanedStateInterfaces & loaned_state_interfaces, OdometryFrame4WD & measurement) const
 {
-  front_spinning_joints_.read(loaned_state_interfaces[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID],measurement.frontLeftWheelSpeed);
-  front_spinning_joints_.read(loaned_state_interfaces[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID],measurement.frontRightWheelSpeed);
-  rear_spinning_joints_.read(loaned_state_interfaces[REAR_LEFT_WHEEL_SPINNING_JOINT_ID],measurement.rearLeftWheelSpeed);
-  rear_spinning_joints_.read(loaned_state_interfaces[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID],measurement.rearRightWheelSpeed);
+  measurement.frontLeftWheelLinearSpeed = front_wheels_radius_*
+      loaned_state_interfaces[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID].get_value();
+  measurement.frontRightWheelLinearSpeed = front_wheels_radius_ *
+      loaned_state_interfaces[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID].get_value();
+  measurement.rearLeftWheelLinearSpeed = rear_wheels_radius_ *
+      loaned_state_interfaces[REAR_LEFT_WHEEL_SPINNING_JOINT_ID].get_value();
+  measurement.rearRightWheelLinearSpeed = rear_wheels_radius_ *
+      loaned_state_interfaces[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID].get_value();
 }
 
 //-----------------------------------------------------------------------------
 std::vector<std::string> ControllerInterface4WD::hardware_interface_names(
     const std::vector<std::string> & joints_names)
 {
-  return {SpinningJointControllerInterface::hardware_interface_name(
-          joints_names[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID]),
-        SpinningJointControllerInterface::hardware_interface_name(
-          joints_names[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID]),
-        SpinningJointControllerInterface::hardware_interface_name(
-          joints_names[REAR_LEFT_WHEEL_SPINNING_JOINT_ID]),
-        SpinningJointControllerInterface::hardware_interface_name(
-          joints_names[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID])
+  return {hardware_velocity_interface_name(joints_names[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID]),
+        hardware_velocity_interface_name(joints_names[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID]),
+        hardware_velocity_interface_name(joints_names[REAR_LEFT_WHEEL_SPINNING_JOINT_ID]),
+        hardware_velocity_interface_name(joints_names[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID])
   };
 }
 

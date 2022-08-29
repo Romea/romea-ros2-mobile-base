@@ -11,24 +11,28 @@ namespace romea
 
 //-----------------------------------------------------------------------------
 ControllerInterface2TD::ControllerInterface2TD(const MobileBaseInfo2TD &mobile_base_info):
-  spinning_joints_(mobile_base_info.geometry.tracks.sprocketWheel.radius+
-                   mobile_base_info.geometry.tracks.thickness)
+  virtual_tracks_radius_(mobile_base_info.geometry.tracks.sprocketWheel.radius+
+                         mobile_base_info.geometry.tracks.thickness)
 {
 
 }
 
 //-----------------------------------------------------------------------------
-void ControllerInterface2TD::write(const OdometryFrame2WD &command, LoanedCommandInterfaces & loaned_command_interfaces)const
+void ControllerInterface2TD::write(const OdometryFrame2TD &command, LoanedCommandInterfaces & loaned_command_interfaces)const
 {
-  spinning_joints_.write(command.leftWheelSpeed,loaned_command_interfaces[LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID]);
-  spinning_joints_.write(command.rightWheelSpeed,loaned_command_interfaces[RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID]);
+  loaned_command_interfaces[LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID].
+      set_value(command.leftTrackLinearSpeed/virtual_tracks_radius_);
+  loaned_command_interfaces[RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID].
+      set_value(command.rightTrackLinearSpeed/virtual_tracks_radius_);
 }
 
 //-----------------------------------------------------------------------------
-void ControllerInterface2TD::read(const LoanedStateInterfaces & loaned_state_interfaces, OdometryFrame2WD & measurement) const
+void ControllerInterface2TD::read(const LoanedStateInterfaces & loaned_state_interfaces, OdometryFrame2TD &measurement) const
 {
-  spinning_joints_.read(loaned_state_interfaces[LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID],measurement.leftWheelSpeed);
-  spinning_joints_.read(loaned_state_interfaces[RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID],measurement.rightWheelSpeed);
+  measurement.leftTrackLinearSpeed = virtual_tracks_radius_*
+      loaned_state_interfaces[LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID].get_value();
+  measurement.rightTrackLinearSpeed = virtual_tracks_radius_ *
+      loaned_state_interfaces[RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID].get_value();
 }
 
 //-----------------------------------------------------------------------------
@@ -52,10 +56,8 @@ std::vector<std::string> ControllerInterface2TD::get_joints_names(
 std::vector<std::string> ControllerInterface2TD::hardware_interface_names(
     const std::vector<std::string> & joints_names)
 {
-  return {SpinningJointControllerInterface::hardware_interface_name(
-          joints_names[LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID]),
-        SpinningJointControllerInterface::hardware_interface_name(
-          joints_names[RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID])};
+  return {hardware_velocity_interface_name(joints_names[LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID]),
+        hardware_velocity_interface_name(joints_names[RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID])};
 }
 
 }

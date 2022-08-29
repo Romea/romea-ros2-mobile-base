@@ -27,9 +27,6 @@ find_package(romea_mobile_base_utils REQUIRED)
 find_package(controller_interface REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
- src/interfaces/joint_controller_interface.cpp
- src/interfaces/spinning_joint_controller_interface.cpp
- src/interfaces/steering_joint_controller_interface.cpp
  src/interfaces/controller_interface1FAS2FWD.cpp
  src/interfaces/controller_interface1FAS2RWD.cpp
  src/interfaces/controller_interface1FWS2RWD.cpp
@@ -41,6 +38,7 @@ add_library(${PROJECT_NAME} SHARED
  src/interfaces/controller_interface2WD.cpp
  src/interfaces/controller_interface4WD.cpp
  src/interfaces/controller_interface4WS4WD.cpp
+ src/interfaces/controller_interface_common.cpp
  src/dead_reckoning.cpp
  src/dead_reckoning_publisher.cpp
  src/mobile_base_controller.cpp

@@ -1,9 +1,10 @@
 #ifndef _romea_ControllerInterface2WD_hpp_
 #define _romea_ControllerInterface2WD_hpp_
 
-#include "spinning_joint_controller_interface.hpp"
+#include "controller_interface_common.hpp"
 #include <romea_core_mobile_base/odometry/OdometryFrame2WD.hpp>
 #include <romea_core_mobile_base/info/MobileBaseInfo2WD.hpp>
+
 namespace romea
 {
 
@@ -12,8 +13,10 @@ class ControllerInterface2WD
 
 public:
 
-  using LoanedCommandInterfaces = JointControllerInterface::LoanedCommandInterfaces;
-  using LoanedStateInterfaces = JointControllerInterface::LoanedStateInterfaces;
+  using LoanedCommandInterface =  hardware_interface::LoanedCommandInterface;
+  using LoanedCommandInterfaces = std::vector<LoanedCommandInterface>;
+  using LoanedStateInterface = hardware_interface::LoanedStateInterface;
+  using LoanedStateInterfaces = std::vector<LoanedStateInterface>;
 
   enum JointIds {
     LEFT_WHEEL_SPINNING_JOINT_ID,
@@ -45,8 +48,7 @@ public :
 
 private :
 
-  SpinningJointControllerInterface spinning_joints_;
-
+  double wheels_radius_;
 };
 
 

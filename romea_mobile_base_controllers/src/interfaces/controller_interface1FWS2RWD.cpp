@@ -13,8 +13,7 @@ namespace romea
 //-----------------------------------------------------------------------------
 ControllerInterface1FWS2RWD::
 ControllerInterface1FWS2RWD(const MobileBaseInfo1FWS2RWD & mobile_base_info):
-  front_steering_joint_(),
-  rear_spinning_joints_(mobile_base_info.geometry.rearAxle.wheels.radius)
+  rear_wheels_radius_(mobile_base_info.geometry.rearAxle.wheels.radius)
 {
 }
 
@@ -22,19 +21,24 @@ ControllerInterface1FWS2RWD(const MobileBaseInfo1FWS2RWD & mobile_base_info):
 void ControllerInterface1FWS2RWD::write(const OdometryFrame1FWS2RWD & command,
                                         LoanedCommandInterfaces & loaned_command_interfaces)const
 {
-  front_steering_joint_.write(command.frontWheelAngle,loaned_command_interfaces[FRONT_WHEEL_STEERING_JOINT_ID]);
-  rear_spinning_joints_.write(command.rearLeftWheelSpeed,loaned_command_interfaces[REAR_LEFT_WHEEL_SPINNING_JOINT_ID]);
-  rear_spinning_joints_.write(command.rearRightWheelSpeed,loaned_command_interfaces[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID]);
+  loaned_command_interfaces[FRONT_WHEEL_STEERING_JOINT_ID].
+      set_value(command.frontWheelSteeringAngle);
+  loaned_command_interfaces[REAR_LEFT_WHEEL_SPINNING_JOINT_ID].
+      set_value(command.rearLeftWheelLinearSpeed/rear_wheels_radius_);
+  loaned_command_interfaces[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID].
+      set_value(command.rearRightWheelLinearSpeed/rear_wheels_radius_);
 }
 
 //-----------------------------------------------------------------------------
 void ControllerInterface1FWS2RWD::read(const LoanedStateInterfaces & loaned_state_interfaces,
                                        OdometryFrame1FWS2RWD & measurement)const
 {
-  front_steering_joint_.read(loaned_state_interfaces[FRONT_WHEEL_STEERING_JOINT_ID],measurement.frontWheelAngle);
-  rear_spinning_joints_.read(loaned_state_interfaces[REAR_LEFT_WHEEL_SPINNING_JOINT_ID],measurement.rearLeftWheelSpeed);
-  rear_spinning_joints_.read(loaned_state_interfaces[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID],measurement.rearRightWheelSpeed);
-
+  measurement.frontWheelSteeringAngle =
+      loaned_state_interfaces[FRONT_WHEEL_STEERING_JOINT_ID].get_value();
+  measurement.rearLeftWheelLinearSpeed = rear_wheels_radius_ *
+      loaned_state_interfaces[REAR_LEFT_WHEEL_SPINNING_JOINT_ID].get_value();
+  measurement.rearRightWheelLinearSpeed = rear_wheels_radius_ *
+      loaned_state_interfaces[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID].get_value();
 }
 
 //-----------------------------------------------------------------------------
@@ -59,12 +63,9 @@ std::vector<std::string> ControllerInterface1FWS2RWD::get_joints_names(
 std::vector<std::string> ControllerInterface1FWS2RWD::hardware_interface_names(
     const std::vector<std::string> & joints_names)
 {
-  return {SteeringJointControllerInterface::hardware_interface_name(
-          joints_names[FRONT_WHEEL_STEERING_JOINT_ID]),
-        SpinningJointControllerInterface::hardware_interface_name(
-          joints_names[REAR_LEFT_WHEEL_SPINNING_JOINT_ID]),
-        SpinningJointControllerInterface::hardware_interface_name(
-          joints_names[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID])};
+  return {hardware_position_interface_name(joints_names[FRONT_WHEEL_STEERING_JOINT_ID]),
+        hardware_velocity_interface_name(joints_names[REAR_LEFT_WHEEL_SPINNING_JOINT_ID]),
+        hardware_velocity_interface_name(joints_names[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID])};
 }
 
 }

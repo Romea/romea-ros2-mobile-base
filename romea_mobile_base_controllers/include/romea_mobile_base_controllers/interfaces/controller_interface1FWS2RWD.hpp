@@ -2,8 +2,7 @@
 #define _romea_ControllerInterface1FWS2RWD_hpp_
 
 //romea
-#include "steering_joint_controller_interface.hpp"
-#include "spinning_joint_controller_interface.hpp"
+#include "controller_interface_common.hpp"
 #include <romea_core_mobile_base/odometry/OdometryFrame1FWS2RWD.hpp>
 #include <romea_core_mobile_base/info/MobileBaseInfo1FWS2RWD.hpp>
 
@@ -15,8 +14,10 @@ class ControllerInterface1FWS2RWD
 
 public:
 
-  using LoanedCommandInterfaces = JointControllerInterface::LoanedCommandInterfaces;
-  using LoanedStateInterfaces = JointControllerInterface::LoanedStateInterfaces;
+  using LoanedCommandInterface =  hardware_interface::LoanedCommandInterface;
+  using LoanedCommandInterfaces = std::vector<LoanedCommandInterface>;
+  using LoanedStateInterface = hardware_interface::LoanedStateInterface;
+  using LoanedStateInterfaces = std::vector<LoanedStateInterface>;
 
   enum JointIDs  {
     FRONT_WHEEL_STEERING_JOINT_ID,
@@ -49,8 +50,7 @@ public :
 
 private :
 
-  SteeringJointControllerInterface front_steering_joint_;
-  SpinningJointControllerInterface rear_spinning_joints_;
+  double rear_wheels_radius_;
 
 };
 
