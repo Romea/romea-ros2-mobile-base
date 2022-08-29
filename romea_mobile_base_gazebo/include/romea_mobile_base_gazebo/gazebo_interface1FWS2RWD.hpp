@@ -3,32 +3,30 @@
 
 #include "spinning_joint_gazebo_interface.hpp"
 #include "steering_joint_gazebo_interface.hpp"
-#include <romea_mobile_base_hardware/hardware_interface1FWS2RWD.hpp>
+#include <romea_core_mobile_base/simulation/SimulationControl1FWS2RWD.hpp>
 
 namespace romea
 {
 
 struct GazeboInterface1FWS2RWD{
 
-  using HardwareInterface = HardwareInterface1FWS2RWD;
+public :
 
   GazeboInterface1FWS2RWD(gazebo::physics::ModelPtr parent_model,
                           const hardware_interface::HardwareInfo & hardware_info,
                           const std::string & command_interface_type);
 
-  SteeringJointGazeboInterface front_wheel_steering_joint;
-  SpinningJointGazeboInterface front_wheel_spinning_joint;
-  SpinningJointGazeboInterface rear_left_wheel_spinning_joint;
-  SpinningJointGazeboInterface rear_right_wheel_spinning_joint;
+  SimulationState1FWS2RWD get_state() const;
+  void set_command(const SimulationCommand1FWS2RWD & command);
+
+private :
+
+  SteeringJointGazeboInterface front_wheel_steering_joint_;
+  SpinningJointGazeboInterface front_wheel_spinning_joint_;
+  SpinningJointGazeboInterface rear_left_wheel_spinning_joint_;
+  SpinningJointGazeboInterface rear_right_wheel_spinning_joint_;
 
 };
-
-void write(const HardwareInterface1FWS2RWD & hardware_interface,
-           GazeboInterface1FWS2RWD & gazebo_interface);
-
-void read(const GazeboInterface1FWS2RWD & gazebo_interface,
-          HardwareInterface1FWS2RWD & hardware_interface);
-
 
 }
 

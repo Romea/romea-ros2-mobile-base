@@ -7,5 +7,5 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 #ament_add_gtest(${PROJECT_NAME}_test_hardware_interface1FAS2FWD test_hardware_interface1FAS2FWD.cpp)
 #target_link_libraries(${PROJECT_NAME}_test_hardware_interface1FAS2FWD ${PROJECT_NAME})
 
-ament_add_gtest(${PROJECT_NAME}_test_gazebo_interface4WD test_gazebo_interface4WD.cpp)
-target_link_libraries(${PROJECT_NAME}_test_gazebo_interface4WD ${PROJECT_NAME})
+#ament_add_gtest(${PROJECT_NAME}_test_gazebo_interface4WD test_gazebo_interface4WD.cpp)
+#target_link_libraries(${PROJECT_NAME}_test_gazebo_interface4WD ${PROJECT_NAME})

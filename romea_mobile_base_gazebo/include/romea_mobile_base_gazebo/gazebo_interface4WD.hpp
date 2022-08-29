@@ -3,36 +3,30 @@
 
 
 #include "spinning_joint_gazebo_interface.hpp"
-#include <romea_mobile_base_hardware/hardware_interface4WD.hpp>
+#include <romea_core_mobile_base/simulation/SimulationControl4WD.hpp>
 
 namespace romea
 {
 
 class GazeboInterface4WD{
 
-
-public:
-
-using HardwareInterface = HardwareInterface4WD;
-
 public:
 
   GazeboInterface4WD(gazebo::physics::ModelPtr parent_model,
                      const hardware_interface::HardwareInfo & hardware_info,
                      const std::string & command_interface_type);
-  SpinningJointGazeboInterface front_left_wheel_spinning_joint;
-  SpinningJointGazeboInterface front_right_wheel_spinning_joint;
-  SpinningJointGazeboInterface rear_left_wheel_spinning_joint;
-  SpinningJointGazeboInterface rear_right_wheel_spinning_joint;
+
+  SimulationState4WD get_state() const;
+  void set_command(const SimulationCommand4WD &command);
+
+private :
+
+  SpinningJointGazeboInterface front_left_wheel_spinning_joint_;
+  SpinningJointGazeboInterface front_right_wheel_spinning_joint_;
+  SpinningJointGazeboInterface rear_left_wheel_spinning_joint_;
+  SpinningJointGazeboInterface rear_right_wheel_spinning_joint_;
 
 };
-
-void write(const HardwareInterface4WD & hardware_interface,
-           GazeboInterface4WD & gazebo_interface);
-
-void read(const GazeboInterface4WD & gazebo_interface,
-          HardwareInterface4WD & hardware_interface);
-
 
 }
 

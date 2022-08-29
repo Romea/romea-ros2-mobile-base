@@ -2,30 +2,30 @@
 #define _romea_GazeboInterface2WD_hpp_
 
 #include "spinning_joint_gazebo_interface.hpp"
-#include <romea_mobile_base_hardware/hardware_interface2WD.hpp>
+#include <romea_core_mobile_base/simulation/SimulationControl2WD.hpp>
 
 namespace romea
 {
 
-struct GazeboInterface2WD{
+class GazeboInterface2WD{
 
-  using HardwareInterface = HardwareInterface2WD;
+
+public :
 
   GazeboInterface2WD(gazebo::physics::ModelPtr parent_model,
                      const hardware_interface::HardwareInfo & hardware_info,
                      const std::string & command_interface_type);
 
-  SpinningJointGazeboInterface left_wheel_spinning_joint;
-  SpinningJointGazeboInterface right_wheel_spinning_joint;
+
+  SimulationState2WD get_state() const;
+  void set_command(const SimulationCommand2WD &command);
+
+private :
+
+  SpinningJointGazeboInterface left_wheel_spinning_joint_;
+  SpinningJointGazeboInterface right_wheel_spinning_joint_;
 
 };
-
-void write(const HardwareInterface2WD & hardware_interface,
-           GazeboInterface2WD & gazebo_interface);
-
-void read(const GazeboInterface2WD & gazebo_interface,
-          HardwareInterface2WD & hardware_interface);
-
 
 }
 

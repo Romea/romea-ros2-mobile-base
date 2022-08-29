@@ -19,6 +19,7 @@
   <depend>romea_common_utils</depend>
   <depend>romea_mobile_base_utils</depend>
   <depend>romea_mobile_base_hardware</depend>
+  <depend>romea_mobile_base_simulation</depend>
   <depend>gazebo_dev</depend>
   <depend>gazebo_ros</depend>
   <depend>gazebo_ros2_control</depend>

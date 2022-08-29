@@ -25,6 +25,7 @@ find_package(romea_core_mobile_base REQUIRED)
 find_package(romea_common_utils REQUIRED)
 find_package(romea_mobile_base_utils REQUIRED)
 find_package(romea_mobile_base_hardware REQUIRED)
+find_package(romea_mobile_base_simulation REQUIRED)
 find_package(gazebo_dev REQUIRED)
 find_package(gazebo_ros REQUIRED)
 find_package(gazebo_ros2_control REQUIRED)
@@ -33,17 +34,14 @@ find_package(hardware_interface REQUIRED)
 add_library(${PROJECT_NAME} SHARED
  src/spinning_joint_gazebo_interface.cpp
  src/steering_joint_gazebo_interface.cpp
- src/gazebo_interface1FAS2FWD.cpp
- src/gazebo_interface1FAS2RWD.cpp
+ src/gazebo_interface1FASxxx.cpp
  src/gazebo_interface1FWS2RWD.cpp
- src/gazebo_interface2AS4WD.cpp
- src/gazebo_interface2FWS2FWD.cpp
- src/gazebo_interface2FWS2RWD.cpp
- src/gazebo_interface2FWS4WD.cpp
- src/gazebo_interface2WD.cpp
+ src/gazebo_interface2ASxxx.cpp
+ src/gazebo_interface2FWSxxx.cpp
  src/gazebo_interface2TD.cpp
  src/gazebo_interface2THD.cpp
  src/gazebo_interface2TTD.cpp
+ src/gazebo_interface2WD.cpp
  src/gazebo_interface4WD.cpp
  src/gazebo_interface4WS4WD.cpp
  src/gazebo_system_interface.cpp
@@ -56,6 +54,7 @@ ament_target_dependencies(${PROJECT_NAME}
  romea_common_utils
  romea_mobile_base_utils
  romea_mobile_base_hardware
+ romea_mobile_base_simulation
  gazebo_dev
  gazebo_ros
  gazebo_ros2_control

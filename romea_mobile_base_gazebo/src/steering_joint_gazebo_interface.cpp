@@ -12,36 +12,36 @@ SteeringJointGazeboInterface::SteeringJointGazeboInterface(
 }
 
 //-----------------------------------------------------------------------------
-void SteeringJointGazeboInterface::setCommand(const double & command)
+void SteeringJointGazeboInterface::set_command(const double & command)
 {
   sim_joint_->SetPosition(0,command,true);
 }
 
 //-----------------------------------------------------------------------------
-double SteeringJointGazeboInterface::getFeedback()const
+double SteeringJointGazeboInterface::get_state() const
 {
   return sim_joint_->Position(0);
 }
 
-//-----------------------------------------------------------------------------
-void write(const SteeringJointHardwareInterface & hardware_joint,
-           SteeringJointGazeboInterface & gazebo_joint)
-{
-  gazebo_joint.setCommand(hardware_joint.command.get());
-}
+////-----------------------------------------------------------------------------
+//void write(const SteeringJointHardwareInterface & hardware_joint,
+//           SteeringJointGazeboInterface & gazebo_joint)
+//{
+//  gazebo_joint.setCommand(hardware_joint.command.get());
+//}
 
-//-----------------------------------------------------------------------------
-void read(const SteeringJointGazeboInterface & gazebo_joint,
-          SteeringJointHardwareInterface & hardware_joint)
-{
-  read(gazebo_joint,hardware_joint.feedback);
-}
+////-----------------------------------------------------------------------------
+//void read(const SteeringJointGazeboInterface & gazebo_joint,
+//          SteeringJointHardwareInterface & hardware_joint)
+//{
+//  read(gazebo_joint,hardware_joint.feedback);
+//}
 
-//-----------------------------------------------------------------------------
-void read(const SteeringJointGazeboInterface & gazebo_joint,
-          SteeringJointHardwareInterface::Feedback & hardware_joint_feedback)
-{
-  hardware_joint_feedback.set(gazebo_joint.getFeedback());
-}
+////-----------------------------------------------------------------------------
+//void read(const SteeringJointGazeboInterface & gazebo_joint,
+//          SteeringJointHardwareInterface::Feedback & hardware_joint_feedback)
+//{
+//  hardware_joint_feedback.set(gazebo_joint.getFeedback());
+//}
 
 }

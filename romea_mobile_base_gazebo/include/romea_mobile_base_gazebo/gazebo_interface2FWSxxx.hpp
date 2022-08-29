@@ -4,38 +4,31 @@
 
 #include "spinning_joint_gazebo_interface.hpp"
 #include "steering_joint_gazebo_interface.hpp"
-#include <romea_mobile_base_hardware/hardware_interface2FWS2FWD.hpp>
+#include <romea_core_mobile_base/simulation/SimulationControl2FWSxxx.hpp>
 
 namespace romea
 {
 
-struct GazeboInterface2FWS2FWD{
+class GazeboInterface2FWSxxx{
 
-  using HardwareInterface = HardwareInterface2FWS2FWD;
+public:
 
-  GazeboInterface2FWS2FWD(gazebo::physics::ModelPtr parent_model,
-                          const hardware_interface::HardwareInfo & hardware_info,
-                          const std::string & command_interface_type);
+  GazeboInterface2FWSxxx(gazebo::physics::ModelPtr parent_model,
+                         const hardware_interface::HardwareInfo & hardware_info,
+                         const std::string & command_interface_type);
 
-  SteeringJointGazeboInterface front_left_wheel_steering_joint;
-  SteeringJointGazeboInterface front_right_wheel_steering_joint;
-  SpinningJointGazeboInterface front_left_wheel_spinning_joint;
-  SpinningJointGazeboInterface front_right_wheel_spinning_joint;
-  SpinningJointGazeboInterface rear_left_wheel_spinning_joint;
-  SpinningJointGazeboInterface rear_right_wheel_spinning_joint;
+  SimulationState2FWSxxx get_state() const;
+  void set_command(const SimulationCommand2FWSxxx & command);
 
-  const double wheelbase;
-  const double front_track;
-  const double rear_track;
+private :
 
+  SteeringJointGazeboInterface front_left_wheel_steering_joint_;
+  SteeringJointGazeboInterface front_right_wheel_steering_joint_;
+  SpinningJointGazeboInterface front_left_wheel_spinning_joint_;
+  SpinningJointGazeboInterface front_right_wheel_spinning_joint_;
+  SpinningJointGazeboInterface rear_left_wheel_spinning_joint_;
+  SpinningJointGazeboInterface rear_right_wheel_spinning_joint_;
 };
-
-void write(const HardwareInterface2FWS2FWD & hardware_interface,
-           GazeboInterface2FWS2FWD & gazebo_interface);
-
-void read(const GazeboInterface2FWS2FWD & gazebo_interface,
-          HardwareInterface2FWS2FWD & hardware_interface);
-
 
 }
 

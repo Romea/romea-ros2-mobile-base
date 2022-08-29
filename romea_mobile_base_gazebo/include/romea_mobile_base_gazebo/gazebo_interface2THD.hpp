@@ -2,36 +2,32 @@
 #define _romea_GazeboInterface2THD_hpp_
 
 #include "spinning_joint_gazebo_interface.hpp"
-#include <romea_mobile_base_hardware/hardware_interface2THD.hpp>
+#include <romea_core_mobile_base/simulation/SimulationControl2THD.hpp>
 
 namespace romea
 {
 
-struct GazeboInterface2THD{
+class GazeboInterface2THD{
 
-  using HardwareInterface = HardwareInterface2THD;
+public:
 
   GazeboInterface2THD(gazebo::physics::ModelPtr parent_model,
                       const hardware_interface::HardwareInfo & hardware_info,
                       const std::string & command_interface_type);
 
-  SpinningJointGazeboInterface left_sprocket_wheel_spinning_joint;
-  SpinningJointGazeboInterface right_sprocket_wheel_spinning_joint;
-  SpinningJointGazeboInterface front_left_idler_wheel_spinning_joint;
-  SpinningJointGazeboInterface front_right_idler_wheel_spinning_joint;
-  SpinningJointGazeboInterface rear_left_idler_wheel_spinning_joint;
-  SpinningJointGazeboInterface rear_right_idler_wheel_spinning_joint;
+  SimulationState2THD get_state() const;
+  void set_command(const SimulationCommand2THD &command);
 
-  const double idler_wheel_radius;
-  const double sprocket_wheel_radius;
+private :
+
+  SpinningJointGazeboInterface left_sprocket_wheel_spinning_joint_;
+  SpinningJointGazeboInterface right_sprocket_wheel_spinning_joint_;
+  SpinningJointGazeboInterface front_left_idler_wheel_spinning_joint_;
+  SpinningJointGazeboInterface front_right_idler_wheel_spinning_joint_;
+  SpinningJointGazeboInterface rear_left_idler_wheel_spinning_joint_;
+  SpinningJointGazeboInterface rear_right_idler_wheel_spinning_joint_;
+
 };
-
-void write(const HardwareInterface2THD & hardware_interface,
-           GazeboInterface2THD & gazebo_interface);
-
-void read(const GazeboInterface2THD & gazebo_interface,
-          HardwareInterface2THD & hardware_interface);
-
 
 }
 

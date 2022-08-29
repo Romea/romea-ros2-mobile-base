@@ -17,9 +17,9 @@ public:
   SteeringJointGazeboInterface(gazebo::physics::ModelPtr parent_model,
                                const hardware_interface::ComponentInfo & joint_info);
 
-  void setCommand(const double & command);
+  void set_command(const double & command);
 
-  double getFeedback()const;
+  double get_state()const;
 
 private:
 
@@ -27,14 +27,14 @@ private:
 
 };
 
-void write(const SteeringJointHardwareInterface & hardware_joint,
-           SteeringJointGazeboInterface & gazebo_joint);
+//void write(const SteeringJointHardwareInterface & hardware_joint,
+//           SteeringJointGazeboInterface & gazebo_joint);
 
-void read(const SteeringJointGazeboInterface & gazebo_joint,
-          SteeringJointHardwareInterface & hardware_joint);
+//void read(const SteeringJointGazeboInterface & gazebo_joint,
+//          SteeringJointHardwareInterface & hardware_joint);
 
-void read(const SteeringJointGazeboInterface & gazebo_joint,
-          SteeringJointHardwareInterface::Feedback & hardware_joint_feedback);
+//void read(const SteeringJointGazeboInterface & gazebo_joint,
+//          SteeringJointHardwareInterface::Feedback & hardware_joint_feedback);
 
 }
 #endif
