@@ -34,6 +34,9 @@ target_link_libraries(${PROJECT_NAME}_test_hardware_interface2FWS2RWD ${PROJECT_
 ament_add_gtest(${PROJECT_NAME}_test_hardware_interface2FWS2FWD test_hardware_interface2FWS2FWD.cpp)
 target_link_libraries(${PROJECT_NAME}_test_hardware_interface2FWS2FWD ${PROJECT_NAME})
 
+ament_add_gtest(${PROJECT_NAME}_test_hardware_interface2WD test_hardware_interface2WD.cpp)
+target_link_libraries(${PROJECT_NAME}_test_hardware_interface2WD ${PROJECT_NAME})
+
 ament_add_gtest(${PROJECT_NAME}_test_hardware_interface4WS4WD test_hardware_interface4WS4WD.cpp)
 target_link_libraries(${PROJECT_NAME}_test_hardware_interface4WS4WD ${PROJECT_NAME})
 

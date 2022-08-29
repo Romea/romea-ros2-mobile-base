@@ -56,15 +56,6 @@ TEST_F(TestHarwareInterface2TD, checkStateInterfaceNames)
   EXPECT_STREQ(state_interfaces[3].get_name().c_str(),"robot_joint2");
   EXPECT_STREQ(state_interfaces[6].get_name().c_str(),"robot_joint3");
   EXPECT_STREQ(state_interfaces[9].get_name().c_str(),"robot_joint4");
-
-  //  EXPECT_STREQ(interface->left_sprocket_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint1");
-  //  EXPECT_STREQ(interface->right_sprocket_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint2");
-
-  //  EXPECT_STREQ(interface->left_sprocket_wheel_spinning_joint.feedback.velocity.get_joint_name().c_str(),"robot_joint1");
-  //  EXPECT_STREQ(interface->right_sprocket_wheel_spinning_joint.feedback.velocity.get_joint_name().c_str(),"robot_joint2");
-
-  //  EXPECT_STREQ(interface->left_idler_wheel_spinning_joint_feedback.velocity.get_joint_name().c_str(),"robot_joint3");
-  //  EXPECT_STREQ(interface->right_idler_wheel_spinning_joint_feedback.velocity.get_joint_name().c_str(),"robot_joint4");
 }
 
 TEST_F(TestHarwareInterface2TD, checkCommandInterfaceTypeWhenVelocityControlIsUsed)
@@ -73,8 +64,6 @@ TEST_F(TestHarwareInterface2TD, checkCommandInterfaceTypeWhenVelocityControlIsUs
   auto command_interfaces = interface->export_command_interfaces();
   EXPECT_STREQ(command_interfaces[0].get_full_name().c_str(),"robot_joint1/velocity");
   EXPECT_STREQ(command_interfaces[1].get_full_name().c_str(),"robot_joint2/velocity");
-  //  EXPECT_STREQ(interface->left_sprocket_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_VELOCITY);
-  //  EXPECT_STREQ(interface->right_sprocket_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_VELOCITY);
 }
 
 TEST_F(TestHarwareInterface2TD, DISABLED_checkCommandInterfaceTypeWhenEffortControlIsUsed)
@@ -83,8 +72,6 @@ TEST_F(TestHarwareInterface2TD, DISABLED_checkCommandInterfaceTypeWhenEffortCont
   auto command_interfaces = interface->export_command_interfaces();
   EXPECT_STREQ(command_interfaces[0].get_full_name().c_str(),"robot_joint1/effort");
   EXPECT_STREQ(command_interfaces[1].get_full_name().c_str(),"robot_joint2/effort");
-  //  EXPECT_STREQ(interface->left_sprocket_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_EFFORT);
-  //  EXPECT_STREQ(interface->right_sprocket_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_EFFORT);
 }
 
 TEST_F(TestHarwareInterface2TD, checkSetCurrentState)

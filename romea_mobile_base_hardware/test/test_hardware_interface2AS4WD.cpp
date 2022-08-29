@@ -53,34 +53,15 @@ TEST_F(TestHarwareInterface2AS4WD, checkStateInterfaceNames)
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
   auto state_interfaces = interface->export_state_interfaces();
   EXPECT_STREQ(state_interfaces[0].get_name().c_str(),"robot_joint1");
-  EXPECT_STREQ(state_interfaces[3].get_name().c_str(),"robot_joint2");
-  EXPECT_STREQ(state_interfaces[6].get_name().c_str(),"robot_joint3");
-  EXPECT_STREQ(state_interfaces[9].get_name().c_str(),"robot_joint4");
-  EXPECT_STREQ(state_interfaces[12].get_name().c_str(),"robot_joint5");
-  EXPECT_STREQ(state_interfaces[15].get_name().c_str(),"robot_joint6");
-  EXPECT_STREQ(state_interfaces[18].get_name().c_str(),"robot_joint7");
-  EXPECT_STREQ(state_interfaces[21].get_name().c_str(),"robot_joint8");
-  EXPECT_STREQ(state_interfaces[24].get_name().c_str(),"robot_joint9");
-  EXPECT_STREQ(state_interfaces[27].get_name().c_str(),"robot_joint10");
-
-  //  EXPECT_STREQ(interface->front_axle_steering_joint.command.get_joint_name().c_str(),"robot_joint1");
-  //  EXPECT_STREQ(interface->rear_axle_steering_joint.command.get_joint_name().c_str(),"robot_joint2");
-  //  EXPECT_STREQ(interface->front_left_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint7");
-  //  EXPECT_STREQ(interface->front_right_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint8");
-  //  EXPECT_STREQ(interface->rear_left_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint9");
-  //  EXPECT_STREQ(interface->rear_right_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint10");
-
-
-  //  EXPECT_STREQ(interface->front_axle_steering_joint.feedback.get_joint_name().c_str(),"robot_joint1");
-  //  EXPECT_STREQ(interface->rear_axle_steering_joint.feedback.get_joint_name().c_str(),"robot_joint2");
-  //  EXPECT_STREQ(interface->front_left_wheel_steering_joint_feedback.get_joint_name().c_str(),"robot_joint3");
-  //  EXPECT_STREQ(interface->front_right_wheel_steering_joint_feedback.get_joint_name().c_str(),"robot_joint4");
-  //  EXPECT_STREQ(interface->rear_left_wheel_steering_joint_feedback.get_joint_name().c_str(),"robot_joint5");
-  //  EXPECT_STREQ(interface->rear_right_wheel_steering_joint_feedback.get_joint_name().c_str(),"robot_joint6");
-  //  EXPECT_STREQ(interface->front_left_wheel_spinning_joint.feedback.position.get_joint_name().c_str(),"robot_joint7");
-  //  EXPECT_STREQ(interface->front_right_wheel_spinning_joint.feedback.position.get_joint_name().c_str(),"robot_joint8");
-  //  EXPECT_STREQ(interface->rear_left_wheel_spinning_joint.feedback.position.get_joint_name().c_str(),"robot_joint9");
-  //  EXPECT_STREQ(interface->rear_right_wheel_spinning_joint.feedback.position.get_joint_name().c_str(),"robot_joint10");
+  EXPECT_STREQ(state_interfaces[1].get_name().c_str(),"robot_joint2");
+  EXPECT_STREQ(state_interfaces[2].get_name().c_str(),"robot_joint3");
+  EXPECT_STREQ(state_interfaces[5].get_name().c_str(),"robot_joint4");
+  EXPECT_STREQ(state_interfaces[8].get_name().c_str(),"robot_joint5");
+  EXPECT_STREQ(state_interfaces[11].get_name().c_str(),"robot_joint6");
+  EXPECT_STREQ(state_interfaces[14].get_name().c_str(),"robot_joint7");
+  EXPECT_STREQ(state_interfaces[15].get_name().c_str(),"robot_joint8");
+  EXPECT_STREQ(state_interfaces[16].get_name().c_str(),"robot_joint9");
+  EXPECT_STREQ(state_interfaces[17].get_name().c_str(),"robot_joint10");
 }
 
 TEST_F(TestHarwareInterface2AS4WD, checkCommandInterfaceTypeWhenVelocityControlIsUsed)
@@ -93,11 +74,6 @@ TEST_F(TestHarwareInterface2AS4WD, checkCommandInterfaceTypeWhenVelocityControlI
   EXPECT_STREQ(command_interfaces[3].get_full_name().c_str(),"robot_joint4/velocity");
   EXPECT_STREQ(command_interfaces[4].get_full_name().c_str(),"robot_joint5/velocity");
   EXPECT_STREQ(command_interfaces[5].get_full_name().c_str(),"robot_joint6/velocity");
-
-  //  EXPECT_STREQ(interface->front_left_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_VELOCITY);
-  //  EXPECT_STREQ(interface->front_right_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_VELOCITY);
-  //  EXPECT_STREQ(interface->rear_left_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_VELOCITY);
-  //  EXPECT_STREQ(interface->rear_right_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_VELOCITY);
 }
 
 TEST_F(TestHarwareInterface2AS4WD, DISABLED_checkCommandInterfaceTypeWhenEffortControlIsUsed)
@@ -110,11 +86,6 @@ TEST_F(TestHarwareInterface2AS4WD, DISABLED_checkCommandInterfaceTypeWhenEffortC
   EXPECT_STREQ(command_interfaces[3].get_full_name().c_str(),"robot_joint4/effort");
   EXPECT_STREQ(command_interfaces[4].get_full_name().c_str(),"robot_joint5/effort");
   EXPECT_STREQ(command_interfaces[5].get_full_name().c_str(),"robot_joint6/effort");
-
-  //  EXPECT_STREQ(interface->front_left_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_EFFORT);
-  //  EXPECT_STREQ(interface->front_right_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_EFFORT);
-  //  EXPECT_STREQ(interface->rear_left_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_EFFORT);
-  //  EXPECT_STREQ(interface->rear_right_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_EFFORT);
 }
 
 

@@ -43,7 +43,7 @@ protected:
     interface = std::make_unique<romea::HardwareInterface2WD>(info[0],command_interface_type);
   }
 
-  std::unique_ptr<romea::HardwareInterface2TD> interface;
+  std::unique_ptr<romea::HardwareInterface2WD> interface;
   std::vector<hardware_interface::HardwareInfo> info;
 };
 
@@ -54,67 +54,46 @@ TEST_F(TestHarwareInterface2WD, checkStateInterfaceNames)
   auto state_interfaces = interface->export_state_interfaces();
   EXPECT_STREQ(state_interfaces[0].get_name().c_str(),"robot_joint1");
   EXPECT_STREQ(state_interfaces[3].get_name().c_str(),"robot_joint2");
-
-  //  EXPECT_STREQ(interface->left_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint1");
-  //  EXPECT_STREQ(interface->right_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint2");
-
-  //  EXPECT_STREQ(interface->left_wheel_spinning_joint.feedback.velocity.get_joint_name().c_str(),"robot_joint1");
-  //  EXPECT_STREQ(interface->right_wheel_spinning_joint.feedback.velocity.get_joint_name().c_str(),"robot_joint2");
-
 }
 
-TEST_F(TestHarwareInterface2TD, checkCommandInterfaceTypeWhenVelocityControlIsUsed)
+TEST_F(TestHarwareInterface2WD, checkCommandInterfaceTypeWhenVelocityControlIsUsed)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
   auto command_interfaces = interface->export_command_interfaces();
   EXPECT_STREQ(command_interfaces[0].get_full_name().c_str(),"robot_joint1/velocity");
   EXPECT_STREQ(command_interfaces[1].get_full_name().c_str(),"robot_joint2/velocity");
-  //  EXPECT_STREQ(interface->left_sprocket_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_VELOCITY);
-  //  EXPECT_STREQ(interface->right_sprocket_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_VELOCITY);
 }
 
-TEST_F(TestHarwareInterface2TD, DISABLED_checkCommandInterfaceTypeWhenEffortControlIsUsed)
+TEST_F(TestHarwareInterface2WD, DISABLED_checkCommandInterfaceTypeWhenEffortControlIsUsed)
 {
   MakeInterface(hardware_interface::HW_IF_EFFORT);
   auto command_interfaces = interface->export_command_interfaces();
   EXPECT_STREQ(command_interfaces[0].get_full_name().c_str(),"robot_joint1/effort");
   EXPECT_STREQ(command_interfaces[1].get_full_name().c_str(),"robot_joint2/effort");
-  //  EXPECT_STREQ(interface->left_sprocket_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_EFFORT);
-  //  EXPECT_STREQ(interface->right_sprocket_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_EFFORT);
 }
 
-TEST_F(TestHarwareInterface2TD, checkSetCurrentState)
+TEST_F(TestHarwareInterface2WD, checkSetCurrentState)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
 
-  romea::HardwareState2TD current_state;
-  current_state.leftSprocketWheelSpinMotion.position=1.0;
-  current_state.leftSprocketWheelSpinMotion.velocity=2.0;
-  current_state.leftSprocketWheelSpinMotion.torque=3.0;
-  current_state.rightSprocketWheelSpinMotion.position=4.0;
-  current_state.rightSprocketWheelSpinMotion.velocity=5.0;
-  current_state.rightSprocketWheelSpinMotion.torque=6.0;
-  romea::AngularMotionState leftIdlerWheelSpinMotion;
-  leftIdlerWheelSpinMotion.position=7.0;
-  leftIdlerWheelSpinMotion.velocity=8.0;
-  leftIdlerWheelSpinMotion.torque=9.0;
-  romea::AngularMotionState rightIdlerWheelSpinMotion;
-  rightIdlerWheelSpinMotion.position=10.0;
-  rightIdlerWheelSpinMotion.velocity=11.0;
-  rightIdlerWheelSpinMotion.torque=12.0;
+  romea::HardwareState2WD current_state;
+  current_state.leftWheelSpinMotion.position=1.0;
+  current_state.leftWheelSpinMotion.velocity=2.0;
+  current_state.leftWheelSpinMotion.torque=3.0;
+  current_state.rightWheelSpinMotion.position=4.0;
+  current_state.rightWheelSpinMotion.velocity=5.0;
+  current_state.rightWheelSpinMotion.torque=6.0;
 
-  interface->set_state(current_state,
-                       leftIdlerWheelSpinMotion,
-                       rightIdlerWheelSpinMotion);
+  interface->set_state(current_state);
 
   auto state_interfaces = interface->export_state_interfaces();
-  for(size_t i=0;i<12;++i)
+  for(size_t i=0;i<6;++i)
   {
     EXPECT_DOUBLE_EQ(state_interfaces[i].get_value(),i+1.0);
   }
 }
 
-TEST_F(TestHarwareInterface2TD, checkGetCurrentCommand)
+TEST_F(TestHarwareInterface2WD, checkGetCurrentCommand)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
 
@@ -124,12 +103,9 @@ TEST_F(TestHarwareInterface2TD, checkGetCurrentCommand)
     command_interfaces[i].set_value(i+1.0);
   }
 
-  romea::HardwareCommand2TD current_command = interface->get_command();
-
-  EXPECT_EQ(current_command.sp,
-                   romea::RotationalMotionCommand::VELOCITY);
-  EXPECT_DOUBLE_EQ(current_command.leftSprocketWheelSpinMotion.value,1.0);
-  EXPECT_DOUBLE_EQ(current_command.rightSprocketWheelSpinMotion.value,2.0);
+  romea::HardwareCommand2WD current_command = interface->get_command();
+  EXPECT_DOUBLE_EQ(current_command.leftWheelSetPoint,1.0);
+  EXPECT_DOUBLE_EQ(current_command.rightWheelSetPoint,2.0);
 
 }
 

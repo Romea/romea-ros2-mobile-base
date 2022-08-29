@@ -48,16 +48,17 @@ protected:
 };
 
 
-//TEST_F(TestHarwareInterface2FWS4WD, checkJointNames)
-//{
-//  MakeInterface(hardware_interface::HW_IF_VELOCITY);
-//  EXPECT_STREQ(interface->front_left_wheel_steering_joint.feedback.get_joint_name().c_str(),"robot_joint1");
-//  EXPECT_STREQ(interface->front_right_wheel_steering_joint.feedback.get_joint_name().c_str(),"robot_joint2");
-//  EXPECT_STREQ(interface->front_left_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint3");
-//  EXPECT_STREQ(interface->front_right_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint4");
-//  EXPECT_STREQ(interface->rear_left_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint5");
-//  EXPECT_STREQ(interface->rear_right_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint6");
-//}
+TEST_F(TestHarwareInterface2FWS4WD, checkJointNames)
+{
+    MakeInterface(hardware_interface::HW_IF_VELOCITY);
+    auto state_interfaces = interface->export_state_interfaces();
+    EXPECT_STREQ(state_interfaces[0].get_name().c_str(),"robot_joint1");
+    EXPECT_STREQ(state_interfaces[1].get_name().c_str(),"robot_joint2");
+    EXPECT_STREQ(state_interfaces[2].get_name().c_str(),"robot_joint3");
+    EXPECT_STREQ(state_interfaces[5].get_name().c_str(),"robot_joint4");
+    EXPECT_STREQ(state_interfaces[8].get_name().c_str(),"robot_joint5");
+    EXPECT_STREQ(state_interfaces[11].get_name().c_str(),"robot_joint6");
+}
 
 //TEST_F(TestHarwareInterface2FWS4WD, checkCommandInterfaceTypeWhenVelocityControlIsUsed)
 //{

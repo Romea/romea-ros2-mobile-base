@@ -27,7 +27,7 @@ get_interface_info(const std::vector<hardware_interface::InterfaceInfo> & interf
     ss << interface_name ;
     ss << " ";
     ss << interface_type;
-    ss <<" interface of joint ";
+    ss <<" interface for joint ";
     ss << joint_name;
     throw(std::runtime_error(ss.str()));
   }

@@ -26,11 +26,8 @@ protected:
   {
     joint_info.name= "steering_wheel";
     joint_info.type= "joint";
-    joint_info.command_interfaces.push_back({hardware_interface::HW_IF_VELOCITY,"-1","1","",0});
-    joint_info.command_interfaces.push_back({hardware_interface::HW_IF_EFFORT,"-1","1","",0});
+    joint_info.command_interfaces.push_back({hardware_interface::HW_IF_POSITION,"-1","1","",0});
     joint_info.state_interfaces.push_back({hardware_interface::HW_IF_POSITION,"","","",0});
-    joint_info.state_interfaces.push_back({hardware_interface::HW_IF_VELOCITY,"","","",0});
-    joint_info.state_interfaces.push_back({hardware_interface::HW_IF_EFFORT,"","","",0});
     joint = std::make_unique<romea::SteeringJointHardwareInterface>(joint_info);
   }
 
@@ -38,18 +35,6 @@ protected:
   std::unique_ptr<romea::SteeringJointHardwareInterface> joint;
   hardware_interface::ComponentInfo joint_info;
 };
-
-//TEST_F(TestSteeringJointHardwateInterface, checkInterfaceNames)
-//{
-//  EXPECT_STREQ(joint->command.get_joint_name().c_str(),"steering_wheel");
-//  EXPECT_STREQ(joint->feedback.get_joint_name().c_str(),"steering_wheel");
-//}
-
-//TEST_F(TestSteeringJointHardwateInterface, checkInterfaceType)
-//{
-//  EXPECT_STREQ(joint->command.get_interface_type().c_str(),hardware_interface::HW_IF_POSITION);
-//  EXPECT_STREQ(joint->feedback.get_interface_type().c_str(),hardware_interface::HW_IF_POSITION);
-//}
 
 TEST_F(TestSteeringJointHardwateInterface, checkExportedStateInterfaces)
 {
