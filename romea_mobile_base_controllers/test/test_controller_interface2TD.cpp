@@ -80,9 +80,9 @@ TEST_F(TestControllerInterface2TD, checkHardwareInterfaceNames)
 
 TEST_F(TestControllerInterface2TD, checkWrite)
 {
-  romea::OdometryFrame2WD command;
-  command.leftWheelSpeed=1;
-  command.rightWheelSpeed=2;
+  romea::OdometryFrame2TD command;
+  command.leftTrackLinearSpeed=1;
+  command.rightTrackLinearSpeed=2;
 
   controller_interface->write(command,command_loaned_interfaces);
   EXPECT_EQ(command_values[0],2);
@@ -94,9 +94,9 @@ TEST_F(TestControllerInterface2TD, checkRead)
    state_values[0]=2;
    state_values[1]=4;
 
-   romea::OdometryFrame2WD measure;
+   romea::OdometryFrame2TD measure;
    controller_interface->read(state_loaned_interfaces,measure);
-   EXPECT_EQ(measure.leftWheelSpeed,1);
-   EXPECT_EQ(measure.rightWheelSpeed,2);
+   EXPECT_EQ(measure.leftTrackLinearSpeed,1);
+   EXPECT_EQ(measure.rightTrackLinearSpeed,2);
 }
 

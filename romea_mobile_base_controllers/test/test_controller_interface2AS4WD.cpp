@@ -99,10 +99,10 @@ TEST_F(TestControllerInterface2AS4WD, checkWrite)
   romea::OdometryFrame2AS4WD command;
   command.frontAxleSteeringAngle=11;
   command.rearAxleSteeringAngle=12;
-  command.frontLeftWheelSpeed=1;
-  command.frontRightWheelSpeed=2;
-  command.rearLeftWheelSpeed=3;
-  command.rearRightWheelSpeed=4;
+  command.frontLeftWheelLinearSpeed=1;
+  command.frontRightWheelLinearSpeed=2;
+  command.rearLeftWheelLinearSpeed=3;
+  command.rearRightWheelLinearSpeed=4;
 
   controller_interface->write(command,command_loaned_interfaces);
   EXPECT_EQ(command_values[0],11);
@@ -127,9 +127,9 @@ TEST_F(TestControllerInterface2AS4WD, checkGetMeasurement)
   controller_interface->read(state_loaned_interfaces,measure);
   EXPECT_EQ(measure.frontAxleSteeringAngle,11);
   EXPECT_EQ(measure.rearAxleSteeringAngle,12);
-  EXPECT_EQ(measure.frontLeftWheelSpeed,1);
-  EXPECT_EQ(measure.frontRightWheelSpeed,2);
-  EXPECT_EQ(measure.rearLeftWheelSpeed,3);
-  EXPECT_EQ(measure.rearRightWheelSpeed,4);
+  EXPECT_EQ(measure.frontLeftWheelLinearSpeed,1);
+  EXPECT_EQ(measure.frontRightWheelLinearSpeed,2);
+  EXPECT_EQ(measure.rearLeftWheelLinearSpeed,3);
+  EXPECT_EQ(measure.rearRightWheelLinearSpeed,4);
 }
 

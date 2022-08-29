@@ -88,10 +88,10 @@ TEST_F(TestControllerInterface4WD, checkHardwareInterfaceNames)
 TEST_F(TestControllerInterface4WD, checkWrite)
 {
   romea::OdometryFrame4WD command;
-  command.frontLeftWheelSpeed=1;
-  command.frontRightWheelSpeed=2;
-  command.rearLeftWheelSpeed=3;
-  command.rearRightWheelSpeed=4;
+  command.frontLeftWheelLinearSpeed=1;
+  command.frontRightWheelLinearSpeed=2;
+  command.rearLeftWheelLinearSpeed=3;
+  command.rearRightWheelLinearSpeed=4;
 
   controller_interface->write(command,command_loaned_interfaces);
   EXPECT_EQ(command_values[0],2);
@@ -109,8 +109,8 @@ TEST_F(TestControllerInterface4WD, checkRead)
 
    romea::OdometryFrame4WD measure;
    controller_interface->read(state_loaned_interfaces,measure);
-   EXPECT_EQ(measure.frontLeftWheelSpeed,1);
-   EXPECT_EQ(measure.frontRightWheelSpeed,2);
-   EXPECT_EQ(measure.rearLeftWheelSpeed,3);
-   EXPECT_EQ(measure.rearRightWheelSpeed,4);
+   EXPECT_EQ(measure.frontLeftWheelLinearSpeed,1);
+   EXPECT_EQ(measure.frontRightWheelLinearSpeed,2);
+   EXPECT_EQ(measure.rearLeftWheelLinearSpeed,3);
+   EXPECT_EQ(measure.rearRightWheelLinearSpeed,4);
 }

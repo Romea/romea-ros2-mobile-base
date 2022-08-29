@@ -86,9 +86,9 @@ TEST_F(TestControllerInterface1FWS2RWD, checkHardwareInterfaceNames)
 TEST_F(TestControllerInterface1FWS2RWD, checkSetCommand)
 {
   romea::OdometryFrame1FWS2RWD command;
-  command.frontWheelAngle=11;
-  command.rearLeftWheelSpeed=3;
-  command.rearRightWheelSpeed=4;
+  command.frontWheelSteeringAngle=11;
+  command.rearLeftWheelLinearSpeed=3;
+  command.rearRightWheelLinearSpeed=4;
 
   controller_interface->write(command,command_loaned_interfaces);
   EXPECT_EQ(command_values[0],11);
@@ -104,8 +104,8 @@ TEST_F(TestControllerInterface1FWS2RWD, checkGetMeasurement)
 
   romea::OdometryFrame1FWS2RWD measure;
   controller_interface->read(state_loaned_interfaces,measure);
-  EXPECT_EQ(measure.frontWheelAngle,11);
-  EXPECT_EQ(measure.rearLeftWheelSpeed,3);
-  EXPECT_EQ(measure.rearRightWheelSpeed,4);
+  EXPECT_EQ(measure.frontWheelSteeringAngle,11);
+  EXPECT_EQ(measure.rearLeftWheelLinearSpeed,3);
+  EXPECT_EQ(measure.rearRightWheelLinearSpeed,4);
 }
 
