@@ -3,11 +3,15 @@
 
 #include "spinning_joint_hardware_interface.hpp"
 #include "steering_joint_hardware_interface.hpp"
+#include <romea_core_mobile_base/hardware/HardwareControl4WS4WD.hpp>
+
 
 namespace romea
 {
 
-struct HardwareInterface4WS4WD{
+class HardwareInterface4WS4WD{
+
+public :
 
   enum JointIDs
   {
@@ -24,19 +28,25 @@ struct HardwareInterface4WS4WD{
   HardwareInterface4WS4WD(const hardware_interface::HardwareInfo & hardware_info,
                           const std::string & spinning_joint_command_interface_type);
 
-  SteeringJointHardwareInterface front_left_wheel_steering_joint;
-  SteeringJointHardwareInterface front_right_wheel_steering_joint;
-  SteeringJointHardwareInterface rear_left_wheel_steering_joint;
-  SteeringJointHardwareInterface rear_right_wheel_steering_joint;
-  SpinningJointHardwareInterface front_left_wheel_spinning_joint;
-  SpinningJointHardwareInterface front_right_wheel_spinning_joint;
-  SpinningJointHardwareInterface rear_left_wheel_spinning_joint;
-  SpinningJointHardwareInterface rear_right_wheel_spinning_joint;
+  HardwareCommand4WS4WD get_command()const;
+  void set_state(const HardwareState4WS4WD & hardware_state);
 
   std::vector<hardware_interface::StateInterface> export_state_interfaces();
   std::vector<hardware_interface::CommandInterface> export_command_interfaces();
 
+private :
+
+  SteeringJointHardwareInterface front_left_wheel_steering_joint_;
+  SteeringJointHardwareInterface front_right_wheel_steering_joint_;
+  SteeringJointHardwareInterface rear_left_wheel_steering_joint_;
+  SteeringJointHardwareInterface rear_right_wheel_steering_joint_;
+  SpinningJointHardwareInterface front_left_wheel_spinning_joint_;
+  SpinningJointHardwareInterface front_right_wheel_spinning_joint_;
+  SpinningJointHardwareInterface rear_left_wheel_spinning_joint_;
+  SpinningJointHardwareInterface rear_right_wheel_spinning_joint_;
+
 };
+
 
 
 }

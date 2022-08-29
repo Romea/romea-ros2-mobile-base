@@ -2,12 +2,15 @@
 #define _romea_HardwareInterface2TD_hpp_
 
 #include "spinning_joint_hardware_interface.hpp"
+#include <romea_core_mobile_base/hardware/HardwareControl2TD.hpp>
+
 
 namespace romea
 {
 
-struct HardwareInterface2TD{
+class HardwareInterface2TD{
 
+public:
   enum JointIDs  {
     LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID=0,
     RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID=1,
@@ -18,16 +21,29 @@ struct HardwareInterface2TD{
   HardwareInterface2TD(const hardware_interface::HardwareInfo & hardware_info,
                        const std::string & command_interface_type);
 
-  SpinningJointHardwareInterface left_sprocket_wheel_spinning_joint;
-  SpinningJointHardwareInterface right_sprocket_wheel_spinning_joint;
+  HardwareCommand2TD get_command()const;
 
-  SpinningJointHardwareInterface::Feedback left_idler_wheel_spinning_joint_feedback;
-  SpinningJointHardwareInterface::Feedback right_idler_wheel_spinning_joint_feedback;
+  void set_state(const HardwareState2TD & hardware_state);
+
+  void set_state(const HardwareState2TD & hardware_state,
+                 const RotationalMotionState & left_idler_wheel_set_point,
+                 const RotationalMotionState & right_idler_wheel_set_point);
 
   std::vector<hardware_interface::StateInterface> export_state_interfaces();
   std::vector<hardware_interface::CommandInterface> export_command_interfaces();
 
+private :
+
+  SpinningJointHardwareInterface left_sprocket_wheel_spinning_joint_;
+  SpinningJointHardwareInterface right_sprocket_wheel_spinning_joint_;
+
+  SpinningJointHardwareInterface::Feedback left_idler_wheel_spinning_joint_feedback_;
+  SpinningJointHardwareInterface::Feedback right_idler_wheel_spinning_joint_feedback_;
+
 };
+
+
+
 
 }
 

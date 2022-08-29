@@ -5,13 +5,15 @@
 //romea
 #include "spinning_joint_hardware_interface.hpp"
 #include "steering_joint_hardware_interface.hpp"
-
+#include <romea_core_mobile_base/hardware/HardwareControl2FWS2RWD.hpp>
 
 namespace romea
 {
 
-struct HardwareInterface2FWS2RWD
+class HardwareInterface2FWS2RWD
 {
+
+public:
 
   enum JointIDs  {
     FRONT_LEFT_WHEEL_STEERING_JOINT_ID=0,
@@ -25,18 +27,31 @@ struct HardwareInterface2FWS2RWD
   HardwareInterface2FWS2RWD(const hardware_interface::HardwareInfo & hardware_info,
                             const std::string & spinning_joint_command_interface_type);
 
-  SteeringJointHardwareInterface front_left_wheel_steering_joint;
-  SteeringJointHardwareInterface front_right_wheel_steering_joint;
-  SpinningJointHardwareInterface rear_left_wheel_spinning_joint;
-  SpinningJointHardwareInterface rear_right_wheel_spinning_joint;
+  HardwareCommand2FWS2RWD get_command()const;
 
-  SpinningJointHardwareInterface::Feedback front_left_wheel_spinning_joint_feedback;
-  SpinningJointHardwareInterface::Feedback front_right_wheel_spinning_joint_feedback;
+  void set_state(const HardwareState2FWS2RWD & hardware_state);
+
+  void set_state(const HardwareState2FWS2RWD & hardware_state,
+                 const RotationalMotionState & front_left_wheel_spin_motion,
+                 const RotationalMotionState & front_right_wheel_spin_motion);
+
 
   std::vector<hardware_interface::StateInterface> export_state_interfaces();
   std::vector<hardware_interface::CommandInterface> export_command_interfaces();
 
+private :
+
+  SteeringJointHardwareInterface front_left_wheel_steering_joint_;
+  SteeringJointHardwareInterface front_right_wheel_steering_joint_;
+  SpinningJointHardwareInterface rear_left_wheel_spinning_joint_;
+  SpinningJointHardwareInterface rear_right_wheel_spinning_joint_;
+
+  SpinningJointHardwareInterface::Feedback front_left_wheel_spinning_joint_feedback_;
+  SpinningJointHardwareInterface::Feedback front_right_wheel_spinning_joint_feedback_;
+
 };
+
+
 
 }
 

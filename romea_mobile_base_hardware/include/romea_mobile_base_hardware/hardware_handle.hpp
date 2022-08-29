@@ -6,6 +6,7 @@
 #include <hardware_interface/system_interface.hpp>
 #include <hardware_interface/types/hardware_interface_return_values.hpp>
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
+#include <romea_core_mobile_base/hardware/HardwareControlCommon.hpp>
 
 namespace romea
 {
@@ -40,7 +41,6 @@ private:
   std::string interface_type_;
 
 };
-
 
 class HardwareStateInterface
 {

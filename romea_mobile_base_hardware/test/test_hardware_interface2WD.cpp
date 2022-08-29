@@ -7,10 +7,10 @@
 #include <rclcpp/node.hpp>
 
 //romea
-#include "romea_mobile_base_hardware/hardware_interface2TD.hpp"
+#include "romea_mobile_base_hardware/hardware_interface2WD.hpp"
 #include <hardware_interface/component_parser.hpp>
 
-class TestHarwareInterface2TD : public ::testing::Test
+class TestHarwareInterface2WD : public ::testing::Test
 {
 protected:
   static void SetUpTestCase()
@@ -25,8 +25,8 @@ protected:
 
   void SetUp() override
   {
-    std::string xacro_file =  std::string(TEST_DIR)+"/test_hardware_interface2TD.xacro";
-    std::string urdf_file =  "/tmp/test_hardware_interface2TD.urdf";
+    std::string xacro_file =  std::string(TEST_DIR)+"/test_hardware_interface2WD.xacro";
+    std::string urdf_file =  "/tmp/test_hardware_interface2WD.urdf";
     std::string cmd = "xacro "+xacro_file + " > " + urdf_file;
     std::system(cmd.c_str());
 
@@ -40,7 +40,7 @@ protected:
 
   void MakeInterface(const std::string & command_interface_type)
   {
-    interface = std::make_unique<romea::HardwareInterface2TD>(info[0],command_interface_type);
+    interface = std::make_unique<romea::HardwareInterface2WD>(info[0],command_interface_type);
   }
 
   std::unique_ptr<romea::HardwareInterface2TD> interface;
@@ -48,23 +48,19 @@ protected:
 };
 
 
-TEST_F(TestHarwareInterface2TD, checkStateInterfaceNames)
+TEST_F(TestHarwareInterface2WD, checkStateInterfaceNames)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
   auto state_interfaces = interface->export_state_interfaces();
   EXPECT_STREQ(state_interfaces[0].get_name().c_str(),"robot_joint1");
   EXPECT_STREQ(state_interfaces[3].get_name().c_str(),"robot_joint2");
-  EXPECT_STREQ(state_interfaces[6].get_name().c_str(),"robot_joint3");
-  EXPECT_STREQ(state_interfaces[9].get_name().c_str(),"robot_joint4");
 
-  //  EXPECT_STREQ(interface->left_sprocket_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint1");
-  //  EXPECT_STREQ(interface->right_sprocket_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint2");
+  //  EXPECT_STREQ(interface->left_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint1");
+  //  EXPECT_STREQ(interface->right_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint2");
 
-  //  EXPECT_STREQ(interface->left_sprocket_wheel_spinning_joint.feedback.velocity.get_joint_name().c_str(),"robot_joint1");
-  //  EXPECT_STREQ(interface->right_sprocket_wheel_spinning_joint.feedback.velocity.get_joint_name().c_str(),"robot_joint2");
+  //  EXPECT_STREQ(interface->left_wheel_spinning_joint.feedback.velocity.get_joint_name().c_str(),"robot_joint1");
+  //  EXPECT_STREQ(interface->right_wheel_spinning_joint.feedback.velocity.get_joint_name().c_str(),"robot_joint2");
 
-  //  EXPECT_STREQ(interface->left_idler_wheel_spinning_joint_feedback.velocity.get_joint_name().c_str(),"robot_joint3");
-  //  EXPECT_STREQ(interface->right_idler_wheel_spinning_joint_feedback.velocity.get_joint_name().c_str(),"robot_joint4");
 }
 
 TEST_F(TestHarwareInterface2TD, checkCommandInterfaceTypeWhenVelocityControlIsUsed)
@@ -98,11 +94,11 @@ TEST_F(TestHarwareInterface2TD, checkSetCurrentState)
   current_state.rightSprocketWheelSpinMotion.position=4.0;
   current_state.rightSprocketWheelSpinMotion.velocity=5.0;
   current_state.rightSprocketWheelSpinMotion.torque=6.0;
-  romea::RotationalMotionState leftIdlerWheelSpinMotion;
+  romea::AngularMotionState leftIdlerWheelSpinMotion;
   leftIdlerWheelSpinMotion.position=7.0;
   leftIdlerWheelSpinMotion.velocity=8.0;
   leftIdlerWheelSpinMotion.torque=9.0;
-  romea::RotationalMotionState rightIdlerWheelSpinMotion;
+  romea::AngularMotionState rightIdlerWheelSpinMotion;
   rightIdlerWheelSpinMotion.position=10.0;
   rightIdlerWheelSpinMotion.velocity=11.0;
   rightIdlerWheelSpinMotion.torque=12.0;
@@ -129,8 +125,11 @@ TEST_F(TestHarwareInterface2TD, checkGetCurrentCommand)
   }
 
   romea::HardwareCommand2TD current_command = interface->get_command();
-  EXPECT_DOUBLE_EQ(current_command.leftSprocketWheelSetPoint,1.0);
-  EXPECT_DOUBLE_EQ(current_command.rightSprocketWheelSetPoint,2.0);
+
+  EXPECT_EQ(current_command.sp,
+                   romea::RotationalMotionCommand::VELOCITY);
+  EXPECT_DOUBLE_EQ(current_command.leftSprocketWheelSpinMotion.value,1.0);
+  EXPECT_DOUBLE_EQ(current_command.rightSprocketWheelSpinMotion.value,2.0);
 
 }
 

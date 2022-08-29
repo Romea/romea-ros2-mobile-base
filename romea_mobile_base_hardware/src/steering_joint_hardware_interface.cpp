@@ -7,8 +7,8 @@ namespace romea
 //-----------------------------------------------------------------------------
 SteeringJointHardwareInterface::SteeringJointHardwareInterface(
     const hardware_interface::ComponentInfo & joint_info):
-  command(joint_info,hardware_interface::HW_IF_POSITION),
-  feedback(joint_info,hardware_interface::HW_IF_POSITION)
+  command_(joint_info,hardware_interface::HW_IF_POSITION),
+  feedback_(joint_info,hardware_interface::HW_IF_POSITION)
 {
 
 }
@@ -17,14 +17,26 @@ SteeringJointHardwareInterface::SteeringJointHardwareInterface(
 void SteeringJointHardwareInterface::export_command_interface(
     std::vector<hardware_interface::CommandInterface> & command_interfaces)
 {
-  command.export_interface(command_interfaces);
+  command_.export_interface(command_interfaces);
 }
 
 //-----------------------------------------------------------------------------
 void SteeringJointHardwareInterface::export_state_interface(
     std::vector<hardware_interface::StateInterface> & state_interfaces)
 {
-  feedback.export_interface(state_interfaces);
+  feedback_.export_interface(state_interfaces);
+}
+
+//-----------------------------------------------------------------------------
+SteeringAngleCommand SteeringJointHardwareInterface::get_command()const
+{
+  return command_.get();
+}
+
+//-----------------------------------------------------------------------------
+void SteeringJointHardwareInterface::set_state(const SteeringAngleState & state)
+{
+  feedback_.set(state);
 }
 
 

@@ -39,17 +39,17 @@ protected:
   hardware_interface::ComponentInfo joint_info;
 };
 
-TEST_F(TestSteeringJointHardwateInterface, checkInterfaceNames)
-{
-  EXPECT_STREQ(joint->command.get_joint_name().c_str(),"steering_wheel");
-  EXPECT_STREQ(joint->feedback.get_joint_name().c_str(),"steering_wheel");
-}
+//TEST_F(TestSteeringJointHardwateInterface, checkInterfaceNames)
+//{
+//  EXPECT_STREQ(joint->command.get_joint_name().c_str(),"steering_wheel");
+//  EXPECT_STREQ(joint->feedback.get_joint_name().c_str(),"steering_wheel");
+//}
 
-TEST_F(TestSteeringJointHardwateInterface, checkInterfaceType)
-{
-  EXPECT_STREQ(joint->command.get_interface_type().c_str(),hardware_interface::HW_IF_POSITION);
-  EXPECT_STREQ(joint->feedback.get_interface_type().c_str(),hardware_interface::HW_IF_POSITION);
-}
+//TEST_F(TestSteeringJointHardwateInterface, checkInterfaceType)
+//{
+//  EXPECT_STREQ(joint->command.get_interface_type().c_str(),hardware_interface::HW_IF_POSITION);
+//  EXPECT_STREQ(joint->feedback.get_interface_type().c_str(),hardware_interface::HW_IF_POSITION);
+//}
 
 TEST_F(TestSteeringJointHardwateInterface, checkExportedStateInterfaces)
 {
