@@ -1,61 +1,39 @@
 //gtest
 #include <gtest/gtest.h>
 #include "test_helper.h"
+#include "test_utils.hpp"
 #include <fstream>
 
 //ros
 #include <rclcpp/node.hpp>
 
+//gazebo
+#include <gazebo/test/ServerFixture.hh>
+
 //romea
-#include "romea_mobile_base_gazebo/gazebo_system_interface.hpp"
+#include "romea_mobile_base_gazebo/gazebo_interface4WD.hpp"
 #include <hardware_interface/component_parser.hpp>
 
-class TestGazeboInterface4WD : public ::testing::Test
+class TestGazeboInterface4WD : public gazebo::ServerFixture{};
+
+
+TEST_F(TestGazeboInterface4WD, testSetGet)
 {
-protected:
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  Load("/usr/share/gazebo-11/worlds/empty.world");
+  std::string urdf_description = make_urdf_description("4WD");
+  std::string sdf_description = make_sdf_description("4WD");
+  SpawnSDF(sdf_description);
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
+  auto hardware_info = hardware_interface::parse_control_resources_from_urdf(urdf_description);
+  romea::GazeboInterface4WD gazebo_interface(GetModel("robot"),hardware_info[0],"velocity");
 
-  void SetUp() override
-  {
-//    std::string xacro_file =  std::string(TEST_DIR)+"/test_hardware_interface4WD.xacro";
-//    std::string urdf_file =  std::string(TEST_DIR)+"/test_hardware_interface4WD.urdf";
-//    std::string cmd = "xacro "+xacro_file + " > " + urdf_file;
-//    std::system(cmd.c_str());
+  romea::SimulationCommand4WD command = {-1.0,1.0,-2.0,2.0};
+  gazebo_interface.set_command(command);
+  auto state = gazebo_interface.get_state();
 
-//    std::ifstream file(urdf_file.c_str());
-//    std::stringstream buffer;
-//    buffer << file.rdbuf();
-//    std::cout << buffer.str() <<std::endl;
-
-//    std::cout << " parse" << std::endl;
-//    auto info = hardware_interface::parse_control_resources_from_urdf(buffer.str());
-//    std::cout << info.size()<< std::endl;
-
-//    interface = std::make_unique<romea::HardwareInterface4WD>(info[0],hardware_interface::HW_IF_VELOCITY);
-//    rclcpp::NodeOptions no;
-//    no.arguments({"--ros-args","--params-file",std::string(TEST_DIR)+"/test_command_limits_parameters.yaml"});
-//    node = std::make_shared<rclcpp::Node>("test_command_limits_paramerters", no);
-  }
-
-//  std::shared_ptr<rclcpp::Node> node;
-
-//  std::unique_ptr<romea::HardwareInterface4WD> interface;
-
-
-};
-
-
-TEST_F(TestGazeboInterface4WD, Toto)
-{
-  gazebo_ros2_control::GazeboSystemInterface * ptr = new romea::GazeboSystemInterface4WD;
-
+  EXPECT_DOUBLE_EQ(command.frontLeftWheelSetPoint,state.frontLeftWheelSpinMotion.velocity);
+  EXPECT_DOUBLE_EQ(command.frontRightWheelSetPoint,state.frontRightWheelSpinMotion.velocity);
+  EXPECT_DOUBLE_EQ(command.rearLeftWheelSetPoint,state.rearLeftWheelSpinMotion.velocity);
+  EXPECT_DOUBLE_EQ(command.rearRightWheelSetPoint,state.rearRightWheelSpinMotion.velocity);
 }
 
