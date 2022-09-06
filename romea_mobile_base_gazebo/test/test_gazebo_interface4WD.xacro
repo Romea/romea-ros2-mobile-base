@@ -24,9 +24,14 @@
     <xacro:property name="rear_right_wheel_spinning_joint" value="rear_right_wheel_spinning_joint_name" />
 
     <!-- Base Properties -->
+    <xacro:property name="ground_clearance" value="0.098"/>
     <xacro:property name="aabb_length" value="0.54" />
     <xacro:property name="aabb_width" value="0.40" />
     <xacro:property name="aabb_height" value="0.18" />
+    <xacro:property name="aabb_center_x" value="0.0" />
+    <xacro:property name="aabb_center_y" value="0.0" />
+    <xacro:property name="aabb_center_z" value="${aabb_height/2.0+ground_clearance}" />
+
 <!--    center: [0., 0., 0.188]-->
     <xacro:property name="wheelbase" value="0.392"/>
     <xacro:property name="front_track" value="0.515"/>
@@ -51,7 +56,6 @@
     <xacro:property name="wheel_width" value="${front_wheel_width}" />
 
     <!-- Wheel Mounting Positions -->
-    <xacro:property name="ground_clearance" value="0.098"/>
     <xacro:property name="front_wheel_y_offset" value="0.0" />
     <xacro:property name="rear_wheel_y_offset" value="0.0" />
     <xacro:property name="chassis_height" value="${min(front_wheel_radius,rear_wheel_radius)}" />
@@ -62,6 +66,7 @@
           <geometry>
             <box size="${aabb_length} ${aabb_width} ${aabb_height}"/>
           </geometry>
+          <origin xyz="${aabb_center_x-body_reference_x} ${aabb_center_y}  ${aabb_center_z-chassis_height}" rpy="0 0 0" />
           <material name="grey">
             <color rgba="0.6 0.6 0.6 1"/>
           </material>

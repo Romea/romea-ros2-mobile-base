@@ -22,6 +22,7 @@ SpinningJointGazeboInterface::SpinningJointGazeboInterface(
     //throw error
   }
 
+  std::cout << " spinning joint_info.name " << joint_info.name << std::endl;
   sim_joint_ = parent_model->GetJoint(joint_info.name);
 }
 
@@ -48,35 +49,6 @@ RotationalMotionState SpinningJointGazeboInterface::get_state() const
   return  state;
 }
 
-////-----------------------------------------------------------------------------
-//void write(const SpinningJointHardwareInterface & hardware_joint,
-//           SpinningJointGazeboInterface & gazebo_joint)
-//{
-//  gazebo_joint.setCommand(hardware_joint.command.get());
-//}
-
-////-----------------------------------------------------------------------------
-//void read(const SpinningJointGazeboInterface & gazebo_joint,
-//          SpinningJointHardwareInterface & hardware_joint)
-//{
-//  read(gazebo_joint,hardware_joint.feedback);
-//}
-
-////-----------------------------------------------------------------------------
-//void read(const SpinningJointGazeboInterface::Feedback & gazebo_joint_feed_back,
-//          SpinningJointHardwareInterface::Feedback & hardware_joint_feedback)
-//{
-//  hardware_joint_feedback.position.set(gazebo_joint_feed_back.position);
-//  hardware_joint_feedback.velocity.set(gazebo_joint_feed_back.velocity);
-//  hardware_joint_feedback.torque.set(gazebo_joint_feed_back.effort);
-//}
-
-////-----------------------------------------------------------------------------
-//void read(const SpinningJointGazeboInterface & gazebo_joint,
-//          SpinningJointHardwareInterface::Feedback & hardware_joint_feedback)
-//{
-//  read(gazebo_joint.getFeedback(),hardware_joint_feedback);
-//}
 
 
 //SpinningJointGazeboInterface::Feedback

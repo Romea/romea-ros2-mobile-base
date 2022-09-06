@@ -33,9 +33,6 @@
     <xacro:property name="aabb_length" value="2.6" />
     <xacro:property name="aabb_width" value="1.18" />
     <xacro:property name="aabb_height" value="1.5" />
-    <xacro:property name="aabb_center_x" value="0.0" />
-    <xacro:property name="aabb_center_y" value="0.0" />
-    <xacro:property name="aabb_center_z" value="${aabb_height/2.0+ground_clearance}" />
 
      <xacro:property name="wheelbase" value="2.0"/>
     <xacro:property name="front_track" value="1.0"/>
@@ -43,10 +40,18 @@
     <xacro:property name="track" value="${front_track}"/>
     <xacro:property name="ground_clearance" value="0.45"/>
 
+<!--    <xacro:property name="mass_body" value="800." />-->
     <xacro:property name="mass_base" value="800." />
     <xacro:property name="mass_center_x" value="-0.1" />
     <xacro:property name="mass_center_y" value=" 0.0" />
     <xacro:property name="mass_center_z" value=" 0.2" />
+
+<!--    <xacro:property name="body_length" value="2.6" />
+    <xacro:property name="body_width" value="1.18" />
+    <xacro:property name="body_height" value="1.5" />-->
+
+<!--    <xacro:property name="body_offset_x" value="-1.0" />-->
+<!--    <xacro:property name="body_origin_z" value="0.0" />-->
     <xacro:property name="body_reference_x" value="-1.0" />
 
     <!-- Steering Properties -->
@@ -84,7 +89,7 @@
     <xacro:chassis>
       <!-- visual chassis -->
       <visual>
-        <origin xyz="${aabb_center_x-body_reference_x} ${aabb_center_y}  ${aabb_center_z-chassis_height}" rpy="0 0 0" />
+        <origin xyz="${-body_reference_x} 0 ${ground_clearance+aabb_height/2-chassis_height}" rpy="0 0 0" />
 
         <geometry>
           <box size="${aabb_length} ${aabb_width} ${aabb_height}"/>

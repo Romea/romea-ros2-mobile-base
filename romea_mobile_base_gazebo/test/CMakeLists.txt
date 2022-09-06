@@ -12,3 +12,12 @@ target_link_libraries(${PROJECT_NAME}_test_gazebo_interface4WD ${PROJECT_NAME} l
 
 ament_add_gtest(${PROJECT_NAME}_test_gazebo_interface2FWSxxx test_gazebo_interface2FWSxxx.cpp)
 target_link_libraries(${PROJECT_NAME}_test_gazebo_interface2FWSxxx  ${PROJECT_NAME} libgazebo_test_fixture.a)
+
+ament_add_gtest(${PROJECT_NAME}_test_gazebo_interface2ASxxx test_gazebo_interface2ASxxx.cpp)
+target_link_libraries(${PROJECT_NAME}_test_gazebo_interface2ASxxx  ${PROJECT_NAME} libgazebo_test_fixture.a)
+
+ament_add_gtest(${PROJECT_NAME}_test_gazebo_interface2TD test_gazebo_interface2TD.cpp)
+target_link_libraries(${PROJECT_NAME}_test_gazebo_interface2TD  ${PROJECT_NAME} libgazebo_test_fixture.a)
+
+ament_add_gtest(${PROJECT_NAME}_test_gazebo_interface2THD test_gazebo_interface2THD.cpp)
+target_link_libraries(${PROJECT_NAME}_test_gazebo_interface2THD  ${PROJECT_NAME} libgazebo_test_fixture.a)

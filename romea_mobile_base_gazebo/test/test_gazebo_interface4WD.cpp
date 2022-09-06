@@ -31,9 +31,9 @@ TEST_F(TestGazeboInterface4WD, testSetGet)
   gazebo_interface.set_command(command);
   auto state = gazebo_interface.get_state();
 
-  EXPECT_DOUBLE_EQ(command.frontLeftWheelSetPoint,state.frontLeftWheelSpinMotion.velocity);
-  EXPECT_DOUBLE_EQ(command.frontRightWheelSetPoint,state.frontRightWheelSpinMotion.velocity);
-  EXPECT_DOUBLE_EQ(command.rearLeftWheelSetPoint,state.rearLeftWheelSpinMotion.velocity);
-  EXPECT_DOUBLE_EQ(command.rearRightWheelSetPoint,state.rearRightWheelSpinMotion.velocity);
+  EXPECT_NEAR(command.frontLeftWheelSetPoint,state.frontLeftWheelSpinMotion.velocity,0.1);
+  EXPECT_NEAR(command.frontRightWheelSetPoint,state.frontRightWheelSpinMotion.velocity,0.1);
+  EXPECT_NEAR(command.rearLeftWheelSetPoint,state.rearLeftWheelSpinMotion.velocity,0.1);
+  EXPECT_NEAR(command.rearRightWheelSetPoint,state.rearRightWheelSpinMotion.velocity,0.1);
 }
 

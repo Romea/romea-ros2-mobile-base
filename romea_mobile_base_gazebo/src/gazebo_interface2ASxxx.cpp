@@ -51,7 +51,7 @@ void GazeboInterface2ASxxx::set_command(const SimulationCommand2ASxxx & command)
   front_left_wheel_spinning_joint_.set_command(command.frontLeftWheelSetPoint);
   front_right_wheel_spinning_joint_.set_command(command.frontRightWheelSetPoint);
   rear_left_wheel_spinning_joint_.set_command(command.rearLeftWheelSetPoint);
-  rear_right_wheel_spinning_joint_.set_command(command.frontRightWheelSetPoint);
+  rear_right_wheel_spinning_joint_.set_command(command.rearRightWheelSetPoint);
 }
 
 }
