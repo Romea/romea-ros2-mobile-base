@@ -19,7 +19,9 @@
         <geometry>
           <box size="${aabb_length} ${aabb_width} ${aabb_height}"/>
         </geometry>
-        <origin xyz="${-body_reference_x} 0 ${ground_clearance+aabb_height/2-chassis_height}" rpy="0 0 0" />
+        <origin xyz="${aabb_center_x-body_reference_x} ${aabb_center_y} ${aabb_center_z-chassis_height}" rpy="0 0 0" />
+<!--        <origin xyz="${-body_reference_x} 0 ${ground_clearance+aabb_height/2-chassis_height}" rpy="0 0 0" />-->
+
       </collision>
     </link>
 
