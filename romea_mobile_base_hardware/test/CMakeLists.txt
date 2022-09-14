@@ -10,8 +10,14 @@ target_link_libraries(${PROJECT_NAME}_test_hardware_interface1FAS2FWD ${PROJECT_
 ament_add_gtest(${PROJECT_NAME}_test_hardware_interface1FAS2RWD test_hardware_interface1FAS2RWD.cpp)
 target_link_libraries(${PROJECT_NAME}_test_hardware_interface1FAS2RWD ${PROJECT_NAME})
 
-ament_add_gtest(${PROJECT_NAME}_test_hardware_interface1FWS2RWD test_hardware_interface1FWS2RWD.cpp)
-target_link_libraries(${PROJECT_NAME}_test_hardware_interface1FWS2RWD ${PROJECT_NAME})
+ament_add_gtest(${PROJECT_NAME}_test_hardware_interface1FAS4WD test_hardware_interface1FAS4WD.cpp)
+target_link_libraries(${PROJECT_NAME}_test_hardware_interface1FAS4WD ${PROJECT_NAME})
+
+ament_add_gtest(${PROJECT_NAME}_test_hardware_interface2AS2FWD test_hardware_interface2AS2FWD.cpp)
+target_link_libraries(${PROJECT_NAME}_test_hardware_interface2AS2FWD ${PROJECT_NAME})
+
+ament_add_gtest(${PROJECT_NAME}_test_hardware_interface2AS2RWD test_hardware_interface2AS2RWD.cpp)
+target_link_libraries(${PROJECT_NAME}_test_hardware_interface2AS2RWD ${PROJECT_NAME})
 
 ament_add_gtest(${PROJECT_NAME}_test_hardware_interface2AS4WD test_hardware_interface2AS4WD.cpp)
 target_link_libraries(${PROJECT_NAME}_test_hardware_interface2AS4WD ${PROJECT_NAME})

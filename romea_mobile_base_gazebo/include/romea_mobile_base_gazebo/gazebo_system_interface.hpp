@@ -4,7 +4,6 @@
 //romea
 #include <romea_mobile_base_simulation/simulation_interface1FAS2FWD.hpp>
 #include <romea_mobile_base_simulation/simulation_interface1FAS2RWD.hpp>
-#include <romea_mobile_base_simulation/simulation_interface1FWS2RWD.hpp>
 #include <romea_mobile_base_simulation/simulation_interface2AS4WD.hpp>
 #include <romea_mobile_base_simulation/simulation_interface2FWS2FWD.hpp>
 #include <romea_mobile_base_simulation/simulation_interface2FWS2RWD.hpp>
@@ -18,7 +17,6 @@
 
 #include "gazebo_interface1FASxxx.hpp"
 #include "gazebo_interface2ASxxx.hpp"
-#include "gazebo_interface1FWS2RWD.hpp"
 #include "gazebo_interface2FWSxxx.hpp"
 #include "gazebo_interface2TD.hpp"
 #include "gazebo_interface2THD.hpp"
@@ -85,7 +83,6 @@ private :
 
 using GazeboSystemInterface1FAS2FWD = GazeboSystemInterface<GazeboInterface1FASxxx,SimulationInterface1FAS2FWD>;
 using GazeboSystemInterface1FAS2RWD = GazeboSystemInterface<GazeboInterface1FASxxx,SimulationInterface1FAS2RWD>;
-using GazeboSystemInterface1FWS2FWD = GazeboSystemInterface<GazeboInterface1FWS2RWD,SimulationInterface1FWS2RWD>;
 using GazeboSystemInterface2AS4WD = GazeboSystemInterface<GazeboInterface2ASxxx,SimulationInterface2AS4WD>;
 using GazeboSystemInterface2FWS2FWD = GazeboSystemInterface<GazeboInterface2FWSxxx,SimulationInterface2FWS2FWD>;
 using GazeboSystemInterface2FWS2RWD = GazeboSystemInterface<GazeboInterface2FWSxxx,SimulationInterface2FWS2RWD>;

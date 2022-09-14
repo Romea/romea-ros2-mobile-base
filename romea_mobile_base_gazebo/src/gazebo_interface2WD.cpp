@@ -25,8 +25,8 @@ SimulationState2WD GazeboInterface2WD::get_state() const
 //-----------------------------------------------------------------------------
 void GazeboInterface2WD::set_command(const SimulationCommand2WD &command)
 {
-  left_wheel_spinning_joint_.set_command(command.leftWheelSetPoint);
-  right_wheel_spinning_joint_.set_command(command.rightWheelSetPoint);
+  left_wheel_spinning_joint_.set_command(command.leftWheelSpinningSetPoint);
+  right_wheel_spinning_joint_.set_command(command.rightWheelSpinningSetPoint);
 
 }
 

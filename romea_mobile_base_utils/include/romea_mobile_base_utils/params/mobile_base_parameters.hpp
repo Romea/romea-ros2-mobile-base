@@ -3,7 +3,6 @@
 
 #include "mobile_base_parameters1FAS2FWD.hpp"
 #include "mobile_base_parameters1FAS2RWD.hpp"
-#include "mobile_base_parameters1FWS2RWD.hpp"
 #include "mobile_base_parameters2AS4WD.hpp"
 #include "mobile_base_parameters2FWS2FWD.hpp"
 #include "mobile_base_parameters2FWS2RWD.hpp"
@@ -25,8 +24,6 @@ void declare_mobile_base_info(std::shared_ptr<rclcpp::Node> node,
       declare_mobile_base_info_1FAS2FWD(node,parameters_ns);
   else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo1FAS2RWD>)
       declare_mobile_base_info_1FAS2RWD(node,parameters_ns);
-  else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo1FWS2RWD>)
-      declare_mobile_base_info_1FWS2RWD(node,parameters_ns);
   else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo2AS4WD>)
       declare_mobile_base_info_2AS4WD(node,parameters_ns);
   else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo2FWS2FWD>)
@@ -55,8 +52,6 @@ MobileBaseInfo get_mobile_base_info(std::shared_ptr<rclcpp::Node> node,
       return get_mobile_base_info_1FAS2FWD(node,parameters_ns);
   else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo1FAS2RWD>)
       return get_mobile_base_info_1FAS2RWD(node,parameters_ns);
-  else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo1FWS2RWD>)
-      return get_mobile_base_info_1FWS2RWD(node,parameters_ns);
   else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo2AS4WD>)
       return get_mobile_base_info_2AS4WD(node,parameters_ns);
   else if constexpr (std::is_same_v<MobileBaseInfo,MobileBaseInfo2FWS2FWD>)

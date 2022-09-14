@@ -11,7 +11,9 @@ SimulationInterface2TTD::SimulationInterface2TTD(
   hardware_interface_(hardware_info,command_interface_type),
   idler_wheel_radius_(get_parameter<double>(hardware_info,"idler_wheel_radius")),
   roller_wheel_radius_(get_parameter<double>(hardware_info,"roller_wheel_radius")),
-  sprocket_wheel_radius_(get_parameter<double>(hardware_info,"sprocket_wheel_radius"))
+  sprocket_wheel_radius_(get_parameter<double>(hardware_info,"sprocket_wheel_radius")),
+  track_thickness_(get_parameter<double>(hardware_info,"track_thickness"))
+
 
 {
 }
@@ -22,6 +24,7 @@ SimulationCommand2TTD SimulationInterface2TTD::get_command()const
   return toSimulationCommand2TTD(sprocket_wheel_radius_,
                                  idler_wheel_radius_,
                                  roller_wheel_radius_,
+                                 track_thickness_,
                                  hardware_interface_.get_command());
 
 }
@@ -32,15 +35,16 @@ void SimulationInterface2TTD::set_state(const SimulationState2TTD & simulation_s
 
   auto hardware_state = toHardwareState2TTD(sprocket_wheel_radius_,
                                            roller_wheel_radius_,
+                                           track_thickness_,
                                            simulation_state);
 
   hardware_interface_.set_state(hardware_state,
-                                simulation_state.leftIdlerWheelSpinMotion,
-                                simulation_state.rightIdlerWheelSpinMotion,
-                                simulation_state.frontLeftRollerWheelSpinMotion,
-                                simulation_state.frontRightRollerWheelSpinMotion,
-                                simulation_state.rearLeftRollerWheelSpinMotion,
-                                simulation_state.rearRightRollerWheelSpinMotion);
+                                simulation_state.leftIdlerWheelSpinningMotion,
+                                simulation_state.rightIdlerWheelSpinningMotion,
+                                simulation_state.frontLeftRollerWheelSpinningMotion,
+                                simulation_state.frontRightRollerWheelSpinningMotion,
+                                simulation_state.rearLeftRollerWheelSpinningMotion,
+                                simulation_state.rearRightRollerWheelSpinningMotion);
 
 }
 

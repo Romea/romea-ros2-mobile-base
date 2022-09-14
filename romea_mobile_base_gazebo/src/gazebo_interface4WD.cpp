@@ -28,10 +28,10 @@ SimulationState4WD GazeboInterface4WD::get_state() const
 //-----------------------------------------------------------------------------
 void GazeboInterface4WD::set_command(const SimulationCommand4WD &command)
 {
-  front_left_wheel_spinning_joint_.set_command(command.frontLeftWheelSetPoint);
-  front_right_wheel_spinning_joint_.set_command(command.frontRightWheelSetPoint);
-  rear_left_wheel_spinning_joint_.set_command(command.rearLeftWheelSetPoint);
-  rear_right_wheel_spinning_joint_.set_command(command.rearRightWheelSetPoint);
+  front_left_wheel_spinning_joint_.set_command(command.frontLeftWheelSpinningSetPoint);
+  front_right_wheel_spinning_joint_.set_command(command.frontRightWheelSpinningSetPoint);
+  rear_left_wheel_spinning_joint_.set_command(command.rearLeftWheelSpinningSetPoint);
+  rear_right_wheel_spinning_joint_.set_command(command.rearRightWheelSpinningSetPoint);
 }
 
 

@@ -11,7 +11,7 @@
   <xacro:property name="rear_left_wheel_spinning_joint" value="joint7"/>
   <xacro:property name="rear_right_wheel_spinning_joint" value="joint8"/>
 
-  <xacro:include filename="$(find romea_mobile_base_description)/ros2_control/4WS_4WD.ros2_control.xacro" />
+  <xacro:include filename="$(find romea_mobile_base_description)/ros2_control/base4WS4WD.ros2_control.xacro" />
   <xacro:base_control mode="test"/>
 
 </robot>

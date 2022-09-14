@@ -31,12 +31,12 @@ TEST_F(TestGazeboInterface2ThD, testSetGet)
   gazebo_interface.set_command(command);
   auto state = gazebo_interface.get_state();
 
-  EXPECT_NEAR(command.leftSprocketWheelSetPoint,state.leftSprocketWheelSpinMotion.velocity,0.1);
-  EXPECT_NEAR(command.rightSprocketWheelSetPoint,state.rightSprocketWheelSpinMotion.velocity,0.1);
-  EXPECT_NEAR(command.frontLeftIdlerWheelSetPoint,state.frontLeftIdlerWheelSpinMotion.velocity,0.1);
-  EXPECT_NEAR(command.frontRightIdlerWheelSetPoint,state.frontRightIdlerWheelSpinMotion.velocity,0.1);
-  EXPECT_NEAR(command.rearLeftIdlerWheelSetPoint,state.rearLeftIdlerWheelSpinMotion.velocity,0.1);
-  EXPECT_NEAR(command.rearRightIdlerWheelSetPoint,state.rearRightIdlerWheelSpinMotion.velocity,0.1);
+  EXPECT_NEAR(command.leftSprocketWheelSpinningSetPoint,state.leftSprocketWheelSpinningMotion.velocity,0.1);
+  EXPECT_NEAR(command.rightSprocketWheelSpinningSetPoint,state.rightSprocketWheelSpinningMotion.velocity,0.1);
+  EXPECT_NEAR(command.frontLeftIdlerWheelSpinningSetPoint,state.frontLeftIdlerWheelSpinningMotion.velocity,0.1);
+  EXPECT_NEAR(command.frontRightIdlerWheelSpinningSetPoint,state.frontRightIdlerWheelSpinningMotion.velocity,0.1);
+  EXPECT_NEAR(command.rearLeftIdlerWheelSpinningSetPoint,state.rearLeftIdlerWheelSpinningMotion.velocity,0.1);
+  EXPECT_NEAR(command.rearRightIdlerWheelSpinningSetPoint,state.rearRightIdlerWheelSpinningMotion.velocity,0.1);
 
 }
 

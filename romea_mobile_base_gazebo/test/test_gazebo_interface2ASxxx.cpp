@@ -37,10 +37,10 @@ TEST_F(TestGazeboInterface2ASxxx, testSetGet2AS4WD)
   EXPECT_NEAR(command.frontRightWheelSteeringAngle,state.frontRightWheelSteeringAngle,0.1);
   EXPECT_NEAR(command.rearLeftWheelSteeringAngle,state.rearLeftWheelSteeringAngle,0.1);
   EXPECT_NEAR(command.rearRightWheelSteeringAngle,state.rearRightWheelSteeringAngle,0.1);
-  EXPECT_NEAR(command.frontLeftWheelSetPoint,state.frontLeftWheelSpinMotion.velocity,0.1);
-  EXPECT_NEAR(command.frontRightWheelSetPoint,state.frontRightWheelSpinMotion.velocity,0.1);
-  EXPECT_NEAR(command.rearLeftWheelSetPoint,state.rearLeftWheelSpinMotion.velocity,0.1);
-  EXPECT_NEAR(command.rearRightWheelSetPoint,state.rearRightWheelSpinMotion.velocity,0.1);
+  EXPECT_NEAR(command.frontLeftWheelSpinningSetPoint,state.frontLeftWheelSpinningMotion.velocity,0.1);
+  EXPECT_NEAR(command.frontRightWheelSpinningSetPoint,state.frontRightWheelSpinningMotion.velocity,0.1);
+  EXPECT_NEAR(command.rearLeftWheelSpinningSetPoint,state.rearLeftWheelSpinningMotion.velocity,0.1);
+  EXPECT_NEAR(command.rearRightWheelSpinningSetPoint,state.rearRightWheelSpinningMotion.velocity,0.1);
 }
 
 
@@ -64,10 +64,10 @@ TEST_F(TestGazeboInterface2ASxxx, testSetGet2AS2FWD)
   EXPECT_NEAR(command.frontRightWheelSteeringAngle,state.frontRightWheelSteeringAngle,0.1);
   EXPECT_NEAR(command.rearLeftWheelSteeringAngle,state.rearLeftWheelSteeringAngle,0.1);
   EXPECT_NEAR(command.rearRightWheelSteeringAngle,state.rearRightWheelSteeringAngle,0.1);
-  EXPECT_NEAR(command.frontLeftWheelSetPoint,state.frontLeftWheelSpinMotion.velocity,0.1);
-  EXPECT_NEAR(command.frontRightWheelSetPoint,state.frontRightWheelSpinMotion.velocity,0.1);
-  EXPECT_NEAR(command.rearLeftWheelSetPoint,state.rearLeftWheelSpinMotion.velocity,0.1);
-  EXPECT_NEAR(command.rearRightWheelSetPoint,state.rearRightWheelSpinMotion.velocity,0.1);
+  EXPECT_NEAR(command.frontLeftWheelSpinningSetPoint,state.frontLeftWheelSpinningMotion.velocity,0.1);
+  EXPECT_NEAR(command.frontRightWheelSpinningSetPoint,state.frontRightWheelSpinningMotion.velocity,0.1);
+  EXPECT_NEAR(command.rearLeftWheelSpinningSetPoint,state.rearLeftWheelSpinningMotion.velocity,0.1);
+  EXPECT_NEAR(command.rearRightWheelSpinningSetPoint,state.rearRightWheelSpinningMotion.velocity,0.1);
 }
 
 TEST_F(TestGazeboInterface2ASxxx, testSetGet2AS2RWD)
@@ -90,8 +90,8 @@ TEST_F(TestGazeboInterface2ASxxx, testSetGet2AS2RWD)
   EXPECT_NEAR(command.frontRightWheelSteeringAngle,state.frontRightWheelSteeringAngle,0.1);
   EXPECT_NEAR(command.rearLeftWheelSteeringAngle,state.rearLeftWheelSteeringAngle,0.1);
   EXPECT_NEAR(command.rearRightWheelSteeringAngle,state.rearRightWheelSteeringAngle,0.1);
-  EXPECT_NEAR(command.frontLeftWheelSetPoint,state.frontLeftWheelSpinMotion.velocity,0.1);
-  EXPECT_NEAR(command.frontRightWheelSetPoint,state.frontRightWheelSpinMotion.velocity,0.1);
-  EXPECT_NEAR(command.rearLeftWheelSetPoint,state.rearLeftWheelSpinMotion.velocity,0.1);
-  EXPECT_NEAR(command.rearRightWheelSetPoint,state.rearRightWheelSpinMotion.velocity,0.1);
+  EXPECT_NEAR(command.frontLeftWheelSpinningSetPoint,state.frontLeftWheelSpinningMotion.velocity,0.1);
+  EXPECT_NEAR(command.frontRightWheelSpinningSetPoint,state.frontRightWheelSpinningMotion.velocity,0.1);
+  EXPECT_NEAR(command.rearLeftWheelSpinningSetPoint,state.rearLeftWheelSpinningMotion.velocity,0.1);
+  EXPECT_NEAR(command.rearRightWheelSpinningSetPoint,state.rearRightWheelSpinningMotion.velocity,0.1);
 }

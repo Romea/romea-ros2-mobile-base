@@ -13,7 +13,7 @@
   <xacro:property name="rear_left_wheel_steering_joint" value="joint9"/>
   <xacro:property name="rear_right_wheel_steering_joint" value="joint10"/>
 
-  <xacro:include filename="$(find romea_mobile_base_description)/ros2_control/2AS_4WD.ros2_control.xacro" />
+  <xacro:include filename="$(find romea_mobile_base_description)/ros2_control/base2AS4WD.ros2_control.xacro" />
   <xacro:base_control mode="test"/>
 
 </robot>

@@ -64,14 +64,14 @@ void HardwareInterface2FWS4WD::set_state(const HardwareState2FWS4WD & hardware_s
       set_state(hardware_state.frontRightWheelSteeringAngle);
 
   front_left_wheel_spinning_joint_.
-      set_state(hardware_state.frontLeftWheelSpinMotion);
+      set_state(hardware_state.frontLeftWheelSpinningMotion);
   front_right_wheel_spinning_joint_.
-      set_state(hardware_state.frontRightWheelSpinMotion);
+      set_state(hardware_state.frontRightWheelSpinningMotion);
 
   rear_left_wheel_spinning_joint_.
-      set_state(hardware_state.rearLeftWheelSpinMotion);
+      set_state(hardware_state.rearLeftWheelSpinningMotion);
   rear_right_wheel_spinning_joint_.
-      set_state(hardware_state.rearRightWheelSpinMotion);
+      set_state(hardware_state.rearRightWheelSpinningMotion);
 
 }
 

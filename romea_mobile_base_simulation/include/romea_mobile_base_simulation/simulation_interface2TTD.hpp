@@ -29,6 +29,7 @@ private :
   const double idler_wheel_radius_;
   const double roller_wheel_radius_;
   const double sprocket_wheel_radius_;
+  const double track_thickness_;
 
 };
 

@@ -34,7 +34,9 @@ add_library(${PROJECT_NAME} SHARED
  src/hardware_info.cpp
  src/hardware_interface1FAS2FWD.cpp
  src/hardware_interface1FAS2RWD.cpp
- src/hardware_interface1FWS2RWD.cpp
+ src/hardware_interface1FAS4WD.cpp
+ src/hardware_interface2AS2FWD.cpp
+ src/hardware_interface2AS2RWD.cpp
  src/hardware_interface2AS4WD.cpp
  src/hardware_interface2FWS2FWD.cpp
  src/hardware_interface2FWS2RWD.cpp

@@ -70,10 +70,10 @@ void HardwareInterface2AS4WD::set_state(const HardwareState2AS4WD & hardware_sta
   front_axle_steering_joint_.set_state(hardware_state.frontAxleSteeringAngle);
   rear_axle_steering_joint_.set_state(hardware_state.rearAxleSteeringAngle);
 
-  front_left_wheel_spinning_joint_.set_state(hardware_state.frontLeftWheelSpinMotion);
-  front_right_wheel_spinning_joint_.set_state(hardware_state.frontRightWheelSpinMotion);
-  rear_left_wheel_spinning_joint_.set_state(hardware_state.rearLeftWheelSpinMotion);
-  rear_right_wheel_spinning_joint_.set_state(hardware_state.rearRightWheelSpinMotion);
+  front_left_wheel_spinning_joint_.set_state(hardware_state.frontLeftWheelSpinningMotion);
+  front_right_wheel_spinning_joint_.set_state(hardware_state.frontRightWheelSpinningMotion);
+  rear_left_wheel_spinning_joint_.set_state(hardware_state.rearLeftWheelSpinningMotion);
+  rear_right_wheel_spinning_joint_.set_state(hardware_state.rearRightWheelSpinningMotion);
 }
 
 //-----------------------------------------------------------------------------

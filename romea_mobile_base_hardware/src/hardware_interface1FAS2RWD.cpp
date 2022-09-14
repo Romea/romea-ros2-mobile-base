@@ -57,24 +57,24 @@ HardwareCommand1FAS2RWD HardwareInterface1FAS2RWD::get_command()const
 void HardwareInterface1FAS2RWD::set_state(const HardwareState1FAS2RWD & hardware_state)
 {
   front_axle_steering_joint_.set_state(hardware_state.frontAxleSteeringAngle);
-  rear_left_wheel_spinning_joint_.set_state(hardware_state.rearLeftWheelSpinMotion);
-  rear_right_wheel_spinning_joint_.set_state(hardware_state.rearRightWheelSpinMotion);
+  rear_left_wheel_spinning_joint_.set_state(hardware_state.rearLeftWheelSpinningMotion);
+  rear_right_wheel_spinning_joint_.set_state(hardware_state.rearRightWheelSpinningMotion);
 }
 
 //-----------------------------------------------------------------------------
 void HardwareInterface1FAS2RWD::set_state(const HardwareState1FAS2RWD & hardware_state,
                                           const SteeringAngleState & front_left_wheel_steering_angle,
                                           const SteeringAngleState & front_right_wheel_steering_angle,
-                                          const RotationalMotionState & front_left_wheel_set_point,
-                                          const RotationalMotionState & front_right_wheel_set_point)
+                                          const RotationalMotionState & front_left_wheel_spin_motion,
+                                          const RotationalMotionState & front_right_wheel_spin_motion)
 {
   set_state(hardware_state);
 
   front_left_wheel_steering_joint_feedback_.set(front_left_wheel_steering_angle);
   front_right_wheel_steering_joint_feedback_.set(front_right_wheel_steering_angle);
 
-  front_left_wheel_spinning_joint_feedback_.set_state(front_left_wheel_set_point);
-  front_right_wheel_spinning_joint_feedback_.set_state(front_right_wheel_set_point);
+  front_left_wheel_spinning_joint_feedback_.set_state(front_left_wheel_spin_motion);
+  front_right_wheel_spinning_joint_feedback_.set_state(front_right_wheel_spin_motion);
 }
 
 }

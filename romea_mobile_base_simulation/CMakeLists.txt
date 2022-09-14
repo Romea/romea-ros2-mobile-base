@@ -33,18 +33,12 @@ find_package(hardware_interface REQUIRED)
 add_library(${PROJECT_NAME} SHARED
  src/simulation_interface1FAS2FWD.cpp
  src/simulation_interface1FAS2RWD.cpp
- src/simulation_interface1FWS2RWD.cpp
  src/simulation_interface2AS4WD.cpp
  src/simulation_interface2FWS2FWD.cpp
  src/simulation_interface2FWS2RWD.cpp
-# src/hardware_simulation_interface2FWS4WD.cpp
-# src/hardware_simulation_interface2WD.cpp
  src/simulation_interface2TD.cpp
  src/simulation_interface2THD.cpp
  src/simulation_interface2TTD.cpp
-# src/hardware_simulation_interface4WD.cpp
-# src/hardware_simulation_interface4WS4WD.cpp
-# src/hardware_simulation_system_interface.cpp
  )
 
 ament_target_dependencies(${PROJECT_NAME}
@@ -98,13 +92,13 @@ install(
 
 #install(TARGETS ${PROJECT_NAME}_node DESTINATION lib/${PROJECT_NAME})
 
-#if(BUILD_TESTING)
+if(BUILD_TESTING)
 
-#    find_package(ament_lint_auto REQUIRED)
-#    ament_lint_auto_find_test_dependencies()
-#    add_subdirectory(test)
+    find_package(ament_lint_auto REQUIRED)
+    ament_lint_auto_find_test_dependencies()
+    add_subdirectory(test)
 
-#endif()
+endif()
 
 ament_package()
 

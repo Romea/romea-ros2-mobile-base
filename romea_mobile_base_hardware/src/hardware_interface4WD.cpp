@@ -50,14 +50,14 @@ HardwareCommand4WD HardwareInterface4WD::get_command()const
 void HardwareInterface4WD::set_state(const HardwareState4WD & hardware_state)
 {
   front_left_wheel_spinning_joint_.
-      set_state(hardware_state.frontLeftWheelSpinMotion);
+      set_state(hardware_state.frontLeftWheelSpinningMotion);
   front_right_wheel_spinning_joint_.
-      set_state(hardware_state.frontRightWheelSpinMotion);
+      set_state(hardware_state.frontRightWheelSpinningMotion);
 
   rear_left_wheel_spinning_joint_.
-      set_state(hardware_state.rearLeftWheelSpinMotion);
+      set_state(hardware_state.rearLeftWheelSpinningMotion);
   rear_right_wheel_spinning_joint_.
-      set_state(hardware_state.rearRightWheelSpinMotion);
+      set_state(hardware_state.rearRightWheelSpinningMotion);
 
 }
 

@@ -85,29 +85,29 @@ TEST_F(TestHarwareInterface1FAS2RWD, checkSetCurrentState)
 
   romea::HardwareState1FAS2RWD current_state;
   current_state.frontAxleSteeringAngle = 1.0;
-  current_state.rearLeftWheelSpinMotion.position=2.0;
-  current_state.rearLeftWheelSpinMotion.velocity=3.0;
-  current_state.rearLeftWheelSpinMotion.torque=4.0;
-  current_state.rearRightWheelSpinMotion.position=5.0;
-  current_state.rearRightWheelSpinMotion.velocity=6.0;
-  current_state.rearRightWheelSpinMotion.torque=7.0;
+  current_state.rearLeftWheelSpinningMotion.position=2.0;
+  current_state.rearLeftWheelSpinningMotion.velocity=3.0;
+  current_state.rearLeftWheelSpinningMotion.torque=4.0;
+  current_state.rearRightWheelSpinningMotion.position=5.0;
+  current_state.rearRightWheelSpinningMotion.velocity=6.0;
+  current_state.rearRightWheelSpinningMotion.torque=7.0;
 
   romea::SteeringAngleState front_left_wheel_steering_angle=8.0;
   romea::SteeringAngleState front_right_wheel_steering_angle=9.0;
-  romea::RotationalMotionState front_left_wheel_set_point;
-  front_left_wheel_set_point.position = 10.0;
-  front_left_wheel_set_point.velocity = 11.0;
-  front_left_wheel_set_point.torque = 12.0;
-  romea::RotationalMotionState front_right_wheel_set_point;
-  front_right_wheel_set_point.position = 13.0;
-  front_right_wheel_set_point.velocity = 14.0;
-  front_right_wheel_set_point.torque = 15.0;
+  romea::RotationalMotionState front_left_wheel_spinning_set_point;
+  front_left_wheel_spinning_set_point.position = 10.0;
+  front_left_wheel_spinning_set_point.velocity = 11.0;
+  front_left_wheel_spinning_set_point.torque = 12.0;
+  romea::RotationalMotionState front_right_wheel_spinning_set_point;
+  front_right_wheel_spinning_set_point.position = 13.0;
+  front_right_wheel_spinning_set_point.velocity = 14.0;
+  front_right_wheel_spinning_set_point.torque = 15.0;
 
   interface->set_state(current_state,
                        front_left_wheel_steering_angle,
                        front_right_wheel_steering_angle,
-                       front_left_wheel_set_point,
-                       front_right_wheel_set_point);
+                       front_left_wheel_spinning_set_point,
+                       front_right_wheel_spinning_set_point);
 
   auto state_interfaces = interface->export_state_interfaces();
   for(size_t i=0;i<15;++i)
@@ -128,7 +128,7 @@ TEST_F(TestHarwareInterface1FAS2RWD, checkGetCurrentCommand)
 
   romea::HardwareCommand1FAS2RWD current_command = interface->get_command();
   EXPECT_DOUBLE_EQ(current_command.frontAxleSteeringAngle , 1.0);
-  EXPECT_DOUBLE_EQ(current_command.rearLeftWheelSetPoint , 2.0);
-  EXPECT_DOUBLE_EQ(current_command.rearRightWheelSetPoint , 3.0);
+  EXPECT_DOUBLE_EQ(current_command.rearLeftWheelSpinningSetPoint , 2.0);
+  EXPECT_DOUBLE_EQ(current_command.rearRightWheelSpinningSetPoint , 3.0);
 }
 

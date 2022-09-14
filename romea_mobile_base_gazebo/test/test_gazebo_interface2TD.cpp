@@ -31,9 +31,9 @@ TEST_F(TestGazeboInterface2TD, testSetGet)
   gazebo_interface.set_command(command);
   auto state = gazebo_interface.get_state();
 
-  EXPECT_NEAR(command.leftSprocketWheelSetPoint,state.leftSprocketWheelSpinMotion.velocity,0.1);
-  EXPECT_NEAR(command.rightSprocketWheelSetPoint,state.rightSprocketWheelSpinMotion.velocity,0.1);
-  EXPECT_NEAR(command.leftIdlerWheelSetPoint,state.leftIdlerWheelSpinMotion.velocity,0.1);
-  EXPECT_NEAR(command.rightIdlerWheelSetPoint,state.rightIdlerWheelSpinMotion.velocity,0.1);
+  EXPECT_NEAR(command.leftSprocketWheelSpinningSetPoint,state.leftSprocketWheelSpinningMotion.velocity,0.1);
+  EXPECT_NEAR(command.rightSprocketWheelSpinningSetPoint,state.rightSprocketWheelSpinningMotion.velocity,0.1);
+  EXPECT_NEAR(command.leftIdlerWheelSpinningSetPoint,state.leftIdlerWheelSpinningMotion.velocity,0.1);
+  EXPECT_NEAR(command.rightIdlerWheelSpinningSetPoint,state.rightIdlerWheelSpinningMotion.velocity,0.1);
 }
 

@@ -28,10 +28,10 @@ SimulationState2TD GazeboInterface2TD::get_state() const
 //-----------------------------------------------------------------------------
 void GazeboInterface2TD::set_command(const SimulationCommand2TD &command)
 {
-  left_sprocket_wheel_spinning_joint_.set_command(command.leftSprocketWheelSetPoint);
-  right_sprocket_wheel_spinning_joint_.set_command(command.rightSprocketWheelSetPoint);
-  left_idler_wheel_spinning_joint_.set_command(command.leftIdlerWheelSetPoint);
-  right_idler_wheel_spinning_joint_.set_command(command.rightIdlerWheelSetPoint);
+  left_sprocket_wheel_spinning_joint_.set_command(command.leftSprocketWheelSpinningSetPoint);
+  right_sprocket_wheel_spinning_joint_.set_command(command.rightSprocketWheelSpinningSetPoint);
+  left_idler_wheel_spinning_joint_.set_command(command.leftIdlerWheelSpinningSetPoint);
+  right_idler_wheel_spinning_joint_.set_command(command.rightIdlerWheelSpinningSetPoint);
 }
 
 ////-----------------------------------------------------------------------------

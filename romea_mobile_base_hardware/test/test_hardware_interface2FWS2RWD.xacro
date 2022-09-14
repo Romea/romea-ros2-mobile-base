@@ -9,7 +9,7 @@
   <xacro:property name="front_left_wheel_spinning_joint" value="joint5"/>
   <xacro:property name="front_right_wheel_spinning_joint" value="joint6"/>
 
-  <xacro:include filename="$(find romea_mobile_base_description)/ros2_control/2FWS_2RWD.ros2_control.xacro" />
+  <xacro:include filename="$(find romea_mobile_base_description)/ros2_control/base2FWS2RWD.ros2_control.xacro" />
   <xacro:base_control mode="test"/>
 
 </robot>

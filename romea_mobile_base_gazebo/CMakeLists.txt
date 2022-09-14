@@ -35,7 +35,6 @@ add_library(${PROJECT_NAME} SHARED
  src/spinning_joint_gazebo_interface.cpp
  src/steering_joint_gazebo_interface.cpp
  src/gazebo_interface1FASxxx.cpp
- src/gazebo_interface1FWS2RWD.cpp
  src/gazebo_interface2ASxxx.cpp
  src/gazebo_interface2FWSxxx.cpp
  src/gazebo_interface2TD.cpp

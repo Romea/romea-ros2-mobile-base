@@ -26,8 +26,8 @@ public:
   void set_state(const HardwareState2TD & hardware_state);
 
   void set_state(const HardwareState2TD & hardware_state,
-                 const RotationalMotionState & left_idler_wheel_set_point,
-                 const RotationalMotionState & right_idler_wheel_set_point);
+                 const RotationalMotionState & left_idler_wheel_spinning_set_point,
+                 const RotationalMotionState & right_idler_wheel_spinning_set_point);
 
   std::vector<hardware_interface::StateInterface> export_state_interfaces();
   std::vector<hardware_interface::CommandInterface> export_command_interfaces();

@@ -9,7 +9,6 @@
 #include "romea_mobile_base_hardware/hardware_interface2FWS2RWD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2FWS2FWD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2AS4WD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface1FWS2RWD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface1FAS2RWD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface1FAS2FWD.hpp"
 
@@ -71,7 +70,6 @@ protected :
 
 using HardwareSystemInterfac1FAS2FWD = HardwareSystemInterface<HardwareInterface1FAS2FWD>;
 using HardwareSystemInterfac1FAS2RWD = HardwareSystemInterface<HardwareInterface1FAS2RWD>;
-using HardwareSystemInterface1FWS2RWD = HardwareSystemInterface<HardwareInterface1FWS2RWD>;
 using HardwareSystemInterface2AS4WD = HardwareSystemInterface<HardwareInterface2AS4WD>;
 using HardwareSystemInterface2FWS2FWD = HardwareSystemInterface<HardwareInterface2FWS2FWD>;
 using HardwareSystemInterface2FWS2RWD = HardwareSystemInterface<HardwareInterface2FWS2RWD>;

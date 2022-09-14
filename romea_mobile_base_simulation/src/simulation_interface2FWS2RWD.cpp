@@ -36,8 +36,8 @@ void SimulationInterface2FWS2RWD::set_state(const SimulationState2FWS2RWD & simu
   auto hardware_state=toHardwareState2FWS2RWD(simulation_state);
 
   hardware_interface_.set_state(hardware_state,
-                                simulation_state.frontLeftWheelSpinMotion,
-                                simulation_state.frontRightWheelSpinMotion);
+                                simulation_state.frontLeftWheelSpinningMotion,
+                                simulation_state.frontRightWheelSpinningMotion);
 
 }
 

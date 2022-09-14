@@ -77,12 +77,12 @@ TEST_F(TestHarwareInterface2WD, checkSetCurrentState)
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
 
   romea::HardwareState2WD current_state;
-  current_state.leftWheelSpinMotion.position=1.0;
-  current_state.leftWheelSpinMotion.velocity=2.0;
-  current_state.leftWheelSpinMotion.torque=3.0;
-  current_state.rightWheelSpinMotion.position=4.0;
-  current_state.rightWheelSpinMotion.velocity=5.0;
-  current_state.rightWheelSpinMotion.torque=6.0;
+  current_state.leftWheelSpinningMotion.position=1.0;
+  current_state.leftWheelSpinningMotion.velocity=2.0;
+  current_state.leftWheelSpinningMotion.torque=3.0;
+  current_state.rightWheelSpinningMotion.position=4.0;
+  current_state.rightWheelSpinningMotion.velocity=5.0;
+  current_state.rightWheelSpinningMotion.torque=6.0;
 
   interface->set_state(current_state);
 
@@ -104,8 +104,8 @@ TEST_F(TestHarwareInterface2WD, checkGetCurrentCommand)
   }
 
   romea::HardwareCommand2WD current_command = interface->get_command();
-  EXPECT_DOUBLE_EQ(current_command.leftWheelSetPoint,1.0);
-  EXPECT_DOUBLE_EQ(current_command.rightWheelSetPoint,2.0);
+  EXPECT_DOUBLE_EQ(current_command.leftWheelSpinningSetPoint,1.0);
+  EXPECT_DOUBLE_EQ(current_command.rightWheelSpinningSetPoint,2.0);
 
 }
 

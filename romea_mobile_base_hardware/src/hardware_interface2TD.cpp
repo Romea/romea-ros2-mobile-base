@@ -49,22 +49,22 @@ HardwareCommand2TD HardwareInterface2TD::get_command()const
 void HardwareInterface2TD::set_state(const HardwareState2TD & hardware_state)
 {
   left_sprocket_wheel_spinning_joint_.
-      set_state(hardware_state.leftSprocketWheelSpinMotion);
+      set_state(hardware_state.leftSprocketWheelSpinningMotion);
   right_sprocket_wheel_spinning_joint_.
-      set_state(hardware_state.rightSprocketWheelSpinMotion);
+      set_state(hardware_state.rightSprocketWheelSpinningMotion);
 }
 
 //-----------------------------------------------------------------------------
 void HardwareInterface2TD::set_state(const HardwareState2TD & hardware_state,
-                                     const RotationalMotionState & left_idler_wheel_set_point,
-                                     const RotationalMotionState & right_idler_wheel_set_point)
+                                     const RotationalMotionState & left_idler_wheel_spinning_set_point,
+                                     const RotationalMotionState & right_idler_wheel_spinning_set_point)
 {
   set_state(hardware_state);
 
   left_idler_wheel_spinning_joint_feedback_.
-      set_state(left_idler_wheel_set_point);
+      set_state(left_idler_wheel_spinning_set_point);
   right_idler_wheel_spinning_joint_feedback_.
-      set_state(right_idler_wheel_set_point);
+      set_state(right_idler_wheel_spinning_set_point);
 }
 
 }

@@ -56,8 +56,8 @@ HardwareCommand1FAS2FWD HardwareInterface1FAS2FWD::get_command()const
 void HardwareInterface1FAS2FWD::set_state(const HardwareState1FAS2FWD & hardware_state)
 {
   front_axle_steering_joint_.set_state(hardware_state.frontAxleSteeringAngle);
-  front_left_wheel_spinning_joint_.set_state(hardware_state.frontLeftWheelSpinMotion);
-  front_right_wheel_spinning_joint_.set_state(hardware_state.frontRightWheelSpinMotion);
+  front_left_wheel_spinning_joint_.set_state(hardware_state.frontLeftWheelSpinningMotion);
+  front_right_wheel_spinning_joint_.set_state(hardware_state.frontRightWheelSpinningMotion);
 }
 
 //-----------------------------------------------------------------------------

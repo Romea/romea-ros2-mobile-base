@@ -153,7 +153,6 @@ hardware_interface::return_type GazeboSystemInterface<GazeboInterface,Simulation
 
 template class GazeboSystemInterface<GazeboInterface1FASxxx,SimulationInterface1FAS2FWD>;
 template class GazeboSystemInterface<GazeboInterface1FASxxx,SimulationInterface1FAS2RWD>;
-template class GazeboSystemInterface<GazeboInterface1FWS2RWD,SimulationInterface1FWS2RWD>;
 template class GazeboSystemInterface<GazeboInterface2ASxxx,SimulationInterface2AS4WD>;
 template class GazeboSystemInterface<GazeboInterface2FWSxxx,SimulationInterface2FWS2FWD>;
 template class GazeboSystemInterface<GazeboInterface2FWSxxx,SimulationInterface2FWS2RWD>;

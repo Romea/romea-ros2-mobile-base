@@ -40,7 +40,6 @@ add_library(${PROJECT_NAME} SHARED
     src/params/mobile_base_inertia_parameters.cpp
     src/params/mobile_base_parameters1FAS2FWD.cpp
     src/params/mobile_base_parameters1FAS2RWD.cpp
-    src/params/mobile_base_parameters1FWS2RWD.cpp
     src/params/mobile_base_parameters2AS4WD.cpp
     src/params/mobile_base_parameters2FWS2FWD.cpp
     src/params/mobile_base_parameters2FWS2RWD.cpp

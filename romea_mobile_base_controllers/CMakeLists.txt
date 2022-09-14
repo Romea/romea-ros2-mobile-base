@@ -29,7 +29,6 @@ find_package(controller_interface REQUIRED)
 add_library(${PROJECT_NAME} SHARED
  src/interfaces/controller_interface1FAS2FWD.cpp
  src/interfaces/controller_interface1FAS2RWD.cpp
- src/interfaces/controller_interface1FWS2RWD.cpp
  src/interfaces/controller_interface2AS4WD.cpp
  src/interfaces/controller_interface2FWS2FWD.cpp
  src/interfaces/controller_interface2FWS2RWD.cpp

@@ -42,8 +42,8 @@ void SimulationInterface1FAS2RWD::set_state(const SimulationState1FAS2RWD & simu
   hardware_interface_.set_state(hardware_state,
                                 simulation_state.frontLeftWheelSteeringAngle,
                                 simulation_state.frontRightWheelSteeringAngle,
-                                simulation_state.frontLeftWheelSpinMotion,
-                                simulation_state.frontLeftWheelSpinMotion);
+                                simulation_state.frontLeftWheelSpinningMotion,
+                                simulation_state.frontRightWheelSpinningMotion);
 
 }
 

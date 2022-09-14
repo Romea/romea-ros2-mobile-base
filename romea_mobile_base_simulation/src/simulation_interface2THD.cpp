@@ -11,8 +11,8 @@ SimulationInterface2THD::SimulationInterface2THD(
     const std::string & command_interface_type):
   hardware_interface_(hardware_info,command_interface_type),
   idler_wheel_radius_(get_parameter<double>(hardware_info,"idler_wheel_radius")),
-  sprocket_wheel_radius_(get_parameter<double>(hardware_info,"sprocket_wheel_radius"))
-
+  sprocket_wheel_radius_(get_parameter<double>(hardware_info,"sprocket_wheel_radius")),
+  track_thickness_(get_parameter<double>(hardware_info,"track_thickness"))
 {
 }
 
@@ -21,6 +21,7 @@ SimulationCommand2THD SimulationInterface2THD::get_command()const
 {
   return toSimulationCommand2THD(sprocket_wheel_radius_,
                                  idler_wheel_radius_,
+                                 track_thickness_,
                                  hardware_interface_.get_command());
 }
 
@@ -30,13 +31,14 @@ void SimulationInterface2THD::set_state(const SimulationState2THD & simulation_s
 
   auto hardware_state =toHardwareState2TD(sprocket_wheel_radius_,
                                           idler_wheel_radius_,
+                                          track_thickness_,
                                           simulation_state);
 
   hardware_interface_.set_state(hardware_state,
-                                simulation_state.frontLeftIdlerWheelSpinMotion,
-                                simulation_state.frontRightIdlerWheelSpinMotion,
-                                simulation_state.rearLeftIdlerWheelSpinMotion,
-                                simulation_state.rearRightIdlerWheelSpinMotion);
+                                simulation_state.frontLeftIdlerWheelSpinningMotion,
+                                simulation_state.frontRightIdlerWheelSpinningMotion,
+                                simulation_state.rearLeftIdlerWheelSpinningMotion,
+                                simulation_state.rearRightIdlerWheelSpinningMotion);
 
 }
 

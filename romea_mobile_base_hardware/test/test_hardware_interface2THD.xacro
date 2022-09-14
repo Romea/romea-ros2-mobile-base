@@ -9,7 +9,7 @@
   <xacro:property name="rear_left_idler_wheel_spinning_joint" value="joint5"/>
   <xacro:property name="rear_right_idler_wheel_spinning_joint" value="joint6"/>
 
-  <xacro:include filename="$(find romea_mobile_base_description)/ros2_control/2THD.ros2_control.xacro" />
+  <xacro:include filename="$(find romea_mobile_base_description)/ros2_control/base2THD.ros2_control.xacro" />
   <xacro:base_control mode="test"/>
 
 </robot>

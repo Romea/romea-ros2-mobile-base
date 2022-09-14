@@ -79,24 +79,24 @@ TEST_F(TestHarwareInterface2TD, checkSetCurrentState)
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
 
   romea::HardwareState2TD current_state;
-  current_state.leftSprocketWheelSpinMotion.position=1.0;
-  current_state.leftSprocketWheelSpinMotion.velocity=2.0;
-  current_state.leftSprocketWheelSpinMotion.torque=3.0;
-  current_state.rightSprocketWheelSpinMotion.position=4.0;
-  current_state.rightSprocketWheelSpinMotion.velocity=5.0;
-  current_state.rightSprocketWheelSpinMotion.torque=6.0;
-  romea::RotationalMotionState leftIdlerWheelSpinMotion;
-  leftIdlerWheelSpinMotion.position=7.0;
-  leftIdlerWheelSpinMotion.velocity=8.0;
-  leftIdlerWheelSpinMotion.torque=9.0;
-  romea::RotationalMotionState rightIdlerWheelSpinMotion;
-  rightIdlerWheelSpinMotion.position=10.0;
-  rightIdlerWheelSpinMotion.velocity=11.0;
-  rightIdlerWheelSpinMotion.torque=12.0;
+  current_state.leftSprocketWheelSpinningMotion.position=1.0;
+  current_state.leftSprocketWheelSpinningMotion.velocity=2.0;
+  current_state.leftSprocketWheelSpinningMotion.torque=3.0;
+  current_state.rightSprocketWheelSpinningMotion.position=4.0;
+  current_state.rightSprocketWheelSpinningMotion.velocity=5.0;
+  current_state.rightSprocketWheelSpinningMotion.torque=6.0;
+  romea::RotationalMotionState leftIdlerWheelSpinningMotion;
+  leftIdlerWheelSpinningMotion.position=7.0;
+  leftIdlerWheelSpinningMotion.velocity=8.0;
+  leftIdlerWheelSpinningMotion.torque=9.0;
+  romea::RotationalMotionState rightIdlerWheelSpinningMotion;
+  rightIdlerWheelSpinningMotion.position=10.0;
+  rightIdlerWheelSpinningMotion.velocity=11.0;
+  rightIdlerWheelSpinningMotion.torque=12.0;
 
   interface->set_state(current_state,
-                       leftIdlerWheelSpinMotion,
-                       rightIdlerWheelSpinMotion);
+                       leftIdlerWheelSpinningMotion,
+                       rightIdlerWheelSpinningMotion);
 
   auto state_interfaces = interface->export_state_interfaces();
   for(size_t i=0;i<12;++i)
@@ -116,8 +116,8 @@ TEST_F(TestHarwareInterface2TD, checkGetCurrentCommand)
   }
 
   romea::HardwareCommand2TD current_command = interface->get_command();
-  EXPECT_DOUBLE_EQ(current_command.leftSprocketWheelSetPoint,1.0);
-  EXPECT_DOUBLE_EQ(current_command.rightSprocketWheelSetPoint,2.0);
+  EXPECT_DOUBLE_EQ(current_command.leftSprocketWheelSpinningSetPoint,1.0);
+  EXPECT_DOUBLE_EQ(current_command.rightSprocketWheelSpinningSetPoint,2.0);
 
 }
 

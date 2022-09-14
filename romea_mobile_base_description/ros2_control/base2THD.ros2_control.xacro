@@ -8,12 +8,18 @@
        <xacro:if value="${mode == 'live'}">
            <hardware>
              <plugin>${live_hardware_plugin}</plugin>
+             <param name="sprocket_wheel_radius">${sprocket_wheel_radius}</param>
+             <param name="idler_wheel_radius">${idler_wheel_radius}</param>
+             <param name="track_thickness">${track_thickness}</param>
            </hardware>
        </xacro:if>
 
         <xacro:if value="${mode == 'simulation'}">
             <hardware>
               <plugin>${simulation_hardware_plugin}</plugin>
+              <param name="sprocket_wheel_radius">${sprocket_wheel_radius}</param>
+              <param name="idler_wheel_radius">${idler_wheel_radius}</param>
+              <param name="track_thickness">${track_thickness}</param>
             </hardware>
         </xacro:if>
 

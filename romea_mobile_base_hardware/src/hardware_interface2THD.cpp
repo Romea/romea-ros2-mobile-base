@@ -57,28 +57,28 @@ HardwareCommand2TD HardwareInterface2THD::get_command()const
 void HardwareInterface2THD::set_state(const HardwareState2TD & hardware_state)
 {
   left_sprocket_wheel_spinning_joint_.
-      set_state(hardware_state.leftSprocketWheelSpinMotion);
+      set_state(hardware_state.leftSprocketWheelSpinningMotion);
   right_sprocket_wheel_spinning_joint_.
-      set_state(hardware_state.rightSprocketWheelSpinMotion);
+      set_state(hardware_state.rightSprocketWheelSpinningMotion);
 }
 
 //-----------------------------------------------------------------------------
 void HardwareInterface2THD::set_state(const HardwareState2TD & hardware_state,
-                                      const RotationalMotionState & front_left_idler_wheel_set_point,
-                                      const RotationalMotionState & front_right_idler_wheel_set_point,
-                                      const RotationalMotionState & rear_left_idler_wheel_set_point,
-                                      const RotationalMotionState & rear_right_idler_wheel_set_point)
+                                      const RotationalMotionState & front_left_idler_wheel_spinning_set_point,
+                                      const RotationalMotionState & front_right_idler_wheel_spinning_set_point,
+                                      const RotationalMotionState & rear_left_idler_wheel_spinning_set_point,
+                                      const RotationalMotionState & rear_right_idler_wheel_spinning_set_point)
 {
   set_state(hardware_state);
 
   front_left_idler_wheel_spinning_joint_feedback_.
-      set_state(front_left_idler_wheel_set_point);
+      set_state(front_left_idler_wheel_spinning_set_point);
   front_right_idler_wheel_spinning_joint_feedback_.
-      set_state(front_right_idler_wheel_set_point);
+      set_state(front_right_idler_wheel_spinning_set_point);
   rear_left_idler_wheel_spinning_joint_feedback_.
-      set_state(rear_left_idler_wheel_set_point);
+      set_state(rear_left_idler_wheel_spinning_set_point);
   rear_right_idler_wheel_spinning_joint_feedback_.
-      set_state(rear_right_idler_wheel_set_point);
+      set_state(rear_right_idler_wheel_spinning_set_point);
 }
 
 }

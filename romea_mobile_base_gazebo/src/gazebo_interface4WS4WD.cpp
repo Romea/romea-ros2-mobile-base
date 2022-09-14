@@ -41,10 +41,10 @@ void GazeboInterface4WS4WD::set_command(const SimulationCommand4WS4WD &command)
   front_right_wheel_steering_joint_.set_command(command.frontRightWheelSteeringAngle);
   rear_left_wheel_steering_joint_.set_command(command.rearLeftWheelSteeringAngle);
   rear_right_wheel_steering_joint_.set_command(command.rearRightWheelSteeringAngle);
-  front_left_wheel_spinning_joint_.set_command(command.frontLeftWheelSetPoint);
-  front_right_wheel_spinning_joint_.set_command(command.frontRightWheelSetPoint);
-  rear_left_wheel_spinning_joint_.set_command(command.rearLeftWheelSetPoint);
-  rear_right_wheel_spinning_joint_.set_command(command.rearRightWheelSetPoint);
+  front_left_wheel_spinning_joint_.set_command(command.frontLeftWheelSpinningSetPoint);
+  front_right_wheel_spinning_joint_.set_command(command.frontRightWheelSpinningSetPoint);
+  rear_left_wheel_spinning_joint_.set_command(command.rearLeftWheelSpinningSetPoint);
+  rear_right_wheel_spinning_joint_.set_command(command.rearRightWheelSpinningSetPoint);
 }
 
 

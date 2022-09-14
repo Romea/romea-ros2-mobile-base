@@ -102,18 +102,18 @@ TEST_F(TestHarwareInterface4WD, checkSetCurrentState)
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
 
   romea::HardwareState4WD current_state;
-  current_state.frontLeftWheelSpinMotion.position=1.0;
-  current_state.frontLeftWheelSpinMotion.velocity=2.0;
-  current_state.frontLeftWheelSpinMotion.torque=3.0;
-  current_state.frontRightWheelSpinMotion.position=4.0;
-  current_state.frontRightWheelSpinMotion.velocity=5.0;
-  current_state.frontRightWheelSpinMotion.torque=6.0;
-  current_state.rearLeftWheelSpinMotion.position=7.0;
-  current_state.rearLeftWheelSpinMotion.velocity=8.0;
-  current_state.rearLeftWheelSpinMotion.torque=9.0;
-  current_state.rearRightWheelSpinMotion.position=10.0;
-  current_state.rearRightWheelSpinMotion.velocity=11.0;
-  current_state.rearRightWheelSpinMotion.torque=12.0;
+  current_state.frontLeftWheelSpinningMotion.position=1.0;
+  current_state.frontLeftWheelSpinningMotion.velocity=2.0;
+  current_state.frontLeftWheelSpinningMotion.torque=3.0;
+  current_state.frontRightWheelSpinningMotion.position=4.0;
+  current_state.frontRightWheelSpinningMotion.velocity=5.0;
+  current_state.frontRightWheelSpinningMotion.torque=6.0;
+  current_state.rearLeftWheelSpinningMotion.position=7.0;
+  current_state.rearLeftWheelSpinningMotion.velocity=8.0;
+  current_state.rearLeftWheelSpinningMotion.torque=9.0;
+  current_state.rearRightWheelSpinningMotion.position=10.0;
+  current_state.rearRightWheelSpinningMotion.velocity=11.0;
+  current_state.rearRightWheelSpinningMotion.torque=12.0;
 
   interface->set_state(current_state);
 
@@ -136,10 +136,10 @@ TEST_F(TestHarwareInterface4WD, checkGetCurrentCommand)
 
   romea::HardwareCommand4WD current_command = interface->get_command();
 
-  EXPECT_DOUBLE_EQ(current_command.frontLeftWheelSetPoint,1.0);
-  EXPECT_DOUBLE_EQ(current_command.frontRightWheelSetPoint,2.0);
-  EXPECT_DOUBLE_EQ(current_command.rearLeftWheelSetPoint,3.0);
-  EXPECT_DOUBLE_EQ(current_command.rearRightWheelSetPoint,4.0);
+  EXPECT_DOUBLE_EQ(current_command.frontLeftWheelSpinningSetPoint,1.0);
+  EXPECT_DOUBLE_EQ(current_command.frontRightWheelSpinningSetPoint,2.0);
+  EXPECT_DOUBLE_EQ(current_command.rearLeftWheelSpinningSetPoint,3.0);
+  EXPECT_DOUBLE_EQ(current_command.rearRightWheelSpinningSetPoint,4.0);
 
 }
 

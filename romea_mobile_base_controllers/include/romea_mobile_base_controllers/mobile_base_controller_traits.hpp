@@ -28,7 +28,6 @@
 
 #include "romea_mobile_base_controllers/interfaces/controller_interface1FAS2FWD.hpp"
 #include "romea_mobile_base_controllers/interfaces/controller_interface1FAS2RWD.hpp"
-#include "romea_mobile_base_controllers/interfaces/controller_interface1FWS2RWD.hpp"
 #include "romea_mobile_base_controllers/interfaces/controller_interface2AS4WD.hpp"
 #include "romea_mobile_base_controllers/interfaces/controller_interface2FWS2RWD.hpp"
 #include "romea_mobile_base_controllers/interfaces/controller_interface2FWS2FWD.hpp"
@@ -78,21 +77,6 @@ struct MobileBaseControllerTraits<ControllerInterface1FAS2FWD,OneAxleSteeringKin
   using OdometryMeasureMsg = romea_mobile_base_msgs::msg::OneAxleSteeringMeasureStamped;
   using MobileBaseInfo = MobileBaseInfo1FAS2FWD;
 };
-
-template <>
-struct MobileBaseControllerTraits<ControllerInterface1FWS2RWD,OneAxleSteeringKinematic>
-{
-  using Kinematic =  OneAxleSteeringKinematic;
-  using Command = OneAxleSteeringCommand;
-  using CommandMsg = romea_mobile_base_msgs::msg::OneAxleSteeringCommand;
-  using CommandRosMsg = ackermann_msgs::msg::AckermannDrive;
-  using CommandLimits = OneAxleSteeringCommandLimits;
-  using OdometryFrame = OdometryFrame1FWS2RWD;
-  using OdometryMeasure = OneAxleSteeringMeasure;
-  using OdometryMeasureMsg = romea_mobile_base_msgs::msg::OneAxleSteeringMeasureStamped;
-  using MobileBaseInfo = MobileBaseInfo1FWS2RWD;
-};
-
 
 template <>
 struct MobileBaseControllerTraits<ControllerInterface2AS4WD,TwoAxleSteeringKinematic>

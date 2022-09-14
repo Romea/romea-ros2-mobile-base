@@ -59,9 +59,9 @@ void HardwareInterface2FWS2FWD::set_state(const HardwareState2FWS2FWD & hardware
       set_state(hardware_state.frontRightWheelSteeringAngle);
 
   front_left_wheel_spinning_joint_.
-      set_state(hardware_state.frontLeftWheelSpinMotion);
+      set_state(hardware_state.frontLeftWheelSpinningMotion);
   front_right_wheel_spinning_joint_.
-      set_state(hardware_state.frontRightWheelSpinMotion);
+      set_state(hardware_state.frontRightWheelSpinningMotion);
 }
 
 //-----------------------------------------------------------------------------

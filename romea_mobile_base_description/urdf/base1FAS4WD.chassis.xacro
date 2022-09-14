@@ -4,6 +4,7 @@
   <xacro:include filename="$(find romea_mobile_base_description)/urdf/common.xacro" />
   <xacro:include filename="$(find romea_mobile_base_description)/urdf/wheel.xacro" />
   <xacro:include filename="$(find romea_mobile_base_description)/urdf/wheel_steered.xacro" />
+  <xacro:include filename="$(find romea_mobile_base_description)/urdf/axle_steering.xacro" />
 
   <xacro:macro name="chassis" params="*visual_chassis *visual_steering *visual_wheel">
 

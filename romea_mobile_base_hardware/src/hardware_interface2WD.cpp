@@ -45,8 +45,8 @@ HardwareCommand2WD HardwareInterface2WD::get_command()const
 //-----------------------------------------------------------------------------
 void HardwareInterface2WD::set_state(const HardwareState2WD & hardware_state)
 {
-  left_wheel_spinning_joint_.set_state(hardware_state.leftWheelSpinMotion);
-  right_wheel_spinning_joint_.set_state(hardware_state.rightWheelSpinMotion);
+  left_wheel_spinning_joint_.set_state(hardware_state.leftWheelSpinningMotion);
+  right_wheel_spinning_joint_.set_state(hardware_state.rightWheelSpinningMotion);
 }
 
 }

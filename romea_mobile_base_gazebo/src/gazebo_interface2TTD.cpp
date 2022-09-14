@@ -36,14 +36,14 @@ SimulationState2TTD GazeboInterface2TTD::get_state() const
 //-----------------------------------------------------------------------------
 void GazeboInterface2TTD::set_command(const SimulationCommand2TTD &command)
 {
-  left_sprocket_wheel_spinning_joint_.set_command(command.leftSprocketWheelSetPoint);
-  right_sprocket_wheel_spinning_joint_.set_command(command.rightSprocketWheelSetPoint);
-  left_idler_wheel_spinning_joint_.set_command(command.leftIdlerWheelSetPoint);
-  right_idler_wheel_spinning_joint_.set_command(command.rightIdlerWheelSetPoint);
-  front_left_roller_wheel_spinning_joint_.set_command(command.frontLeftRollerWheelSetPoint);
-  front_right_roller_wheel_spinning_joint_.set_command(command.frontRightRollerWheelSetPoint);
-  rear_left_roller_wheel_spinning_joint_.set_command(command.rearLeftRollerWheelSetPoint);
-  rear_right_roller_wheel_spinning_joint_.set_command(command.rearRightRollerWheelSetPoint);
+  left_sprocket_wheel_spinning_joint_.set_command(command.leftSprocketWheelSpinningSetPoint);
+  right_sprocket_wheel_spinning_joint_.set_command(command.rightSprocketWheelSpinningSetPoint);
+  left_idler_wheel_spinning_joint_.set_command(command.leftIdlerWheelSpinningSetPoint);
+  right_idler_wheel_spinning_joint_.set_command(command.rightIdlerWheelSpinningSetPoint);
+  front_left_roller_wheel_spinning_joint_.set_command(command.frontLeftRollerWheelSpinningSetPoint);
+  front_right_roller_wheel_spinning_joint_.set_command(command.frontRightRollerWheelSpinningSetPoint);
+  rear_left_roller_wheel_spinning_joint_.set_command(command.rearLeftRollerWheelSpinningSetPoint);
+  rear_right_roller_wheel_spinning_joint_.set_command(command.rearRightRollerWheelSpinningSetPoint);
 }
 
 ////-----------------------------------------------------------------------------

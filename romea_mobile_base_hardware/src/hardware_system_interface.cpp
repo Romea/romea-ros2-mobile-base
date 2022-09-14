@@ -179,6 +179,5 @@ template class HardwareSystemInterface<HardwareInterface2FWS2FWD>;
 template class HardwareSystemInterface<HardwareInterface2AS4WD>;
 template class HardwareSystemInterface<HardwareInterface1FAS2FWD>;
 template class HardwareSystemInterface<HardwareInterface1FAS2RWD>;
-template class HardwareSystemInterface<HardwareInterface1FWS2RWD>;
 
 }

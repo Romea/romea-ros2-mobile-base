@@ -32,12 +32,12 @@ SimulationState2THD GazeboInterface2THD::get_state() const
 //-----------------------------------------------------------------------------
 void GazeboInterface2THD::set_command(const SimulationCommand2THD &command)
 {
-  left_sprocket_wheel_spinning_joint_.set_command(command.leftSprocketWheelSetPoint);
-  right_sprocket_wheel_spinning_joint_.set_command(command.rightSprocketWheelSetPoint);
-  front_left_idler_wheel_spinning_joint_.set_command(command.frontLeftIdlerWheelSetPoint);
-  front_right_idler_wheel_spinning_joint_.set_command(command.frontRightIdlerWheelSetPoint);
-  rear_left_idler_wheel_spinning_joint_.set_command(command.rearLeftIdlerWheelSetPoint);
-  rear_right_idler_wheel_spinning_joint_.set_command(command.rearRightIdlerWheelSetPoint);
+  left_sprocket_wheel_spinning_joint_.set_command(command.leftSprocketWheelSpinningSetPoint);
+  right_sprocket_wheel_spinning_joint_.set_command(command.rightSprocketWheelSpinningSetPoint);
+  front_left_idler_wheel_spinning_joint_.set_command(command.frontLeftIdlerWheelSpinningSetPoint);
+  front_right_idler_wheel_spinning_joint_.set_command(command.frontRightIdlerWheelSpinningSetPoint);
+  rear_left_idler_wheel_spinning_joint_.set_command(command.rearLeftIdlerWheelSpinningSetPoint);
+  rear_right_idler_wheel_spinning_joint_.set_command(command.rearRightIdlerWheelSpinningSetPoint);
 }
 
 ////-----------------------------------------------------------------------------
