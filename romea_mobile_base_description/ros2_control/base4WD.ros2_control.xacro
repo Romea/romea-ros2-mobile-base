@@ -16,6 +16,8 @@
          <xacro:if value="${mode == 'simulation'}">
              <hardware>
                <plugin>${simulation_hardware_plugin}</plugin>
+               <param name="front_wheel_radius">${front_wheel_radius}</param>
+               <param name="rear_wheel_radius">${rear_wheel_radius}</param>
              </hardware>
          </xacro:if>
 
