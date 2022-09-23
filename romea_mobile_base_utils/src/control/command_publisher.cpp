@@ -101,6 +101,11 @@ CommandPublisher<OneAxleSteeringCommand>::make_publisher_(std::shared_ptr<rclcpp
     using MsgType = geometry_msgs::msg::Twist;
     return make_publisher_<MsgType>(node,"cmd_vel",1);
   }
+  else if( message_type == "acmkermann_msgs/AckermannDrive")
+  {
+    using MsgType = ackermann_msgs::msg::AckermannDrive;
+    return make_publisher_<MsgType>(node,"cmd_steer",1);
+  }
   else if( message_type == "romea_mobile_base_msgs/OneAxleSteeringCommand")
   {
     using MsgType = romea_mobile_base_msgs::msg::OneAxleSteeringCommand;
