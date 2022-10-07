@@ -8,6 +8,14 @@
     </description>
   </class>
 
+  <class name="romea_mobile_base_controllers/MobileBaseController4MWD"
+         type="romea::MobileBaseController4MWD"
+         base_class_type="controller_interface::ControllerInterface">
+    <description>
+      Controller for 4MWD vehicle
+    </description>
+  </class>
+
    <class name="romea_mobile_base_controllers/MobileBaseController4WS4WD"
           type="romea::MobileBaseController4WS4WD"
           base_class_type="controller_interface::ControllerInterface">

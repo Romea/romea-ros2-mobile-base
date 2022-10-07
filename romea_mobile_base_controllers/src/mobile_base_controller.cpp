@@ -587,6 +587,7 @@ template class MobileBaseController<ControllerInterface2FWS4WD,TwoWheelSteeringK
 //template class MobileBaseController<ControllerInterface2TD,SkidSteeringKinematic>;
 //template class MobileBaseController<ControllerInterface2WD,SkidSteeringKinematic>;
 template class MobileBaseController<ControllerInterface4WD,SkidSteeringKinematic>;
+template class MobileBaseController<ControllerInterface4WD,MecanumWheelSteeringKinematic>;
 template class MobileBaseController<ControllerInterface4WS4WD,FourWheelSteeringKinematic>;
 
 }
@@ -603,5 +604,6 @@ CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController2FWS4WD, controller_inter
 //CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController2TD, controller_interface::ControllerInterface)
 //CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController2WD, controller_interface::ControllerInterface)
 CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController4WD, controller_interface::ControllerInterface)
+CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController4MWD, controller_interface::ControllerInterface)
 CLASS_LOADER_REGISTER_CLASS(romea::MobileBaseController4WS4WD, controller_interface::ControllerInterface)
 

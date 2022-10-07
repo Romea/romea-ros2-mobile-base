@@ -177,18 +177,19 @@ struct MobileBaseControllerTraits<ControllerInterface2TD,SkidSteeringKinematic>
 };
 
 
-//template <>
-//struct MobileBaseControllerTraits<OdometryFrame4WD,MecanumWheelSteeringKinematic>
-//{
-//    using Kinematic = MecanumWheelSteeringKinematic;
-//    using Command = OmniSteeringCommand;
-//    using CommandMsg = romea_mobile_base_msgs::msg::OmniSteeringCommand;
-//    using CommandRosMsg = geometry_msgs::msg::Twist;
-//    using CommandLimits = OmniSteeringCommandLimits;
-//    using OdometryInterface = MobileBaseControllerInterface4WD;
-//    using OdometryMeasure = OmniSteeringMeasure;
-//    using OdometryMeasureMsg = romea_mobile_base_msgs::msg::OmniSteeringMeasureStamped;
-//};
+template <>
+struct MobileBaseControllerTraits<ControllerInterface4WD,MecanumWheelSteeringKinematic>
+{
+    using Kinematic = MecanumWheelSteeringKinematic;
+    using Command = OmniSteeringCommand;
+    using CommandMsg = romea_mobile_base_msgs::msg::OmniSteeringCommand;
+    using CommandRosMsg = geometry_msgs::msg::Twist;
+    using CommandLimits = OmniSteeringCommandLimits;
+    using OdometryFrame = OdometryFrame4WD;
+    using OdometryMeasure = OmniSteeringMeasure;
+    using OdometryMeasureMsg = romea_mobile_base_msgs::msg::OmniSteeringMeasureStamped;
+    using MobileBaseInfo = MobileBaseInfo4WD;
+};
 
 template <>
 struct MobileBaseControllerTraits<ControllerInterface4WS4WD,FourWheelSteeringKinematic>

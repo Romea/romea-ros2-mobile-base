@@ -139,6 +139,7 @@ using MobileBaseController2FWS4WD = MobileBaseController<ControllerInterface2FWS
 //using MobileBaseController2WD = MobileBaseController<ControllerInterface2WD,SkidSteeringKinematic>;
 //using MobileBaseController2TD = MobileBaseController<ControllerInterface2TD,SkidSteeringKinematic>;
 using MobileBaseController4WD = MobileBaseController<ControllerInterface4WD,SkidSteeringKinematic>;
+using MobileBaseController4MWD = MobileBaseController<ControllerInterface4WD,MecanumWheelSteeringKinematic>;
 using MobileBaseController4WS4WD = MobileBaseController<ControllerInterface4WS4WD,FourWheelSteeringKinematic>;
 
 }
