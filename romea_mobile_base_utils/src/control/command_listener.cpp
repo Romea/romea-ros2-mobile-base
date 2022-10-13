@@ -101,6 +101,11 @@ CommandListener<OneAxleSteeringCommand>::make_listener_(std::shared_ptr<rclcpp::
     using MsgType = geometry_msgs::msg::Twist;
     return make_listener_<MsgType>(node,"cmd_vel",1);
   }
+  else if( message_type == "ackermann_msgs/AckermannDrive")
+  {
+    using MsgType = ackermann_msgs::msg::AckermannDrive;
+    return make_listener_<MsgType>(node,"cmd_steer",1);
+  }
   else if( message_type == "romea_mobile_base_msgs/OneAxleSteeringCommand")
   {
     using MsgType = romea_mobile_base_msgs::msg::OneAxleSteeringCommand;
@@ -143,11 +148,11 @@ CommandListener<TwoAxleSteeringCommand>::make_listener_(std::shared_ptr<rclcpp::
 {
   if(message_type == "four_wheel_steering_msgs/FourWheelSteering")
   {
-    return make_listener_<four_wheel_steering_msgs::msg::FourWheelSteering>(node,"cmd_vel",1);
+    return make_listener_<four_wheel_steering_msgs::msg::FourWheelSteering>(node,"cmd_4ws",1);
   }
   else if( message_type == "romea_mobile_base_msgs/TwoAxleSteeringCommand")
   {
-    return make_listener_<romea_mobile_base_msgs::msg::TwoAxleSteeringCommand>(node,"cmd_omni_steering",1);
+    return make_listener_<romea_mobile_base_msgs::msg::TwoAxleSteeringCommand>(node,"cmd_two_axle_steering",1);
   }
   else
   {

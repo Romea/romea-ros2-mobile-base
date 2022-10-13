@@ -36,7 +36,7 @@ template <typename CommandType>
 void CommandInterface<CommandType>::create_publisher_(std::shared_ptr<rclcpp::Node> node,
                                                       const std::string & output_message_type)
 {
-  cmd_pub_ = std::make_unique<CmdPubType>(node,output_message_type);
+  cmd_pub_ = make_command_publisher<CommandType>(node,output_message_type);
 }
 
 //-----------------------------------------------------------------------------

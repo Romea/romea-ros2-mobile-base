@@ -27,7 +27,7 @@ class CommandInterface
 {
 public :
 
-  using CmdPubType = CommandPublisher<CommandType>;
+  using CmdPublisher = PublisherBase<CommandType>;
   using Configuration = CommandInterfaceConfiguration;
 
 public :
@@ -73,7 +73,7 @@ private :
                             const double & timetout);
 private:
 
-  std::unique_ptr<CmdPubType> cmd_pub_;
+  std::shared_ptr<CmdPublisher> cmd_pub_;
   CmdMuxInterface cmd_mux_client_;
 
   std::atomic<bool> is_started_;
@@ -90,5 +90,5 @@ private:
   std::function<void(void)> timeout_callback_;
 };
 
-}// namespace 
+}// namespace
 #endif
