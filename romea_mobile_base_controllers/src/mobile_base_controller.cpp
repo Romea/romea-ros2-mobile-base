@@ -538,22 +538,22 @@ void MobileBaseController<InterfaceType,KinematicType>::init_interface_()
 template <typename InterfaceType, typename KinematicType>
 void MobileBaseController<InterfaceType,KinematicType>::init_cmd_subscriber_()
 {
-  std::string cmd_topic;
+  std::string cmd_topic="controller/";
   if(std::is_same<Command, SkidSteeringCommand>::value)
   {
-    cmd_topic="cmd_skid_steering";
+    cmd_topic+="cmd_skid_steering";
   }
   else if(std::is_same<Command, OneAxleSteeringCommand>::value)
   {
-    cmd_topic="cmd_one_axle_steering";
+    cmd_topic+="cmd_one_axle_steering";
   }
   else if(std::is_same<Command, TwoAxleSteeringCommand>::value)
   {
-    cmd_topic="cmd_two_axle_steering";
+    cmd_topic+="cmd_two_axle_steering";
   }
   else
   {
-    cmd_topic="cmd_omni_steering";
+    cmd_topic+="cmd_omni_steering";
 
   }
 
@@ -570,9 +570,9 @@ void MobileBaseController<OdometryFrameType,KinematicType>::init_publishers_()
   bool enable_odom_tf = load_enable_odom_tf_();
 
   odometry_measure_publisher_ = std::make_unique<OdometryMeasurePublisher>(
-        node_,"odometry",base_frame_id,sensor_data_qos());
+        node_,"controller/odometry",base_frame_id,sensor_data_qos());
   kinematic_measure_publisher_ = std::make_unique<KinematicMeasurePublisher>(
-        node_,"kinematic",base_frame_id,sensor_data_qos());
+        node_,"controller/kinematic",base_frame_id,sensor_data_qos());
   dead_reckoning_publisher_ = std::make_unique<DeadReckoningPublisher>(
         node_,odom_frame_id,base_frame_id,enable_odom_tf);
 }

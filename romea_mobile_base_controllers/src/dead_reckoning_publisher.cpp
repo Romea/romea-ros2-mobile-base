@@ -38,7 +38,7 @@ void DeadReckoningPublisher::initOdomPublisher_(std::shared_ptr<rclcpp::Node> no
                                                 const std::string & odom_frame_id,
                                                 const std::string & base_frame_id)
 {
-    auto odom_pub = node->create_publisher<nav_msgs::msg::Odometry>("odom", 100);
+    auto odom_pub = node->create_publisher<nav_msgs::msg::Odometry>("controller/odom", 100);
     odom_pub_ = std::make_shared<OdomPublisher>(odom_pub);
     odom_pub_->msg_.child_frame_id= base_frame_id;
     odom_pub_->msg_.header.frame_id=odom_frame_id;
