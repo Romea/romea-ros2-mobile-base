@@ -49,7 +49,7 @@ TEST_F(TestSpinningJointHardwateInterface, checkExportedStateInterfaces)
   std::vector<hardware_interface::StateInterface> state_interfaces;
   joint->export_state_interfaces(state_interfaces);
 
-  EXPECT_EQ(state_interfaces.size(),3);
+  EXPECT_EQ(state_interfaces.size(),3u);
   EXPECT_STREQ(state_interfaces[0].get_full_name().c_str(),"spinning_wheel/position");
   EXPECT_STREQ(state_interfaces[1].get_full_name().c_str(),"spinning_wheel/velocity");
   EXPECT_STREQ(state_interfaces[2].get_full_name().c_str(),"spinning_wheel/effort");
@@ -61,7 +61,7 @@ TEST_F(TestSpinningJointHardwateInterface, checkExportedCommandInterfaceWhenVelo
   std::vector<hardware_interface::CommandInterface> command_interfaces;
   joint->export_command_interface(command_interfaces);
 
-  EXPECT_EQ(command_interfaces.size(),1);
+  EXPECT_EQ(command_interfaces.size(),1u);
   EXPECT_STREQ(command_interfaces[0].get_full_name().c_str(),"spinning_wheel/velocity");
 }
 
@@ -71,6 +71,6 @@ TEST_F(TestSpinningJointHardwateInterface, checkExportedCommandInterfaceWhenEffo
   std::vector<hardware_interface::CommandInterface> command_interfaces;
   joint->export_command_interface(command_interfaces);
 
-  EXPECT_EQ(command_interfaces.size(),1);
+  EXPECT_EQ(command_interfaces.size(),1u);
   EXPECT_STREQ(command_interfaces[0].get_full_name().c_str(),"spinning_wheel/effort");
 }

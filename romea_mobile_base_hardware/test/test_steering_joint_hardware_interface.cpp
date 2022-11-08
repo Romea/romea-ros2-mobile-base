@@ -41,7 +41,7 @@ TEST_F(TestSteeringJointHardwateInterface, checkExportedStateInterfaces)
   std::vector<hardware_interface::StateInterface> state_interfaces;
   joint->export_state_interface(state_interfaces);
 
-  EXPECT_EQ(state_interfaces.size(),1);
+  EXPECT_EQ(state_interfaces.size(),1u);
   EXPECT_STREQ(state_interfaces[0].get_full_name().c_str(),"steering_wheel/position");
 }
 
@@ -50,6 +50,6 @@ TEST_F(TestSteeringJointHardwateInterface, checkExportedCommandInterfaces)
   std::vector<hardware_interface::CommandInterface> command_interfaces;
   joint->export_command_interface(command_interfaces);
 
-  EXPECT_EQ(command_interfaces.size(),1);
+  EXPECT_EQ(command_interfaces.size(),1u);
   EXPECT_STREQ(command_interfaces[0].get_full_name().c_str(),"steering_wheel/position");
 }
