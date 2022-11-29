@@ -25,6 +25,7 @@ find_package(romea_common_utils REQUIRED)
 find_package(romea_mobile_base_msgs REQUIRED)
 find_package(romea_mobile_base_utils REQUIRED)
 find_package(controller_interface REQUIRED)
+find_package(realtime_tools REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
  src/interfaces/controller_interface1FAS2FWD.cpp
