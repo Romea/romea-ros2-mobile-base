@@ -1,6 +1,5 @@
 #include "romea_mobile_base_utils/control/command_interface.hpp"
 #include <romea_core_common/time/Time.hpp>
-//#include "romea_vehicle_control_utils/vehicle_control_traits.hpp"
 
 namespace romea {
 
