@@ -34,10 +34,7 @@ def launch_setup(context, *args, **kwargs):
     controller_yaml_filename = "/tmp/mobile_base_controller.yaml"
 
     with open(base_description_yaml_filename, "r") as f:
-        base_description_root = yaml.load(f, Loader=yaml.FullLoader)
-        base_description_node = base_description_root["/**"]
-        base_description_ros_params = base_description_node["ros__parameters"]
-        base_info = base_description_ros_params["base_info"]
+        base_info = yaml.load(f, Loader=yaml.FullLoader)
 
     with open(base_controller_yaml_filename, "r") as f:
         base_controller_root = yaml.load(f, Loader=yaml.FullLoader)
