@@ -1,40 +1,46 @@
 #!/usr/bin/env python3
 
-from ament_index_python.packages import get_package_share_directory
-from romea_common_bringup import robot_urdf_prefix
+from romea_common_bringup import MetaDescription
 import importlib
-import yaml
 
 
-def get_base_name(base_meta_description):
-    return base_meta_description["name"]
+# def base_full_name(type, model=""):
+#     if model != "":
+#         return type + "_" + model
+#     else:
+#         return type
 
 
-def get_base_type(base_meta_description):
-    return base_meta_description["configuration"]["type"]
+class MobileBaseMetaDescription:
 
+    def __init__(self, meta_description_filename):
+        self.meta_description = MetaDescription("mobile_base", meta_description_filename)
 
-def get_base_model(base_meta_description):
-    return base_meta_description["configuration"].get("model", "")
+    def get_name(self):
+        return self.meta_description.get("name")
 
+    def get_type(self):
+        return self.meta_description.get("type","configuration")
 
-def base_full_name(type, model=""):
-    if model != "":
-        return type + "_" + model
-    else:
-        return type
+    def get_model(self):
+        return self.meta_description.get("model","configuration")
+
+    def get_simulation_initial_xyz(self):
+        return self.meta_description.get("initial_xyz","simulation")
+
+    def get_simulation_initial_rpy(self):
+        return self.meta_description.get("initial_rpy","simulation")
 
 
 def urdf_description(prefix, mode, meta_description_filename):
 
-    with open(meta_description_filename) as f:
-        meta_description = yaml.safe_load(f)
+    meta_description = MobileBaseMetaDescription(meta_description_filename)
 
-    base_type = get_base_type(meta_description)
-    base_model = get_base_model(meta_description)
+    base_type = meta_description.get_type()
+    base_model = meta_description.get_model()
     base_bringup = importlib.import_module(base_type + "_bringup")
 
-    if base_model == "":
+    if not base_model :
         return base_bringup.urdf_description(prefix, mode)
     else:
         return base_bringup.urdf_description(prefix, mode, base_model)

@@ -4,24 +4,14 @@ from launch.actions import (
     IncludeLaunchDescription,
     DeclareLaunchArgument,
     OpaqueFunction,
-    GroupAction,
 )
 
-from launch_ros.actions import PushRosNamespace
-from launch.substitutions import Command, PathJoinSubstitution, LaunchConfiguration
-from launch_ros.substitutions import ExecutableInPackage, FindPackageShare
+from launch.substitutions import Command, LaunchConfiguration
+from launch_ros.substitutions import ExecutableInPackage
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from ament_index_python.packages import get_package_share_directory
 
-
-from romea_mobile_base_bringup import (
-    get_base_name,
-    get_base_model,
-    get_base_type,
-    base_full_name,
-)
-
-import yaml
+from romea_mobile_base_bringup import MobileBaseMetaDescription
 
 
 def get_robot_namespace(context):
@@ -33,11 +23,12 @@ def get_mode(context):
 
 
 def get_meta_description(context):
-    base_meta_description_filename = LaunchConfiguration(
+
+    meta_description_filename = LaunchConfiguration(
         "meta_description_filename"
     ).perform(context)
-    with open(base_meta_description_filename) as f:
-        return yaml.safe_load(f)
+
+    return MobileBaseMetaDescription(meta_description_filename)
 
 
 def get_urdf_description(context):
@@ -51,20 +42,18 @@ def launch_setup(context, *args, **kwargs):
     meta_description = get_meta_description(context)
     urdf_description = get_urdf_description(context)
 
-    base_type = get_base_type(meta_description)
-    base_model = get_base_model(meta_description)
-    base_name = base_full_name(base_type, base_model)
+    base_type = meta_description.get_type()
+    base_model = meta_description.get_model()
 
-    launch_arguments={
-            "mode": mode,
-            "robot_namespace": robot_namespace,
-            "urdf_description": urdf_description
-            # initial xyz intial rpy
-        }
+    launch_arguments = {
+        "mode": mode,
+        "robot_namespace": robot_namespace,
+        "urdf_description": urdf_description
+        # initial xyz intial rpy
+    }
 
-    if base_model != "":
-        launch_arguments["robot_model"]=base_model
-
+    if base_model is not None:
+        launch_arguments["robot_model"] = base_model
 
     base = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -75,22 +64,6 @@ def launch_setup(context, *args, **kwargs):
         ),
         launch_arguments=launch_arguments.items(),
     )
-
-    #     base = IncludeLaunchDescription(
-    #     PythonLaunchDescriptionSource(
-    #         get_package_share_directory(base_type + "_bringup")
-    #         + "/launch/"
-    #         + base_name
-    #         + ".launch.py"
-    #     ),
-    #     launch_arguments={
-    #         "mode": mode,
-    #         "namespace": robot_namespace,
-    #         "urdf_description": urdf_description
-    #         # initial xyz intial rpy
-    #     }.items(),
-    # )
-
 
     return [base]
 
