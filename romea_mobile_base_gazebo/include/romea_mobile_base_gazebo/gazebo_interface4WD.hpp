@@ -1,33 +1,39 @@
-#ifndef _romea_GazeboInterface4WD_hpp_
-#define _romea_GazeboInterface4WD_hpp_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
 
+#ifndef ROMEA_MOBILE_BASE_GAZEBO__GAZEBO_INTERFACE4WD_HPP_
+#define ROMEA_MOBILE_BASE_GAZEBO__GAZEBO_INTERFACE4WD_HPP_
 
-#include "spinning_joint_gazebo_interface.hpp"
+// romea
 #include <romea_core_mobile_base/simulation/SimulationControl4WD.hpp>
+
+// std
+#include <string>
+
+// local
+#include "romea_mobile_base_gazebo/spinning_joint_gazebo_interface.hpp"
 
 namespace romea
 {
 
-class GazeboInterface4WD{
-
+class GazeboInterface4WD
+{
 public:
-
-  GazeboInterface4WD(gazebo::physics::ModelPtr parent_model,
-                     const hardware_interface::HardwareInfo & hardware_info,
-                     const std::string & command_interface_type);
+  GazeboInterface4WD(
+    gazebo::physics::ModelPtr parent_model,
+    const hardware_interface::HardwareInfo & hardware_info,
+    const std::string & command_interface_type);
 
   SimulationState4WD get_state() const;
-  void set_command(const SimulationCommand4WD &command);
+  void set_command(const SimulationCommand4WD & command);
 
-private :
-
+private:
   SpinningJointGazeboInterface front_left_wheel_spinning_joint_;
   SpinningJointGazeboInterface front_right_wheel_spinning_joint_;
   SpinningJointGazeboInterface rear_left_wheel_spinning_joint_;
   SpinningJointGazeboInterface rear_right_wheel_spinning_joint_;
-
 };
 
-}
+}  // namespace romea
 
-#endif
+#endif  // ROMEA_MOBILE_BASE_GAZEBO__GAZEBO_INTERFACE4WD_HPP_

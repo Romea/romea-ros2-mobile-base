@@ -1,10 +1,15 @@
 from launch import LaunchDescription
-from launch import LaunchContext
 from launch.actions import DeclareLaunchArgument
-from launch.substitutions import Command, FindExecutable, LaunchConfiguration, PathJoinSubstitution
+from launch.substitutions import (
+    Command,
+    FindExecutable,
+    LaunchConfiguration,
+    PathJoinSubstitution,
+)
 
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
+
 
 def generate_launch_description():
 
@@ -12,17 +17,13 @@ def generate_launch_description():
     declared_arguments = []
     declared_arguments.append(
         DeclareLaunchArgument(
-            "urdf_file",
-            default_value="",
-            description="Robot URDF/xacro filename",
+            "urdf_file", default_value="", description="Robot URDF/xacro filename"
         )
     )
 
     declared_arguments.append(
         DeclareLaunchArgument(
-            "prefix",
-            default_value='""',
-            description="Prefix of the joint names.",
+            "prefix", default_value='""', description="Prefix of the joint names."
         )
     )
 
@@ -50,8 +51,7 @@ def generate_launch_description():
     )
 
     joint_state_publisher_node = Node(
-        package="joint_state_publisher_gui",
-        executable="joint_state_publisher_gui",
+        package="joint_state_publisher_gui", executable="joint_state_publisher_gui"
     )
     robot_state_publisher_node = Node(
         package="robot_state_publisher",
@@ -67,10 +67,6 @@ def generate_launch_description():
         arguments=["-d", rviz_config_file],
     )
 
-    nodes = [
-        joint_state_publisher_node,
-        robot_state_publisher_node,
-        rviz_node,
-    ]
+    nodes = [joint_state_publisher_node, robot_state_publisher_node, rviz_node]
 
     return LaunchDescription(declared_arguments + nodes)

@@ -1,52 +1,65 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef TEST_UTILS_HPP_
+#define TEST_UTILS_HPP_
+
+// std
 #include <string>
 #include <iostream>
 #include <sstream>
 #include <fstream>
-#include "test_helper.h"
 
-std::string interface_name (const std::string & vehicle_type)
+// local
+#include "../test/test_helper.h"
+
+std::string interface_name(const std::string & vehicle_type)
 {
-  return "test_gazebo_interface"+vehicle_type;
+  return "test_gazebo_interface" + vehicle_type;
 }
 
-std::string xacro_filename (const std::string & vehicle_type)
+std::string xacro_filename(const std::string & vehicle_type)
 {
-  return std::string(TEST_DIR)+"/"+interface_name(vehicle_type)+".xacro";
+  return std::string(TEST_DIR) + "/" + interface_name(vehicle_type) + ".xacro";
 }
 
-std::string urdf_filename (const std::string & vehicle_type)
+std::string urdf_filename(const std::string & vehicle_type)
 {
-  return "/tmp/"+interface_name(vehicle_type)+".urdf";
+  return "/tmp/" + interface_name(vehicle_type) + ".urdf";
 }
 
-std::string sdf_filename (const std::string & vehicle_type)
+std::string sdf_filename(const std::string & vehicle_type)
 {
-  return "/tmp/"+interface_name(vehicle_type)+".sdf";
+  return "/tmp/" + interface_name(vehicle_type) + ".sdf";
 }
 
 void create_urdf_file(const std::string & gazebo_interface_type, const std::string & vehicle_type)
 {
-    std::string create_urdf = "xacro "+ xacro_filename(gazebo_interface_type) + " type:=" + vehicle_type + " > " + urdf_filename(vehicle_type);
-    std::cout << create_urdf << std::endl;
-    std::system(create_urdf.c_str());
+  std::string create_urdf = "xacro " + xacro_filename(gazebo_interface_type) + " type:=" +
+    vehicle_type + " > " + urdf_filename(vehicle_type);
+  std::cout << create_urdf << std::endl;
+  std::system(create_urdf.c_str());
 }
 
 void create_urdf_file(const std::string & vehicle_type)
 {
-    create_urdf_file(vehicle_type,vehicle_type);
+  create_urdf_file(vehicle_type, vehicle_type);
 }
 
 void create_sdf_file(const std::string & vehicle_type)
 {
-    std::string create_sdf = "gz sdf -p "+ urdf_filename(vehicle_type) + " > " + sdf_filename(vehicle_type);
-    std::cout << create_sdf << std::endl;
-    std::system(create_sdf.c_str());
+  std::string create_sdf = "gz sdf -p " + urdf_filename(vehicle_type) + " > " + sdf_filename(
+    vehicle_type);
+  std::cout << create_sdf << std::endl;
+  std::system(create_sdf.c_str());
 }
 
-std::string make_urdf_description(const std::string & gazebo_interface_type, const std::string & vehicle_type)
+std::string make_urdf_description(
+  const std::string & gazebo_interface_type,
+  const std::string & vehicle_type)
 {
-  std::cout << gazebo_interface_type << " "<< vehicle_type << std::endl;
-  create_urdf_file(gazebo_interface_type,vehicle_type);
+  std::cout << gazebo_interface_type << " " << vehicle_type << std::endl;
+  create_urdf_file(gazebo_interface_type, vehicle_type);
   std::ifstream urdf_file(urdf_filename(vehicle_type));
   std::stringstream urdf_content;
   urdf_content << urdf_file.rdbuf();
@@ -55,7 +68,7 @@ std::string make_urdf_description(const std::string & gazebo_interface_type, con
 
 std::string make_urdf_description(const std::string & vehicle_type)
 {
-  return make_urdf_description(vehicle_type,vehicle_type);
+  return make_urdf_description(vehicle_type, vehicle_type);
 }
 
 
@@ -68,3 +81,4 @@ std::string make_sdf_description(const std::string & vehicle_type)
   return sdf_content.str();
 }
 
+#endif  // TEST_UTILS_HPP_

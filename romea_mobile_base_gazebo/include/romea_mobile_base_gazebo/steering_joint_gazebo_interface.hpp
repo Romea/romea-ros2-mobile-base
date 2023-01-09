@@ -1,40 +1,35 @@
-#ifndef _romea_SteeringJointGazeboInterface_hpp_
-#define _romea_SteeringJointGazeboInterface_hpp_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
 
-#include "gazebo/physics/Joint.hh"
-#include "gazebo/physics/Model.hh"
+#ifndef ROMEA_MOBILE_BASE_GAZEBO__STEERING_JOINT_GAZEBO_INTERFACE_HPP_
+#define ROMEA_MOBILE_BASE_GAZEBO__STEERING_JOINT_GAZEBO_INTERFACE_HPP_
 
+// romea
 #include <romea_mobile_base_hardware/steering_joint_hardware_interface.hpp>
+
+// gazebo
+#include <gazebo/physics/Joint.hh>
+#include <gazebo/physics/Model.hh>
+
 
 namespace romea
 {
 
 class SteeringJointGazeboInterface
 {
-
 public:
-
-  SteeringJointGazeboInterface(gazebo::physics::ModelPtr parent_model,
-                               const hardware_interface::ComponentInfo & joint_info);
+  SteeringJointGazeboInterface(
+    gazebo::physics::ModelPtr parent_model,
+    const hardware_interface::ComponentInfo & joint_info);
 
   void set_command(const double & command);
 
   double get_state()const;
 
 private:
-
   gazebo::physics::JointPtr sim_joint_;
-
 };
 
-//void write(const SteeringJointHardwareInterface & hardware_joint,
-//           SteeringJointGazeboInterface & gazebo_joint);
+}  // namespace romea
 
-//void read(const SteeringJointGazeboInterface & gazebo_joint,
-//          SteeringJointHardwareInterface & hardware_joint);
-
-//void read(const SteeringJointGazeboInterface & gazebo_joint,
-//          SteeringJointHardwareInterface::Feedback & hardware_joint_feedback);
-
-}
-#endif
+#endif  // ROMEA_MOBILE_BASE_GAZEBO__STEERING_JOINT_GAZEBO_INTERFACE_HPP_

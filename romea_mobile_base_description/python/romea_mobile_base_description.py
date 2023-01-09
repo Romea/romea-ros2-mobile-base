@@ -55,9 +55,10 @@ def get_maximal_linear_speed(base_description):
     elif "tracks_speed_control" in base_description:
         speed_control_info = base_description["tracks_speed_control"]
 
-    else:    
+    else:
         raise AttributeError(
-            "No wheels or tracks speed control description found in base info cannot get maximal linear speed"
+            "No wheels or tracks speed control description found in base info" +
+            "cannot get maximal linear speed"
         )
 
     return speed_control_info["command"]["maximal_speed"]
@@ -74,7 +75,7 @@ def get_maximal_wheel_angle(base_description):
     elif "wheels_steering_control" in base_description:
         wheels_steering_control_info = base_description["wheels_steering_control"]
 
-    else:    
+    else:
         raise AttributeError(
             "No wheel steering control description found in base info cannot get maximal wheel angle"
         )

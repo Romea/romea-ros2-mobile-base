@@ -1,53 +1,86 @@
-#include "romea_mobile_base_gazebo/gazebo_interface2TTD.hpp"
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+// romea
 #include <romea_mobile_base_hardware/hardware_interface2TTD.hpp>
+
+// std
+#include <string>
+
+// local
+#include "romea_mobile_base_gazebo/gazebo_interface2TTD.hpp"
 
 namespace romea
 {
 
 //-----------------------------------------------------------------------------
-GazeboInterface2TTD::GazeboInterface2TTD(gazebo::physics::ModelPtr parent_model,
-                                         const hardware_interface::HardwareInfo & hardware_info,
-                                         const std::string & command_interface_type):
-  left_sprocket_wheel_spinning_joint_(parent_model,hardware_info.joints[HardwareInterface2TTD::LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID],command_interface_type),
-  right_sprocket_wheel_spinning_joint_(parent_model,hardware_info.joints[HardwareInterface2TTD::RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID],command_interface_type),
-  left_idler_wheel_spinning_joint_(parent_model,hardware_info.joints[HardwareInterface2TTD::LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID],command_interface_type),
-  right_idler_wheel_spinning_joint_(parent_model,hardware_info.joints[HardwareInterface2TTD::RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID],command_interface_type),
-  front_left_roller_wheel_spinning_joint_(parent_model,hardware_info.joints[HardwareInterface2TTD::FRONT_LEFT_ROLLER_WHEEL_SPINNING_JOINT_ID],command_interface_type),
-  front_right_roller_wheel_spinning_joint_(parent_model,hardware_info.joints[HardwareInterface2TTD::FRONT_RIGHT_ROLLER_WHEEL_SPINNING_JOINT_ID],command_interface_type),
-  rear_left_roller_wheel_spinning_joint_(parent_model,hardware_info.joints[HardwareInterface2TTD::REAR_LEFT_ROLLER_WHEEL_SPINNING_JOINT_ID],command_interface_type),
-  rear_right_roller_wheel_spinning_joint_(parent_model,hardware_info.joints[HardwareInterface2TTD::REAR_RIGHT_ROLLER_WHEEL_SPINNING_JOINT_ID],command_interface_type)
+GazeboInterface2TTD::GazeboInterface2TTD(
+  gazebo::physics::ModelPtr parent_model,
+  const hardware_interface::HardwareInfo & hardware_info,
+  const std::string & command_interface_type)
+: left_sprocket_wheel_spinning_joint_(parent_model,
+    hardware_info.joints[HardwareInterface2TTD::LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID],
+    command_interface_type),
+  right_sprocket_wheel_spinning_joint_(parent_model,
+    hardware_info.joints[HardwareInterface2TTD::RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID],
+    command_interface_type),
+  left_idler_wheel_spinning_joint_(parent_model,
+    hardware_info.joints[HardwareInterface2TTD::LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID],
+    command_interface_type),
+  right_idler_wheel_spinning_joint_(parent_model,
+    hardware_info.joints[HardwareInterface2TTD::RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID],
+    command_interface_type),
+  front_left_roller_wheel_spinning_joint_(parent_model,
+    hardware_info.joints[HardwareInterface2TTD::FRONT_LEFT_ROLLER_WHEEL_SPINNING_JOINT_ID],
+    command_interface_type),
+  front_right_roller_wheel_spinning_joint_(parent_model,
+    hardware_info.joints[HardwareInterface2TTD::FRONT_RIGHT_ROLLER_WHEEL_SPINNING_JOINT_ID],
+    command_interface_type),
+  rear_left_roller_wheel_spinning_joint_(parent_model,
+    hardware_info.joints[HardwareInterface2TTD::REAR_LEFT_ROLLER_WHEEL_SPINNING_JOINT_ID],
+    command_interface_type),
+  rear_right_roller_wheel_spinning_joint_(parent_model,
+    hardware_info.joints[HardwareInterface2TTD::REAR_RIGHT_ROLLER_WHEEL_SPINNING_JOINT_ID],
+    command_interface_type)
 {
-
 }
 
 //-----------------------------------------------------------------------------
 SimulationState2TTD GazeboInterface2TTD::get_state() const
 {
   return {left_sprocket_wheel_spinning_joint_.get_state(),
-        right_sprocket_wheel_spinning_joint_.get_state(),
-        left_idler_wheel_spinning_joint_.get_state(),
-        right_idler_wheel_spinning_joint_.get_state(),
-        front_left_roller_wheel_spinning_joint_.get_state(),
-        front_right_roller_wheel_spinning_joint_.get_state(),
-        rear_left_roller_wheel_spinning_joint_.get_state(),
-        rear_right_roller_wheel_spinning_joint_.get_state()};
+      right_sprocket_wheel_spinning_joint_.get_state(),
+      left_idler_wheel_spinning_joint_.get_state(),
+      right_idler_wheel_spinning_joint_.get_state(),
+      front_left_roller_wheel_spinning_joint_.get_state(),
+      front_right_roller_wheel_spinning_joint_.get_state(),
+      rear_left_roller_wheel_spinning_joint_.get_state(),
+      rear_right_roller_wheel_spinning_joint_.get_state()};
 }
 
 //-----------------------------------------------------------------------------
-void GazeboInterface2TTD::set_command(const SimulationCommand2TTD &command)
+void GazeboInterface2TTD::set_command(const SimulationCommand2TTD & command)
 {
-  left_sprocket_wheel_spinning_joint_.set_command(command.leftSprocketWheelSpinningSetPoint);
-  right_sprocket_wheel_spinning_joint_.set_command(command.rightSprocketWheelSpinningSetPoint);
-  left_idler_wheel_spinning_joint_.set_command(command.leftIdlerWheelSpinningSetPoint);
-  right_idler_wheel_spinning_joint_.set_command(command.rightIdlerWheelSpinningSetPoint);
-  front_left_roller_wheel_spinning_joint_.set_command(command.frontLeftRollerWheelSpinningSetPoint);
-  front_right_roller_wheel_spinning_joint_.set_command(command.frontRightRollerWheelSpinningSetPoint);
-  rear_left_roller_wheel_spinning_joint_.set_command(command.rearLeftRollerWheelSpinningSetPoint);
-  rear_right_roller_wheel_spinning_joint_.set_command(command.rearRightRollerWheelSpinningSetPoint);
+  left_sprocket_wheel_spinning_joint_.set_command(
+    command.leftSprocketWheelSpinningSetPoint);
+  right_sprocket_wheel_spinning_joint_.set_command(
+    command.rightSprocketWheelSpinningSetPoint);
+  left_idler_wheel_spinning_joint_.set_command(
+    command.leftIdlerWheelSpinningSetPoint);
+  right_idler_wheel_spinning_joint_.set_command(
+    command.rightIdlerWheelSpinningSetPoint);
+  front_left_roller_wheel_spinning_joint_.set_command(
+    command.frontLeftRollerWheelSpinningSetPoint);
+  front_right_roller_wheel_spinning_joint_.set_command(
+    command.frontRightRollerWheelSpinningSetPoint);
+  rear_left_roller_wheel_spinning_joint_.set_command(
+    command.rearLeftRollerWheelSpinningSetPoint);
+  rear_right_roller_wheel_spinning_joint_.set_command(
+    command.rearRightRollerWheelSpinningSetPoint);
 }
 
 ////-----------------------------------------------------------------------------
-//void write(const HardwareInterface2TTD & hardware_interface,
+// void write(const HardwareInterface2TTD & hardware_interface,
 //           const double & left_roller_wheels_speed_command,
 //           const double & right_roller_wheels_speed_command,
 //           GazeboInterface2TTD & gazebo_interface)
@@ -71,7 +104,7 @@ void GazeboInterface2TTD::set_command(const SimulationCommand2TTD &command)
 //}
 
 ////-----------------------------------------------------------------------------
-//void write(const HardwareInterface2TTD & hardware_interface,
+// void write(const HardwareInterface2TTD & hardware_interface,
 //           GazeboInterface2TTD & gazebo_interface)
 //{
 
@@ -91,7 +124,7 @@ void GazeboInterface2TTD::set_command(const SimulationCommand2TTD &command)
 //}
 
 ////-----------------------------------------------------------------------------
-//void read(const GazeboInterface2TTD & gazebo_interface,
+// void read(const GazeboInterface2TTD & gazebo_interface,
 //          const SpinningJointGazeboInterface::Feedback & left_sprocket_wheel_feedback,
 //          const SpinningJointGazeboInterface::Feedback & right_sprocket_wheel_feedback,
 //          HardwareInterface2TTD & hardware_interface)
@@ -115,9 +148,8 @@ void GazeboInterface2TTD::set_command(const SimulationCommand2TTD &command)
 //}
 
 
-
 ////-----------------------------------------------------------------------------
-//void read(const GazeboInterface2TTD & gazebo_interface,
+// void read(const GazeboInterface2TTD & gazebo_interface,
 //          HardwareInterface2TTD & hardware_interface)
 //{
 
@@ -142,8 +174,4 @@ void GazeboInterface2TTD::set_command(const SimulationCommand2TTD &command)
 
 //}
 
-}
-
-
-
-
+}  // namespace romea

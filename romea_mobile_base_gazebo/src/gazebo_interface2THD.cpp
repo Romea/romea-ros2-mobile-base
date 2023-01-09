@@ -1,36 +1,57 @@
-#include "romea_mobile_base_gazebo/gazebo_interface2THD.hpp"
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+// romea
 #include <romea_mobile_base_hardware/hardware_interface2THD.hpp>
+
+// std
+#include <string>
+
+// local
+#include "romea_mobile_base_gazebo/gazebo_interface2THD.hpp"
 
 namespace romea
 {
 
 //-----------------------------------------------------------------------------
-GazeboInterface2THD::GazeboInterface2THD(gazebo::physics::ModelPtr parent_model,
-                                         const hardware_interface::HardwareInfo & hardware_info,
-                                         const std::string & command_interface_type):
-  left_sprocket_wheel_spinning_joint_(parent_model,hardware_info.joints[HardwareInterface2THD::LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID],command_interface_type),
-  right_sprocket_wheel_spinning_joint_(parent_model,hardware_info.joints[HardwareInterface2THD::RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID],command_interface_type),
-  front_left_idler_wheel_spinning_joint_(parent_model,hardware_info.joints[HardwareInterface2THD::FRONT_LEFT_IDLER_WHEEL_SPINNING_JOINT_ID],command_interface_type),
-  front_right_idler_wheel_spinning_joint_(parent_model,hardware_info.joints[HardwareInterface2THD::FRONT_RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID],command_interface_type),
-  rear_left_idler_wheel_spinning_joint_(parent_model,hardware_info.joints[HardwareInterface2THD::REAR_LEFT_IDLER_WHEEL_SPINNING_JOINT_ID],command_interface_type),
-  rear_right_idler_wheel_spinning_joint_(parent_model,hardware_info.joints[HardwareInterface2THD::REAR_RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID],command_interface_type)
+GazeboInterface2THD::GazeboInterface2THD(
+  gazebo::physics::ModelPtr parent_model,
+  const hardware_interface::HardwareInfo & hardware_info,
+  const std::string & command_interface_type)
+: left_sprocket_wheel_spinning_joint_(parent_model,
+    hardware_info.joints[HardwareInterface2THD::LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID],
+    command_interface_type),
+  right_sprocket_wheel_spinning_joint_(parent_model,
+    hardware_info.joints[HardwareInterface2THD::RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID],
+    command_interface_type),
+  front_left_idler_wheel_spinning_joint_(parent_model,
+    hardware_info.joints[HardwareInterface2THD::FRONT_LEFT_IDLER_WHEEL_SPINNING_JOINT_ID],
+    command_interface_type),
+  front_right_idler_wheel_spinning_joint_(parent_model,
+    hardware_info.joints[HardwareInterface2THD::FRONT_RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID],
+    command_interface_type),
+  rear_left_idler_wheel_spinning_joint_(parent_model,
+    hardware_info.joints[HardwareInterface2THD::REAR_LEFT_IDLER_WHEEL_SPINNING_JOINT_ID],
+    command_interface_type),
+  rear_right_idler_wheel_spinning_joint_(parent_model,
+    hardware_info.joints[HardwareInterface2THD::REAR_RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID],
+    command_interface_type)
 {
-
 }
 
 //-----------------------------------------------------------------------------
 SimulationState2THD GazeboInterface2THD::get_state() const
 {
   return {left_sprocket_wheel_spinning_joint_.get_state(),
-        right_sprocket_wheel_spinning_joint_.get_state(),
-        front_left_idler_wheel_spinning_joint_.get_state(),
-        front_right_idler_wheel_spinning_joint_.get_state(),
-        rear_left_idler_wheel_spinning_joint_.get_state(),
-        rear_right_idler_wheel_spinning_joint_.get_state()};
+      right_sprocket_wheel_spinning_joint_.get_state(),
+      front_left_idler_wheel_spinning_joint_.get_state(),
+      front_right_idler_wheel_spinning_joint_.get_state(),
+      rear_left_idler_wheel_spinning_joint_.get_state(),
+      rear_right_idler_wheel_spinning_joint_.get_state()};
 }
 
 //-----------------------------------------------------------------------------
-void GazeboInterface2THD::set_command(const SimulationCommand2THD &command)
+void GazeboInterface2THD::set_command(const SimulationCommand2THD & command)
 {
   left_sprocket_wheel_spinning_joint_.set_command(command.leftSprocketWheelSpinningSetPoint);
   right_sprocket_wheel_spinning_joint_.set_command(command.rightSprocketWheelSpinningSetPoint);
@@ -41,7 +62,7 @@ void GazeboInterface2THD::set_command(const SimulationCommand2THD &command)
 }
 
 ////-----------------------------------------------------------------------------
-//void write(const HardwareInterface2THD & hardware_interface,
+// void write(const HardwareInterface2THD & hardware_interface,
 //           const double & left_idler_wheels_speed_command,
 //           const double & right_idler_wheels_speed_command,
 //           GazeboInterface2THD & gazebo_interface)
@@ -65,7 +86,7 @@ void GazeboInterface2THD::set_command(const SimulationCommand2THD &command)
 //}
 
 ////-----------------------------------------------------------------------------
-//void write(const HardwareInterface2THD & hardware_interface,
+// void write(const HardwareInterface2THD & hardware_interface,
 //           GazeboInterface2THD & gazebo_interface)
 //{
 
@@ -85,7 +106,7 @@ void GazeboInterface2THD::set_command(const SimulationCommand2THD &command)
 //}
 
 ////-----------------------------------------------------------------------------
-//void read(const GazeboInterface2THD & gazebo_interface,
+// void read(const GazeboInterface2THD & gazebo_interface,
 //          const SpinningJointGazeboInterface::Feedback & left_sprocket_wheel_feedback,
 //          const SpinningJointGazeboInterface::Feedback & right_sprocket_wheel_feedback,
 //          HardwareInterface2THD & hardware_interface)
@@ -109,9 +130,8 @@ void GazeboInterface2THD::set_command(const SimulationCommand2THD &command)
 //}
 
 
-
 ////-----------------------------------------------------------------------------
-//void read(const GazeboInterface2THD & gazebo_interface,
+// void read(const GazeboInterface2THD & gazebo_interface,
 //          HardwareInterface2THD & hardware_interface)
 //{
 
@@ -136,8 +156,4 @@ void GazeboInterface2THD::set_command(const SimulationCommand2THD &command)
 
 //}
 
-}
-
-
-
-
+}  // namespace romea
