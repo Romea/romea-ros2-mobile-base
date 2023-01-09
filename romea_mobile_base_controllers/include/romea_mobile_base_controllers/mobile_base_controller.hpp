@@ -1,39 +1,62 @@
-#ifndef MobileBaseController_H
-#define MobileBaseController_H
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
 
-//ros
+#ifndef ROMEA_MOBILE_BASE_CONTROLLERS__MOBILE_BASE_CONTROLLER_HPP_
+#define ROMEA_MOBILE_BASE_CONTROLLERS__MOBILE_BASE_CONTROLLER_HPP_
+
+// ros
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp_lifecycle/state.hpp>
 #include <controller_interface/controller_interface.hpp>
 #include <realtime_tools/realtime_buffer.h>
 
-//romea
-#include "dead_reckoning.hpp"
-#include "dead_reckoning_publisher.hpp"
-#include "mobile_base_controller_traits.hpp"
+// romea
 #include <romea_core_common/concurrency/SharedOptionalVariable.hpp>
 #include <romea_common_utils/realtime_publishers/stamped_data_publisher.hpp>
 
+// std
+#include <memory>
+#include <string>
+#include <vector>
 
-namespace romea{
+// local
+#include "dead_reckoning.hpp"
+#include "dead_reckoning_publisher.hpp"
+#include "mobile_base_controller_traits.hpp"
+
+
+namespace romea
+{
 
 using CallbackReturn = rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn;
 
-template <typename InterfaceType, typename KinematicType>
+template<typename InterfaceType, typename KinematicType>
 class MobileBaseController : public controller_interface::ControllerInterface
 {
+  using Kinematic =
+    typename MobileBaseControllerTraits<InterfaceType, KinematicType>::Kinematic;
+  using MobileBaseInfo =
+    typename MobileBaseControllerTraits<InterfaceType, KinematicType>::MobileBaseInfo;
+  using Command =
+    typename MobileBaseControllerTraits<InterfaceType, KinematicType>::Command;
+  using CommandMsg =
+    typename MobileBaseControllerTraits<InterfaceType, KinematicType>::CommandMsg;
+  using CommandRosMsg =
+    typename MobileBaseControllerTraits<InterfaceType, KinematicType>::CommandRosMsg;
+  using CommandLimits =
+    typename MobileBaseControllerTraits<InterfaceType, KinematicType>::CommandLimits;
+  using OdometryFrame =
+    typename  MobileBaseControllerTraits<InterfaceType, KinematicType>::OdometryFrame;
+  using OdometryMeasure =
+    typename MobileBaseControllerTraits<InterfaceType, KinematicType>::OdometryMeasure;
+  using OdometryMeasureMsg =
+    typename MobileBaseControllerTraits<InterfaceType, KinematicType>::OdometryMeasureMsg;
 
-  using Kinematic = typename MobileBaseControllerTraits<InterfaceType,KinematicType>::Kinematic;
-  using MobileBaseInfo = typename MobileBaseControllerTraits<InterfaceType,KinematicType>::MobileBaseInfo;
-  using Command = typename MobileBaseControllerTraits<InterfaceType,KinematicType>::Command;
-  using CommandMsg = typename MobileBaseControllerTraits<InterfaceType,KinematicType>::CommandMsg;
-  using CommandRosMsg = typename MobileBaseControllerTraits<InterfaceType,KinematicType>::CommandRosMsg;
-  using CommandLimits = typename MobileBaseControllerTraits<InterfaceType,KinematicType>::CommandLimits;
-  using OdometryFrame = typename  MobileBaseControllerTraits<InterfaceType,KinematicType>::OdometryFrame;
-  using OdometryMeasure = typename MobileBaseControllerTraits<InterfaceType,KinematicType>::OdometryMeasure;
-  using OdometryMeasureMsg = typename MobileBaseControllerTraits<InterfaceType,KinematicType>::OdometryMeasureMsg;
-  using OdometryMeasurePublisher = RealtimeStampedMessagePublisher<OdometryMeasure,OdometryMeasureMsg>;
-  using KinematicMeasurePublisher = RealtimeStampedMessagePublisher<KinematicMeasure,romea_mobile_base_msgs::msg::KinematicMeasureStamped>;
+  using OdometryMeasurePublisher =
+    RealtimeStampedMessagePublisher<OdometryMeasure, OdometryMeasureMsg>;
+  using KinematicMeasurePublisher =
+    RealtimeStampedMessagePublisher<KinematicMeasure,
+      romea_mobile_base_msgs::msg::KinematicMeasureStamped>;
 
   struct StampedCommand
   {
@@ -41,17 +64,18 @@ class MobileBaseController : public controller_interface::ControllerInterface
     rclcpp::Time stamp;
   };
 
-  using StampedCommandBuffer= SharedOptionalVariable<StampedCommand>;
+  using StampedCommandBuffer = SharedOptionalVariable<StampedCommand>;
 
 public:
-
   MobileBaseController();
 
   controller_interface::InterfaceConfiguration command_interface_configuration() const override;
 
   controller_interface::InterfaceConfiguration state_interface_configuration() const override;
 
-  controller_interface::return_type update(const rclcpp::Time & time, const rclcpp::Duration & period) override;
+  controller_interface::return_type update(
+    const rclcpp::Time & time,
+    const rclcpp::Duration & period) override;
 
   CallbackReturn on_init() override;
 
@@ -68,7 +92,6 @@ public:
   CallbackReturn on_shutdown(const rclcpp_lifecycle::State & previous_state) override;
 
 protected:
-
   //  void declare_joints_names_();
   //  void declare_mobile_base_info_();
   //  void declare_command_limits_();
@@ -102,7 +125,6 @@ protected:
   void command_callback_(typename CommandMsg::ConstSharedPtr cmd_msg);
 
 protected:
-
   std::vector<std::string> joints_names_;
   std::unique_ptr<InterfaceType> controller_interface_;
   typename Kinematic::Parameters kinematic_parameters_;
@@ -125,23 +147,34 @@ protected:
   std::unique_ptr<DeadReckoningPublisher> dead_reckoning_publisher_;
   std::unique_ptr<OdometryMeasurePublisher> odometry_measure_publisher_;
   std::unique_ptr<KinematicMeasurePublisher> kinematic_measure_publisher_;
-
 };
 
 
-//using MobileBaseController1FAS2FWD = MobileBaseController<ControllerInterface1FAS2FWD,OneAxleSteeringKinematic>;
-//using MobileBaseController1FAS2RWD = MobileBaseController<ControllerInterface1FAS2RWD,OneAxleSteeringKinematic>;
-//using MobileBaseController1FWS2RWD = MobileBaseController<ControllerInterface1FWS2RWD,OneAxleSteeringKinematic>;
-using MobileBaseController2AS4WD = MobileBaseController<ControllerInterface2AS4WD,TwoAxleSteeringKinematic>;
-//using MobileBaseController2FWS2FWD = MobileBaseController<ControllerInterface2FWS2FWD,TwoWheelSteeringKinematic>;
-using MobileBaseController2FWS2RWD = MobileBaseController<ControllerInterface2FWS2RWD,TwoWheelSteeringKinematic>;
-using MobileBaseController2FWS4WD = MobileBaseController<ControllerInterface2FWS4WD,TwoWheelSteeringKinematic>;
-//using MobileBaseController2WD = MobileBaseController<ControllerInterface2WD,SkidSteeringKinematic>;
-//using MobileBaseController2TD = MobileBaseController<ControllerInterface2TD,SkidSteeringKinematic>;
-using MobileBaseController4WD = MobileBaseController<ControllerInterface4WD,SkidSteeringKinematic>;
-using MobileBaseController4MWD = MobileBaseController<ControllerInterface4WD,MecanumWheelSteeringKinematic>;
-using MobileBaseController4WS4WD = MobileBaseController<ControllerInterface4WS4WD,FourWheelSteeringKinematic>;
+// using MobileBaseController1FAS2FWD =
+//   MobileBaseController<ControllerInterface1FAS2FWD,OneAxleSteeringKinematic>;
+// using MobileBaseController1FAS2RWD =
+//   MobileBaseController<ControllerInterface1FAS2RWD,OneAxleSteeringKinematic>;
+// using MobileBaseController1FWS2RWD =
+//   MobileBaseController<ControllerInterface1FWS2RWD,OneAxleSteeringKinematic>;
+using MobileBaseController2AS4WD =
+  MobileBaseController<ControllerInterface2AS4WD, TwoAxleSteeringKinematic>;
+// using MobileBaseController2FWS2FWD =
+//   MobileBaseController<ControllerInterface2FWS2FWD,TwoWheelSteeringKinematic>;
+using MobileBaseController2FWS2RWD =
+  MobileBaseController<ControllerInterface2FWS2RWD, TwoWheelSteeringKinematic>;
+using MobileBaseController2FWS4WD =
+  MobileBaseController<ControllerInterface2FWS4WD, TwoWheelSteeringKinematic>;
+// using MobileBaseController2WD =
+//   MobileBaseController<ControllerInterface2WD,SkidSteeringKinematic>;
+// using MobileBaseController2TD =
+//   MobileBaseController<ControllerInterface2TD,SkidSteeringKinematic>;
+using MobileBaseController4WD =
+  MobileBaseController<ControllerInterface4WD, SkidSteeringKinematic>;
+using MobileBaseController4MWD =
+  MobileBaseController<ControllerInterface4WD, MecanumWheelSteeringKinematic>;
+using MobileBaseController4WS4WD =
+  MobileBaseController<ControllerInterface4WS4WD, FourWheelSteeringKinematic>;
 
-}
+}  // namespace romea
 
-#endif
+#endif  // ROMEA_MOBILE_BASE_CONTROLLERS__MOBILE_BASE_CONTROLLER_HPP_

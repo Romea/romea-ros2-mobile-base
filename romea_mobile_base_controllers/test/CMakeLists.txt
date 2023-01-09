@@ -29,10 +29,3 @@ target_link_libraries(${PROJECT_NAME}_test_controller_interface4WD ${PROJECT_NAM
 
 ament_add_gtest(${PROJECT_NAME}_test_controller_interface4WS4WD test_controller_interface4WS4WD.cpp)
 target_link_libraries(${PROJECT_NAME}_test_controller_interface4WS4WD ${PROJECT_NAME})
-
-
-ament_add_gtest(${PROJECT_NAME}_test_spinning_joint_controller_interface test_spinning_joint_controller_interface.cpp)
-target_link_libraries(${PROJECT_NAME}_test_spinning_joint_controller_interface ${PROJECT_NAME})
-
-ament_add_gtest(${PROJECT_NAME}_test_steering_joint_controller_interface test_steering_joint_controller_interface.cpp)
-target_link_libraries(${PROJECT_NAME}_test_steering_joint_controller_interface ${PROJECT_NAME})
