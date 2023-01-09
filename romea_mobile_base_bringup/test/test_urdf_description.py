@@ -1,9 +1,12 @@
+# Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+# Add license
+
 import os
 import pytest
-from romea_mobile_base_bringup import urdf_description
 from ament_index_python import get_package_prefix
 import xml.etree.ElementTree as ET
 import subprocess
+
 
 @pytest.fixture(scope="module")
 def urdf():

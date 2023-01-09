@@ -1,3 +1,6 @@
+# Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+# Add license
+
 import os
 import pytest
 
