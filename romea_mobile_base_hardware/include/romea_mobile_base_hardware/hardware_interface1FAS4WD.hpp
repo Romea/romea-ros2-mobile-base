@@ -12,8 +12,8 @@
 #include <vector>
 
 // local
-#include "romea_mobile_base_hadware/spinning_joint_hardware_interface.hpp"
-#include "romea_mobile_base_hadware/steering_joint_hardware_interface.hpp"
+#include "romea_mobile_base_hardware/spinning_joint_hardware_interface.hpp"
+#include "romea_mobile_base_hardware/steering_joint_hardware_interface.hpp"
 
 namespace romea
 {
