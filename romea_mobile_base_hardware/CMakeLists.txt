@@ -3,16 +3,16 @@ project(romea_mobile_base_hardware)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
- set(CMAKE_C_STANDARD 99)
+  set(CMAKE_C_STANDARD 99)
 endif()
 
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
- set(CMAKE_CXX_STANDARD 17)
+  set(CMAKE_CXX_STANDARD 17)
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
- add_compile_options(-Wall -Wextra -Wpedantic)
+  add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
 
@@ -30,43 +30,41 @@ find_package(romea_mobile_base_utils REQUIRED)
 find_package(hardware_interface REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
- src/hardware_handle.cpp
- src/hardware_info.cpp
- src/hardware_interface1FAS2FWD.cpp
- src/hardware_interface1FAS2RWD.cpp
- src/hardware_interface1FAS4WD.cpp
- src/hardware_interface2AS2FWD.cpp
- src/hardware_interface2AS2RWD.cpp
- src/hardware_interface2AS4WD.cpp
- src/hardware_interface2FWS2FWD.cpp
- src/hardware_interface2FWS2RWD.cpp
- src/hardware_interface2FWS4WD.cpp
- src/hardware_interface2WD.cpp
- src/hardware_interface2TD.cpp
- src/hardware_interface2THD.cpp
- src/hardware_interface2TTD.cpp
- src/hardware_interface4WD.cpp
- src/hardware_interface4WS4WD.cpp
- src/hardware_system_interface.cpp
- src/spinning_joint_hardware_interface.cpp
- src/steering_joint_hardware_interface.cpp
- )
+  src/hardware_handle.cpp
+  src/hardware_info.cpp
+  src/hardware_interface1FAS2FWD.cpp
+  src/hardware_interface1FAS2RWD.cpp
+  src/hardware_interface1FAS4WD.cpp
+  src/hardware_interface2AS2FWD.cpp
+  src/hardware_interface2AS2RWD.cpp
+  src/hardware_interface2AS4WD.cpp
+  src/hardware_interface2FWS2FWD.cpp
+  src/hardware_interface2FWS2RWD.cpp
+  src/hardware_interface2FWS4WD.cpp
+  src/hardware_interface2WD.cpp
+  src/hardware_interface2TD.cpp
+  src/hardware_interface2THD.cpp
+  src/hardware_interface2TTD.cpp
+  src/hardware_interface4WD.cpp
+  src/hardware_interface4WS4WD.cpp
+  src/hardware_system_interface.cpp
+  src/spinning_joint_hardware_interface.cpp
+  src/steering_joint_hardware_interface.cpp)
 
 ament_target_dependencies(${PROJECT_NAME}
- rclcpp
- rclcpp_lifecycle
- hardware_interface
- pluginlib
- romea_core_common
- romea_core_mobile_base
- romea_common_utils
- romea_mobile_base_utils
- hardware_interface
- )
+  rclcpp
+  rclcpp_lifecycle
+  hardware_interface
+  pluginlib
+  romea_core_common
+  romea_core_mobile_base
+  romea_common_utils
+  romea_mobile_base_utils
+  hardware_interface)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
- $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
- $<INSTALL_INTERFACE:include>)
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
 
 ament_export_dependencies(hardware_interface)
 ament_export_dependencies(rclcpp)
@@ -82,31 +80,25 @@ ament_export_libraries(${PROJECT_NAME})
 #ament_export_targets(${PROJECT_NAME})
 
 install(TARGETS
- ${PROJECT_NAME}
- DESTINATION lib/${PROJECT_NAME})
+  ${PROJECT_NAME}
+  DESTINATION lib/${PROJECT_NAME})
 
 install(
- DIRECTORY include/
- DESTINATION include
- )
+  DIRECTORY include/
+  DESTINATION include)
 
 install(
- TARGETS ${PROJECT_NAME}
- EXPORT export_${PROJECT_NAME}
- LIBRARY DESTINATION lib
- ARCHIVE DESTINATION lib
- RUNTIME DESTINATION bin
- INCLUDES DESTINATION include
- )
-
-#install(TARGETS ${PROJECT_NAME}_node DESTINATION lib/${PROJECT_NAME})
+  TARGETS ${PROJECT_NAME}
+  EXPORT export_${PROJECT_NAME}
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  RUNTIME DESTINATION bin
+  INCLUDES DESTINATION include)
 
 if(BUILD_TESTING)
-
-    find_package(ament_lint_auto REQUIRED)
-    ament_lint_auto_find_test_dependencies()
-    add_subdirectory(test)
-
+  find_package(ament_lint_auto REQUIRED)
+  ament_lint_auto_find_test_dependencies()
+  add_subdirectory(test)
 endif()
 
 ament_package()
