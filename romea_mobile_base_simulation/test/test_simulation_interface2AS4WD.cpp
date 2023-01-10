@@ -1,14 +1,22 @@
-//gtest
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+// gtest
 #include <gtest/gtest.h>
-#include "test_helper.h"
-#include <fstream>
 
-//ros
+// ros
 #include <rclcpp/node.hpp>
-
-//romea
-#include "romea_mobile_base_simulation/simulation_interface2AS4WD.hpp"
 #include <hardware_interface/component_parser.hpp>
+
+// std
+#include <fstream>
+#include <memory>
+#include <string>
+#include <vector>
+
+// romea
+#include "../test/test_helper.h"
+#include "romea_mobile_base_simulation/simulation_interface2AS4WD.hpp"
 
 class TestSimulationInterface2AS4WD : public ::testing::Test
 {
@@ -25,9 +33,9 @@ protected:
 
   void SetUp() override
   {
-    std::string xacro_file =  std::string(TEST_DIR)+"/test_simulation_interface2AS4WD.xacro";
-    std::string urdf_file =  "/tmp/test_simulation_interface2AS4WD.urdf";
-    std::string cmd = "xacro "+xacro_file + " > " + urdf_file;
+    std::string xacro_file = std::string(TEST_DIR) + "/test_simulation_interface2AS4WD.xacro";
+    std::string urdf_file = "/tmp/test_simulation_interface2AS4WD.urdf";
+    std::string cmd = "xacro " + xacro_file + " > " + urdf_file;
     std::system(cmd.c_str());
 
     std::ifstream file(urdf_file.c_str());
@@ -36,7 +44,7 @@ protected:
     //    std::cout << buffer.str() <<std::endl;
 
     info = hardware_interface::parse_control_resources_from_urdf(buffer.str());
-    interface = std::make_unique<romea::SimulationInterface2AS4WD>(info[0],"velocity");
+    interface = std::make_unique<romea::SimulationInterface2AS4WD>(info[0], "velocity");
   }
 
   std::unique_ptr<romea::SimulationInterface2AS4WD> interface;
@@ -44,7 +52,7 @@ protected:
 };
 
 
-//TEST_F(TestSimulationInterface2AS4WD, checkSetCommand)
+// TEST_F(TestSimulationInterface2AS4WD, checkSetCommand)
 //{
 //  romea::HardwareCommand2AS4WD command = {0.3, 2.2471, 2.99038};
 
@@ -63,32 +71,60 @@ protected:
 //  EXPECT_NEAR(simulation_command.rearRightWheelSpinningSetPoint,1.97969,0.001);
 //}
 
-////TEST_F(TestSimulationInterface1FAS2FWD, checkGetCommand)
-////{
-////  romea::HardwareCommand1FAS2FWD command = {0.3, 2.2471, 2.99038};
-////  auto command_interfaces = interface->export_command_interfaces();
-////  command_interfaces[0].set_value(command.frontAxleSteeringAngle);
-////  command_interfaces[1].set_value(command.frontLeftWheelSpinningSetPoint);
-////  command_interfaces[2].set_value(command.frontRightWheelSpinningSetPoint);
+// TEST_F(TestSimulationInterface1FAS2FWD, checkGetCommand)
+// {
+//   romea::HardwareCommand1FAS2FWD command = {0.3, 2.2471, 2.99038};
+//   auto command_interfaces = interface->export_command_interfaces();
+//   command_interfaces[0].set_value(command.frontAxleSteeringAngle);
+//   command_interfaces[1].set_value(command.frontLeftWheelSpinningSetPoint);
+//   command_interfaces[2].set_value(command.frontRightWheelSpinningSetPoint);
 
-////  romea::SimulationCommand1FASxxx simulation_command = interface->get_command();
+//   romea::SimulationCommand1FASxxx simulation_command = interface->get_command();
 
-////  romea::SimulationState1FASxxx simulation_state;
-////  simulation_state.frontAxleSteeringAngle=simulation_command.frontAxleSteeringAngle;
-////  simulation_state.frontLeftWheelSteeringAngle=simulation_command.frontLeftWheelSteeringAngle;
-////  simulation_state.frontRightWheelSteeringAngle=simulation_command.frontRightWheelSteeringAngle;
-////  simulation_state.frontLeftWheelSpinningMotion.velocity=simulation_command.frontLeftWheelSpinningSetPoint;
-////  simulation_state.frontRightWheelSpinningMotion.velocity=simulation_command.frontRightWheelSpinningSetPoint;
-////  simulation_state.rearLeftWheelSpinningMotion.velocity=simulation_command.rearLeftWheelSpinningSetPoint;
-////  simulation_state.rearRightWheelSpinningMotion.velocity=simulation_command.rearRightWheelSpinningSetPoint;
-////  interface->set_state(simulation_state);
+//   romea::SimulationState1FASxxx simulation_state;
+//   simulation_state.frontAxleSteeringAngle =
+//     simulation_command.frontAxleSteeringAngle;
+//   simulation_state.frontLeftWheelSteeringAngle =
+//     simulation_command.frontLeftWheelSteeringAngle;
+//   simulation_state.frontRightWheelSteeringAngle =
+//     simulation_command.frontRightWheelSteeringAngle;
+//   simulation_state.frontLeftWheelSpinningMotion.velocity =
+//     simulation_command.frontLeftWheelSpinningSetPoint;
+//   simulation_state.frontRightWheelSpinningMotion.velocity =
+//     simulation_command.frontRightWheelSpinningSetPoint;
+//   simulation_state.rearLeftWheelSpinningMotion.velocity =
+//     simulation_command.rearLeftWheelSpinningSetPoint;
+//   simulation_state.rearRightWheelSpinningMotion.velocity =
+//     simulation_command.rearRightWheelSpinningSetPoint;
+//   interface->set_state(simulation_state);
 
-////  auto state_interfaces = interface->export_state_interfaces();
-////  EXPECT_NEAR(state_interfaces[0].get_value(),command.frontAxleSteeringAngle,0.001);
-////  EXPECT_NEAR(state_interfaces[2].get_value(),command.frontLeftWheelSpinningSetPoint,0.001);
-////  EXPECT_NEAR(state_interfaces[5].get_value(),command.frontRightWheelSpinningSetPoint,0.001);
-////  EXPECT_NEAR(state_interfaces[7].get_value(),simulation_command.frontLeftWheelSteeringAngle,0.001);
-////  EXPECT_NEAR(state_interfaces[8].get_value(),simulation_command.frontRightWheelSteeringAngle,0.001);
-////  EXPECT_NEAR(state_interfaces[10].get_value(),simulation_command.rearLeftWheelSpinningSetPoint,0.001);
-////  EXPECT_NEAR(state_interfaces[13].get_value(),simulation_command.rearRightWheelSpinningSetPoint,0.001);
-////}
+//   auto state_interfaces = interface->export_state_interfaces();
+//   EXPECT_NEAR(
+//     state_interfaces[0].get_value(),
+//      command.frontAxleSteeringAngle,
+//       0.001);
+//   EXPECT_NEAR(
+//     state_interfaces[2].get_value(),
+//    command.frontLeftWheelSpinningSetPoint,
+//     0.001);
+//   EXPECT_NEAR(
+//     state_interfaces[5].get_value(),
+//    command.frontRightWheelSpinningSetPoint,
+//     0.001);
+//   EXPECT_NEAR(
+//     state_interfaces[7].get_value(),
+//      simulation_command.frontLeftWheelSteeringAngle,
+//     0.001);
+//   EXPECT_NEAR(
+//     state_interfaces[8].get_value(),
+//      simulation_command.frontRightWheelSteeringAngle,
+//       0.001);
+//   EXPECT_NEAR(
+//     state_interfaces[10].get_value(),
+//      simulation_command.rearLeftWheelSpinningSetPoint,
+//       0.001);
+//   EXPECT_NEAR(
+//     state_interfaces[13].get_value(),
+//      simulation_command.rearRightWheelSpinningSetPoint,
+//       0.001);
+// }

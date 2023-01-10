@@ -1,20 +1,26 @@
-#ifndef _romea_SimulationInterface2THD_hpp_
-#define _romea_SimulationInterface2THD_hpp_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
 
-//romea
+#ifndef ROMEA_MOBILE_BASE_SIMULATION__SIMULATION_INTERFACE2THD_HPP_
+#define ROMEA_MOBILE_BASE_SIMULATION__SIMULATION_INTERFACE2THD_HPP_
+
+// romea
 #include <romea_mobile_base_hardware/hardware_interface2THD.hpp>
 #include <romea_core_mobile_base/simulation/SimulationControl2THD.hpp>
+
+// std
+#include <string>
+#include <vector>
 
 namespace romea
 {
 
-class SimulationInterface2THD{
-
-public :
-
-
-  SimulationInterface2THD(const hardware_interface::HardwareInfo & hardware_info,
-                          const std::string & command_interface_type);
+class SimulationInterface2THD
+{
+public:
+  SimulationInterface2THD(
+    const hardware_interface::HardwareInfo & hardware_info,
+    const std::string & command_interface_type);
 
 
   SimulationCommand2THD get_command()const;
@@ -23,19 +29,15 @@ public :
   std::vector<hardware_interface::StateInterface> export_state_interfaces();
   std::vector<hardware_interface::CommandInterface> export_command_interfaces();
 
-private :
-
+private:
   HardwareInterface2THD hardware_interface_;
 
   const double idler_wheel_radius_;
   const double sprocket_wheel_radius_;
   const double track_thickness_;
-
 };
 
 
+}  // namespace romea
 
-
-}
-
-#endif
+#endif  // ROMEA_MOBILE_BASE_SIMULATION__SIMULATION_INTERFACE2THD_HPP_

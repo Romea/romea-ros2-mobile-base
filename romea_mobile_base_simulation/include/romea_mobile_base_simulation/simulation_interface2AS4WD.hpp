@@ -1,20 +1,26 @@
-#ifndef _romea_SimulationInterface2AS4WD_hpp_
-#define _romea_SimulationInterface2AS4WD_hpp_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
 
-//romea
+#ifndef ROMEA_MOBILE_BASE_SIMULATION__SIMULATION_INTERFACE2AS4WD_HPP_
+#define ROMEA_MOBILE_BASE_SIMULATION__SIMULATION_INTERFACE2AS4WD_HPP_
+
+// romea
 #include <romea_mobile_base_hardware/hardware_interface2AS4WD.hpp>
 #include <romea_core_mobile_base/simulation/SimulationControl2AS4WD.hpp>
+
+// std
+#include <string>
+#include <vector>
 
 namespace romea
 {
 
 class SimulationInterface2AS4WD
 {
-
-public :
-
-  SimulationInterface2AS4WD(const hardware_interface::HardwareInfo & hardware_info,
-                            const std::string & spinning_joint_command_interface_type);
+public:
+  SimulationInterface2AS4WD(
+    const hardware_interface::HardwareInfo & hardware_info,
+    const std::string & spinning_joint_command_interface_type);
 
   SimulationCommand2AS4WD get_command()const;
   void set_state(const SimulationState2AS4WD & hardware_state);
@@ -22,17 +28,14 @@ public :
   std::vector<hardware_interface::StateInterface> export_state_interfaces();
   std::vector<hardware_interface::CommandInterface> export_command_interfaces();
 
-private :
-
+private:
   HardwareInterface2AS4WD hardware_interface_;
 
   const double wheelbase_;
   const double front_track_;
   const double rear_track_;
-
 };
 
+}  // namespace romea
 
-}
-
-#endif
+#endif  // ROMEA_MOBILE_BASE_SIMULATION__SIMULATION_INTERFACE2AS4WD_HPP_
