@@ -1,20 +1,38 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+// std
+#include <string>
+#include <vector>
+
+// local
 #include "romea_mobile_base_hardware/hardware_interface1FAS2FWD.hpp"
 
 namespace romea
 {
 
 //-----------------------------------------------------------------------------
-HardwareInterface1FAS2FWD::HardwareInterface1FAS2FWD(const hardware_interface::HardwareInfo & hardware_info,
-                                                     const std::string & spinning_joint_command_interface_type):
-  front_axle_steering_joint_(hardware_info.joints[FRONT_AXLE_STEERING_JOINT_ID]),
-  front_left_wheel_spinning_joint_(hardware_info.joints[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID],spinning_joint_command_interface_type),
-  front_right_wheel_spinning_joint_(hardware_info.joints[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID],spinning_joint_command_interface_type),
-  front_left_wheel_steering_joint_feedback_(hardware_info.joints[FRONT_LEFT_WHEEL_STEERING_JOINT_ID],hardware_interface::HW_IF_POSITION),
-  front_right_wheel_steering_joint_feedback_(hardware_info.joints[FRONT_RIGHT_WHEEL_STEERING_JOINT_ID],hardware_interface::HW_IF_POSITION),
-  rear_left_wheel_spinning_joint_feedback_(hardware_info.joints[REAR_LEFT_WHEEL_SPINNING_JOINT_ID]),
-  rear_right_wheel_spinning_joint_feedback_(hardware_info.joints[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID])
+HardwareInterface1FAS2FWD::HardwareInterface1FAS2FWD(
+  const hardware_interface::HardwareInfo & hardware_info,
+  const std::string & spinning_joint_command_interface_type)
+: front_axle_steering_joint_(hardware_info.joints[FRONT_AXLE_STEERING_JOINT_ID]),
+  front_left_wheel_spinning_joint_(
+    hardware_info.joints[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID],
+    spinning_joint_command_interface_type),
+  front_right_wheel_spinning_joint_(
+    hardware_info.joints[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID],
+    spinning_joint_command_interface_type),
+  front_left_wheel_steering_joint_feedback_(
+    hardware_info.joints[FRONT_LEFT_WHEEL_STEERING_JOINT_ID],
+    hardware_interface::HW_IF_POSITION),
+  front_right_wheel_steering_joint_feedback_(
+    hardware_info.joints[FRONT_RIGHT_WHEEL_STEERING_JOINT_ID],
+    hardware_interface::HW_IF_POSITION),
+  rear_left_wheel_spinning_joint_feedback_(
+    hardware_info.joints[REAR_LEFT_WHEEL_SPINNING_JOINT_ID]),
+  rear_right_wheel_spinning_joint_feedback_(
+    hardware_info.joints[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID])
 {
-
 }
 
 
@@ -47,9 +65,9 @@ HardwareInterface1FAS2FWD::export_command_interfaces()
 //-----------------------------------------------------------------------------
 HardwareCommand1FAS2FWD HardwareInterface1FAS2FWD::get_command()const
 {
-  return { front_axle_steering_joint_.get_command(),
-        front_left_wheel_spinning_joint_.get_command(),
-        front_right_wheel_spinning_joint_.get_command()};
+  return {front_axle_steering_joint_.get_command(),
+      front_left_wheel_spinning_joint_.get_command(),
+      front_right_wheel_spinning_joint_.get_command()};
 }
 
 //-----------------------------------------------------------------------------
@@ -61,11 +79,12 @@ void HardwareInterface1FAS2FWD::set_state(const HardwareState1FAS2FWD & hardware
 }
 
 //-----------------------------------------------------------------------------
-void HardwareInterface1FAS2FWD::set_state(const HardwareState1FAS2FWD & hardware_state,
-               const SteeringAngleState & front_left_wheel_steering_angle,
-               const SteeringAngleState & front_right_wheel_steering_angle,
-               const RotationalMotionState & rear_left_wheel_motion_state,
-               const RotationalMotionState & rear_right_wheel_motion_state)
+void HardwareInterface1FAS2FWD::set_state(
+  const HardwareState1FAS2FWD & hardware_state,
+  const SteeringAngleState & front_left_wheel_steering_angle,
+  const SteeringAngleState & front_right_wheel_steering_angle,
+  const RotationalMotionState & rear_left_wheel_motion_state,
+  const RotationalMotionState & rear_right_wheel_motion_state)
 {
   set_state(hardware_state);
 
@@ -76,5 +95,4 @@ void HardwareInterface1FAS2FWD::set_state(const HardwareState1FAS2FWD & hardware
   rear_right_wheel_spinning_joint_feedback_.set_state(rear_right_wheel_motion_state);
 }
 
-}
-
+}  // namespace romea

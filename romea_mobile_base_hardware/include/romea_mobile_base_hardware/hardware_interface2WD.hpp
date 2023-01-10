@@ -1,23 +1,34 @@
-#ifndef _romea_HardwareInterface2WD_hpp_
-#define _romea_HardwareInterface2WD_hpp_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
 
-#include "spinning_joint_hardware_interface.hpp"
+#ifndef ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_INTERFACE2WD_HPP_
+#define ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_INTERFACE2WD_HPP_
+
+// romea
 #include <romea_core_mobile_base/hardware/HardwareControl2WD.hpp>
+
+// std
+#include <string>
+#include <vector>
+
+// local
+#include "spinning_joint_hardware_interface.hpp"
 
 namespace romea
 {
 
-class HardwareInterface2WD{
-
+class HardwareInterface2WD
+{
 public:
-
-  enum JointIDs  {
-    LEFT_WHEEL_SPINNING_JOINT_ID=0,
-    RIGHT_WHEEL_SPINNING_JOINT_ID=1
+  enum JointIDs
+  {
+    LEFT_WHEEL_SPINNING_JOINT_ID = 0,
+    RIGHT_WHEEL_SPINNING_JOINT_ID = 1
   };
 
-  HardwareInterface2WD(const hardware_interface::HardwareInfo & hardware_info,
-                       const std::string & command_interface_type);
+  HardwareInterface2WD(
+    const hardware_interface::HardwareInfo & hardware_info,
+    const std::string & command_interface_type);
 
   HardwareCommand2WD get_command()const;
   void set_state(const HardwareState2WD & hardware_state);
@@ -25,14 +36,12 @@ public:
   std::vector<hardware_interface::StateInterface> export_state_interfaces();
   std::vector<hardware_interface::CommandInterface> export_command_interfaces();
 
-private :
-
+private:
   SpinningJointHardwareInterface left_wheel_spinning_joint_;
   SpinningJointHardwareInterface right_wheel_spinning_joint_;
-
 };
 
 
-}
+}  // namespace romea
 
-#endif
+#endif  // ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_INTERFACE2WD_HPP_

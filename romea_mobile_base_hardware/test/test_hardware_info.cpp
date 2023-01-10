@@ -1,13 +1,20 @@
-//gtest
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+// gtest
 #include <gtest/gtest.h>
-#include "test_helper.h"
 
-//ros
+// ros
 #include <rclcpp/node.hpp>
-
-//romea
-#include "romea_mobile_base_hardware/hardware_info.hpp"
 #include <hardware_interface/component_parser.hpp>
+
+// std
+#include <string>
+#include <limits>
+
+// local
+#include "../test/test_helper.h"
+#include "romea_mobile_base_hardware/hardware_info.hpp"
 
 class TestHarwareInfo : public ::testing::Test
 {
@@ -24,7 +31,7 @@ protected:
 
   void SetUp() override
   {
-   std::string urdf =
+    std::string urdf =
       R"(
    <?xml version="1.0" encoding="utf-8"?>
    <!-- =================================================================================== -->
@@ -59,7 +66,7 @@ protected:
    </robot>
    )";
 
-   info = hardware_interface::parse_control_resources_from_urdf(urdf)[0];
+    info = hardware_interface::parse_control_resources_from_urdf(urdf)[0];
   }
   hardware_interface::HardwareInfo info;
 };
@@ -67,78 +74,78 @@ protected:
 
 TEST_F(TestHarwareInfo, getJointInfo)
 {
-  auto joint_info =romea::get_joint_info(info,"joint1");
-  EXPECT_STREQ(joint_info.name.c_str(),"joint1");
+  auto joint_info = romea::get_joint_info(info, "joint1");
+  EXPECT_STREQ(joint_info.name.c_str(), "joint1");
 }
 
 TEST_F(TestHarwareInfo, failedToGetJointInfo)
 {
-  EXPECT_THROW(romea::get_joint_info(info,"joint3"),std::runtime_error);
+  EXPECT_THROW(romea::get_joint_info(info, "joint3"), std::runtime_error);
 }
 
 TEST_F(TestHarwareInfo, getStateInterfaceInfo)
 {
-  auto joint_info =romea::get_joint_info(info,"joint2");
-  auto interface_info = romea::get_state_interface_info(joint_info,"position");
-  EXPECT_STREQ(interface_info.name.c_str(),"position");
+  auto joint_info = romea::get_joint_info(info, "joint2");
+  auto interface_info = romea::get_state_interface_info(joint_info, "position");
+  EXPECT_STREQ(interface_info.name.c_str(), "position");
 }
 
 TEST_F(TestHarwareInfo, failedToGetStateInterfaceInfo)
 {
-  auto joint_info =romea::get_joint_info(info,"joint1");
-  EXPECT_THROW(romea::get_state_interface_info(joint_info,"velocity"),std::runtime_error);
+  auto joint_info = romea::get_joint_info(info, "joint1");
+  EXPECT_THROW(romea::get_state_interface_info(joint_info, "velocity"), std::runtime_error);
 }
 
 TEST_F(TestHarwareInfo, getCommandInterfaceInfo)
 {
-  auto joint_info =romea::get_joint_info(info,"joint2");
-  auto interface_info = romea::get_command_interface_info(joint_info,"velocity");
-  EXPECT_STREQ(interface_info.name.c_str(),"velocity");
+  auto joint_info = romea::get_joint_info(info, "joint2");
+  auto interface_info = romea::get_command_interface_info(joint_info, "velocity");
+  EXPECT_STREQ(interface_info.name.c_str(), "velocity");
 }
 
 TEST_F(TestHarwareInfo, getInterfaceMinMax)
 {
-  auto joint_info =romea::get_joint_info(info,"joint1");
-  auto interface_info = romea::get_state_interface_info(joint_info,"position");
-  EXPECT_DOUBLE_EQ(romea::get_min((interface_info)),-std::numeric_limits<double>::max());
+  auto joint_info = romea::get_joint_info(info, "joint1");
+  auto interface_info = romea::get_state_interface_info(joint_info, "position");
+  EXPECT_DOUBLE_EQ(romea::get_min((interface_info)), -std::numeric_limits<double>::max());
   EXPECT_DOUBLE_EQ(romea::get_max((interface_info)), std::numeric_limits<double>::max());
 }
 
 TEST_F(TestHarwareInfo, getInterfaceMinMaxWhenTheyAreNotDefined)
 {
-  auto joint_info =romea::get_joint_info(info,"joint1");
-  auto interface_info = romea::get_command_interface_info(joint_info,"position");
-  EXPECT_DOUBLE_EQ(romea::get_min((interface_info)),-std::numeric_limits<double>::max());
+  auto joint_info = romea::get_joint_info(info, "joint1");
+  auto interface_info = romea::get_command_interface_info(joint_info, "position");
+  EXPECT_DOUBLE_EQ(romea::get_min((interface_info)), -std::numeric_limits<double>::max());
   EXPECT_DOUBLE_EQ(romea::get_max((interface_info)), std::numeric_limits<double>::max());
 }
 
 
 TEST_F(TestHarwareInfo, failedToGetCommandInterfaceInfo)
 {
-  auto joint_info =romea::get_joint_info(info,"joint1");
-  EXPECT_THROW(romea::get_command_interface_info(joint_info,"velocity"),std::runtime_error);
+  auto joint_info = romea::get_joint_info(info, "joint1");
+  EXPECT_THROW(romea::get_command_interface_info(joint_info, "velocity"), std::runtime_error);
 }
 
 TEST_F(TestHarwareInfo, checkHasParemeter)
 {
-  EXPECT_TRUE(romea::has_parameter(info,"foo"));
-  EXPECT_FALSE(romea::has_parameter(info,"bar"));
+  EXPECT_TRUE(romea::has_parameter(info, "foo"));
+  EXPECT_FALSE(romea::has_parameter(info, "bar"));
 }
 
 TEST_F(TestHarwareInfo, checkGetParemeter)
 {
-   EXPECT_DOUBLE_EQ(romea::get_parameter<double>(info,"foo"),3.14);
-   EXPECT_STREQ(romea::get_parameter<std::string>(info,"baz").c_str(),"string");
+  EXPECT_DOUBLE_EQ(romea::get_parameter<double>(info, "foo"), 3.14);
+  EXPECT_STREQ(romea::get_parameter<std::string>(info, "baz").c_str(), "string");
 }
 
 TEST_F(TestHarwareInfo, checkFailedToGetParemeter)
 {
-  EXPECT_THROW(romea::get_parameter(info,"bar"),std::out_of_range);
-  EXPECT_THROW(romea::get_parameter<double>(info,"baz"),std::invalid_argument);
+  EXPECT_THROW(romea::get_parameter(info, "bar"), std::out_of_range);
+  EXPECT_THROW(romea::get_parameter<double>(info, "baz"), std::invalid_argument);
 }
 
 TEST_F(TestHarwareInfo, checkGetParemeterOr)
 {
-   EXPECT_DOUBLE_EQ(romea::get_parameter_or<double>(info,"foo",2.71),3.14);
-   EXPECT_DOUBLE_EQ(romea::get_parameter_or<double>(info,"bar",2.71),2.71);
+  EXPECT_DOUBLE_EQ(romea::get_parameter_or<double>(info, "foo", 2.71), 3.14);
+  EXPECT_DOUBLE_EQ(romea::get_parameter_or<double>(info, "bar", 2.71), 2.71);
 }

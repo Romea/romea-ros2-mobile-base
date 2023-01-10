@@ -1,13 +1,22 @@
-//gtest
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+
+// gtest
 #include <gtest/gtest.h>
-#include "test_helper.h"
 
-//ros
+// ros
 #include <rclcpp/node.hpp>
-
-//romea
-#include "romea_mobile_base_hardware/spinning_joint_hardware_interface.hpp"
 #include <hardware_interface/component_parser.hpp>
+
+// std
+#include <memory>
+#include <string>
+#include <vector>
+
+// romea
+#include "../test/test_helper.h"
+#include "romea_mobile_base_hardware/spinning_joint_hardware_interface.hpp"
 
 class TestSpinningJointHardwateInterface : public ::testing::Test
 {
@@ -24,18 +33,20 @@ protected:
 
   void SetUp() override
   {
-    joint_info.name= "spinning_wheel";
-    joint_info.type= "joint";
-    joint_info.command_interfaces.push_back({hardware_interface::HW_IF_VELOCITY,"-1","1","",0});
-    joint_info.command_interfaces.push_back({hardware_interface::HW_IF_EFFORT,"-1","1","",0});
-    joint_info.state_interfaces.push_back({hardware_interface::HW_IF_POSITION,"","","",0});
-    joint_info.state_interfaces.push_back({hardware_interface::HW_IF_VELOCITY,"","","",0});
-    joint_info.state_interfaces.push_back({hardware_interface::HW_IF_EFFORT,"","","",0});
+    joint_info.name = "spinning_wheel";
+    joint_info.type = "joint";
+    joint_info.command_interfaces.push_back({hardware_interface::HW_IF_VELOCITY, "-1", "1", "", 0});
+    joint_info.command_interfaces.push_back({hardware_interface::HW_IF_EFFORT, "-1", "1", "", 0});
+    joint_info.state_interfaces.push_back({hardware_interface::HW_IF_POSITION, "", "", "", 0});
+    joint_info.state_interfaces.push_back({hardware_interface::HW_IF_VELOCITY, "", "", "", 0});
+    joint_info.state_interfaces.push_back({hardware_interface::HW_IF_EFFORT, "", "", "", 0});
   }
 
   void MakeJoint(const std::string & command_interface_type)
   {
-    joint = std::make_unique<romea::SpinningJointHardwareInterface>(joint_info,command_interface_type);
+    joint = std::make_unique<romea::SpinningJointHardwareInterface>(
+      joint_info,
+      command_interface_type);
   }
 
   std::unique_ptr<romea::SpinningJointHardwareInterface> joint;
@@ -49,10 +60,10 @@ TEST_F(TestSpinningJointHardwateInterface, checkExportedStateInterfaces)
   std::vector<hardware_interface::StateInterface> state_interfaces;
   joint->export_state_interfaces(state_interfaces);
 
-  EXPECT_EQ(state_interfaces.size(),3u);
-  EXPECT_STREQ(state_interfaces[0].get_full_name().c_str(),"spinning_wheel/position");
-  EXPECT_STREQ(state_interfaces[1].get_full_name().c_str(),"spinning_wheel/velocity");
-  EXPECT_STREQ(state_interfaces[2].get_full_name().c_str(),"spinning_wheel/effort");
+  EXPECT_EQ(state_interfaces.size(), 3u);
+  EXPECT_STREQ(state_interfaces[0].get_full_name().c_str(), "spinning_wheel/position");
+  EXPECT_STREQ(state_interfaces[1].get_full_name().c_str(), "spinning_wheel/velocity");
+  EXPECT_STREQ(state_interfaces[2].get_full_name().c_str(), "spinning_wheel/effort");
 }
 
 TEST_F(TestSpinningJointHardwateInterface, checkExportedCommandInterfaceWhenVelocityControlIsUsed)
@@ -61,8 +72,8 @@ TEST_F(TestSpinningJointHardwateInterface, checkExportedCommandInterfaceWhenVelo
   std::vector<hardware_interface::CommandInterface> command_interfaces;
   joint->export_command_interface(command_interfaces);
 
-  EXPECT_EQ(command_interfaces.size(),1u);
-  EXPECT_STREQ(command_interfaces[0].get_full_name().c_str(),"spinning_wheel/velocity");
+  EXPECT_EQ(command_interfaces.size(), 1u);
+  EXPECT_STREQ(command_interfaces[0].get_full_name().c_str(), "spinning_wheel/velocity");
 }
 
 TEST_F(TestSpinningJointHardwateInterface, checkExportedCommandInterfaceWhenEffortControlIsUsed)
@@ -71,6 +82,6 @@ TEST_F(TestSpinningJointHardwateInterface, checkExportedCommandInterfaceWhenEffo
   std::vector<hardware_interface::CommandInterface> command_interfaces;
   joint->export_command_interface(command_interfaces);
 
-  EXPECT_EQ(command_interfaces.size(),1u);
-  EXPECT_STREQ(command_interfaces[0].get_full_name().c_str(),"spinning_wheel/effort");
+  EXPECT_EQ(command_interfaces.size(), 1u);
+  EXPECT_STREQ(command_interfaces[0].get_full_name().c_str(), "spinning_wheel/effort");
 }

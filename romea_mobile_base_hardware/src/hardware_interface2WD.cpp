@@ -1,3 +1,11 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+// std
+#include <string>
+#include <vector>
+
+// local
 #include "romea_mobile_base_hardware/hardware_interface2WD.hpp"
 
 namespace romea
@@ -5,10 +13,14 @@ namespace romea
 
 //-----------------------------------------------------------------------------
 HardwareInterface2WD::HardwareInterface2WD(
-    const hardware_interface::HardwareInfo & hardware_info,
-    const std::string & command_interface_type):
-  left_wheel_spinning_joint_(hardware_info.joints[LEFT_WHEEL_SPINNING_JOINT_ID],command_interface_type),
-  right_wheel_spinning_joint_(hardware_info.joints[RIGHT_WHEEL_SPINNING_JOINT_ID],command_interface_type)
+  const hardware_interface::HardwareInfo & hardware_info,
+  const std::string & command_interface_type)
+: left_wheel_spinning_joint_(
+    hardware_info.joints[LEFT_WHEEL_SPINNING_JOINT_ID],
+    command_interface_type),
+  right_wheel_spinning_joint_(
+    hardware_info.joints[RIGHT_WHEEL_SPINNING_JOINT_ID],
+    command_interface_type)
 {
 }
 
@@ -37,8 +49,8 @@ HardwareInterface2WD::export_command_interfaces()
 //-----------------------------------------------------------------------------
 HardwareCommand2WD HardwareInterface2WD::get_command()const
 {
-  return { left_wheel_spinning_joint_.get_command(),
-        right_wheel_spinning_joint_.get_command()};
+  return {left_wheel_spinning_joint_.get_command(),
+      right_wheel_spinning_joint_.get_command()};
 }
 
 
@@ -49,5 +61,4 @@ void HardwareInterface2WD::set_state(const HardwareState2WD & hardware_state)
   right_wheel_spinning_joint_.set_state(hardware_state.rightWheelSpinningMotion);
 }
 
-}
-
+}  // namespace romea

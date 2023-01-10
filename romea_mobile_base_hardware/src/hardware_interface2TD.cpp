@@ -1,3 +1,11 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+// std
+#include <string>
+#include <vector>
+
+// local
 #include "romea_mobile_base_hardware/hardware_interface2TD.hpp"
 
 namespace romea
@@ -5,12 +13,18 @@ namespace romea
 
 //-----------------------------------------------------------------------------
 HardwareInterface2TD::HardwareInterface2TD(
-    const hardware_interface::HardwareInfo & hardware_info,
-    const std::string & command_interface_type):
-  left_sprocket_wheel_spinning_joint_(hardware_info.joints[LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID],command_interface_type),
-  right_sprocket_wheel_spinning_joint_(hardware_info.joints[RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID],command_interface_type),
-  left_idler_wheel_spinning_joint_feedback_(hardware_info.joints[LEFT_IDLER_WHEEL_SPINNING_JOINT_ID]),
-  right_idler_wheel_spinning_joint_feedback_(hardware_info.joints[RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID])
+  const hardware_interface::HardwareInfo & hardware_info,
+  const std::string & command_interface_type)
+: left_sprocket_wheel_spinning_joint_(
+    hardware_info.joints[LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID],
+    command_interface_type),
+  right_sprocket_wheel_spinning_joint_(
+    hardware_info.joints[RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID],
+    command_interface_type),
+  left_idler_wheel_spinning_joint_feedback_(
+    hardware_info.joints[LEFT_IDLER_WHEEL_SPINNING_JOINT_ID]),
+  right_idler_wheel_spinning_joint_feedback_(
+    hardware_info.joints[RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID])
 {
 }
 
@@ -40,8 +54,8 @@ HardwareInterface2TD::export_command_interfaces()
 //-----------------------------------------------------------------------------
 HardwareCommand2TD HardwareInterface2TD::get_command()const
 {
-  return { left_sprocket_wheel_spinning_joint_.get_command(),
-        right_sprocket_wheel_spinning_joint_.get_command()};
+  return {left_sprocket_wheel_spinning_joint_.get_command(),
+      right_sprocket_wheel_spinning_joint_.get_command()};
 }
 
 
@@ -49,23 +63,23 @@ HardwareCommand2TD HardwareInterface2TD::get_command()const
 void HardwareInterface2TD::set_state(const HardwareState2TD & hardware_state)
 {
   left_sprocket_wheel_spinning_joint_.
-      set_state(hardware_state.leftSprocketWheelSpinningMotion);
+  set_state(hardware_state.leftSprocketWheelSpinningMotion);
   right_sprocket_wheel_spinning_joint_.
-      set_state(hardware_state.rightSprocketWheelSpinningMotion);
+  set_state(hardware_state.rightSprocketWheelSpinningMotion);
 }
 
 //-----------------------------------------------------------------------------
-void HardwareInterface2TD::set_state(const HardwareState2TD & hardware_state,
-                                     const RotationalMotionState & left_idler_wheel_spinning_set_point,
-                                     const RotationalMotionState & right_idler_wheel_spinning_set_point)
+void HardwareInterface2TD::set_state(
+  const HardwareState2TD & hardware_state,
+  const RotationalMotionState & left_idler_wheel_spinning_set_point,
+  const RotationalMotionState & right_idler_wheel_spinning_set_point)
 {
   set_state(hardware_state);
 
   left_idler_wheel_spinning_joint_feedback_.
-      set_state(left_idler_wheel_spinning_set_point);
+  set_state(left_idler_wheel_spinning_set_point);
   right_idler_wheel_spinning_joint_feedback_.
-      set_state(right_idler_wheel_spinning_set_point);
+  set_state(right_idler_wheel_spinning_set_point);
 }
 
-}
-
+}  // namespace romea

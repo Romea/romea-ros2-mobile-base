@@ -1,15 +1,32 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+// std
+#include <string>
+#include <vector>
+
+// local
 #include "romea_mobile_base_hardware/hardware_interface4WD.hpp"
 
 namespace romea
 {
 
 //-----------------------------------------------------------------------------
-HardwareInterface4WD::HardwareInterface4WD(const hardware_interface::HardwareInfo & hardware_info,
-                                           const std::string & command_interface_type):
-  front_left_wheel_spinning_joint_(hardware_info.joints[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID],command_interface_type),
-  front_right_wheel_spinning_joint_(hardware_info.joints[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID],command_interface_type),
-  rear_left_wheel_spinning_joint_(hardware_info.joints[REAR_LEFT_WHEEL_SPINNING_JOINT_ID],command_interface_type),
-  rear_right_wheel_spinning_joint_(hardware_info.joints[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID],command_interface_type)
+HardwareInterface4WD::HardwareInterface4WD(
+  const hardware_interface::HardwareInfo & hardware_info,
+  const std::string & command_interface_type)
+: front_left_wheel_spinning_joint_(
+    hardware_info.joints[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID],
+    command_interface_type),
+  front_right_wheel_spinning_joint_(
+    hardware_info.joints[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID],
+    command_interface_type),
+  rear_left_wheel_spinning_joint_(
+    hardware_info.joints[REAR_LEFT_WHEEL_SPINNING_JOINT_ID],
+    command_interface_type),
+  rear_right_wheel_spinning_joint_(
+    hardware_info.joints[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID],
+    command_interface_type)
 {
 }
 
@@ -39,26 +56,24 @@ std::vector<hardware_interface::CommandInterface> HardwareInterface4WD::export_c
 HardwareCommand4WD HardwareInterface4WD::get_command()const
 {
   return {front_left_wheel_spinning_joint_.get_command(),
-        front_right_wheel_spinning_joint_.get_command(),
-        rear_left_wheel_spinning_joint_.get_command(),
-        rear_right_wheel_spinning_joint_.get_command()
+      front_right_wheel_spinning_joint_.get_command(),
+      rear_left_wheel_spinning_joint_.get_command(),
+      rear_right_wheel_spinning_joint_.get_command()
   };
-
 }
 
 //-----------------------------------------------------------------------------
 void HardwareInterface4WD::set_state(const HardwareState4WD & hardware_state)
 {
   front_left_wheel_spinning_joint_.
-      set_state(hardware_state.frontLeftWheelSpinningMotion);
+  set_state(hardware_state.frontLeftWheelSpinningMotion);
   front_right_wheel_spinning_joint_.
-      set_state(hardware_state.frontRightWheelSpinningMotion);
+  set_state(hardware_state.frontRightWheelSpinningMotion);
 
   rear_left_wheel_spinning_joint_.
-      set_state(hardware_state.rearLeftWheelSpinningMotion);
+  set_state(hardware_state.rearLeftWheelSpinningMotion);
   rear_right_wheel_spinning_joint_.
-      set_state(hardware_state.rearRightWheelSpinningMotion);
-
+  set_state(hardware_state.rearRightWheelSpinningMotion);
 }
 
-}
+}  // namespace romea
