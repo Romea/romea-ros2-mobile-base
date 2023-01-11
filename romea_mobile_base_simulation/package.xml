@@ -6,7 +6,6 @@
   <version>0.0.0</version>
   <description>The romea_mobile_base_simulation package</description>
 
-  <author email="jean.laneurit@inrae.fr">Jean Laneurit</author>
   <maintainer email="jean.laneurit@inrae.fr">Jean Laneurit</maintainer>
 
   <license>TODO</license>
@@ -32,6 +31,3 @@
 
 
 </package>
-
-
-

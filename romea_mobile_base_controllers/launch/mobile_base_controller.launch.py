@@ -1,9 +1,6 @@
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, OpaqueFunction
-from launch.conditions import LaunchConfigurationNotEquals
-from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
-
 from launch_ros.actions import Node
 
 import yaml
@@ -11,17 +8,13 @@ import yaml
 
 def launch_setup(context, *args, **kwargs):
 
-    joints_prefix = LaunchConfiguration(
-        "joints_prefix"
-    ).perform(context)
+    joints_prefix = LaunchConfiguration("joints_prefix").perform(context)
 
-    controller_name = LaunchConfiguration(
-        "controller_name"
-    ).perform(context)
+    controller_name = LaunchConfiguration("controller_name").perform(context)
 
-    controller_manager_name = LaunchConfiguration(
-        "controller_manager_name"
-    ).perform(context)
+    controller_manager_name = LaunchConfiguration("controller_manager_name").perform(
+        context
+    )
 
     base_description_yaml_filename = LaunchConfiguration(
         "base_description_yaml_filename"
@@ -65,7 +58,8 @@ def launch_setup(context, *args, **kwargs):
         arguments=[
             "joint_state_broadcaster",
             "--controller-manager",
-            controller_manager_name],
+            controller_manager_name,
+        ],
         output="screen",
     )
 

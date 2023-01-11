@@ -1,7 +1,5 @@
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, OpaqueFunction
-from launch.conditions import LaunchConfigurationNotEquals
-from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 
 from launch_ros.actions import Node
@@ -14,13 +12,11 @@ def launch_setup(context, *args, **kwargs):
 
     joints_prefix = LaunchConfiguration("joints_prefix").perform(context)
 
-    controller_name = LaunchConfiguration(
-        "controller_name"
-    ).perform(context)
+    controller_name = LaunchConfiguration("controller_name").perform(context)
 
-    controller_manager_name = LaunchConfiguration(
-       "controller_manager_name"
-    ).perform(context)
+    controller_manager_name = LaunchConfiguration("controller_manager_name").perform(
+        context
+    )
 
     base_description_yaml_filename = LaunchConfiguration(
         "base_description_yaml_filename"
@@ -45,10 +41,10 @@ def launch_setup(context, *args, **kwargs):
         base_controller = base_controller_ros_params["controller"]
 
     config = {}
-    config["/**"]={}
-    config["/**"]["ros__parameters"]={}
+    config["/**"] = {}
+    config["/**"]["ros__parameters"] = {}
 
-    params = config["/**"]["ros__parameters"];
+    params = config["/**"]["ros__parameters"]
     params["update_rate"] = base_controller_ros_params["update_rate"]
 
     params["left_wheel_names"] = [
@@ -95,7 +91,7 @@ def launch_setup(context, *args, **kwargs):
     maximal_wheel_acceleration = wheel_speed_command_info["maximal_acceleration"]
 
     maximal_longitudinal_speed = maximal_wheel_speed
-    minimal_longitudinal_speed = - maximal_wheel_speed
+    minimal_longitudinal_speed = -maximal_wheel_speed
     maximal_longitudinal_acceleration = maximal_wheel_acceleration
     maximal_angular_speed = 2 * maximal_wheel_speed / params["wheel_separation"]
     maximal_angular_acceleration = 0.0  # TODO
@@ -119,12 +115,10 @@ def launch_setup(context, *args, **kwargs):
         maximal_longitudinal_speed, user_maximal_longitudinal_speed
     )
 
-    maximal_angular_speed = min(
-        maximal_angular_speed, user_maximal_angular_speed
-    )
+    maximal_angular_speed = min(maximal_angular_speed, user_maximal_angular_speed)
 
-    params["linear"]={}
-    params["linear"]["x"]={}
+    params["linear"] = {}
+    params["linear"]["x"] = {}
     params["linear"]["x"]["has_velocity_limits"] = True
     params["linear"]["x"]["has_acceleration_limits"] = True
     params["linear"]["x"]["has_jerk_limits"] = False
@@ -135,8 +129,8 @@ def launch_setup(context, *args, **kwargs):
     params["linear"]["x"]["max_jerk"]: 0.0
     params["linear"]["x"]["min_jerk"]: 0.0
 
-    params["angular"]={}
-    params["angular"]["z"]={}
+    params["angular"] = {}
+    params["angular"]["z"] = {}
     params["angular"]["z"]["has_velocity_limits"] = True
     params["angular"]["z"]["has_acceleration_limits"] = False
     params["angular"]["z"]["has_jerk_limits"] = False
@@ -169,7 +163,8 @@ def launch_setup(context, *args, **kwargs):
         arguments=[
             "joint_state_broadcaster",
             "--controller-manager",
-            controller_manager_name],
+            controller_manager_name,
+        ],
         output="screen",
     )
 

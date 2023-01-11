@@ -30,6 +30,6 @@ galactic_focal_build:
   stage: build
   script:
     - colcon build 
-#    - source install/setup.bash 
-#    - colcon test --packages-select romea_mobile_base_bringup
-#    - colcon test-result --verbose
+    - source install/setup.bash 
+    - colcon test --packages-select romea_mobile_base_bringup romea_mobile_base_description romea_mobile_base_controllers romea_mobile_base_gazebo romea_mobile_base_hardware romea_mobile_base_utils
+    - colcon test-result --verbose
