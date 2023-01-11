@@ -1,11 +1,18 @@
-//gtest
-#include <gtest/gtest.h>
-#include "test_helper.h"
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
 
-//ros
+// gtest
+#include <gtest/gtest.h>
+
+// ros
 #include <rclcpp/node.hpp>
 
-//romea
+// std
+#include <memory>
+#include <string>
+
+// romea
+#include "../test/test_helper.h"
 #include "romea_mobile_base_utils/params/command_limits_parameters.hpp"
 
 class TestCommandLimits : public ::testing::Test
@@ -24,7 +31,9 @@ protected:
   void SetUp() override
   {
     rclcpp::NodeOptions no;
-    no.arguments({"--ros-args","--params-file",std::string(TEST_DIR)+"/test_command_limits_parameters.yaml"});
+    no.arguments(
+      {"--ros-args", "--params-file",
+        std::string(TEST_DIR) + std::string("/test_command_limits_parameters.yaml")});
     node = std::make_shared<rclcpp::Node>("test_command_limits_paramerters", no);
   }
 
@@ -35,64 +44,60 @@ protected:
 TEST_F(TestCommandLimits, getSkidSteeringCommandLimits)
 {
   romea::declare_command_limits<romea::SkidSteeringCommandLimits>(
-        node,"skid_steering_command_limits");
+    node, "skid_steering_command_limits");
 
   auto limits = romea::get_command_limits<romea::SkidSteeringCommandLimits>(
-        node,"skid_steering_command_limits");
+    node, "skid_steering_command_limits");
 
-  EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.lower(),-1);
-  EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.upper(),2);
-  EXPECT_DOUBLE_EQ(limits.angularSpeed.upper(),0.3);
+  EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.lower(), -1);
+  EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.upper(), 2);
+  EXPECT_DOUBLE_EQ(limits.angularSpeed.upper(), 0.3);
 }
 
 TEST_F(TestCommandLimits, getOmniSteeringCommandLimits)
 {
   romea::declare_command_limits<romea::OmniSteeringCommandLimits>(
-        node,"omni_steering_command_limits");
+    node, "omni_steering_command_limits");
 
-  auto limits =romea::get_command_limits<romea::OmniSteeringCommandLimits>(
-        node,"omni_steering_command_limits");
+  auto limits = romea::get_command_limits<romea::OmniSteeringCommandLimits>(
+    node, "omni_steering_command_limits");
 
-  EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.lower(),0);
-  EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.upper(),1);
-  EXPECT_DOUBLE_EQ(limits.lateralSpeed.upper(),1);
-  EXPECT_DOUBLE_EQ(limits.angularSpeed.upper(),0.5);
+  EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.lower(), 0);
+  EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.upper(), 1);
+  EXPECT_DOUBLE_EQ(limits.lateralSpeed.upper(), 1);
+  EXPECT_DOUBLE_EQ(limits.angularSpeed.upper(), 0.5);
 }
 
 TEST_F(TestCommandLimits, getOneAxleSteeringCommandLimits)
 {
   romea::declare_command_limits<romea::OneAxleSteeringCommandLimits>(
-        node,"one_axle_steering_command_limits");
+    node, "one_axle_steering_command_limits");
 
   auto limits = romea::get_command_limits<romea::OneAxleSteeringCommandLimits>(
-        node,"one_axle_steering_command_limits");
+    node, "one_axle_steering_command_limits");
 
-  EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.lower(),-2);
-  EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.upper(),0);
-  EXPECT_DOUBLE_EQ(limits.steeringAngle.upper(),0.7);
+  EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.lower(), -2);
+  EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.upper(), 0);
+  EXPECT_DOUBLE_EQ(limits.steeringAngle.upper(), 0.7);
 }
 
 TEST_F(TestCommandLimits, getTwoAxleSteeringCommandLimits)
 {
   romea::declare_command_limits<romea::TwoAxleSteeringCommandLimits>(
-        node,"two_axle_steering_command_limits");
+    node, "two_axle_steering_command_limits");
 
-  auto limits =romea::get_command_limits<romea::TwoAxleSteeringCommandLimits>(
-        node,"two_axle_steering_command_limits");
+  auto limits = romea::get_command_limits<romea::TwoAxleSteeringCommandLimits>(
+    node, "two_axle_steering_command_limits");
 
-  EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.lower(),-1);
-  EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.upper(),2);
-  EXPECT_DOUBLE_EQ(limits.frontSteeringAngle.upper(),1.);
-  EXPECT_DOUBLE_EQ(limits.rearSteeringAngle.upper(),0.3);
-
+  EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.lower(), -1);
+  EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.upper(), 2);
+  EXPECT_DOUBLE_EQ(limits.frontSteeringAngle.upper(), 1.);
+  EXPECT_DOUBLE_EQ(limits.rearSteeringAngle.upper(), 0.3);
 }
 
-//int main(int argc, char** argv)
-//{
-//  testing::InitGoogleTest(&argc, argv);
-//  ros::init(argc, argv, "ros_param_test");
-
-//  int ret = RUN_ALL_TESTS();
-//  ros::shutdown();
-//  return ret;
-//}
+//-----------------------------------------------------------------------------
+int main(int argc, char ** argv)
+{
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}

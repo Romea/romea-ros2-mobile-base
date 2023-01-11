@@ -1,18 +1,24 @@
-#ifndef _romea_CommandInterface_hpp_
-#define _romea_CommandInterface_hpp_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
 
-//std
+#ifndef ROMEA_MOBILE_BASE_UTILS__CONTROL__COMMAND_INTERFACE_HPP_
+#define ROMEA_MOBILE_BASE_UTILS__CONTROL__COMMAND_INTERFACE_HPP_
+
+// romea
+#include <romea_cmd_mux_utils/cmd_mux_interface.hpp>
+
+// std
 #include <atomic>
+#include <memory>
 #include <functional>
 #include <string>
 #include <mutex>
 
-//romea
-#include <romea_cmd_mux_utils/cmd_mux_interface.hpp>
-#include "../conversions/kinematic_conversions.hpp"
-#include "command_publisher.hpp"
+#include "romea_mobile_base_utils/conversions/kinematic_conversions.hpp"
+#include "romea_mobile_base_utils/control/command_publisher.hpp"
 
-namespace romea {
+namespace romea
+{
 
 struct CommandInterfaceConfiguration
 {
@@ -22,27 +28,25 @@ struct CommandInterfaceConfiguration
 };
 
 
-template <typename CommandType>
+template<typename CommandType>
 class CommandInterface
 {
-public :
-
+public:
   using CmdPublisher = PublisherBase<CommandType>;
   using Configuration = CommandInterfaceConfiguration;
 
-public :
-
-  CommandInterface(std::shared_ptr<rclcpp::Node> node,
-                   const Configuration & configuration);
+public:
+  CommandInterface(
+    std::shared_ptr<rclcpp::Node> node,
+    const Configuration & configuration);
 
   void send_null_command();
 
   void send_command(const CommandType & command);
 
-  void connect_timeout_callback( std::function<void(void)> callback);
+  void connect_timeout_callback(std::function<void(void)> callback);
 
-public :
-
+public:
   void start();
 
   void stop(bool reset);
@@ -51,28 +55,29 @@ public :
 
   void disable_emergency_stop();
 
-public :
-
+public:
   bool is_started();
 
   bool is_emergency_stop_activated();
 
-private :
-
+private:
   void timer_callback_();
 
   void publish_command_(const bool & timeout);
 
-  void create_timer_(std::shared_ptr<rclcpp::Node> node,
-                     const double & period);
+  void create_timer_(
+    std::shared_ptr<rclcpp::Node> node,
+    const double & period);
 
-  void create_publisher_(std::shared_ptr<rclcpp::Node> node,
-                         const std::string & output_message_type);
+  void create_publisher_(
+    std::shared_ptr<rclcpp::Node> node,
+    const std::string & output_message_type);
 
-  void subscribe_to_cmd_mux(const int & priority,
-                            const double & timetout);
+  void subscribe_to_cmd_mux(
+    const int & priority,
+    const double & timetout);
+
 private:
-
   std::shared_ptr<CmdPublisher> cmd_pub_;
   CmdMuxInterface cmd_mux_client_;
 
@@ -90,5 +95,6 @@ private:
   std::function<void(void)> timeout_callback_;
 };
 
-}// namespace
-#endif
+}  // namespace romea
+
+#endif  // ROMEA_MOBILE_BASE_UTILS__CONTROL__COMMAND_INTERFACE_HPP_

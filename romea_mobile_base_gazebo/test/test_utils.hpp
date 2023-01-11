@@ -81,4 +81,4 @@ std::string make_sdf_description(const std::string & vehicle_type)
   return sdf_content.str();
 }
 
-#endif  // TEST_UTILS_HPP_
+#endif    // TEST_UTILS_HPP_

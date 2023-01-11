@@ -117,3 +117,10 @@ TEST_F(TestControllerInterface2WD, checkGetMeasurement)
   EXPECT_EQ(measure.leftWheelLinearSpeed, 1);
   EXPECT_EQ(measure.rightWheelLinearSpeed, 2);
 }
+
+//-----------------------------------------------------------------------------
+int main(int argc, char ** argv)
+{
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}

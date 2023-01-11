@@ -1,7 +1,6 @@
 // Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
 // Add license
 
-
 // gtest
 #include <gtest/gtest.h>
 
@@ -84,4 +83,11 @@ TEST_F(TestSpinningJointHardwateInterface, checkExportedCommandInterfaceWhenEffo
 
   EXPECT_EQ(command_interfaces.size(), 1u);
   EXPECT_STREQ(command_interfaces[0].get_full_name().c_str(), "spinning_wheel/effort");
+}
+
+//-----------------------------------------------------------------------------
+int main(int argc, char ** argv)
+{
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }

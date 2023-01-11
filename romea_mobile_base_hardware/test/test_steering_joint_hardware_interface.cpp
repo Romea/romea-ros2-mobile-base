@@ -61,3 +61,10 @@ TEST_F(TestSteeringJointHardwateInterface, checkExportedCommandInterfaces)
   EXPECT_EQ(command_interfaces.size(), 1u);
   EXPECT_STREQ(command_interfaces[0].get_full_name().c_str(), "steering_wheel/position");
 }
+
+//-----------------------------------------------------------------------------
+int main(int argc, char ** argv)
+{
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}

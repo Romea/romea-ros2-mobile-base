@@ -117,3 +117,10 @@ TEST_F(TestControllerInterface2TD, checkRead)
   EXPECT_EQ(measure.leftTrackLinearSpeed, 1);
   EXPECT_EQ(measure.rightTrackLinearSpeed, 2);
 }
+
+//-----------------------------------------------------------------------------
+int main(int argc, char ** argv)
+{
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}

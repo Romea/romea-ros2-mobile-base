@@ -1,14 +1,23 @@
-//gtest
-#include <gtest/gtest.h>
-#include "test_helper.h"
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
 
-//ros
+// gtest
+#include <gtest/gtest.h>
+
+// ros
 #include <rclcpp/node.hpp>
 
-//romea
+// romea
 #include <romea_common_utils/listeners/data_listener.hpp>
-#include "romea_mobile_base_utils/control/command_publisher.hpp"
 #include <romea_mobile_base_msgs/msg/skid_steering_command.hpp>
+
+// std
+#include <memory>
+#include <string>
+
+// local
+#include "../test/test_helper.h"
+#include "romea_mobile_base_utils/control/command_publisher.hpp"
 
 class TestOneAxleSteeringCommandPublisher : public ::testing::Test
 {
@@ -26,38 +35,34 @@ protected:
   void SetUp() override
   {
     node = std::make_shared<rclcpp::Node>("test_command_publisher");
-    command.longitudinalSpeed=1;
-    command.steeringAngle=2;
+    command.longitudinalSpeed = 1;
+    command.steeringAngle = 2;
   }
 
   void make_publisher(const std::string & message_type)
   {
-    publisher = romea::make_command_publisher<romea::OneAxleSteeringCommand>(node,message_type);
+    publisher = romea::make_command_publisher<romea::OneAxleSteeringCommand>(node, message_type);
     publisher->activate();
   }
 
   template<typename MsgType>
   void make_listener(std::string topic_name)
   {
-    listener = romea::make_data_listener<romea::OneAxleSteeringCommand,MsgType>(node,topic_name,romea::best_effort(1));
+    listener = romea::make_data_listener<romea::OneAxleSteeringCommand, MsgType>(
+      node, topic_name, romea::best_effort(
+        1));
   }
 
   void init(const std::string & message_type)
   {
     make_publisher(message_type);
-    if(message_type == "geometry_msgs/Twist")
-    {
+    if (message_type == "geometry_msgs/Twist") {
       make_listener<geometry_msgs::msg::Twist>("cmd_vel");
-    }
-    else if( message_type == "ackermann_msgs/AckermannDrive")
-    {
+    } else if (message_type == "ackermann_msgs/AckermannDrive") {
       make_listener<ackermann_msgs::msg::AckermannDrive>("cmd_steer");
-    }
-    else if( message_type == "romea_mobile_base_msgs/OneAxleSteeringCommand")
-    {
+    } else if (message_type == "romea_mobile_base_msgs/OneAxleSteeringCommand") {
       make_listener<romea_mobile_base_msgs::msg::OneAxleSteeringCommand>("cmd_one_axle_steering");
     }
-
   }
 
   std::shared_ptr<rclcpp::Node> node;
@@ -77,9 +82,9 @@ TEST_F(TestOneAxleSteeringCommandPublisher, checkPublishTwistMessage)
   rclcpp::sleep_for(std::chrono::milliseconds(100));
   rclcpp::spin_some(node);
 
-  EXPECT_STREQ(publisher->get_topic_name().c_str(),listener->get_topic_name().c_str());
-  EXPECT_DOUBLE_EQ(listener->get_data().longitudinalSpeed,command.longitudinalSpeed);
-  EXPECT_DOUBLE_EQ(listener->get_data().steeringAngle,command.steeringAngle);
+  EXPECT_STREQ(publisher->get_topic_name().c_str(), listener->get_topic_name().c_str());
+  EXPECT_DOUBLE_EQ(listener->get_data().longitudinalSpeed, command.longitudinalSpeed);
+  EXPECT_DOUBLE_EQ(listener->get_data().steeringAngle, command.steeringAngle);
 }
 
 TEST_F(TestOneAxleSteeringCommandPublisher, checkPublishOneAxleSteeringMessage)
@@ -91,9 +96,9 @@ TEST_F(TestOneAxleSteeringCommandPublisher, checkPublishOneAxleSteeringMessage)
   rclcpp::sleep_for(std::chrono::milliseconds(100));
   rclcpp::spin_some(node);
 
-  EXPECT_STREQ(publisher->get_topic_name().c_str(),listener->get_topic_name().c_str());
-  EXPECT_DOUBLE_EQ(listener->get_data().longitudinalSpeed,command.longitudinalSpeed);
-  EXPECT_DOUBLE_EQ(listener->get_data().steeringAngle,command.steeringAngle);
+  EXPECT_STREQ(publisher->get_topic_name().c_str(), listener->get_topic_name().c_str());
+  EXPECT_DOUBLE_EQ(listener->get_data().longitudinalSpeed, command.longitudinalSpeed);
+  EXPECT_DOUBLE_EQ(listener->get_data().steeringAngle, command.steeringAngle);
 }
 
 TEST_F(TestOneAxleSteeringCommandPublisher, checkPublishAckermannMessage)
@@ -105,8 +110,14 @@ TEST_F(TestOneAxleSteeringCommandPublisher, checkPublishAckermannMessage)
   rclcpp::sleep_for(std::chrono::milliseconds(100));
   rclcpp::spin_some(node);
 
-  EXPECT_STREQ(publisher->get_topic_name().c_str(),listener->get_topic_name().c_str());
-  EXPECT_DOUBLE_EQ(listener->get_data().longitudinalSpeed,command.longitudinalSpeed);
-  EXPECT_DOUBLE_EQ(listener->get_data().steeringAngle,command.steeringAngle);
+  EXPECT_STREQ(publisher->get_topic_name().c_str(), listener->get_topic_name().c_str());
+  EXPECT_DOUBLE_EQ(listener->get_data().longitudinalSpeed, command.longitudinalSpeed);
+  EXPECT_DOUBLE_EQ(listener->get_data().steeringAngle, command.steeringAngle);
 }
 
+//-----------------------------------------------------------------------------
+int main(int argc, char ** argv)
+{
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}

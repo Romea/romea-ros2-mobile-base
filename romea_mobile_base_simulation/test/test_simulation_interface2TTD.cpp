@@ -137,3 +137,10 @@ TEST_F(TestSimulationInterface2TTD, checkGetState)
     simulation_command.rearRightRollerWheelSpinningSetPoint,
     0.001);
 }
+
+//-----------------------------------------------------------------------------
+int main(int argc, char ** argv)
+{
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}

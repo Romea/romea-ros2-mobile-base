@@ -1,12 +1,19 @@
-//gtest
-#include <gtest/gtest.h>
-#include "test_helper.h"
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
 
-//ros
+// gtest
+#include <gtest/gtest.h>
+
+// ros
 #include <rclcpp/rclcpp.hpp>
 
-//romea
-#include <romea_mobile_base_utils/params/mobile_base_inertia_parameters.hpp>
+// std
+#include <string>
+#include <memory>
+
+// romea
+#include "../test/test_helper.h"
+#include "romea_mobile_base_utils/params/mobile_base_inertia_parameters.hpp"
 
 class TestMobileBaseInertiaParams : public ::testing::Test
 {
@@ -28,7 +35,7 @@ protected:
   void loadYaml(const std::string & config_filename)
   {
     rclcpp::NodeOptions no;
-    no.arguments({"--ros-args","--params-file",config_filename});
+    no.arguments({"--ros-args", "--params-file", config_filename});
     node = std::make_shared<rclcpp::Node>("test_mobile_base_inertia_paramerters", no);
   }
 
@@ -38,30 +45,35 @@ protected:
 
 TEST_F(TestMobileBaseInertiaParams, GetFullDescription)
 {
-  loadYaml(std::string(TEST_DIR)+"/test_mobile_base_inertia_parameters.yaml");
+  loadYaml(std::string(TEST_DIR) + "/test_mobile_base_inertia_parameters.yaml");
 
-  romea::declare_inertia_info(node,"inertia");
-  auto inertia = romea::get_inertia_info(node,"inertia");
-  EXPECT_DOUBLE_EQ(inertia.mass,1);
-  EXPECT_DOUBLE_EQ(inertia.center.x(),2);
-  EXPECT_DOUBLE_EQ(inertia.center.y(),3);
-  EXPECT_DOUBLE_EQ(inertia.center.z(),4);
-  EXPECT_DOUBLE_EQ(inertia.zMoment,5);
+  romea::declare_inertia_info(node, "inertia");
+  auto inertia = romea::get_inertia_info(node, "inertia");
+  EXPECT_DOUBLE_EQ(inertia.mass, 1);
+  EXPECT_DOUBLE_EQ(inertia.center.x(), 2);
+  EXPECT_DOUBLE_EQ(inertia.center.y(), 3);
+  EXPECT_DOUBLE_EQ(inertia.center.z(), 4);
+  EXPECT_DOUBLE_EQ(inertia.zMoment, 5);
 }
 
 
 TEST_F(TestMobileBaseInertiaParams, GetDescriptionWithoutCenterPosition)
 {
-  loadYaml(std::string(TEST_DIR)+"/test_mobile_base_inertia_parameters.yaml");
+  loadYaml(std::string(TEST_DIR) + "/test_mobile_base_inertia_parameters.yaml");
 
-  romea::declare_inertia_info(node,"inertia_miss_center");
-  auto inertia = romea::get_inertia_info(node,"inertia_miss_center");
-  EXPECT_DOUBLE_EQ(inertia.mass,1);
-  EXPECT_DOUBLE_EQ(inertia.center.x(),0);
-  EXPECT_DOUBLE_EQ(inertia.center.y(),0);
-  EXPECT_DOUBLE_EQ(inertia.center.z(),0);
-  EXPECT_DOUBLE_EQ(inertia.zMoment,5);
+  romea::declare_inertia_info(node, "inertia_miss_center");
+  auto inertia = romea::get_inertia_info(node, "inertia_miss_center");
+  EXPECT_DOUBLE_EQ(inertia.mass, 1);
+  EXPECT_DOUBLE_EQ(inertia.center.x(), 0);
+  EXPECT_DOUBLE_EQ(inertia.center.y(), 0);
+  EXPECT_DOUBLE_EQ(inertia.center.z(), 0);
+  EXPECT_DOUBLE_EQ(inertia.zMoment, 5);
 }
 
 
-
+//-----------------------------------------------------------------------------
+int main(int argc, char ** argv)
+{
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}

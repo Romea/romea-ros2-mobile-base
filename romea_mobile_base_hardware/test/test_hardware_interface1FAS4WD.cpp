@@ -141,3 +141,10 @@ TEST_F(TestHarwareInterface1FAS4WD, checkGetCurrentCommand)
   EXPECT_DOUBLE_EQ(current_command.rearLeftWheelSpinningSetPoint, 4.0);
   EXPECT_DOUBLE_EQ(current_command.rearRightWheelSpinningSetPoint, 5.0);
 }
+
+//-----------------------------------------------------------------------------
+int main(int argc, char ** argv)
+{
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}

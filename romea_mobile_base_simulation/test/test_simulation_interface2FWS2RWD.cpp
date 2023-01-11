@@ -125,3 +125,10 @@ TEST_F(TestSimulationInterface2FWS2RWD, checkGetState)
     simulation_command.frontRightWheelSpinningSetPoint,
     0.001);
 }
+
+//-----------------------------------------------------------------------------
+int main(int argc, char ** argv)
+{
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}

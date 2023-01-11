@@ -1,11 +1,18 @@
-//gtest
-#include <gtest/gtest.h>
-#include "test_helper.h"
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
 
-//ros
+// gtest
+#include <gtest/gtest.h>
+
+// ros
 #include <rclcpp/node.hpp>
 
-//romea
+// std
+#include <memory>
+#include <string>
+
+// romea
+#include "../test/test_helper.h"
 #include "romea_mobile_base_utils/params/command_interface_parameters.hpp"
 
 class TestCommandInterfaceParams : public ::testing::Test
@@ -24,7 +31,9 @@ protected:
   void SetUp() override
   {
     rclcpp::NodeOptions no;
-    no.arguments({"--ros-args","--params-file",std::string(TEST_DIR)+"/test_command_interface_parameters.yaml"});
+    no.arguments(
+      {"--ros-args", "--params-file",
+        std::string(TEST_DIR) + std::string("/test_command_interface_parameters.yaml")});
     node = std::make_shared<rclcpp::Node>("test_command_interface_paramerters", no);
   }
 
@@ -34,33 +43,30 @@ protected:
 
 TEST_F(TestCommandInterfaceParams, getParameterWithPriority)
 {
-  romea::declare_command_interface_configuration(node,"with_priority");
+  romea::declare_command_interface_configuration(node, "with_priority");
 
-  auto config = romea::get_command_interface_configuration(node,"with_priority");
+  auto config = romea::get_command_interface_configuration(node, "with_priority");
 
-  EXPECT_STREQ(config.output_message_type.c_str(),"foo");
-  EXPECT_EQ(config.priority,127);
-  EXPECT_DOUBLE_EQ(config.rate,10.);
+  EXPECT_STREQ(config.output_message_type.c_str(), "foo");
+  EXPECT_EQ(config.priority, 127);
+  EXPECT_DOUBLE_EQ(config.rate, 10.);
 }
 
 
 TEST_F(TestCommandInterfaceParams, getParameterWithoutPriority)
 {
-  romea::declare_command_interface_configuration(node,"without_priority");
+  romea::declare_command_interface_configuration(node, "without_priority");
 
-  auto config = romea::get_command_interface_configuration(node,"without_priority");
+  auto config = romea::get_command_interface_configuration(node, "without_priority");
 
-  EXPECT_STREQ(config.output_message_type.c_str(),"bar");
-  EXPECT_EQ(config.priority,0);
-  EXPECT_DOUBLE_EQ(config.rate,50.);
+  EXPECT_STREQ(config.output_message_type.c_str(), "bar");
+  EXPECT_EQ(config.priority, 0);
+  EXPECT_DOUBLE_EQ(config.rate, 50.);
 }
 
-//int main(int argc, char** argv)
-//{
-//  testing::InitGoogleTest(&argc, argv);
-//  ros::init(argc, argv, "ros_param_test");
-
-//  int ret = RUN_ALL_TESTS();
-//  ros::shutdown();
-//  return ret;
-//}
+//-----------------------------------------------------------------------------
+int main(int argc, char ** argv)
+{
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}

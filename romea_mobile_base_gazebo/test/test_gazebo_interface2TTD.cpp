@@ -61,3 +61,10 @@ TEST_F(TestGazeboInterface2ThD, testSetGet)
     state.rearRightIdlerWheelSpinningMotion.velocity,
     0.1);
 }
+
+//-----------------------------------------------------------------------------
+int main(int argc, char ** argv)
+{
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}

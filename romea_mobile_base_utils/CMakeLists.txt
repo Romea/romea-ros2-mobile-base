@@ -48,8 +48,7 @@ add_library(${PROJECT_NAME} SHARED
     src/params/mobile_base_parameters2WD.cpp
     src/params/mobile_base_parameters4WD.cpp
     src/params/mobile_base_parameters4WS4WD.cpp
-    src/control/command_interface.cpp
-    )
+    src/control/command_interface.cpp)
 
 ament_target_dependencies(${PROJECT_NAME}
     rclcpp
@@ -61,8 +60,7 @@ ament_target_dependencies(${PROJECT_NAME}
     four_wheel_steering_msgs
     ackermann_msgs
     romea_cmd_mux_msgs
-    romea_cmd_mux_utils
-    )
+    romea_cmd_mux_utils)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>

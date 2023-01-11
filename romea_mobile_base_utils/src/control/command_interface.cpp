@@ -1,134 +1,144 @@
-#include "romea_mobile_base_utils/control/command_interface.hpp"
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+// romea
 #include <romea_core_common/time/Time.hpp>
 
-namespace romea {
+// std
+#include <memory>
+#include <string>
+
+// local
+#include "romea_mobile_base_utils/control/command_interface.hpp"
+
+namespace romea
+{
 
 //-----------------------------------------------------------------------------
-template <typename CommandType>
-CommandInterface<CommandType>::CommandInterface(std::shared_ptr<rclcpp::Node> node,
-                                                const Configuration & configuration):
-  cmd_pub_(nullptr),
+template<typename CommandType>
+CommandInterface<CommandType>::CommandInterface(
+  std::shared_ptr<rclcpp::Node> node,
+  const Configuration & configuration)
+: cmd_pub_(nullptr),
   cmd_mux_client_(node),
   is_started_(false),
   is_emergency_stop_activated_(false),
   clock_(node->get_clock()),
   timer_(),
-  timeout_duration_(0,0),
+  timeout_duration_(0, 0),
   last_command_date_(),
   command_(),
   mutex_(),
   timeout_callback_(nullptr)
 {
   const std::string & output_message_type = configuration.output_message_type;
-  const int & priority =configuration.priority;
-  double period = 1/configuration.rate;
-  double timeout = 2*period;
+  const int & priority = configuration.priority;
+  double period = 1 / configuration.rate;
+  double timeout = 2 * period;
 
-  timeout_duration_=durationFromSecond(timeout);
-  create_publisher_(node,output_message_type);
-  subscribe_to_cmd_mux(priority,timeout);
-  create_timer_(node,period);
+  timeout_duration_ = durationFromSecond(timeout);
+  create_publisher_(node, output_message_type);
+  subscribe_to_cmd_mux(priority, timeout);
+  create_timer_(node, period);
 }
 
 //-----------------------------------------------------------------------------
-template <typename CommandType>
-void CommandInterface<CommandType>::create_publisher_(std::shared_ptr<rclcpp::Node> node,
-                                                      const std::string & output_message_type)
+template<typename CommandType>
+void CommandInterface<CommandType>::create_publisher_(
+  std::shared_ptr<rclcpp::Node> node,
+  const std::string & output_message_type)
 {
-  cmd_pub_ = make_command_publisher<CommandType>(node,output_message_type);
+  cmd_pub_ = make_command_publisher<CommandType>(node, output_message_type);
 }
 
 //-----------------------------------------------------------------------------
-template <typename CommandType>
-void CommandInterface<CommandType>::create_timer_(std::shared_ptr<rclcpp::Node> node,
-                                                  const double & period)
+template<typename CommandType>
+void CommandInterface<CommandType>::create_timer_(
+  std::shared_ptr<rclcpp::Node> node,
+  const double & period)
 {
-  auto timer_callback= std::bind(&CommandInterface::timer_callback_, this);
-  timer_ = node->create_wall_timer(durationFromSecond(period),timer_callback);
+  auto timer_callback = std::bind(&CommandInterface::timer_callback_, this);
+  timer_ = node->create_wall_timer(durationFromSecond(period), timer_callback);
 }
 
 //-----------------------------------------------------------------------------
-template <typename CommandType>
-void CommandInterface<CommandType>::subscribe_to_cmd_mux(const int & priority,
-                                                         const double & timeout)
+template<typename CommandType>
+void CommandInterface<CommandType>::subscribe_to_cmd_mux(
+  const int & priority,
+  const double & timeout)
 {
-  if(priority!=-1)
-  {
-    cmd_mux_client_.subscribe(cmd_pub_->get_topic_name(),priority,timeout);
+  if (priority != -1) {
+    cmd_mux_client_.subscribe(cmd_pub_->get_topic_name(), priority, timeout);
   }
 }
 
 //-----------------------------------------------------------------------------
-template <typename CommandType>
+template<typename CommandType>
 bool CommandInterface<CommandType>::is_started()
 {
   return is_started_;
 }
 
 //-----------------------------------------------------------------------------
-template <typename CommandType>
+template<typename CommandType>
 void CommandInterface<CommandType>::start()
 {
   std::lock_guard<std::mutex> lock(mutex_);
-  if(!is_started_)
-  {
+  if (!is_started_) {
     last_command_date_ = clock_->now();
-    is_started_=true;
+    is_started_ = true;
   }
 }
 
 //-----------------------------------------------------------------------------
-template <typename CommandType>
+template<typename CommandType>
 void CommandInterface<CommandType>::stop(bool reset)
 {
   std::lock_guard<std::mutex> lock(mutex_);
-  if(reset)
-  {
+  if (reset) {
     publish_command_(true);
   }
-  is_started_=false;
+  is_started_ = false;
 }
 
 //-----------------------------------------------------------------------------
-template <typename CommandType>
+template<typename CommandType>
 void CommandInterface<CommandType>::enable_emergency_stop()
 {
-  is_emergency_stop_activated_=true;
-  if(!is_started())
-  {
+  is_emergency_stop_activated_ = true;
+  if (!is_started()) {
     start();
   }
 }
 
 //-----------------------------------------------------------------------------
-template <typename CommandType>
+template<typename CommandType>
 void CommandInterface<CommandType>::disable_emergency_stop()
 {
   stop(false);
-  is_emergency_stop_activated_=false;
+  is_emergency_stop_activated_ = false;
 }
 
 //-----------------------------------------------------------------------------
-template <typename CommandType>
-void CommandInterface<CommandType>::connect_timeout_callback( std::function<void(void)> callback)
+template<typename CommandType>
+void CommandInterface<CommandType>::connect_timeout_callback(std::function<void(void)> callback)
 {
-  timeout_callback_=callback;
+  timeout_callback_ = callback;
 }
 
 
 //-----------------------------------------------------------------------------
-template <typename CommandType>
+template<typename CommandType>
 bool CommandInterface<CommandType>::is_emergency_stop_activated()
 {
   return is_emergency_stop_activated_;
 }
 
 //-----------------------------------------------------------------------------
-template <typename CommandType>
-void  CommandInterface<CommandType>::send_command(const CommandType & command)
+template<typename CommandType>
+void CommandInterface<CommandType>::send_command(const CommandType & command)
 {
-  if(!is_emergency_stop_activated_)
-  {
+  if (!is_emergency_stop_activated_) {
     std::lock_guard<std::mutex> lock(mutex_);
     last_command_date_ = clock_->now();
     command_ = command;
@@ -136,11 +146,10 @@ void  CommandInterface<CommandType>::send_command(const CommandType & command)
 }
 
 //-----------------------------------------------------------------------------
-template <typename CommandType>
+template<typename CommandType>
 void CommandInterface<CommandType>::send_null_command()
 {
-  if(!is_emergency_stop_activated_)
-  {
+  if (!is_emergency_stop_activated_) {
     std::lock_guard<std::mutex> lock(mutex_);
     last_command_date_ = clock_->now();
     command_ = CommandType();
@@ -148,7 +157,7 @@ void CommandInterface<CommandType>::send_null_command()
 }
 
 //-----------------------------------------------------------------------------
-template <typename CommandType>
+template<typename CommandType>
 void CommandInterface<CommandType>::publish_command_(const bool & timeout)
 {
   //  //send command msg
@@ -163,41 +172,31 @@ void CommandInterface<CommandType>::publish_command_(const bool & timeout)
   //  commandPublisher_.publish(msg);
 
 
-  if(is_started())
-  {
-    if(!timeout)
-    {
+  if (is_started()) {
+    if (!timeout) {
       cmd_pub_->publish(command_);
-    }
-    else
-    {
+    } else {
       cmd_pub_->publish(CommandType());
     }
   }
 }
 
 //-----------------------------------------------------------------------------
-template <typename CommandType>
+template<typename CommandType>
 void CommandInterface<CommandType>::timer_callback_()
 {
   std::lock_guard<std::mutex> lock(mutex_);
 
-  if(is_emergency_stop_activated())
-  {
+  if (is_emergency_stop_activated()) {
     publish_command_(true);
-  }
-  else
-  {
-
-    bool timeout=clock_->now( )> last_command_date_ + timeout_duration_;
-    if(timeout && timeout_callback_)
-    {
-      std::cout << "Command publisher timeout"<<std::endl;
+  } else {
+    bool timeout = clock_->now() > last_command_date_ + timeout_duration_;
+    if (timeout && timeout_callback_) {
+      std::cout << "Command publisher timeout" << std::endl;
       timeout_callback_();
     }
 
     publish_command_(timeout);
-
   }
 }
 
@@ -207,4 +206,4 @@ template class CommandInterface<OneAxleSteeringCommand>;
 template class CommandInterface<TwoAxleSteeringCommand>;
 
 
-}// namespace 
+}  // namespace  romea

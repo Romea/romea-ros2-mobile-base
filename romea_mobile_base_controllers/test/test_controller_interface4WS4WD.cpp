@@ -190,3 +190,10 @@ TEST_F(TestControllerInterface4WS4WD, checkRead)
   EXPECT_EQ(measure.rearLeftWheelLinearSpeed, 3);
   EXPECT_EQ(measure.rearRightWheelLinearSpeed, 4);
 }
+
+//-----------------------------------------------------------------------------
+int main(int argc, char ** argv)
+{
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}

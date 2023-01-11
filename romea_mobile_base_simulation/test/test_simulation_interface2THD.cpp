@@ -100,7 +100,7 @@ TEST_F(TestSimulationInterface2THD, checkGetState)
 
   auto state_interfaces = interface->export_state_interfaces();
   EXPECT_NEAR(
-    state_interfaces[1].get_value()
+    state_interfaces[1].get_value(),
     simulation_command.leftSprocketWheelSpinningSetPoint,
     0.001);
   EXPECT_NEAR(
@@ -123,4 +123,11 @@ TEST_F(TestSimulationInterface2THD, checkGetState)
     state_interfaces[16].get_value(),
     simulation_command.rearRightIdlerWheelSpinningSetPoint,
     0.001);
+}
+
+//-----------------------------------------------------------------------------
+int main(int argc, char ** argv)
+{
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }
