@@ -1,0 +1,33 @@
+type: 2TD
+geometry:
+  tracks_distance: 2.
+
+tracks_speed_control:
+    command:
+      maximal_speed: 4.
+
+inertia:
+  mass: 400.
+  center: [401., 402., 403.]
+  z_moment: 404.
+
+control_point : [500., 501., 502.]
+
+joints:
+  left_sprocket_wheel_spinning_joint_name: J1
+  right_sprocket_wheel_spinning_joint_name: J2
+  left_idler_wheel_spinning_joint_name: J3
+  right_idler_wheel_spinning_joint_name: J4
+
+tracks:
+  width: 102.
+  thickness: 102.5
+  sprocket_wheel:
+    radius: 103.
+    x: 104.
+  idler_wheel:
+    radius: 105.
+    x: 106.
+  rollers:
+    radius: 107.
+    x: [108.,109.]

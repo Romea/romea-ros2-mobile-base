@@ -1,0 +1,34 @@
+type: 2AS4WD
+geometry:
+  axles_distance: 1.
+  front_axle:
+    wheels_distance: 2.
+  rear_axle:
+    wheels_distance: 2.
+
+axles_steering_control:
+  command:
+    maximal_angle: 5.
+
+wheels_speed_control:
+    command:
+      maximal_speed: 4.
+
+inertia:
+  mass: 400.
+  center: [401., 402., 403.]
+  z_moment: 404.
+
+control_point : [500., 501., 502.]
+
+joints:
+  front_axle_steering_joint_name: J1
+  rear_axle_steering_joint_name: J2
+  front_left_wheel_steering_joint_name: J3
+  front_right_wheel_steering_joint_name: J4
+  rear_left_wheel_steering_joint_name: J5
+  rear_right_wheel_steering_joint_name: J6
+  front_left_wheel_spinning_joint_name: J7
+  front_right_wheel_spinning_joint_name: J8
+  rear_left_wheel_spinning_joint_name: J9
+  rear_right_wheel_spinning_joint_name: J10
