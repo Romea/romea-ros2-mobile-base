@@ -54,12 +54,11 @@ def get_kinematic_type(base_description):
     elif type == "2AS4WD" or type == "2AS2FWD" or type == "2AS2RWD":
         return "two_axle_steering"
     elif type == "2FWS2FWD" or type == "2FWS2RWD" or type == "2FWS4WD":
-        print("coucou 2FWS2FWD")
         return "two_wheel_steering"
     elif type == "4WS4WD":
         return "four_wheel_steering"
     elif type == "4WMD":
-        return "omni_steeering"
+        return "omni_steering"
     else:
         raise LookupError("Robot type found in base info is not available")
 
@@ -197,3 +196,17 @@ def get_maximal_steering_angle(base_description):
         )
 
     return steering_control_info["command"]["maximal_angle"]
+
+
+def get_maximal_angular_speed(base_description):
+
+    kinematic = get_kinematic_type(base_description)
+    if kinematic == "skid_steering" or "omni_steering":
+        track = get_track(base_description)
+        maximal_linear_speed = get_maximal_linear_speed(base_description)
+        return 2 * maximal_linear_speed / track
+
+    else:
+        raise LookupError(
+            "No maximal angular speed computation is implement for this type of vehicule : "
+        )

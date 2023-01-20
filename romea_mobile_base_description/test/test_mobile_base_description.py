@@ -14,6 +14,7 @@ from romea_mobile_base_description import (
     get_maximal_linear_speed,
     get_maximal_wheel_angle,
     get_maximal_steering_angle,
+    get_maximal_angular_speed,
 )
 
 
@@ -159,3 +160,22 @@ def get_maximal_steering_angles():
         get_maximal_steering_angle_("2WD")
     with pytest.raises(LookupError):
         get_maximal_steering_angle_("4WD")
+
+
+def compute_maximal_angular_speed():
+    with pytest.raises(LookupError):
+        get_maximal_angular_speed("1FAS2RWD")
+    with pytest.raises(LookupError):
+        get_maximal_angular_speed("2AS4WD")
+    with pytest.raises(LookupError):
+        get_maximal_angular_speed("2FWS2FWD")
+    with pytest.raises(LookupError):
+        get_maximal_angular_speed("2FWS2RWD")
+    with pytest.raises(LookupError):
+        get_maximal_angular_speed("2FWS4WD")
+    with pytest.raises(LookupError):
+        get_maximal_angular_speed("4WS4WD")
+
+    assert get_maximal_angular_speed("2TD") == 4.0
+    assert get_maximal_angular_speed("2WD") == 4.0
+    assert get_maximal_angular_speed("4WD") == 4.0
