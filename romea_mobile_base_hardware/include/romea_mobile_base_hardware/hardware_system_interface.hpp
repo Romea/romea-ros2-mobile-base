@@ -29,7 +29,8 @@ template<typename HardwareInterface>
 class HardwareSystemInterface : public hardware_interface::SystemInterface
 {
 public:
-  using CallbackReturn = rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn;
+  using CallbackReturn =
+    typename rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn;
 
 public:
   HardwareSystemInterface();

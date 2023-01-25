@@ -59,8 +59,7 @@ ament_target_dependencies(${PROJECT_NAME}
   romea_core_common
   romea_core_mobile_base
   romea_common_utils
-  romea_mobile_base_utils
-  hardware_interface)
+  romea_mobile_base_utils)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
