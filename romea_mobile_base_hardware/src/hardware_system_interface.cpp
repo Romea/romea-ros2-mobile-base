@@ -26,7 +26,8 @@ HardwareSystemInterface<HardwareInterface>::HardwareSystemInterface()
 
 //-----------------------------------------------------------------------------
 template<typename HardwareInterface>
-CallbackReturn HardwareSystemInterface<HardwareInterface>::on_init(
+rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
+HardwareSystemInterface<HardwareInterface>::on_init(
   const hardware_interface::HardwareInfo & hardware_info)
 {
   // RCLCPP_FATAL_STREAM(rclcpp::get_logger("HardwareSystemInterface"), "on_init");
@@ -91,7 +92,8 @@ hardware_interface::return_type HardwareSystemInterface<HardwareInterface>::load
 
 //-----------------------------------------------------------------------------
 template<typename HardwareInterface>
-CallbackReturn HardwareSystemInterface<HardwareInterface>::on_configure(
+rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
+HardwareSystemInterface<HardwareInterface>::on_configure(
   const rclcpp_lifecycle::State & previous_state)
 {
   RCLCPP_ERROR_STREAM(
@@ -108,7 +110,8 @@ CallbackReturn HardwareSystemInterface<HardwareInterface>::on_configure(
 
 //-----------------------------------------------------------------------------
 template<typename HardwareInterface>
-CallbackReturn HardwareSystemInterface<HardwareInterface>::on_cleanup(
+rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
+HardwareSystemInterface<HardwareInterface>::on_cleanup(
   const rclcpp_lifecycle::State & previous_state)
 {
   RCLCPP_ERROR_STREAM(
@@ -126,7 +129,8 @@ CallbackReturn HardwareSystemInterface<HardwareInterface>::on_cleanup(
 
 //-----------------------------------------------------------------------------
 template<typename HardwareInterface>
-CallbackReturn HardwareSystemInterface<HardwareInterface>::on_activate(
+rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
+HardwareSystemInterface<HardwareInterface>::on_activate(
   const rclcpp_lifecycle::State & previous_state)
 {
   RCLCPP_ERROR_STREAM(
@@ -138,7 +142,8 @@ CallbackReturn HardwareSystemInterface<HardwareInterface>::on_activate(
 
 //-----------------------------------------------------------------------------
 template<typename HardwareInterface>
-CallbackReturn HardwareSystemInterface<HardwareInterface>::on_deactivate(
+rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
+HardwareSystemInterface<HardwareInterface>::on_deactivate(
   const rclcpp_lifecycle::State & previous_state)
 {
   // send null command
@@ -152,7 +157,8 @@ CallbackReturn HardwareSystemInterface<HardwareInterface>::on_deactivate(
 
 //-----------------------------------------------------------------------------
 template<typename HardwareInterface>
-CallbackReturn HardwareSystemInterface<HardwareInterface>::on_shutdown(
+rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
+HardwareSystemInterface<HardwareInterface>::on_shutdown(
   const rclcpp_lifecycle::State & previous_state)
 {
   RCLCPP_ERROR_STREAM(
@@ -172,7 +178,8 @@ CallbackReturn HardwareSystemInterface<HardwareInterface>::on_shutdown(
 
 //-----------------------------------------------------------------------------
 template<typename HardwareInterface>
-CallbackReturn HardwareSystemInterface<HardwareInterface>::on_error(
+rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
+HardwareSystemInterface<HardwareInterface>::on_error(
   const rclcpp_lifecycle::State & previous_state)
 {
   RCLCPP_ERROR_STREAM(
