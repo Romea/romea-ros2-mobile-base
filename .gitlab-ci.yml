@@ -22,6 +22,7 @@ before_script:
   - mkdir -p ${CI_PROJECT_DIR}/workspace/src
   - cd ${CI_PROJECT_DIR}/workspace
   - vcs import src < ${CI_PROJECT_DIR}/${CI_PROJECT_NAME}.repos
+  - git clone git@gitlab-ssh.irstea.fr:romea_ros2/interfaces/vehicles/adap2e.git ${CI_PROJECT_DIR}/workspace/src/interfaces/vehicles
   - rosdep install --from-paths src --ignore-src -y --as-root apt:false
 
 # galatic
