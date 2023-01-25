@@ -4,13 +4,13 @@
 #ifndef ROMEA_MOBILE_BASE_UTILS__CONTROL__COMMAND_PUBLISHER_HPP_
 #define ROMEA_MOBILE_BASE_UTILS__CONTROL__COMMAND_PUBLISHER_HPP_
 
-// romea
-#include <romea_common_utils/publishers/data_publisher.hpp>
-#include <romea_common_utils/qos.hpp>
-
 // std
 #include <memory>
 #include <string>
+
+// romea
+#include "romea_common_utils/publishers/data_publisher.hpp"
+#include "romea_common_utils/qos.hpp"
 
 // local
 #include "romea_mobile_base_utils/conversions/command_conversions.hpp"

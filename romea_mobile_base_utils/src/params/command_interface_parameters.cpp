@@ -1,12 +1,12 @@
 // Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
 // Add license
 
-// romea
-#include <romea_common_utils/params/node_parameters.hpp>
-
 // std
 #include <memory>
 #include <string>
+
+// romea
+#include "romea_common_utils/params/node_parameters.hpp"
 
 // local
 #include "romea_mobile_base_utils/control/command_interface.hpp"

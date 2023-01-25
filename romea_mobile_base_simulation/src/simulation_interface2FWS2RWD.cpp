@@ -1,13 +1,13 @@
 // Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
 // Add license
 
-// romea
-#include <romea_mobile_base_hardware/hardware_info.hpp>
 
 // std
 #include <string>
 #include <vector>
 
+// romea
+#include "romea_mobile_base_hardware/hardware_info.hpp"
 
 // local
 #include "romea_mobile_base_simulation/simulation_interface2FWS2RWD.hpp"

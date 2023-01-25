@@ -1,18 +1,18 @@
 // Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
 // Add license
 
-// gtest
-#include <gtest/gtest.h>
-
-// gazebo
-#include <gazebo/test/ServerFixture.hh>
-
-// ros
-#include <rclcpp/node.hpp>
-#include <hardware_interface/component_parser.hpp>
-
 // std
 #include <string>
+
+// gtest
+#include "gtest/gtest.h"
+
+// gazebo
+#include "gazebo/test/ServerFixture.hh"
+
+// ros
+#include "rclcpp/node.hpp"
+#include "hardware_interface/component_parser.hpp"
 
 // romea
 #include "../test/test_helper.h"

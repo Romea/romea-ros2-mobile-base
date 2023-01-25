@@ -4,13 +4,13 @@
 #ifndef ROMEA_MOBILE_BASE_GAZEBO__GAZEBO_INTERFACE2ASXXX_HPP_
 #define ROMEA_MOBILE_BASE_GAZEBO__GAZEBO_INTERFACE2ASXXX_HPP_
 
-// romea
-#include <romea_core_mobile_base/simulation/SimulationControl2ASxxx.hpp>
-
 // std
 #include <memory>
 #include <string>
 #include <vector>
+
+// romea
+#include "romea_core_mobile_base/simulation/SimulationControl2ASxxx.hpp"
 
 // local
 #include "romea_mobile_base_gazebo/spinning_joint_gazebo_interface.hpp"

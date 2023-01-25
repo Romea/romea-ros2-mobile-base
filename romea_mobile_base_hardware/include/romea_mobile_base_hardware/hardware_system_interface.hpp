@@ -4,12 +4,12 @@
 #ifndef ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_SYSTEM_INTERFACE_HPP_
 #define ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_SYSTEM_INTERFACE_HPP_
 
-// ros
-#include <hardware_interface/system_interface.hpp>
-
 // std
 #include <vector>
 #include <memory>
+
+// ros
+#include "hardware_interface/system_interface.hpp"
 
 // local
 #include "romea_mobile_base_hardware/hardware_interface2WD.hpp"

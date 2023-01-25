@@ -4,11 +4,11 @@
 #ifndef ROMEA_MOBILE_BASE_HARDWARE__STEERING_JOINT_HARDWARE_INTERFACE_HPP_
 #define ROMEA_MOBILE_BASE_HARDWARE__STEERING_JOINT_HARDWARE_INTERFACE_HPP_
 
-// ros
-#include <hardware_interface/hardware_info.hpp>
-
 // std
 #include <vector>
+
+// ros
+#include "hardware_interface/hardware_info.hpp"
 
 // local
 #include "hardware_handle.hpp"

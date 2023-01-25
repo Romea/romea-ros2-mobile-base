@@ -5,12 +5,12 @@
 #define ROMEA_MOBILE_BASE_HARDWARE__SPINNING_JOINT_HARDWARE_INTERFACE_HPP_
 
 
-// ros
-#include <hardware_interface/hardware_info.hpp>
-
 // std
 #include <string>
 #include <vector>
+
+// ros
+#include "hardware_interface/hardware_info.hpp"
 
 // local
 #include "romea_mobile_base_hardware/hardware_handle.hpp"

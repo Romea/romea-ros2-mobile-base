@@ -1,19 +1,19 @@
 // Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
 // Add license
 
-// gtest
-#include <gtest/gtest.h>
-
-// romea
-#include <romea_common_utils/listeners/data_listener.hpp>
-#include <romea_mobile_base_msgs/msg/skid_steering_command.hpp>
-
-// ros
-#include <rclcpp/node.hpp>
-
 // std
 #include <string>
 #include <memory>
+
+// gtest
+#include "gtest/gtest.h"
+
+// romea
+#include "romea_common_utils/listeners/data_listener.hpp"
+#include "romea_mobile_base_msgs/msg/skid_steering_command.hpp"
+
+// ros
+#include "rclcpp/node.hpp"
 
 // local
 #include "../test/test_helper.h"

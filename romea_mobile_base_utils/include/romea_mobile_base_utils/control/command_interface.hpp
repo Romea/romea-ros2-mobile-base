@@ -4,15 +4,15 @@
 #ifndef ROMEA_MOBILE_BASE_UTILS__CONTROL__COMMAND_INTERFACE_HPP_
 #define ROMEA_MOBILE_BASE_UTILS__CONTROL__COMMAND_INTERFACE_HPP_
 
-// romea
-#include <romea_cmd_mux_utils/cmd_mux_interface.hpp>
-
 // std
 #include <atomic>
 #include <memory>
 #include <functional>
 #include <string>
 #include <mutex>
+
+// romea
+#include "romea_cmd_mux_utils/cmd_mux_interface.hpp"
 
 #include "romea_mobile_base_utils/conversions/kinematic_conversions.hpp"
 #include "romea_mobile_base_utils/control/command_publisher.hpp"

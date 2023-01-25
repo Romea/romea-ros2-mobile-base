@@ -4,15 +4,16 @@
 #ifndef ROMEA_MOBILE_BASE_GAZEBO__SPINNING_JOINT_GAZEBO_INTERFACE_HPP_
 #define ROMEA_MOBILE_BASE_GAZEBO__SPINNING_JOINT_GAZEBO_INTERFACE_HPP_
 
-// romea
-#include <romea_mobile_base_hardware/spinning_joint_hardware_interface.hpp>
-
-// gazebo
-#include <gazebo/physics/Joint.hh>
-#include <gazebo/physics/Model.hh>
-
 // std
 #include <string>
+
+// romea
+#include "romea_mobile_base_hardware/spinning_joint_hardware_interface.hpp"
+
+// gazebo
+#include "gazebo/physics/Joint.hh"
+#include "gazebo/physics/Model.hh"
+
 
 namespace romea
 {

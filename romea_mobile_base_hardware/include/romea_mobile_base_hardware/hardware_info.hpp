@@ -4,14 +4,15 @@
 #ifndef ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_INFO_HPP_
 #define ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_INFO_HPP_
 
-// romea
-#include <romea_core_common/lexical/LexicalCast.hpp>
-
-// ros
-#include <hardware_interface/hardware_info.hpp>
-
 // std
 #include <string>
+
+// romea
+#include "romea_core_common/lexical/LexicalCast.hpp"
+
+// ros
+#include "hardware_interface/hardware_info.hpp"
+
 
 namespace romea
 {

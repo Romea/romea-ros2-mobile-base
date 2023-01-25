@@ -4,11 +4,11 @@
 #ifndef ROMEA_MOBILE_BASE_GAZEBO__GAZEBO_INTERFACE4WS4WD_HPP_
 #define ROMEA_MOBILE_BASE_GAZEBO__GAZEBO_INTERFACE4WS4WD_HPP_
 
-// romea
-#include <romea_core_mobile_base/simulation/SimulationControl4WS4WD.hpp>
-
 // std
 #include <string>
+
+// romea
+#include "romea_core_mobile_base/simulation/SimulationControl4WS4WD.hpp"
 
 // local
 #include "romea_mobile_base_gazebo/spinning_joint_gazebo_interface.hpp"
