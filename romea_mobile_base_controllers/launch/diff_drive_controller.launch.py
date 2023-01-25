@@ -74,8 +74,8 @@ def launch_setup(context, *args, **kwargs):
     params["left_wheel_radius_multiplier"] = 1.0
     params["right_wheel_radius_multiplier"]: 1.0
 
-    params["publish_rate"]: base_controller["publish_rate"]
-    params["odom_frame_id"]: base_controller["odom_frame_id"]
+    params["publish_rate"] = base_controller["publish_rate"]
+    params["odom_frame_id"] = base_controller["odom_frame_id"]
     params["enable_odom_tf"] = base_controller["enable_odom_tf"]
     params["cmd_vel_timeout"] = base_controller["timeout"]
     params["open_loop"] = True

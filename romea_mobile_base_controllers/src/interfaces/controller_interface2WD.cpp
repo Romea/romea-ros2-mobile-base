@@ -7,7 +7,7 @@
 #include <vector>
 
 // romea
-#include <romea_common_utils/params/node_parameters.hpp>
+#include "romea_common_utils/params/node_parameters.hpp"
 
 
 // local

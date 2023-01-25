@@ -29,8 +29,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
     msg/TwoAxleSteeringMeasure.msg
     msg/TwoAxleSteeringMeasureStamped.msg
     msg/TwoAxleSteeringCommand.msg
-    DEPENDENCIES std_msgs
-    )
+    DEPENDENCIES std_msgs)
 
 
 ament_export_dependencies(rosidl_default_runtime)
