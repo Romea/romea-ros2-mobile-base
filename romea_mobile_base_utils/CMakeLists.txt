@@ -33,22 +33,23 @@ find_package(romea_cmd_mux_utils REQUIRED)
 add_library(${PROJECT_NAME} SHARED
     src/conversions/command_conversions.cpp
     src/conversions/kinematic_conversions.cpp
-    src/params/command_limits_parameters.cpp
-    src/params/command_interface_parameters.cpp
-    src/params/mobile_base_control_parameters.cpp
-    src/params/mobile_base_geometry_parameters.cpp
-    src/params/mobile_base_inertia_parameters.cpp
-    src/params/mobile_base_parameters1FAS2FWD.cpp
-    src/params/mobile_base_parameters1FAS2RWD.cpp
-    src/params/mobile_base_parameters2AS4WD.cpp
-    src/params/mobile_base_parameters2FWS2FWD.cpp
-    src/params/mobile_base_parameters2FWS2RWD.cpp
-    src/params/mobile_base_parameters2FWS4WD.cpp
-    src/params/mobile_base_parameters2TD.cpp
-    src/params/mobile_base_parameters2WD.cpp
-    src/params/mobile_base_parameters4WD.cpp
-    src/params/mobile_base_parameters4WS4WD.cpp
-    src/control/command_interface.cpp)
+    # src/params/command_limits_parameters.cpp
+    # src/params/command_interface_parameters.cpp
+    # src/params/mobile_base_control_parameters.cpp
+    # src/params/mobile_base_geometry_parameters.cpp
+    # src/params/mobile_base_inertia_parameters.cpp
+    # src/params/mobile_base_parameters1FAS2FWD.cpp
+    # src/params/mobile_base_parameters1FAS2RWD.cpp
+    # src/params/mobile_base_parameters2AS4WD.cpp
+    # src/params/mobile_base_parameters2FWS2FWD.cpp
+    # src/params/mobile_base_parameters2FWS2RWD.cpp
+    # src/params/mobile_base_parameters2FWS4WD.cpp
+    # src/params/mobile_base_parameters2TD.cpp
+    # src/params/mobile_base_parameters2WD.cpp
+    # src/params/mobile_base_parameters4WD.cpp
+    # src/params/mobile_base_parameters4WS4WD.cpp
+    # src/control/command_interface.cpp
+    )
 
 ament_target_dependencies(${PROJECT_NAME}
     rclcpp

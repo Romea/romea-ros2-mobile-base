@@ -61,7 +61,7 @@ TEST_F(TestCommandInterfaceParams, getParameterWithoutPriority)
   auto config = romea::get_command_interface_configuration(node, "without_priority");
 
   EXPECT_STREQ(config.output_message_type.c_str(), "bar");
-  EXPECT_EQ(config.priority, 0);
+  EXPECT_EQ(config.priority, -1);
   EXPECT_DOUBLE_EQ(config.rate, 50.);
 }
 

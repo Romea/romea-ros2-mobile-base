@@ -1,9 +1,9 @@
 test_command_interface_paramerters:
   ros__parameters:
     with_priority:
-      output_message_type: foo
+      message_type: foo
       priority: 127
       rate: 10.
     without_priority:
-      output_message_type: bar
+      message_type: bar
       rate: 50.

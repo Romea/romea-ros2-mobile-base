@@ -28,7 +28,7 @@ struct CommandInterfaceConfiguration
 };
 
 
-template<typename CommandType>
+template<typename CommandType, typename Node>
 class CommandInterface
 {
 public:
@@ -37,7 +37,7 @@ public:
 
 public:
   CommandInterface(
-    std::shared_ptr<rclcpp::Node> node,
+    std::shared_ptr<Node> node,
     const Configuration & configuration);
 
   void send_null_command();
@@ -66,11 +66,11 @@ private:
   void publish_command_(const bool & timeout);
 
   void create_timer_(
-    std::shared_ptr<rclcpp::Node> node,
+    std::shared_ptr<Node> node,
     const double & period);
 
   void create_publisher_(
-    std::shared_ptr<rclcpp::Node> node,
+    std::shared_ptr<Node> node,
     const std::string & output_message_type);
 
   void subscribe_to_cmd_mux(
@@ -94,6 +94,194 @@ private:
 
   std::function<void(void)> timeout_callback_;
 };
+
+//-----------------------------------------------------------------------------
+template<typename CommandType, typename Node>
+CommandInterface<CommandType, Node>::CommandInterface(
+  std::shared_ptr<Node> node,
+  const Configuration & configuration)
+: cmd_pub_(nullptr),
+  cmd_mux_client_(node),
+  is_started_(false),
+  is_emergency_stop_activated_(false),
+  clock_(node->get_clock()),
+  timer_(),
+  timeout_duration_(0, 0),
+  last_command_date_(),
+  command_(),
+  mutex_(),
+  timeout_callback_(nullptr)
+{
+  const std::string & output_message_type = configuration.output_message_type;
+  const int & priority = configuration.priority;
+  double period = 1 / configuration.rate;
+  double timeout = 2 * period;
+
+  timeout_duration_ = durationFromSecond(timeout);
+  create_publisher_(node, output_message_type);
+  subscribe_to_cmd_mux(priority, timeout);
+  create_timer_(node, period);
+}
+
+//-----------------------------------------------------------------------------
+template<typename CommandType, typename Node>
+void CommandInterface<CommandType, Node>::create_publisher_(
+  std::shared_ptr<Node> node,
+  const std::string & output_message_type)
+{
+  cmd_pub_ = make_command_publisher<CommandType>(node, output_message_type);
+}
+
+//-----------------------------------------------------------------------------
+template<typename CommandType, typename Node>
+void CommandInterface<CommandType, Node>::create_timer_(
+  std::shared_ptr<Node> node,
+  const double & period)
+{
+  auto timer_callback = std::bind(&CommandInterface::timer_callback_, this);
+  timer_ = node->create_wall_timer(durationFromSecond(period), timer_callback);
+}
+
+//-----------------------------------------------------------------------------
+template<typename CommandType, typename Node>
+void CommandInterface<CommandType, Node>::subscribe_to_cmd_mux(
+  const int & priority,
+  const double & timeout)
+{
+  if (priority != -1) {
+    cmd_mux_client_.subscribe(cmd_pub_->get_topic_name(), priority, timeout);
+  }
+}
+
+//-----------------------------------------------------------------------------
+template<typename CommandType, typename Node>
+bool CommandInterface<CommandType, Node>::is_started()
+{
+  return is_started_;
+}
+
+//-----------------------------------------------------------------------------
+template<typename CommandType, typename Node>
+void CommandInterface<CommandType, Node>::start()
+{
+  std::lock_guard<std::mutex> lock(mutex_);
+  if (!is_started_) {
+    last_command_date_ = clock_->now();
+    is_started_ = true;
+  }
+}
+
+//-----------------------------------------------------------------------------
+template<typename CommandType, typename Node>
+void CommandInterface<CommandType, Node>::stop(bool reset)
+{
+  std::lock_guard<std::mutex> lock(mutex_);
+  if (reset) {
+    publish_command_(true);
+  }
+  is_started_ = false;
+}
+
+//-----------------------------------------------------------------------------
+template<typename CommandType, typename Node>
+void CommandInterface<CommandType, Node>::enable_emergency_stop()
+{
+  is_emergency_stop_activated_ = true;
+  if (!is_started()) {
+    start();
+  }
+}
+
+//-----------------------------------------------------------------------------
+template<typename CommandType, typename Node>
+void CommandInterface<CommandType, Node>::disable_emergency_stop()
+{
+  stop(false);
+  is_emergency_stop_activated_ = false;
+}
+
+//-----------------------------------------------------------------------------
+template<typename CommandType, typename Node>
+void CommandInterface<CommandType, Node>::connect_timeout_callback(
+  std::function<void(void)> callback)
+{
+  timeout_callback_ = callback;
+}
+
+
+//-----------------------------------------------------------------------------
+template<typename CommandType, typename Node>
+bool CommandInterface<CommandType, Node>::is_emergency_stop_activated()
+{
+  return is_emergency_stop_activated_;
+}
+
+//-----------------------------------------------------------------------------
+template<typename CommandType, typename Node>
+void CommandInterface<CommandType, Node>::send_command(const CommandType & command)
+{
+  if (!is_emergency_stop_activated_) {
+    std::lock_guard<std::mutex> lock(mutex_);
+    last_command_date_ = clock_->now();
+    command_ = command;
+  }
+}
+
+//-----------------------------------------------------------------------------
+template<typename CommandType, typename Node>
+void CommandInterface<CommandType, Node>::send_null_command()
+{
+  if (!is_emergency_stop_activated_) {
+    std::lock_guard<std::mutex> lock(mutex_);
+    last_command_date_ = clock_->now();
+    command_ = CommandType();
+  }
+}
+
+//-----------------------------------------------------------------------------
+template<typename CommandType, typename Node>
+void CommandInterface<CommandType, Node>::publish_command_(const bool & timeout)
+{
+  //  //send command msg
+  //  typename VehicleControlTraits<CommandType>::CommandMsg msg;
+  //  if(!timeout)
+  //  {
+  //    to_ros_msg(command_,msg);
+  //  }
+
+  //  //  std::cout <<" command msg " <<std::endl;
+  //  //  std::cout << msg << std::endl;
+  //  commandPublisher_.publish(msg);
+
+
+  if (is_started()) {
+    if (!timeout) {
+      cmd_pub_->publish(command_);
+    } else {
+      cmd_pub_->publish(CommandType());
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
+template<typename CommandType, typename Node>
+void CommandInterface<CommandType, Node>::timer_callback_()
+{
+  std::lock_guard<std::mutex> lock(mutex_);
+
+  if (is_emergency_stop_activated()) {
+    publish_command_(true);
+  } else {
+    bool timeout = clock_->now() > last_command_date_ + timeout_duration_;
+    if (timeout && timeout_callback_) {
+      std::cout << "Command publisher timeout" << std::endl;
+      timeout_callback_();
+    }
+
+    publish_command_(timeout);
+  }
+}
+
 
 }  // namespace romea
 

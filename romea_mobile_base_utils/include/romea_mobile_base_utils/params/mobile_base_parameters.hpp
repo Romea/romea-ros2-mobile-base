@@ -25,9 +25,9 @@ namespace romea
 {
 
 
-template<typename MobileBaseInfo>
+template<typename MobileBaseInfo, typename Node>
 void declare_mobile_base_info(
-  std::shared_ptr<rclcpp::Node> node,
+  std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
   if constexpr (std::is_same_v<MobileBaseInfo, MobileBaseInfo1FAS2FWD>) {
@@ -54,9 +54,9 @@ void declare_mobile_base_info(
 }
 
 
-template<typename MobileBaseInfo>
+template<typename MobileBaseInfo, typename Node>
 MobileBaseInfo get_mobile_base_info(
-  std::shared_ptr<rclcpp::Node> node,
+  std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
   if constexpr (std::is_same_v<MobileBaseInfo, MobileBaseInfo1FAS2FWD>) {

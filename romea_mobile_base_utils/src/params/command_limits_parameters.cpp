@@ -141,7 +141,7 @@ void declare_omni_steering_command_limits(
 }
 
 
-//-----------------------------------------------------------------------------
+---------------------------------------------------------------------------- -
 OneAxleSteeringCommandLimits get_one_axle_steering_command_limits(
   std::shared_ptr<rclcpp::Node> node,
   const std::string & parameters_ns)
@@ -158,7 +158,7 @@ OneAxleSteeringCommandLimits get_one_axle_steering_command_limits(
       DEFAULT_MAXIMAL_STEERGING_ANGLE));
 }
 
-//-----------------------------------------------------------------------------
+---------------------------------------------------------------------------- -
 TwoAxleSteeringCommandLimits get_two_axle_steering_command_limits(
   std::shared_ptr<rclcpp::Node> node,
   const std::string & parameters_ns)
