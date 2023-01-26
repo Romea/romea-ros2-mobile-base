@@ -80,7 +80,7 @@ CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_init()
     std::cout << " on init OK" << std::endl;
     return CallbackReturn::SUCCESS;
   } catch (std::runtime_error & e) {
-    RCLCPP_ERROR_STREAM(node_->get_logger(), e.what());
+    RCLCPP_ERROR_STREAM(get_node()->get_logger(), e.what());
     return CallbackReturn::ERROR;
   }
 }
@@ -133,7 +133,7 @@ CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_configure(
 //    std::cout << " on configure OK" << std::endl;
     return CallbackReturn::SUCCESS;
   } catch (std::runtime_error & e) {
-    RCLCPP_ERROR_STREAM(node_->get_logger(), e.what());
+    RCLCPP_ERROR_STREAM(get_node()->get_logger(), e.what());
     return CallbackReturn::ERROR;
   }
 }
@@ -149,7 +149,7 @@ CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_activate(
 //    controller_interface_->register_loaned_command_interfaces(command_interfaces_);
 //    controller_interface_->register_loaned_state_interfaces(state_interfaces_);
 
-    auto now = node_->get_clock()->now();
+    auto now = get_node()->get_clock()->now();
     previous_command_.cmd = Command();
     previous_command_.stamp = now;
     current_command_.cmd = Command();
@@ -161,7 +161,7 @@ CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_activate(
 
     return CallbackReturn::SUCCESS;
   } catch (std::runtime_error & e) {
-    RCLCPP_ERROR_STREAM(node_->get_logger(), e.what());
+    RCLCPP_ERROR_STREAM(get_node()->get_logger(), e.what());
     return CallbackReturn::ERROR;
   }
 }
@@ -215,32 +215,32 @@ controller_interface::return_type MobileBaseController<InterfaceType, KinematicT
   const rclcpp::Time & /*time*/, const rclcpp::Duration & period)
 {
 //  std::cout << "update" << std::endl;
-  update_time_ = node_->get_clock()->now();  // why not time?
-  RCLCPP_INFO_STREAM(node_->get_logger(), "update_controller_state_");
+  update_time_ = get_node()->get_clock()->now();  // why not time?
+  RCLCPP_INFO_STREAM(get_node()->get_logger(), "update_controller_state_");
   update_controller_state_();
-  RCLCPP_INFO_STREAM(node_->get_logger(), "publish_controller_state_");
+  RCLCPP_INFO_STREAM(get_node()->get_logger(), "publish_controller_state_");
   publish_controller_state_();
-  RCLCPP_INFO_STREAM(node_->get_logger(), "read command");
+  RCLCPP_INFO_STREAM(get_node()->get_logger(), "read command");
 
   auto current_command = command_buffer_.consume();
   std::cout << " update " << update_time_.seconds() << " " << period.seconds() << std::endl;
   if (current_command.has_value()) {
     current_command_ = *current_command;
-    //    RCLCPP_INFO_STREAM(node_->get_logger(),"odometry frame measured");
-    //    RCLCPP_INFO_STREAM(node_->get_logger(),"\n"<<odometry_frame_);
+    //    RCLCPP_INFO_STREAM(get_node()->get_logger(),"odometry frame measured");
+    //    RCLCPP_INFO_STREAM(get_node()->get_logger(),"\n"<<odometry_frame_);
 
-    //    RCLCPP_INFO_STREAM(node_->get_logger(), " new command ok");
-    //    RCLCPP_INFO_STREAM(node_->get_logger(),"\n"<<current_command_.cmd);
+    //    RCLCPP_INFO_STREAM(get_node()->get_logger(), " new command ok");
+    //    RCLCPP_INFO_STREAM(get_node()->get_logger(),"\n"<<current_command_.cmd);
 
     clamp_current_command_();
-    //    RCLCPP_INFO_STREAM(node_->get_logger(), " new clamp command");
-    //    RCLCPP_INFO_STREAM(node_->get_logger(),"\n"<<current_command_.cmd);
+    //    RCLCPP_INFO_STREAM(get_node()->get_logger(), " new clamp command");
+    //    RCLCPP_INFO_STREAM(get_node()->get_logger(),"\n"<<current_command_.cmd);
 
     send_current_command_();
-//    RCLCPP_INFO_STREAM(node_->get_logger(), "cooucou new command");
+//    RCLCPP_INFO_STREAM(get_node()->get_logger(), "cooucou new command");
 
   } else if (timeout_()) {
-    //    RCLCPP_INFO_STREAM(node_->get_logger(), "timeout, brake");
+    //    RCLCPP_INFO_STREAM(get_node()->get_logger(), "timeout, brake");
     send_null_command();
   }
 
@@ -252,10 +252,10 @@ template<typename OdometryFrameType, typename KinematicType>
 bool MobileBaseController<OdometryFrameType, KinematicType>::timeout_()
 {
   // RCLCPP_INFO_STREAM(
-  //   node_->get_logger(),
+  //   get_node()->get_logger(),
   //   "dts " << update_time_ - current_command_.stamp << " " << command_timeout_);
   // RCLCPP_INFO_STREAM(
-  //   node_->get_logger(),
+  //   get_node()->get_logger(),
   //   "dts " << (update_time_ - current_command_.stamp).seconds() << " " <<
   //     command_timeout_.seconds());
   return update_time_ - current_command_.stamp > command_timeout_;
@@ -278,16 +278,16 @@ template<typename OdometryFrameType, typename KinematicType>
 void MobileBaseController<OdometryFrameType, KinematicType>::update_controller_state_()
 {
   controller_interface_->read(state_interfaces_, odometry_frame_);
-  //    RCLCPP_INFO_STREAM(node_->get_logger(),"odometry frame measured");
-  //    RCLCPP_INFO_STREAM(node_->get_logger(),"\n"<<odometry_frame_);
+  //    RCLCPP_INFO_STREAM(get_node()->get_logger(),"odometry frame measured");
+  //    RCLCPP_INFO_STREAM(get_node()->get_logger(),"\n"<<odometry_frame_);
 
   inverseKinematic(kinematic_parameters_, odometry_frame_, odometry_measure_);
-  //    RCLCPP_INFO_STREAM(node_->get_logger(),"odometry measure");
-  //    RCLCPP_INFO_STREAM(node_->get_logger(),"\n"<<odometry_measure_);
+  //    RCLCPP_INFO_STREAM(get_node()->get_logger(),"odometry measure");
+  //    RCLCPP_INFO_STREAM(get_node()->get_logger(),"\n"<<odometry_measure_);
 
   kinematic_measure_ = toKinematicMeasure(odometry_measure_, kinematic_parameters_);
-  //    RCLCPP_INFO_STREAM(node_->get_logger(),"kinmeatic measure");
-  //    RCLCPP_INFO_STREAM(node_->get_logger(),"\n"<<kinematic_measure_);
+  //    RCLCPP_INFO_STREAM(get_node()->get_logger(),"kinmeatic measure");
+  //    RCLCPP_INFO_STREAM(get_node()->get_logger(),"\n"<<kinematic_measure_);
 }
 
 //-----------------------------------------------------------------------------
@@ -317,8 +317,8 @@ template<typename OdometryFrameType, typename KinematicType>
 void MobileBaseController<OdometryFrameType, KinematicType>::send_current_command_()
 {
   forwardKinematic(kinematic_parameters_, current_command_.cmd, odometry_frame_);
-//  RCLCPP_INFO_STREAM(node_->get_logger(),"odometry frame commad");
-//  RCLCPP_INFO_STREAM(node_->get_logger(),odometry_frame_);
+//  RCLCPP_INFO_STREAM(get_node()->get_logger(),"odometry frame commad");
+//  RCLCPP_INFO_STREAM(get_node()->get_logger(),odometry_frame_);
 
   controller_interface_->write(odometry_frame_, command_interfaces_);
 }
@@ -337,15 +337,15 @@ template<typename OdometryFrameType, typename KinematicType>
 void MobileBaseController<OdometryFrameType, KinematicType>::command_callback_(
   typename CommandMsg::ConstSharedPtr cmd_msg)
 {
-//  RCLCPP_INFO_STREAM(node_->get_logger(),"command_callback_");
+//  RCLCPP_INFO_STREAM(get_node()->get_logger(),"command_callback_");
   StampedCommand stamped_cmd;
   to_romea(*cmd_msg, stamped_cmd.cmd);
-  stamped_cmd.stamp = node_->get_clock()->now();
+  stamped_cmd.stamp = get_node()->get_clock()->now();
 
   if (is_running_) {
     //        ROS_INFO_STREAM("running");
     if (!isValid(stamped_cmd.cmd)) {
-      RCLCPP_WARN_STREAM(node_->get_logger(), "Received NaN in command. Ignoring.");
+      RCLCPP_WARN_STREAM(get_node()->get_logger(), "Received NaN in command. Ignoring.");
       return;
     }
 
@@ -353,7 +353,9 @@ void MobileBaseController<OdometryFrameType, KinematicType>::command_callback_(
     //        ROS_INFO_STREAM(stamped_cmd.cmd);
     command_buffer_.store(stamped_cmd);
   } else {
-    RCLCPP_ERROR(node_->get_logger(), "Can't accept new commands. Controller is not activated.");
+    RCLCPP_ERROR(
+      get_node()->get_logger(),
+      "Can't accept new commands. Controller is not activated.");
   }
 }
 
@@ -419,7 +421,7 @@ std::string MobileBaseController<InterfaceType, KinematicType>::load_base_frame_
   auto base_frame_id = get_parameter_or<std::string>(
     node_, BASE_FRAME_ID_PARAM_NAME, DEFAULT_BASE_FRAME_ID);
 
-  RCLCPP_INFO_STREAM(node_->get_logger(), "Base frame_id set to " << base_frame_id);
+  RCLCPP_INFO_STREAM(get_node()->get_logger(), "Base frame_id set to " << base_frame_id);
   return base_frame_id;
 }
 
@@ -437,7 +439,7 @@ std::string MobileBaseController<InterfaceType, KinematicType>::load_odom_frame_
   auto odom_frame_id = get_parameter_or<std::string>(
     node_, ODOM_FRAME_ID_PARAM_NAME, DEFAULT_ODOM_FRAME_ID);
 
-  RCLCPP_INFO_STREAM(node_->get_logger(), "Odometry frame_id set to " << odom_frame_id);
+  RCLCPP_INFO_STREAM(get_node()->get_logger(), "Odometry frame_id set to " << odom_frame_id);
   return odom_frame_id;
 }
 
@@ -454,7 +456,7 @@ bool MobileBaseController<InterfaceType, KinematicType>::load_enable_odom_tf_()
 {
   bool enable_odom_tf = get_parameter_or<bool>(node_, ENABLE_ODOM_TF_PARAM_NAME, false);
   RCLCPP_INFO_STREAM(
-    node_->get_logger(),
+    get_node()->get_logger(),
     "Publishing to tf is " << (enable_odom_tf ? "enabled" : "disabled"));
   return enable_odom_tf;
 }
@@ -477,7 +479,7 @@ void MobileBaseController<InterfaceType, KinematicType>::load_publish_period_()
   info_msg << "Controller state will be published at ";
   info_msg << publish_rate;
   info_msg << "Hz.";
-  RCLCPP_INFO_STREAM(node_->get_logger(), info_msg.str());
+  RCLCPP_INFO_STREAM(get_node()->get_logger(), info_msg.str());
 }
 
 ////-----------------------------------------------------------------------------
@@ -498,7 +500,7 @@ void MobileBaseController<OdometryFrameType, KinematicType>::load_command_timeou
   info_msg << "Commands will be considered old if they are older than ";
   info_msg << command_timeout;
   info_msg << "s.";
-  RCLCPP_INFO_STREAM(node_->get_logger(), info_msg.str());
+  RCLCPP_INFO_STREAM(get_node()->get_logger(), info_msg.str());
 }
 
 ////-----------------------------------------------------------------------------
@@ -541,7 +543,7 @@ void MobileBaseController<InterfaceType, KinematicType>::init_cmd_subscriber_()
   }
 
   auto callback = std::bind(&MobileBaseController::command_callback_, this, std::placeholders::_1);
-  command_sub_ = node_->create_subscription<CommandMsg>(cmd_topic, best_effort(1), callback);
+  command_sub_ = get_node()->create_subscription<CommandMsg>(cmd_topic, best_effort(1), callback);
 }
 
 //-----------------------------------------------------------------------------
