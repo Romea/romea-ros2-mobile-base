@@ -374,16 +374,16 @@ void MobileBaseController<OdometryFrameType, KinematicType>::reset_()
 // template <typename InterfaceType, typename KinematicType>
 // void MobileBaseController<InterfaceType,KinematicType>::declare_joints_names_()
 // {
-//   declare_parameter_with_default<std::string>(node_,JOINTS_PREFIX_PARAM_NAME,"");
-//  InterfaceType::declare_joints_names(node_,JOINTS_MAPPING_PARAM_NAME);
+//   declare_parameter_with_default<std::string>(get_node(),JOINTS_PREFIX_PARAM_NAME,"");
+//  InterfaceType::declare_joints_names(get_node(),JOINTS_MAPPING_PARAM_NAME);
 // }
 
 //-----------------------------------------------------------------------------
 template<typename InterfaceType, typename KinematicType>
 void MobileBaseController<InterfaceType, KinematicType>::load_joints_names_()
 {
-  std::string prefix = get_parameter_or<std::string>(node_, JOINTS_PREFIX_PARAM_NAME, "");
-  joints_names_ = InterfaceType::get_joints_names(node_, JOINTS_MAPPING_PARAM_NAME);
+  std::string prefix = get_parameter_or<std::string>(get_node(), JOINTS_PREFIX_PARAM_NAME, "");
+  joints_names_ = InterfaceType::get_joints_names(get_node(), JOINTS_MAPPING_PARAM_NAME);
 
 //  std::cout << " joint_names "<< std::endl;
   for (auto & joint_name : joints_names_) {
@@ -396,7 +396,7 @@ void MobileBaseController<InterfaceType, KinematicType>::load_joints_names_()
 // template <typename InterfaceType, typename KinematicType>
 // void MobileBaseController<InterfaceType,KinematicType>::declare_mobile_base_info_()
 // {
-//  declare_mobile_base_info<MobileBaseInfo>(node_,MOBILE_BASE_INFO_PARAM_NAME);
+//  declare_mobile_base_info<MobileBaseInfo>(get_node(),MOBILE_BASE_INFO_PARAM_NAME);
 // }
 
 //-----------------------------------------------------------------------------
@@ -404,14 +404,14 @@ template<typename InterfaceType, typename KinematicType>
 typename MobileBaseController<InterfaceType, KinematicType>::MobileBaseInfo
 MobileBaseController<InterfaceType, KinematicType>::load_mobile_base_info_()
 {
-  return get_mobile_base_info<MobileBaseInfo>(node_, MOBILE_BASE_INFO_PARAM_NAME);
+  return get_mobile_base_info<MobileBaseInfo>(get_node(), MOBILE_BASE_INFO_PARAM_NAME);
 }
 
 ////-----------------------------------------------------------------------------
 // template <typename InterfaceType, typename KinematicType>
 // void MobileBaseController<InterfaceType,KinematicType>::declare_base_frame_id_()
 // {
-//  declare_mobile_base_info<std::string>(node_,MOBILE_BASE_INFO_PARAM_NAME);
+//  declare_mobile_base_info<std::string>(get_node(),MOBILE_BASE_INFO_PARAM_NAME);
 // }
 
 //-----------------------------------------------------------------------------
@@ -419,7 +419,7 @@ template<typename InterfaceType, typename KinematicType>
 std::string MobileBaseController<InterfaceType, KinematicType>::load_base_frame_id_()
 {
   auto base_frame_id = get_parameter_or<std::string>(
-    node_, BASE_FRAME_ID_PARAM_NAME, DEFAULT_BASE_FRAME_ID);
+    get_node(), BASE_FRAME_ID_PARAM_NAME, DEFAULT_BASE_FRAME_ID);
 
   RCLCPP_INFO_STREAM(get_node()->get_logger(), "Base frame_id set to " << base_frame_id);
   return base_frame_id;
@@ -429,7 +429,7 @@ std::string MobileBaseController<InterfaceType, KinematicType>::load_base_frame_
 // template <typename InterfaceType, typename KinematicType>
 // void MobileBaseController<InterfaceType,KinematicType>::declare_odom_frame_id_()
 // {
-//   declare_mobile_base_info<std::string>(node_,ODOM_FRAME_ID_PARAM_NAME);
+//   declare_mobile_base_info<std::string>(get_node(),ODOM_FRAME_ID_PARAM_NAME);
 // }
 
 //-----------------------------------------------------------------------------
@@ -437,7 +437,7 @@ template<typename InterfaceType, typename KinematicType>
 std::string MobileBaseController<InterfaceType, KinematicType>::load_odom_frame_id_()
 {
   auto odom_frame_id = get_parameter_or<std::string>(
-    node_, ODOM_FRAME_ID_PARAM_NAME, DEFAULT_ODOM_FRAME_ID);
+    get_node(), ODOM_FRAME_ID_PARAM_NAME, DEFAULT_ODOM_FRAME_ID);
 
   RCLCPP_INFO_STREAM(get_node()->get_logger(), "Odometry frame_id set to " << odom_frame_id);
   return odom_frame_id;
@@ -447,14 +447,14 @@ std::string MobileBaseController<InterfaceType, KinematicType>::load_odom_frame_
 // template <typename InterfaceType, typename KinematicType>
 // void MobileBaseController<InterfaceType,KinematicType>::declare_enable_odom_tf_()
 // {
-//   declare_mobile_base_info<std::string>(node_,ENABLE_ODOM_TF_PARAM_NAME);
+//   declare_mobile_base_info<std::string>(get_node(),ENABLE_ODOM_TF_PARAM_NAME);
 // }
 
 //-----------------------------------------------------------------------------
 template<typename InterfaceType, typename KinematicType>
 bool MobileBaseController<InterfaceType, KinematicType>::load_enable_odom_tf_()
 {
-  bool enable_odom_tf = get_parameter_or<bool>(node_, ENABLE_ODOM_TF_PARAM_NAME, false);
+  bool enable_odom_tf = get_parameter_or<bool>(get_node(), ENABLE_ODOM_TF_PARAM_NAME, false);
   RCLCPP_INFO_STREAM(
     get_node()->get_logger(),
     "Publishing to tf is " << (enable_odom_tf ? "enabled" : "disabled"));
@@ -465,14 +465,14 @@ bool MobileBaseController<InterfaceType, KinematicType>::load_enable_odom_tf_()
 // template <typename InterfaceType, typename KinematicType>
 // void MobileBaseController<InterfaceType,KinematicType>::declare_publish_period_()
 // {
-//  declare_parameter_with_default<double>(node_,PUBLISH_RATE_PARAM_NAME, DEFAULT_PUBLISH_RATE);
+//  declare_parameter_with_default<double>(get_node(),PUBLISH_RATE_PARAM_NAME, DEFAULT_PUBLISH_RATE);
 // }
 
 //-----------------------------------------------------------------------------
 template<typename InterfaceType, typename KinematicType>
 void MobileBaseController<InterfaceType, KinematicType>::load_publish_period_()
 {
-  double publish_rate = get_parameter<double>(node_, PUBLISH_RATE_PARAM_NAME);
+  double publish_rate = get_parameter<double>(get_node(), PUBLISH_RATE_PARAM_NAME);
   publish_period_ = rclcpp::Duration::from_seconds(1.0 / publish_rate);
 
   std::stringstream info_msg;
@@ -486,14 +486,14 @@ void MobileBaseController<InterfaceType, KinematicType>::load_publish_period_()
 // template <typename InterfaceType, typename KinematicType>
 // void MobileBaseController<InterfaceType,KinematicType>::declare_command_timeout_()
 // {
-//  declare_parameter_with_default<double>(node_,TIMEOUT_PARAM_NAME, DEFAULT_COMMAND_TIMEOUT);
+//  declare_parameter_with_default<double>(get_node(),TIMEOUT_PARAM_NAME, DEFAULT_COMMAND_TIMEOUT);
 // }
 
 //-----------------------------------------------------------------------------
 template<typename OdometryFrameType, typename KinematicType>
 void MobileBaseController<OdometryFrameType, KinematicType>::load_command_timeout_()
 {
-  double command_timeout = get_parameter<double>(node_, TIMEOUT_PARAM_NAME);
+  double command_timeout = get_parameter<double>(get_node(), TIMEOUT_PARAM_NAME);
   command_timeout_ = rclcpp::Duration::from_seconds(command_timeout);
 
   std::stringstream info_msg;
@@ -507,14 +507,14 @@ void MobileBaseController<OdometryFrameType, KinematicType>::load_command_timeou
 // template <typename OdometryFrameType, typename KinematicType>
 // void MobileBaseController<OdometryFrameType,KinematicType>::declare_command_limits_()
 // {
-//  declare_command_limits<CommandLimits>(node_,COMMMAND_LIMITS_PARAM_NAME);
+//  declare_command_limits<CommandLimits>(get_node(),COMMMAND_LIMITS_PARAM_NAME);
 // }
 
 //-----------------------------------------------------------------------------
 template<typename OdometryFrameType, typename KinematicType>
 void MobileBaseController<OdometryFrameType, KinematicType>::load_command_limits_()
 {
-  user_command_limits_ = get_command_limits<CommandLimits>(node_, COMMMAND_LIMITS_PARAM_NAME);
+  user_command_limits_ = get_command_limits<CommandLimits>(get_node(), COMMMAND_LIMITS_PARAM_NAME);
 }
 
 //-----------------------------------------------------------------------------
@@ -555,11 +555,11 @@ void MobileBaseController<OdometryFrameType, KinematicType>::init_publishers_()
   bool enable_odom_tf = load_enable_odom_tf_();
 
   odometry_measure_publisher_ = std::make_unique<OdometryMeasurePublisher>(
-    node_, "controller/odometry", base_frame_id, sensor_data_qos());
+    get_node(), "controller/odometry", base_frame_id, sensor_data_qos());
   kinematic_measure_publisher_ = std::make_unique<KinematicMeasurePublisher>(
-    node_, "controller/kinematic", base_frame_id, sensor_data_qos());
+    get_node(), "controller/kinematic", base_frame_id, sensor_data_qos());
   dead_reckoning_publisher_ = std::make_unique<DeadReckoningPublisher>(
-    node_, odom_frame_id, base_frame_id, enable_odom_tf);
+    get_node(), odom_frame_id, base_frame_id, enable_odom_tf);
 }
 
 // template class MobileBaseController<ControllerInterface1FAS2FWD, OneAxleSteeringKinematic>;
