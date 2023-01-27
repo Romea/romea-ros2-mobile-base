@@ -21,6 +21,7 @@ set(ROS_DISTRO "ROS_${ROS_DISTRO}")
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(rclcpp_lifecycle REQUIRED)
 find_package(romea_core_common REQUIRED)
 find_package(romea_core_mobile_base REQUIRED)
 find_package(romea_common_utils REQUIRED)
@@ -47,6 +48,7 @@ add_library(${PROJECT_NAME} SHARED
 
 ament_target_dependencies(${PROJECT_NAME}
   rclcpp
+  rclcpp_lifecycle
   romea_core_common
   romea_core_mobile_base
   romea_common_utils
