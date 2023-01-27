@@ -13,6 +13,7 @@
 
 // ros
 #include "rclcpp/node.hpp"
+#include "rclcpp_lifecycle/lifecycle_node.hpp"
 #include "realtime_tools/realtime_publisher.h"
 #include "tf2_msgs/msg/tf_message.hpp"
 #include "nav_msgs/msg/odometry.hpp"
@@ -27,6 +28,13 @@ namespace romea
 class DeadReckoningPublisher
 {
 private:
+#if ROD_DISTRO == ROS_GALACTIC
+  using Node = rclcpp::Node;
+#else
+  using Node = rclcpp_lifecycle::LifecycleNode;
+#endif
+
+private:
   using TfPublisher = realtime_tools::RealtimePublisher<tf2_msgs::msg::TFMessage>;
   using OdomPublisher = realtime_tools::RealtimePublisher<nav_msgs::msg::Odometry>;
   using KinematicPublisher =
@@ -34,7 +42,7 @@ private:
 
 public:
   DeadReckoningPublisher(
-    std::shared_ptr<rclcpp::Node> node,
+    std::shared_ptr<Node> node,
     const std::string & odom_frame_id,
     const std::string & base_frame_id,
     const bool & enable_odom_tf);
@@ -47,12 +55,12 @@ public:
 
 private:
   void initOdomPublisher_(
-    std::shared_ptr<rclcpp::Node> node,
+    std::shared_ptr<Node> node,
     const std::string & odom_frame_id,
     const std::string & base_frame_id);
 
   void initOdomTFPublisher_(
-    std::shared_ptr<rclcpp::Node> node,
+    std::shared_ptr<Node> node,
     const std::string & odom_frame_id,
     const std::string & base_frame_id);
 
