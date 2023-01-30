@@ -32,7 +32,7 @@ namespace romea
 
 //-----------------------------------------------------------------------------
 DeadReckoningPublisher::DeadReckoningPublisher(
-  std::shared_ptr<Node> node,
+  std::shared_ptr<HardwareInterfaceNode> node,
   const std::string & odom_frame_id,
   const std::string & base_frame_id,
   const bool & enable_odom_tf)
@@ -49,7 +49,7 @@ DeadReckoningPublisher::DeadReckoningPublisher(
 
 //-----------------------------------------------------------------------------
 void DeadReckoningPublisher::initOdomPublisher_(
-  std::shared_ptr<Node> node,
+  std::shared_ptr<HardwareInterfaceNode> node,
   const std::string & odom_frame_id,
   const std::string & base_frame_id)
 {
@@ -61,7 +61,7 @@ void DeadReckoningPublisher::initOdomPublisher_(
 
 //-----------------------------------------------------------------------------
 void DeadReckoningPublisher::initOdomTFPublisher_(
-  std::shared_ptr<Node> node,
+  std::shared_ptr<HardwareInterfaceNode> node,
   const std::string & odom_frame_id,
   const std::string & base_frame_id)
 {

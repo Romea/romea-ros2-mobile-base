@@ -12,6 +12,7 @@
 #include "gazebo_ros2_control/gazebo_system_interface.hpp"
 
 // romea
+#include "romea_common_utils/ros_versions.hpp"
 #include "romea_mobile_base_simulation/simulation_interface1FAS2FWD.hpp"
 #include "romea_mobile_base_simulation/simulation_interface1FAS2RWD.hpp"
 #include "romea_mobile_base_simulation/simulation_interface2AS4WD.hpp"
@@ -66,9 +67,19 @@ public:
 
   std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
 
+#if ROS_DISTRO == ROS_GALACTIC
   virtual hardware_interface::return_type read();
 
   virtual hardware_interface::return_type write();
+#else
+  virtual hardware_interface::return_type read(
+    const rclcpp::Time & time,
+    const rclcpp::Duration & period);
+
+  virtual hardware_interface::return_type write(
+    const rclcpp::Time & time,
+    const rclcpp::Duration & period);
+#endif
 
 private:
   bool check_physics_engine_configuration_();

@@ -465,7 +465,8 @@ bool MobileBaseController<InterfaceType, KinematicType>::load_enable_odom_tf_()
 // template <typename InterfaceType, typename KinematicType>
 // void MobileBaseController<InterfaceType,KinematicType>::declare_publish_period_()
 // {
-//  declare_parameter_with_default<double>(get_node(),PUBLISH_RATE_PARAM_NAME, DEFAULT_PUBLISH_RATE);
+// declare_parameter_with_default<double>(
+//   get_node(), PUBLISH_RATE_PARAM_NAME, DEFAULT_PUBLISH_RATE);
 // }
 
 //-----------------------------------------------------------------------------

@@ -60,7 +60,8 @@ bool GazeboSystemInterface<GazeboInterface,
 
 //-----------------------------------------------------------------------------
 template<typename GazeboInterface, typename SimulationInterface>
-CallbackReturn GazeboSystemInterface<GazeboInterface, SimulationInterface>::on_init(
+rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
+GazeboSystemInterface<GazeboInterface, SimulationInterface>::on_init(
   const hardware_interface::HardwareInfo & hardware_info)
 {
   if (hardware_interface::SystemInterface::on_init(hardware_info) != CallbackReturn::SUCCESS) {
@@ -72,7 +73,8 @@ CallbackReturn GazeboSystemInterface<GazeboInterface, SimulationInterface>::on_i
 
 //-----------------------------------------------------------------------------
 template<typename GazeboInterface, typename SimulationInterface>
-CallbackReturn GazeboSystemInterface<GazeboInterface, SimulationInterface>::on_activate(
+rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
+GazeboSystemInterface<GazeboInterface, SimulationInterface>::on_activate(
   const rclcpp_lifecycle::State & previous_state)
 {
   return CallbackReturn::SUCCESS;
@@ -80,7 +82,8 @@ CallbackReturn GazeboSystemInterface<GazeboInterface, SimulationInterface>::on_a
 
 //-----------------------------------------------------------------------------
 template<typename GazeboInterface, typename SimulationInterface>
-CallbackReturn GazeboSystemInterface<GazeboInterface, SimulationInterface>::on_deactivate(
+rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
+GazeboSystemInterface<GazeboInterface, SimulationInterface>::on_deactivate(
   const rclcpp_lifecycle::State & previous_state)
 {
   return CallbackReturn::SUCCESS;
@@ -138,7 +141,13 @@ bool GazeboSystemInterface<GazeboInterface, SimulationInterface>::init_hardware_
 
 //-----------------------------------------------------------------------------
 template<typename GazeboInterface, typename SimulationInterface>
+#if ROS_DISTRO == ROS_GALACTIC
 hardware_interface::return_type GazeboSystemInterface<GazeboInterface, SimulationInterface>::read()
+#else
+hardware_interface::return_type GazeboSystemInterface<GazeboInterface, SimulationInterface>::read(
+  const rclcpp::Time & time,
+  const rclcpp::Duration & period)
+#endif
 {
   simulation_interface_->set_state(gazebo_interface_->get_state());
   return hardware_interface::return_type::OK;
@@ -146,7 +155,13 @@ hardware_interface::return_type GazeboSystemInterface<GazeboInterface, Simulatio
 
 //-----------------------------------------------------------------------------
 template<typename GazeboInterface, typename SimulationInterface>
+#if ROS_DISTRO == ROS_GALACTIC
 hardware_interface::return_type GazeboSystemInterface<GazeboInterface, SimulationInterface>::write()
+#else
+hardware_interface::return_type GazeboSystemInterface<GazeboInterface, SimulationInterface>::write(
+  const rclcpp::Time & time,
+  const rclcpp::Duration & period)
+#endif
 {
   gazebo_interface_->set_command(simulation_interface_->get_command());
   return hardware_interface::return_type::OK;

@@ -10,7 +10,6 @@
 
 // romea ros
 #include "romea_mobile_base_msgs/msg/kinematic_measure_stamped.hpp"
-#include "romea_common_utils/ros_versions.hpp"
 
 // ros
 #include "rclcpp/node.hpp"
@@ -22,19 +21,13 @@
 
 // local
 #include "dead_reckoning.hpp"
+#include "interfaces/controller_interface_common.hpp"
 
 namespace romea
 {
 
 class DeadReckoningPublisher
 {
-private:
-#if ROD_DISTRO == ROS_GALACTIC
-  using Node = rclcpp::Node;
-#else
-  using Node = rclcpp_lifecycle::LifecycleNode;
-#endif
-
 private:
   using TfPublisher = realtime_tools::RealtimePublisher<tf2_msgs::msg::TFMessage>;
   using OdomPublisher = realtime_tools::RealtimePublisher<nav_msgs::msg::Odometry>;
@@ -43,7 +36,7 @@ private:
 
 public:
   DeadReckoningPublisher(
-    std::shared_ptr<Node> node,
+    std::shared_ptr<HardwareInterfaceNode> node,
     const std::string & odom_frame_id,
     const std::string & base_frame_id,
     const bool & enable_odom_tf);
@@ -56,12 +49,12 @@ public:
 
 private:
   void initOdomPublisher_(
-    std::shared_ptr<Node> node,
+    std::shared_ptr<HardwareInterfaceNode> node,
     const std::string & odom_frame_id,
     const std::string & base_frame_id);
 
   void initOdomTFPublisher_(
-    std::shared_ptr<Node> node,
+    std::shared_ptr<HardwareInterfaceNode> node,
     const std::string & odom_frame_id,
     const std::string & base_frame_id);
 

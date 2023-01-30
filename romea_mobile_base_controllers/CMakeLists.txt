@@ -17,7 +17,6 @@ endif()
 
 string(TOUPPER $ENV{ROS_DISTRO} ROS_DISTRO)
 set(ROS_DISTRO "ROS_${ROS_DISTRO}")
-message(STATUS, "ros distro equal to  ${ROS_DISTRO}")
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
@@ -30,6 +29,7 @@ find_package(romea_mobile_base_msgs REQUIRED)
 find_package(romea_mobile_base_utils REQUIRED)
 find_package(controller_interface REQUIRED)
 find_package(realtime_tools REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
   src/interfaces/controller_interface1FAS2FWD.cpp
@@ -55,7 +55,8 @@ ament_target_dependencies(${PROJECT_NAME}
   romea_common_utils
   romea_mobile_base_msgs
   romea_mobile_base_utils
-  controller_interface)
+  controller_interface
+  tf2_geometry_msgs)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>

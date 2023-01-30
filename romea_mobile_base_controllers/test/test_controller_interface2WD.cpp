@@ -37,7 +37,7 @@ protected:
         "-p", "joints.right_wheel_spinning_joint_name:=J2",
       });
 
-    node = std::make_shared<rclcpp::Node>("test_interface_controller_2WD", no);
+    node = std::make_shared<romea::HardwareInterfaceNode>("test_interface_controller_2WD", no);
 
     state_values.resize(2);
     command_values.resize(2);
@@ -72,7 +72,7 @@ protected:
     controller_interface = std::make_unique<romea::ControllerInterface2WD>(mobile_info);
   }
 
-  std::shared_ptr<rclcpp::Node> node;
+  std::shared_ptr<romea::HardwareInterfaceNode> node;
 
   std::vector<double> state_values;
   std::vector<double> command_values;
