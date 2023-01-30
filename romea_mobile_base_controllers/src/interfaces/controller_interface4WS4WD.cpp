@@ -82,7 +82,7 @@ void ControllerInterface4WS4WD::read(
 
 //-----------------------------------------------------------------------------
 void ControllerInterface4WS4WD::declare_joints_names(
-  std::shared_ptr<rclcpp::Node> node, const std::string & parameters_ns)
+  std::shared_ptr<HardwareInterfaceNode> node, const std::string & parameters_ns)
 {
   declare_parameter<std::string>(node, parameters_ns, front_left_wheel_steering_joint_param_name);
   declare_parameter<std::string>(node, parameters_ns, front_right_wheel_steering_joint_param_name);
@@ -96,7 +96,7 @@ void ControllerInterface4WS4WD::declare_joints_names(
 
 //-----------------------------------------------------------------------------
 std::vector<std::string> ControllerInterface4WS4WD::get_joints_names(
-  std::shared_ptr<rclcpp::Node> node, const std::string & parameters_ns)
+  std::shared_ptr<HardwareInterfaceNode> node, const std::string & parameters_ns)
 {
   return {get_parameter<std::string>(
       node, parameters_ns,

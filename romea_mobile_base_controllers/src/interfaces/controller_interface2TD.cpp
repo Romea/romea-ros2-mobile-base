@@ -54,7 +54,7 @@ void ControllerInterface2TD::read(
 
 //-----------------------------------------------------------------------------
 void ControllerInterface2TD::declare_joints_names(
-  std::shared_ptr<rclcpp::Node> node, const std::string & parameters_ns)
+  std::shared_ptr<HardwareInterfaceNode> node, const std::string & parameters_ns)
 {
   declare_parameter<std::string>(
     node, parameters_ns,
@@ -66,7 +66,7 @@ void ControllerInterface2TD::declare_joints_names(
 
 //-----------------------------------------------------------------------------
 std::vector<std::string> ControllerInterface2TD::get_joints_names(
-  std::shared_ptr<rclcpp::Node> node, const std::string & parameters_ns)
+  std::shared_ptr<HardwareInterfaceNode> node, const std::string & parameters_ns)
 {
   return {get_parameter<std::string>(
       node, parameters_ns,

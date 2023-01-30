@@ -52,11 +52,11 @@ public:
 
 public:
   static void declare_joints_names(
-    std::shared_ptr<rclcpp::Node> node,
+    std::shared_ptr<HardwareInterfaceNode> node,
     const std::string & parameters_ns);
 
   static std::vector<std::string> get_joints_names(
-    std::shared_ptr<rclcpp::Node> node,
+    std::shared_ptr<HardwareInterfaceNode> node,
     const std::string & parameters_ns);
 
   static std::vector<std::string> hardware_interface_names(

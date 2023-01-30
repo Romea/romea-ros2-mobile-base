@@ -52,7 +52,7 @@ void ControllerInterface2WD::read(
 
 //-----------------------------------------------------------------------------
 void ControllerInterface2WD::declare_joints_names(
-  std::shared_ptr<rclcpp::Node> node, const std::string & parameters_ns)
+  std::shared_ptr<HardwareInterfaceNode> node, const std::string & parameters_ns)
 {
   declare_parameter<std::string>(node, parameters_ns, left_wheel_spinning_joint_param_name);
   declare_parameter<std::string>(node, parameters_ns, right_wheel_spinning_joint_param_name);
@@ -60,7 +60,7 @@ void ControllerInterface2WD::declare_joints_names(
 
 //-----------------------------------------------------------------------------
 std::vector<std::string> ControllerInterface2WD::get_joints_names(
-  std::shared_ptr<rclcpp::Node> node, const std::string & parameters_ns)
+  std::shared_ptr<HardwareInterfaceNode> node, const std::string & parameters_ns)
 {
   return {get_parameter<std::string>(node, parameters_ns, left_wheel_spinning_joint_param_name),
     get_parameter<std::string>(node, parameters_ns, right_wheel_spinning_joint_param_name)};
