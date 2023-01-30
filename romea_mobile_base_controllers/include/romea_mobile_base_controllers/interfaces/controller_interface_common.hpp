@@ -7,10 +7,13 @@
 // std
 #include <string>
 
+
 // ros
 #include "controller_interface/controller_interface.hpp"
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
 
+// romea ros
+#include "romea_common_utils/ros_versions.hpp"
 
 namespace romea
 {

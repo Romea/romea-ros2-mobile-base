@@ -10,6 +10,7 @@
 
 // romea ros
 #include "romea_mobile_base_msgs/msg/kinematic_measure_stamped.hpp"
+#include "romea_common_utils/ros_versions.hpp"
 
 // ros
 #include "rclcpp/node.hpp"
