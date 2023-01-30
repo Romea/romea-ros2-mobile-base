@@ -17,6 +17,7 @@ endif()
 
 string(TOUPPER $ENV{ROS_DISTRO} ROS_DISTRO)
 set(ROS_DISTRO "ROS_${ROS_DISTRO}")
+message(STATUS, "ros distro equal to  ${ROS_DISTRO}")
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
