@@ -173,23 +173,19 @@ make_command_publisher(
   std::shared_ptr<NodeType> node,
   const std::string message_type)
 {
-  if constexpr (std::is_same_v<CommandType, SkidSteeringCommand>)
-  {
+  if constexpr (std::is_same_v<CommandType, SkidSteeringCommand>) {
     return CommandPublisher<SkidSteeringCommand>::instance(node, message_type);
   }
 
-  if constexpr (std::is_same_v<CommandType, OmniSteeringCommand>)
-  {
+  if constexpr (std::is_same_v<CommandType, OmniSteeringCommand>) {
     return CommandPublisher<OmniSteeringCommand>::instance(node, message_type);
   }
 
-  if constexpr (std::is_same_v<CommandType, OneAxleSteeringCommand>)
-  {
+  if constexpr (std::is_same_v<CommandType, OneAxleSteeringCommand>) {
     return CommandPublisher<OneAxleSteeringCommand>::instance(node, message_type);
   }
 
-  if constexpr (std::is_same_v<CommandType, TwoAxleSteeringCommand>)
-  {
+  if constexpr (std::is_same_v<CommandType, TwoAxleSteeringCommand>) {
     return CommandPublisher<TwoAxleSteeringCommand>::instance(node, message_type);
   }
 }

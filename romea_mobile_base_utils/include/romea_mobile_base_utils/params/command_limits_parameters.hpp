@@ -250,8 +250,7 @@ void declare_command_limits(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
-  if constexpr (std::is_same_v<Limits, SkidSteeringCommandLimits>)
-  {
+  if constexpr (std::is_same_v<Limits, SkidSteeringCommandLimits>) {
     declare_skid_steering_command_limits(node, parameters_ns);
   } else if constexpr (std::is_same_v<Limits, OmniSteeringCommandLimits>) {
     declare_omni_steering_command_limits(node, parameters_ns);

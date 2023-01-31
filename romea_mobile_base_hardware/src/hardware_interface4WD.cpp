@@ -58,8 +58,7 @@ HardwareCommand4WD HardwareInterface4WD::get_command()const
   return {front_left_wheel_spinning_joint_.get_command(),
       front_right_wheel_spinning_joint_.get_command(),
       rear_left_wheel_spinning_joint_.get_command(),
-      rear_right_wheel_spinning_joint_.get_command()
-  };
+      rear_right_wheel_spinning_joint_.get_command()};
 }
 
 //-----------------------------------------------------------------------------
