@@ -35,11 +35,26 @@ protected:
   {
     joint_info.name = "spinning_wheel";
     joint_info.type = "joint";
-    joint_info.command_interfaces.push_back({hardware_interface::HW_IF_VELOCITY, "-1", "1", "", 0});
-    joint_info.command_interfaces.push_back({hardware_interface::HW_IF_EFFORT, "-1", "1", "", 0});
-    joint_info.state_interfaces.push_back({hardware_interface::HW_IF_POSITION, "", "", "", 0});
-    joint_info.state_interfaces.push_back({hardware_interface::HW_IF_VELOCITY, "", "", "", 0});
-    joint_info.state_interfaces.push_back({hardware_interface::HW_IF_EFFORT, "", "", "", 0});
+    joint_info.command_interfaces.push_back(
+      make_interface_info(
+        hardware_interface::HW_IF_VELOCITY,
+        "-1", "1"));
+    joint_info.command_interfaces.push_back(
+      make_interface_info(
+        hardware_interface::HW_IF_EFFORT,
+        "-1", "1"));
+    joint_info.state_interfaces.push_back(
+      make_interface_info(
+        hardware_interface::HW_IF_POSITION,
+        "", ""));
+    joint_info.state_interfaces.push_back(
+      make_interface_info(
+        hardware_interface::HW_IF_VELOCITY,
+        "", ""));
+    joint_info.state_interfaces.push_back(
+      make_interface_info(
+        hardware_interface::HW_IF_EFFORT, "",
+        ""));
   }
 
   void MakeJoint(const std::string & command_interface_type)

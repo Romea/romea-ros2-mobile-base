@@ -53,8 +53,7 @@ T get_parameter(
 {
   std::string parameter = get_parameter(hardware_info, parameter_name);
 
-  if constexpr (std::is_same_v<T, std::string>)
-  {
+  if constexpr (std::is_same_v<T, std::string>) {
     return parameter;
   } else {
     return lexical_cast<T>(parameter);

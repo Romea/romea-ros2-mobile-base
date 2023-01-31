@@ -7,6 +7,9 @@
 // std
 #include <string>
 
+// ros
+#include "hardware_interface/hardware_info.hpp"
+
 // romea
 #include "romea_common_utils/ros_versions.hpp"
 
@@ -21,5 +24,18 @@ void check_interface_name(
   EXPECT_STREQ(interface.get_name().c_str(), expected_name.c_str());
 #endif
 }
+
+hardware_interface::InterfaceInfo make_interface_info(
+  const std::string & name,
+  const std::string & min,
+  const std::string & max)
+{
+  hardware_interface::InterfaceInfo info;
+  info.name = name;
+  info.min = min;
+  info.max = max;
+  return info;
+}
+
 
 #endif  // TEST_UTILS_HPP_

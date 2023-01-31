@@ -35,8 +35,14 @@ protected:
   {
     joint_info.name = "steering_wheel";
     joint_info.type = "joint";
-    joint_info.command_interfaces.push_back({hardware_interface::HW_IF_POSITION, "-1", "1", "", 0});
-    joint_info.state_interfaces.push_back({hardware_interface::HW_IF_POSITION, "", "", "", 0});
+    joint_info.command_interfaces.push_back(
+      make_interface_info(
+        hardware_interface::HW_IF_POSITION,
+        "-1", "1"));
+    joint_info.state_interfaces.push_back(
+      make_interface_info(
+        hardware_interface::HW_IF_POSITION,
+        "", ""));
     joint = std::make_unique<romea::SteeringJointHardwareInterface>(joint_info);
   }
 
