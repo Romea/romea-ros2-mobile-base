@@ -17,6 +17,7 @@
 
 // local
 #include "../test/test_helper.h"
+#include "../test/test_utils.hpp"
 #include "romea_mobile_base_hardware/hardware_interface4WS4WD.hpp"
 
 class TestHarwareInterface4WS4WD : public ::testing::Test
@@ -61,42 +62,43 @@ TEST_F(TestHarwareInterface4WS4WD, checkStateInterfaceNames)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
   auto state_interfaces = interface->export_state_interfaces();
-  EXPECT_STREQ(state_interfaces[0].get_name().c_str(), "robot_joint1");
-  EXPECT_STREQ(state_interfaces[1].get_name().c_str(), "robot_joint2");
-  EXPECT_STREQ(state_interfaces[2].get_name().c_str(), "robot_joint3");
-  EXPECT_STREQ(state_interfaces[3].get_name().c_str(), "robot_joint4");
-  EXPECT_STREQ(state_interfaces[4].get_name().c_str(), "robot_joint5");
-  EXPECT_STREQ(state_interfaces[7].get_name().c_str(), "robot_joint6");
-  EXPECT_STREQ(state_interfaces[10].get_name().c_str(), "robot_joint7");
-  EXPECT_STREQ(state_interfaces[13].get_name().c_str(), "robot_joint8");
+  check_interface_name(state_interfaces[0], "robot_joint1/position");
+  check_interface_name(state_interfaces[1], "robot_joint2/position");
+  check_interface_name(state_interfaces[2], "robot_joint3/position");
+  check_interface_name(state_interfaces[3], "robot_joint4/position");
+  check_interface_name(state_interfaces[4], "robot_joint5/position");
+  check_interface_name(state_interfaces[7], "robot_joint6/position");
+  check_interface_name(state_interfaces[10], "robot_joint7/position");
+  check_interface_name(state_interfaces[13], "robot_joint8/position");
 }
+
 
 TEST_F(TestHarwareInterface4WS4WD, checkCommandInterfaceTypeWhenVelocityControlIsUsed)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
   auto command_interfaces = interface->export_command_interfaces();
-  EXPECT_STREQ(command_interfaces[0].get_full_name().c_str(), "robot_joint1/position");
-  EXPECT_STREQ(command_interfaces[1].get_full_name().c_str(), "robot_joint2/position");
-  EXPECT_STREQ(command_interfaces[2].get_full_name().c_str(), "robot_joint3/position");
-  EXPECT_STREQ(command_interfaces[3].get_full_name().c_str(), "robot_joint4/position");
-  EXPECT_STREQ(command_interfaces[4].get_full_name().c_str(), "robot_joint5/velocity");
-  EXPECT_STREQ(command_interfaces[5].get_full_name().c_str(), "robot_joint6/velocity");
-  EXPECT_STREQ(command_interfaces[6].get_full_name().c_str(), "robot_joint7/velocity");
-  EXPECT_STREQ(command_interfaces[7].get_full_name().c_str(), "robot_joint8/velocity");
+  check_interface_name(command_interfaces[0], "robot_joint1/position");
+  check_interface_name(command_interfaces[1], "robot_joint2/position");
+  check_interface_name(command_interfaces[2], "robot_joint3/position");
+  check_interface_name(command_interfaces[3], "robot_joint4/position");
+  check_interface_name(command_interfaces[4], "robot_joint5/velocity");
+  check_interface_name(command_interfaces[5], "robot_joint6/velocity");
+  check_interface_name(command_interfaces[6], "robot_joint7/velocity");
+  check_interface_name(command_interfaces[7], "robot_joint8/velocity");
 }
 
 TEST_F(TestHarwareInterface4WS4WD, DISABLED_checkCommandInterfaceTypeWhenEffortControlIsUsed)
 {
   MakeInterface(hardware_interface::HW_IF_EFFORT);
   auto command_interfaces = interface->export_command_interfaces();
-  EXPECT_STREQ(command_interfaces[0].get_full_name().c_str(), "robot_joint1/position");
-  EXPECT_STREQ(command_interfaces[1].get_full_name().c_str(), "robot_joint2/position");
-  EXPECT_STREQ(command_interfaces[2].get_full_name().c_str(), "robot_joint3/position");
-  EXPECT_STREQ(command_interfaces[3].get_full_name().c_str(), "robot_joint4/position");
-  EXPECT_STREQ(command_interfaces[4].get_full_name().c_str(), "robot_joint5/effort");
-  EXPECT_STREQ(command_interfaces[5].get_full_name().c_str(), "robot_joint6/effort");
-  EXPECT_STREQ(command_interfaces[6].get_full_name().c_str(), "robot_joint7/effort");
-  EXPECT_STREQ(command_interfaces[7].get_full_name().c_str(), "robot_joint8/effort");
+  check_interface_name(command_interfaces[0], "robot_joint1/position");
+  check_interface_name(command_interfaces[1], "robot_joint2/position");
+  check_interface_name(command_interfaces[2], "robot_joint3/position");
+  check_interface_name(command_interfaces[3], "robot_joint4/position");
+  check_interface_name(command_interfaces[4], "robot_joint5/effort");
+  check_interface_name(command_interfaces[5], "robot_joint6/effort");
+  check_interface_name(command_interfaces[6], "robot_joint7/effort");
+  check_interface_name(command_interfaces[7], "robot_joint8/effort");
 }
 
 

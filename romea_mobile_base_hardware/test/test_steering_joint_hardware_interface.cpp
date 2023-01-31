@@ -15,6 +15,7 @@
 
 // romea
 #include "../test/test_helper.h"
+#include "../test/test_utils.hpp"
 #include "romea_mobile_base_hardware/steering_joint_hardware_interface.hpp"
 
 class TestSteeringJointHardwateInterface : public ::testing::Test
@@ -50,7 +51,7 @@ TEST_F(TestSteeringJointHardwateInterface, checkExportedStateInterfaces)
   joint->export_state_interface(state_interfaces);
 
   EXPECT_EQ(state_interfaces.size(), 1u);
-  EXPECT_STREQ(state_interfaces[0].get_full_name().c_str(), "steering_wheel/position");
+  check_interface_name(state_interfaces[0], "steering_wheel/position");
 }
 
 TEST_F(TestSteeringJointHardwateInterface, checkExportedCommandInterfaces)
@@ -59,7 +60,7 @@ TEST_F(TestSteeringJointHardwateInterface, checkExportedCommandInterfaces)
   joint->export_command_interface(command_interfaces);
 
   EXPECT_EQ(command_interfaces.size(), 1u);
-  EXPECT_STREQ(command_interfaces[0].get_full_name().c_str(), "steering_wheel/position");
+  check_interface_name(command_interfaces[0], "steering_wheel/position");
 }
 
 //-----------------------------------------------------------------------------

@@ -53,18 +53,16 @@ HardwareSystemInterface<HardwareInterface>::on_init(
   // }
 
 
-  if (hardware_interface::SystemInterface::on_init(hardware_info) !=
-    rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS)
-  {
-    return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::ERROR;
+  if (hardware_interface::SystemInterface::on_init(hardware_info) != CallbackReturn::SUCCESS) {
+    return CallbackReturn::ERROR;
   }
 
   if (load_info_(hardware_info) == hardware_interface::return_type::OK &&
     load_interface_(hardware_info) == hardware_interface::return_type::OK)
   {
-    return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
+    return CallbackReturn::SUCCESS;
   } else {
-    return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::ERROR;
+    return CallbackReturn::ERROR;
   }
 }
 
@@ -104,9 +102,9 @@ HardwareSystemInterface<HardwareInterface>::on_configure(
     "on_configure : previous state " << int(previous_state.id()) << " " <<
       previous_state.label());
   if (connect_() == hardware_interface::return_type::OK) {
-    return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
+    return CallbackReturn::SUCCESS;
   } else {
-    return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::FAILURE;
+    return CallbackReturn::FAILURE;
   }
 }
 
@@ -121,10 +119,10 @@ HardwareSystemInterface<HardwareInterface>::on_cleanup(
       "HardwareSystemInterface"),
     "on_cleanup : previous state " << int(previous_state.id()) << " " << previous_state.label());
   if (disconnect_() == hardware_interface::return_type::OK) {
-    return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
+    return CallbackReturn::SUCCESS;
   } else {
     RCLCPP_ERROR_STREAM(rclcpp::get_logger("HardwareSystemInterface"), "on_cleanup raised error");
-    return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::ERROR;
+    return CallbackReturn::ERROR;
   }
 }
 
@@ -139,7 +137,7 @@ HardwareSystemInterface<HardwareInterface>::on_activate(
     rclcpp::get_logger(
       "HardwareSystemInterface"),
     "on_activate : previous state " << int(previous_state.id()) << " " << previous_state.label());
-  return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
+  return CallbackReturn::SUCCESS;
 }
 
 //-----------------------------------------------------------------------------
@@ -154,7 +152,7 @@ HardwareSystemInterface<HardwareInterface>::on_deactivate(
       "HardwareSystemInterface"),
     "on_deactivate : previous state" << int(previous_state.id()) << " " <<
       previous_state.label());
-  return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
+  return CallbackReturn::SUCCESS;
 }
 
 //-----------------------------------------------------------------------------
@@ -170,11 +168,11 @@ HardwareSystemInterface<HardwareInterface>::on_shutdown(
       previous_state.label());
 
   if (static_cast<int>(previous_state.id()) == 1) {
-    return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
+    return CallbackReturn::SUCCESS;
   } else if (disconnect_() == hardware_interface::return_type::OK) {
-    return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
+    return CallbackReturn::SUCCESS;
   } else {
-    return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::ERROR;
+    return CallbackReturn::ERROR;
   }
 }
 
@@ -188,7 +186,7 @@ HardwareSystemInterface<HardwareInterface>::on_error(
     rclcpp::get_logger(
       "HardwareSystemInterface"),
     "on_error : previous state " << int(previous_state.id()) << " " << previous_state.label());
-  return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::FAILURE;
+  return CallbackReturn::FAILURE;
 }
 
 //-----------------------------------------------------------------------------

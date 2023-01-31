@@ -17,6 +17,7 @@
 
 // romea
 #include "../test/test_helper.h"
+#include "../test/test_utils.hpp"
 #include "romea_mobile_base_hardware/hardware_interface4WD.hpp"
 
 class TestHarwareInterface4WD : public ::testing::Test
@@ -61,49 +62,30 @@ TEST_F(TestHarwareInterface4WD, checkStateInterfaceNames)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
   auto state_interfaces = interface->export_state_interfaces();
-  EXPECT_STREQ(state_interfaces[0].get_name().c_str(), "robot_joint1");
-  EXPECT_STREQ(state_interfaces[3].get_name().c_str(), "robot_joint2");
-  EXPECT_STREQ(state_interfaces[6].get_name().c_str(), "robot_joint3");
-  EXPECT_STREQ(state_interfaces[9].get_name().c_str(), "robot_joint4");
-
-  //  EXPECT_STREQ(interface->front_left_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint1");
-  //  EXPECT_STREQ(interface->front_right_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint2");
-  //  EXPECT_STREQ(interface->rear_left_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint3");
-  //  EXPECT_STREQ(interface->rear_right_wheel_spinning_joint.command.get_joint_name().c_str(),"robot_joint4");
-  //  EXPECT_STREQ(interface->front_left_wheel_spinning_joint.feedback.position.get_joint_name().c_str(),"robot_joint1");
-  //  EXPECT_STREQ(interface->front_right_wheel_spinning_joint.feedback.position.get_joint_name().c_str(),"robot_joint2");
-  //  EXPECT_STREQ(interface->rear_left_wheel_spinning_joint.feedback.position.get_joint_name().c_str(),"robot_joint3");
-  //  EXPECT_STREQ(interface->rear_right_wheel_spinning_joint.feedback.position.get_joint_name().c_str(),"robot_joint4");
+  check_interface_name(state_interfaces[0], "robot_joint1/position");
+  check_interface_name(state_interfaces[3], "robot_joint2/position");
+  check_interface_name(state_interfaces[6], "robot_joint3/position");
+  check_interface_name(state_interfaces[9], "robot_joint4/position");
 }
 
 TEST_F(TestHarwareInterface4WD, checkCommandInterfaceTypeWhenVelocityCovntrolIsUsed)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
   auto command_interfaces = interface->export_command_interfaces();
-  EXPECT_STREQ(command_interfaces[0].get_full_name().c_str(), "robot_joint1/velocity");
-  EXPECT_STREQ(command_interfaces[1].get_full_name().c_str(), "robot_joint2/velocity");
-  EXPECT_STREQ(command_interfaces[2].get_full_name().c_str(), "robot_joint3/velocity");
-  EXPECT_STREQ(command_interfaces[3].get_full_name().c_str(), "robot_joint4/velocity");
-
-  //  EXPECT_STREQ(interface->front_left_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_VELOCITY);
-  //  EXPECT_STREQ(interface->front_right_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_VELOCITY);
-  //  EXPECT_STREQ(interface->rear_left_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_VELOCITY);
-  //  EXPECT_STREQ(interface->rear_right_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_VELOCITY);
+  check_interface_name(command_interfaces[0], "robot_joint1/velocity");
+  check_interface_name(command_interfaces[1], "robot_joint2/velocity");
+  check_interface_name(command_interfaces[2], "robot_joint3/velocity");
+  check_interface_name(command_interfaces[3], "robot_joint4/velocity");
 }
 
 TEST_F(TestHarwareInterface4WD, DISABLED_checkCommandInterfaceTypeWhenEffortControlIsUsed)
 {
   MakeInterface(hardware_interface::HW_IF_EFFORT);
   auto command_interfaces = interface->export_command_interfaces();
-  EXPECT_STREQ(command_interfaces[0].get_full_name().c_str(), "robot_joint1/effort");
-  EXPECT_STREQ(command_interfaces[1].get_full_name().c_str(), "robot_joint2/effort");
-  EXPECT_STREQ(command_interfaces[2].get_full_name().c_str(), "robot_joint3/effort");
-  EXPECT_STREQ(command_interfaces[3].get_full_name().c_str(), "robot_joint4/effort");
-
-  //  EXPECT_STREQ(interface->front_left_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_EFFORT);
-  //  EXPECT_STREQ(interface->front_right_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_EFFORT);
-  //  EXPECT_STREQ(interface->rear_left_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_EFFORT);
-  //  EXPECT_STREQ(interface->rear_right_wheel_spinning_joint.command.get_interface_type().c_str(),hardware_interface::HW_IF_EFFORT);
+  check_interface_name(command_interfaces[0], "robot_joint1/velocity");
+  check_interface_name(command_interfaces[1], "robot_joint2/velocity");
+  check_interface_name(command_interfaces[2], "robot_joint3/velocity");
+  check_interface_name(command_interfaces[3], "robot_joint4/velocity");
 }
 
 TEST_F(TestHarwareInterface4WD, checkSetCurrentState)

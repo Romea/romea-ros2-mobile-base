@@ -15,6 +15,7 @@
 
 // romea
 #include "../test/test_helper.h"
+#include "../test/test_utils.hpp"
 #include "romea_mobile_base_hardware/spinning_joint_hardware_interface.hpp"
 
 class TestSpinningJointHardwateInterface : public ::testing::Test
@@ -60,9 +61,9 @@ TEST_F(TestSpinningJointHardwateInterface, checkExportedStateInterfaces)
   joint->export_state_interfaces(state_interfaces);
 
   EXPECT_EQ(state_interfaces.size(), 3u);
-  EXPECT_STREQ(state_interfaces[0].get_full_name().c_str(), "spinning_wheel/position");
-  EXPECT_STREQ(state_interfaces[1].get_full_name().c_str(), "spinning_wheel/velocity");
-  EXPECT_STREQ(state_interfaces[2].get_full_name().c_str(), "spinning_wheel/effort");
+  check_interface_name(state_interfaces[0], "spinning_wheel/position");
+  check_interface_name(state_interfaces[1], "spinning_wheel/velocity");
+  check_interface_name(state_interfaces[2], "spinning_wheel/effort");
 }
 
 TEST_F(TestSpinningJointHardwateInterface, checkExportedCommandInterfaceWhenVelocityControlIsUsed)
@@ -72,7 +73,7 @@ TEST_F(TestSpinningJointHardwateInterface, checkExportedCommandInterfaceWhenVelo
   joint->export_command_interface(command_interfaces);
 
   EXPECT_EQ(command_interfaces.size(), 1u);
-  EXPECT_STREQ(command_interfaces[0].get_full_name().c_str(), "spinning_wheel/velocity");
+  check_interface_name(command_interfaces[0], "spinning_wheel/velocity");
 }
 
 TEST_F(TestSpinningJointHardwateInterface, checkExportedCommandInterfaceWhenEffortControlIsUsed)
@@ -82,7 +83,7 @@ TEST_F(TestSpinningJointHardwateInterface, checkExportedCommandInterfaceWhenEffo
   joint->export_command_interface(command_interfaces);
 
   EXPECT_EQ(command_interfaces.size(), 1u);
-  EXPECT_STREQ(command_interfaces[0].get_full_name().c_str(), "spinning_wheel/effort");
+  check_interface_name(command_interfaces[0], "spinning_wheel/effort");
 }
 
 //-----------------------------------------------------------------------------

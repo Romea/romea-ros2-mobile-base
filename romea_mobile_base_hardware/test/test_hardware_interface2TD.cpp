@@ -17,6 +17,7 @@
 
 // romea
 #include "../test/test_helper.h"
+#include "../test/test_utils.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2TD.hpp"
 
 class TestHarwareInterface2TD : public ::testing::Test
@@ -61,26 +62,26 @@ TEST_F(TestHarwareInterface2TD, checkStateInterfaceNames)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
   auto state_interfaces = interface->export_state_interfaces();
-  EXPECT_STREQ(state_interfaces[0].get_name().c_str(), "robot_joint1");
-  EXPECT_STREQ(state_interfaces[3].get_name().c_str(), "robot_joint2");
-  EXPECT_STREQ(state_interfaces[6].get_name().c_str(), "robot_joint3");
-  EXPECT_STREQ(state_interfaces[9].get_name().c_str(), "robot_joint4");
+  check_interface_name(state_interfaces[0], "robot_joint1/position");
+  check_interface_name(state_interfaces[3], "robot_joint2/position");
+  check_interface_name(state_interfaces[6], "robot_joint3/position");
+  check_interface_name(state_interfaces[9], "robot_joint4/position");
 }
 
 TEST_F(TestHarwareInterface2TD, checkCommandInterfaceTypeWhenVelocityControlIsUsed)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
   auto command_interfaces = interface->export_command_interfaces();
-  EXPECT_STREQ(command_interfaces[0].get_full_name().c_str(), "robot_joint1/velocity");
-  EXPECT_STREQ(command_interfaces[1].get_full_name().c_str(), "robot_joint2/velocity");
+  check_interface_name(command_interfaces[0], "robot_joint1/velocity");
+  check_interface_name(command_interfaces[1], "robot_joint2/velocity");
 }
 
 TEST_F(TestHarwareInterface2TD, DISABLED_checkCommandInterfaceTypeWhenEffortControlIsUsed)
 {
   MakeInterface(hardware_interface::HW_IF_EFFORT);
   auto command_interfaces = interface->export_command_interfaces();
-  EXPECT_STREQ(command_interfaces[0].get_full_name().c_str(), "robot_joint1/effort");
-  EXPECT_STREQ(command_interfaces[1].get_full_name().c_str(), "robot_joint2/effort");
+  check_interface_name(command_interfaces[0], "robot_joint1/effort");
+  check_interface_name(command_interfaces[1], "robot_joint2/effort");
 }
 
 TEST_F(TestHarwareInterface2TD, checkSetCurrentState)
