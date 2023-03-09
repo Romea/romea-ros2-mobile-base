@@ -55,6 +55,7 @@ ament_target_dependencies(${PROJECT_NAME}
   romea_common_utils
   romea_mobile_base_msgs
   romea_mobile_base_utils
+  realtime_tools
   controller_interface
   tf2_geometry_msgs)
 
