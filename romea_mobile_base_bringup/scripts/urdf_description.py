@@ -5,7 +5,6 @@
 
 
 from romea_mobile_base_bringup import urdf_description
-from romea_common_bringup import robot_urdf_prefix
 import sys
 
 if __name__ == "__main__":
