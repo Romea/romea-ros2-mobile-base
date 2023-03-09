@@ -18,6 +18,6 @@ if __name__ == "__main__":
         parameters[name] = value
 
     mode = parameters["mode"]
-    prefix = robot_urdf_prefix(parameters["robot_namespace"])
+    robot_namespace = parameters["robot_namespace"]
     meta_description_filename = parameters["meta_description_filename"]
-    print(urdf_description(prefix, mode, meta_description_filename))
+    print(urdf_description(robot_namespace, mode, meta_description_filename))
