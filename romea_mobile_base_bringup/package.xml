@@ -3,17 +3,21 @@
 <package format="3">
   <name>romea_mobile_base_bringup</name>
   <version>0.0.0</version>
-  <description>Package with gps launch files.</description>
+  <description>Package with mobile base launch files.</description>
 
   <maintainer email="jean.laneurit@inrae.fr">Jean Laneurit</maintainer>
 
   <license>TODO</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>launch</depend>
+  <depend>launch_ros</depend>
+  <depend>ament_index_python</depend>
+  <depend>romea_common_bringup</depend>
+
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
-
-  <exec_depend>xacro</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>

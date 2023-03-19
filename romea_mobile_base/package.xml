@@ -5,17 +5,19 @@
   <version>0.0.0</version>
   <description>The romea mobile base stack</description>
 
-  <author email="jean.laneurit@inrae.fr">Jean Laneurit</author>
   <maintainer email="jean.laneurit@inrae.fr">Jean Laneurit</maintainer>
 
   <license>TODO: License declaration</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
+  <exec_depend>romea_mobile_bringup</exec_depend>
+  <exec_depend>romea_mobile_controllers</exec_depend>
+  <exec_depend>romea_mobile_base_description</exec_depend>
+  <exec_depend>romea_mobile_base_gazebo</exec_depend>
+  <exec_depend>romea_mobile_base_hardware</exec_depend>
   <exec_depend>romea_mobile_base_msgs</exec_depend>
   <exec_depend>romea_mobile_base_utils</exec_depend>
-  <exec_depend>romea_mobile_base_description</exec_depend>
-<!--  <exec_depend>romea_odo_bringup</exec_depend> -->
 
   <export>
     <build_type>ament_cmake</build_type>

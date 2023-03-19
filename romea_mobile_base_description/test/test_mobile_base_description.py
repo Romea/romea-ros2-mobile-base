@@ -5,7 +5,6 @@
 import pytest
 import yaml
 
-# import xml.etree.ElementTree as ET
 from romea_mobile_base_description import (
     get_kinematic_type,
     get_command_type,
