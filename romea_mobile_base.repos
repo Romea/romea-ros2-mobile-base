@@ -18,7 +18,7 @@ repositories:
     version: main
   romea_ros2/interfaces/teleoperation/romea_joystick:
     type: git
-    url: git@gitlab-ssh.irstea.fr:romea_ros2/interfaces/teleoperation/romea_joystick.git
+    url: git@gitlab-ssh.irstea.fr:romea_ros2/interfaces/teleoperation/romea_joy.git
     version: main
   romea_ros2/interfaces/teleoperation/romea_teleop:
     type: git
