@@ -6,9 +6,9 @@ import importlib
 
 
 class MobileBaseMetaDescription:
-    def __init__(self, meta_description_filename):
+    def __init__(self, meta_description_file_path):
         self.meta_description = MetaDescription(
-            "mobile_base", meta_description_filename
+            "mobile_base", meta_description_file_path
         )
 
     def get_name(self):
@@ -27,9 +27,9 @@ class MobileBaseMetaDescription:
         return self.meta_description.get("initial_rpy", "simulation")
 
 
-def urdf_description(robot_name, mode, meta_description_filename):
+def urdf_description(robot_name, mode, meta_description_file_path):
 
-    meta_description = MobileBaseMetaDescription(meta_description_filename)
+    meta_description = MobileBaseMetaDescription(meta_description_file_path)
 
     base_type = meta_description.get_type()
     base_model = meta_description.get_model()

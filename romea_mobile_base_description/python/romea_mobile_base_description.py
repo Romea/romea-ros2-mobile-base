@@ -12,7 +12,7 @@ def robot_full_name(robot_type, robot_model):
         return robot_type
 
 
-def get_mobile_base_description_filename(robot_type, robot_model):
+def get_mobile_base_description_file_path(robot_type, robot_model):
     robot_name = robot_full_name(robot_type, robot_model)
     return (
         get_package_share_directory(robot_type + "_description")
@@ -23,18 +23,18 @@ def get_mobile_base_description_filename(robot_type, robot_model):
 
 
 def get_mobile_base_description(robot_type, robot_model):
-    with open(get_mobile_base_description_filename(robot_type, robot_model)) as f:
+    with open(get_mobile_base_description_file_path(robot_type, robot_model)) as f:
         return yaml.safe_load(f)
 
 
-def get_default_teleop_configuration_filename(robot_type):
+def get_default_teleop_configuration_file_path(robot_type):
     return (
         get_package_share_directory(robot_type + "_description") + "/config/teleop.yaml"
     )
 
 
 def get_default_teleop_configuration(robot_type):
-    with open(get_mobile_base_description_filename(robot_type)) as f:
+    with open(get_mobile_base_description_file_path(robot_type)) as f:
         return yaml.safe_load(f)
 
 

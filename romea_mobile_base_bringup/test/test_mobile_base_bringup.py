@@ -9,10 +9,10 @@ from romea_mobile_base_bringup import MobileBaseMetaDescription
 
 @pytest.fixture(scope="module")
 def meta_description():
-    meta_description_filename = os.path.join(
+    meta_description_file_path = os.path.join(
         os.getcwd(), "test_mobile_base_bringup.yaml"
     )
-    return MobileBaseMetaDescription(meta_description_filename)
+    return MobileBaseMetaDescription(meta_description_file_path)
 
 
 def test_get_name(meta_description):

@@ -27,11 +27,11 @@ def get_mode(context):
 
 def get_meta_description(context):
 
-    meta_description_filename = LaunchConfiguration(
-        "meta_description_filename"
+    meta_description_file_path = LaunchConfiguration(
+        "meta_description_file_path"
     ).perform(context)
 
-    return MobileBaseMetaDescription(meta_description_filename)
+    return MobileBaseMetaDescription(meta_description_file_path)
 
 
 def get_urdf_description(context):
@@ -81,7 +81,7 @@ def generate_launch_description():
         DeclareLaunchArgument("robot_namespace", default_value="")
     )
 
-    declared_arguments.append(DeclareLaunchArgument("meta_description_filename"))
+    declared_arguments.append(DeclareLaunchArgument("meta_description_file_path"))
 
     urdf_description = Command(
         [
@@ -90,8 +90,8 @@ def generate_launch_description():
             LaunchConfiguration("mode"),
             " robot_namespace:",
             LaunchConfiguration("robot_namespace"),
-            " meta_description_filename:",
-            LaunchConfiguration("meta_description_filename"),
+            " meta_description_file_path:",
+            LaunchConfiguration("meta_description_file_path"),
         ]
     )
 
