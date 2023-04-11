@@ -40,8 +40,8 @@ struct HardwareInterface2FWS2FWD
 
   void set_state(
     const HardwareState2FWS2FWD & hardware_state,
-    const RotationalMotionState & rear_left_wheel_spin_motion,
-    const RotationalMotionState & rear_right_wheel_spin_motion);
+    const RotationalMotionState & rear_left_wheel_spinning_motion,
+    const RotationalMotionState & rear_right_wheel_spinning_motion);
 
   std::vector<hardware_interface::StateInterface> export_state_interfaces();
   std::vector<hardware_interface::CommandInterface> export_command_interfaces();

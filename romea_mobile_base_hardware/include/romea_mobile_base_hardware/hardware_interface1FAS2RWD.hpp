@@ -45,8 +45,8 @@ public:
     const HardwareState1FAS2RWD & hardware_state,
     const SteeringAngleState & front_left_wheel_steering_angle,
     const SteeringAngleState & front_right_wheel_steering_angle,
-    const RotationalMotionState & front_left_wheel_spin_motion,
-    const RotationalMotionState & front_right_wheel_spin_motion);
+    const RotationalMotionState & front_left_wheel_spinning_motion,
+    const RotationalMotionState & front_right_wheel_spinning_motion);
 
 
   std::vector<hardware_interface::StateInterface> export_state_interfaces();

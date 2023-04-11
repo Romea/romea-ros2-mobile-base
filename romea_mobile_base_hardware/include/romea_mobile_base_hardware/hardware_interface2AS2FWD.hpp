@@ -49,8 +49,8 @@ public:
     const SteeringAngleState & front_right_wheel_steering_angle,
     const SteeringAngleState & rear_left_wheel_steering_angle,
     const SteeringAngleState & rear_right_wheel_steering_angle,
-    const RotationalMotionState & rear_left_wheel_spin_motion,
-    const RotationalMotionState & rear_right_wheel_spin_motion);
+    const RotationalMotionState & rear_left_wheel_spinning_motion,
+    const RotationalMotionState & rear_right_wheel_spinning_motion);
 
   std::vector<hardware_interface::StateInterface> export_state_interfaces();
   std::vector<hardware_interface::CommandInterface> export_command_interfaces();

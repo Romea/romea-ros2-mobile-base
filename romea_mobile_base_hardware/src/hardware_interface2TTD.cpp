@@ -83,28 +83,28 @@ void HardwareInterface2TTD::set_state(const HardwareState2TD & hardware_state)
 //-----------------------------------------------------------------------------
 void HardwareInterface2TTD::set_state(
   const HardwareState2TD & hardware_state,
-  const RotationalMotionState & left_idler_wheel_spinning_set_point,
-  const RotationalMotionState & right_idler_wheel_spinning_set_point,
-  const RotationalMotionState & front_left_roller_wheel_spinning_set_point,
-  const RotationalMotionState & front_right_roller_wheel_spinning_set_point,
-  const RotationalMotionState & rear_left_roller_wheel_spinning_set_point,
-  const RotationalMotionState & rear_right_roller_wheel_spinning_set_point)
+  const RotationalMotionState & left_idler_wheel_spinning_motion,
+  const RotationalMotionState & right_idler_wheel_spinning_motion,
+  const RotationalMotionState & front_left_roller_wheel_spinning_motion,
+  const RotationalMotionState & front_right_roller_wheel_spinning_motion,
+  const RotationalMotionState & rear_left_roller_wheel_spinning_motion,
+  const RotationalMotionState & rear_right_roller_wheel_spinning_motion)
 {
   set_state(hardware_state);
 
   left_idler_wheel_spinning_joint_feedback_.
-  set_state(left_idler_wheel_spinning_set_point);
+  set_state(left_idler_wheel_spinning_motion);
   right_idler_wheel_spinning_joint_feedback_.
-  set_state(right_idler_wheel_spinning_set_point);
+  set_state(right_idler_wheel_spinning_motion);
 
   front_left_roller_wheel_spinning_joint_feedback_.
-  set_state(front_left_roller_wheel_spinning_set_point);
+  set_state(front_left_roller_wheel_spinning_motion);
   front_right_roller_wheel_spinning_joint_feedback_.
-  set_state(front_right_roller_wheel_spinning_set_point);
+  set_state(front_right_roller_wheel_spinning_motion);
   rear_left_roller_wheel_spinning_joint_feedback_.
-  set_state(rear_left_roller_wheel_spinning_set_point);
+  set_state(rear_left_roller_wheel_spinning_motion);
   rear_right_roller_wheel_spinning_joint_feedback_.
-  set_state(rear_right_roller_wheel_spinning_set_point);
+  set_state(rear_right_roller_wheel_spinning_motion);
 }
 
 }  // namespace romea

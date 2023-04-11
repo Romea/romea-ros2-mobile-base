@@ -18,9 +18,15 @@
 #include "romea_mobile_base_hardware/hardware_interface2FWS4WD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2FWS2RWD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2FWS2FWD.hpp"
+#include "romea_mobile_base_hardware/hardware_interface2AS2FWD.hpp"
+#include "romea_mobile_base_hardware/hardware_interface2AS2RWD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2AS4WD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface1FAS2RWD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface1FAS2FWD.hpp"
+#include "romea_mobile_base_hardware/hardware_interface1FAS4WD.hpp"
+#include "romea_mobile_base_hardware/hardware_interface2TD.hpp"
+#include "romea_mobile_base_hardware/hardware_interface2THD.hpp"
+#include "romea_mobile_base_hardware/hardware_interface2TTD.hpp"
 
 namespace romea
 {
@@ -69,13 +75,19 @@ protected:
 
 using HardwareSystemInterfac1FAS2FWD = HardwareSystemInterface<HardwareInterface1FAS2FWD>;
 using HardwareSystemInterfac1FAS2RWD = HardwareSystemInterface<HardwareInterface1FAS2RWD>;
+using HardwareSystemInterfac1FAS4WD = HardwareSystemInterface<HardwareInterface1FAS4WD>;
 using HardwareSystemInterface2AS4WD = HardwareSystemInterface<HardwareInterface2AS4WD>;
+using HardwareSystemInterface2AS2FWD = HardwareSystemInterface<HardwareInterface2AS2FWD>;
+using HardwareSystemInterface2AS2RWD = HardwareSystemInterface<HardwareInterface2AS2RWD>;
 using HardwareSystemInterface2FWS2FWD = HardwareSystemInterface<HardwareInterface2FWS2FWD>;
 using HardwareSystemInterface2FWS2RWD = HardwareSystemInterface<HardwareInterface2FWS2RWD>;
 using HardwareSystemInterface2FWS4WD = HardwareSystemInterface<HardwareInterface2FWS4WD>;
 using HardwareSystemInterface2WD = HardwareSystemInterface<HardwareInterface2WD>;
 using HardwareSystemInterface4WD = HardwareSystemInterface<HardwareInterface4WD>;
 using HardwareSystemInterface4WS4WD = HardwareSystemInterface<HardwareInterface4WS4WD>;
+using HardwareSystemInterface2TD = HardwareSystemInterface<HardwareInterface2TD>;
+using HardwareSystemInterface2THD = HardwareSystemInterface<HardwareInterface2THD>;
+using HardwareSystemInterface2TTD = HardwareSystemInterface<HardwareInterface2TTD>;
 
 }  // namespace romea
 

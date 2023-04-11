@@ -212,7 +212,13 @@ template class HardwareSystemInterface<HardwareInterface2FWS4WD>;
 template class HardwareSystemInterface<HardwareInterface2FWS2RWD>;
 template class HardwareSystemInterface<HardwareInterface2FWS2FWD>;
 template class HardwareSystemInterface<HardwareInterface2AS4WD>;
+template class HardwareSystemInterface<HardwareInterface2AS2FWD>;
+template class HardwareSystemInterface<HardwareInterface2AS2RWD>;
 template class HardwareSystemInterface<HardwareInterface1FAS2FWD>;
 template class HardwareSystemInterface<HardwareInterface1FAS2RWD>;
+template class HardwareSystemInterface<HardwareInterface1FAS4WD>;
+template class HardwareSystemInterface<HardwareInterface2TD>;
+template class HardwareSystemInterface<HardwareInterface2THD>;
+template class HardwareSystemInterface<HardwareInterface2TTD>;
 
 }  // namespace romea

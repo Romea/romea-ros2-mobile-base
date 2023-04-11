@@ -83,16 +83,16 @@ void HardwareInterface1FAS2FWD::set_state(
   const HardwareState1FAS2FWD & hardware_state,
   const SteeringAngleState & front_left_wheel_steering_angle,
   const SteeringAngleState & front_right_wheel_steering_angle,
-  const RotationalMotionState & rear_left_wheel_motion_state,
-  const RotationalMotionState & rear_right_wheel_motion_state)
+  const RotationalMotionState & rear_left_wheel_spinning_motion,
+  const RotationalMotionState & rear_right_wheel_spinning_motion)
 {
   set_state(hardware_state);
 
   front_left_wheel_steering_joint_feedback_.set(front_left_wheel_steering_angle);
   front_right_wheel_steering_joint_feedback_.set(front_right_wheel_steering_angle);
 
-  rear_left_wheel_spinning_joint_feedback_.set_state(rear_left_wheel_motion_state);
-  rear_right_wheel_spinning_joint_feedback_.set_state(rear_right_wheel_motion_state);
+  rear_left_wheel_spinning_joint_feedback_.set_state(rear_left_wheel_spinning_motion);
+  rear_right_wheel_spinning_joint_feedback_.set_state(rear_right_wheel_spinning_motion);
 }
 
 }  // namespace romea

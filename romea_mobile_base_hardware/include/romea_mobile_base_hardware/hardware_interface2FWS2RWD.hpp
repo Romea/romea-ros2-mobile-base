@@ -42,8 +42,8 @@ public:
 
   void set_state(
     const HardwareState2FWS2RWD & hardware_state,
-    const RotationalMotionState & front_left_wheel_spin_motion,
-    const RotationalMotionState & front_right_wheel_spin_motion);
+    const RotationalMotionState & front_left_wheel_spinning_motion,
+    const RotationalMotionState & front_right_wheel_spinning_motion);
 
 
   std::vector<hardware_interface::StateInterface> export_state_interfaces();

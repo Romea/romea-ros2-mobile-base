@@ -71,15 +71,15 @@ void HardwareInterface2TD::set_state(const HardwareState2TD & hardware_state)
 //-----------------------------------------------------------------------------
 void HardwareInterface2TD::set_state(
   const HardwareState2TD & hardware_state,
-  const RotationalMotionState & left_idler_wheel_spinning_set_point,
-  const RotationalMotionState & right_idler_wheel_spinning_set_point)
+  const RotationalMotionState & left_idler_wheel_spinning_motion,
+  const RotationalMotionState & right_idler_wheel_spinning_motion)
 {
   set_state(hardware_state);
 
   left_idler_wheel_spinning_joint_feedback_.
-  set_state(left_idler_wheel_spinning_set_point);
+  set_state(left_idler_wheel_spinning_motion);
   right_idler_wheel_spinning_joint_feedback_.
-  set_state(right_idler_wheel_spinning_set_point);
+  set_state(right_idler_wheel_spinning_motion);
 }
 
 }  // namespace romea

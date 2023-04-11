@@ -84,13 +84,13 @@ void HardwareInterface2FWS2FWD::set_state(const HardwareState2FWS2FWD & hardware
 //-----------------------------------------------------------------------------
 void HardwareInterface2FWS2FWD::set_state(
   const HardwareState2FWS2FWD & hardware_state,
-  const RotationalMotionState & rear_left_wheel_spin_motion,
-  const RotationalMotionState & rear_right_wheel_spin_motion)
+  const RotationalMotionState & rear_left_wheel_spinning_motion,
+  const RotationalMotionState & rear_right_wheel_spinning_motion)
 {
   set_state(hardware_state);
 
-  rear_left_wheel_spinning_joint_feedback_.set_state(rear_left_wheel_spin_motion);
-  rear_right_wheel_spinning_joint_feedback_.set_state(rear_right_wheel_spin_motion);
+  rear_left_wheel_spinning_joint_feedback_.set_state(rear_left_wheel_spinning_motion);
+  rear_right_wheel_spinning_joint_feedback_.set_state(rear_right_wheel_spinning_motion);
 }
 
 }  // namespace romea
