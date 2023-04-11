@@ -88,6 +88,10 @@ install(
   DIRECTORY launch
   DESTINATION share/${PROJECT_NAME})
 
+install(PROGRAMS
+  scripts/spawner
+  DESTINATION lib/${PROJECT_NAME}
+)
 install(
   TARGETS ${PROJECT_NAME}
   EXPORT export_${PROJECT_NAME}

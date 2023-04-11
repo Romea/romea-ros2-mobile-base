@@ -40,8 +40,9 @@ def launch_setup(context, *args, **kwargs):
         yaml.dump(base_controller_root, f)
 
     mobile_base_controller = Node(
-        package="controller_manager",
+        package="romea_mobile_base_controllers",
         executable="spawner",
+        exec_name="mobile_base_controller_spawner",
         arguments=[
             controller_name,
             "--param-file",
@@ -49,18 +50,19 @@ def launch_setup(context, *args, **kwargs):
             "--controller-manager",
             controller_manager_name,
         ],
-        output="screen",
+        # output="screen",
     )
 
     joint_state_broadcaster = Node(
         package="controller_manager",
         executable="spawner",
+        exec_name="joint_state_broadcaster_spawner",
         arguments=[
             "joint_state_broadcaster",
             "--controller-manager",
             controller_manager_name,
         ],
-        output="screen",
+        # output="screen",
     )
 
     return [mobile_base_controller, joint_state_broadcaster]

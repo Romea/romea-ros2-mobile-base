@@ -177,7 +177,7 @@ struct MobileBaseControllerTraits<ControllerInterface2TD, SkidSteeringKinematic>
   using CommandMsg = romea_mobile_base_msgs::msg::SkidSteeringCommand;
   using CommandRosMsg = geometry_msgs::msg::Twist;
   using CommandLimits = SkidSteeringCommandLimits;
-  using OdometryFrame = OdometryFrame2WD;
+  using OdometryFrame = OdometryFrame2TD;
   using OdometryMeasure = SkidSteeringMeasure;
   using OdometryMeasureMsg = romea_mobile_base_msgs::msg::SkidSteeringMeasureStamped;
   using MobileBaseInfo = MobileBaseInfo2TD;

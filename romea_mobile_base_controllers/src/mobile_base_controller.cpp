@@ -74,7 +74,7 @@ CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_init()
     //    declare_enable_odom_tf_();
     //    declare_mobile_base_info_();
     //    declare_joints_names_();
-    std::cout << " on init OK" << std::endl;
+    // std::cout << " on init OK" << std::endl;
     return CallbackReturn::SUCCESS;
   } catch (std::runtime_error & e) {
     RCLCPP_ERROR_STREAM(get_node()->get_logger(), e.what());
@@ -213,14 +213,14 @@ controller_interface::return_type MobileBaseController<InterfaceType, KinematicT
 {
 //  std::cout << "update" << std::endl;
   update_time_ = get_node()->get_clock()->now();  // why not time?
-  RCLCPP_INFO_STREAM(get_node()->get_logger(), "update_controller_state_");
+  // RCLCPP_INFO_STREAM(get_node()->get_logger(), "update_controller_state_");
   update_controller_state_();
-  RCLCPP_INFO_STREAM(get_node()->get_logger(), "publish_controller_state_");
+  // RCLCPP_INFO_STREAM(get_node()->get_logger(), "publish_controller_state_");
   publish_controller_state_();
-  RCLCPP_INFO_STREAM(get_node()->get_logger(), "read command");
+  // RCLCPP_INFO_STREAM(get_node()->get_logger(), "read command");
 
   auto current_command = command_buffer_.consume();
-  std::cout << " update " << update_time_.seconds() << " " << period.seconds() << std::endl;
+  // std::cout << " update " << update_time_.seconds() << " " << period.seconds() << std::endl;
   if (current_command.has_value()) {
     current_command_ = *current_command;
     //    RCLCPP_INFO_STREAM(get_node()->get_logger(),"odometry frame measured");
@@ -560,15 +560,15 @@ void MobileBaseController<OdometryFrameType, KinematicType>::init_publishers_()
     get_node(), odom_frame_id, base_frame_id, enable_odom_tf);
 }
 
-// template class MobileBaseController<ControllerInterface1FAS2FWD, OneAxleSteeringKinematic>;
-// template class MobileBaseController<ControllerInterface1FAS2RWD, OneAxleSteeringKinematic>;
+template class MobileBaseController<ControllerInterface1FAS2FWD, OneAxleSteeringKinematic>;
+template class MobileBaseController<ControllerInterface1FAS2RWD, OneAxleSteeringKinematic>;
 // template class MobileBaseController<ControllerInterface1FWS2RWD, OneAxleSteeringKinematic>;
 template class MobileBaseController<ControllerInterface2AS4WD, TwoAxleSteeringKinematic>;
-// template class MobileBaseController<ControllerInterface2FWS2FWD, TwoWheelSteeringKinematic>;
+template class MobileBaseController<ControllerInterface2FWS2FWD, TwoWheelSteeringKinematic>;
 template class MobileBaseController<ControllerInterface2FWS2RWD, TwoWheelSteeringKinematic>;
 template class MobileBaseController<ControllerInterface2FWS4WD, TwoWheelSteeringKinematic>;
 // template class MobileBaseController<ControllerInterface2TD, SkidSteeringKinematic>;
-// template class MobileBaseController<ControllerInterface2WD, SkidSteeringKinematic>;
+template class MobileBaseController<ControllerInterface2WD, SkidSteeringKinematic>;
 template class MobileBaseController<ControllerInterface4WD, SkidSteeringKinematic>;
 template class MobileBaseController<ControllerInterface4WD, MecanumWheelSteeringKinematic>;
 template class MobileBaseController<ControllerInterface4WS4WD, FourWheelSteeringKinematic>;
@@ -577,33 +577,33 @@ template class MobileBaseController<ControllerInterface4WS4WD, FourWheelSteering
 
 #include "class_loader/register_macro.hpp"
 
-// CLASS_LOADER_REGISTER_CLASS(
-//  romea::MobileBaseController1FAS2FWD,
-//  controller_interface::ControllerInterface)
-// CLASS_LOADER_REGISTER_CLASS(
-//  romea::MobileBaseController1FAS2RWD,
-//  controller_interface::ControllerInterface)
+CLASS_LOADER_REGISTER_CLASS(
+  romea::MobileBaseController1FAS2FWD,
+  controller_interface::ControllerInterface)
+CLASS_LOADER_REGISTER_CLASS(
+  romea::MobileBaseController1FAS2RWD,
+  controller_interface::ControllerInterface)
 // CLASS_LOADER_REGISTER_CLASS(
 //  romea::MobileBaseController1FWS2RWD,
 //  controller_interface::ControllerInterface)
 CLASS_LOADER_REGISTER_CLASS(
   romea::MobileBaseController2AS4WD,
   controller_interface::ControllerInterface)
-// CLASS_LOADER_REGISTER_CLASS(
-//  romea::MobileBaseController2FWS2FWD,
-//  controller_interface::ControllerInterface)
+CLASS_LOADER_REGISTER_CLASS(
+  romea::MobileBaseController2FWS2FWD,
+  controller_interface::ControllerInterface)
 CLASS_LOADER_REGISTER_CLASS(
   romea::MobileBaseController2FWS2RWD,
   controller_interface::ControllerInterface)
 CLASS_LOADER_REGISTER_CLASS(
   romea::MobileBaseController2FWS4WD,
   controller_interface::ControllerInterface)
-// CLASS_LOADER_REGISTER_CLASS(
-//   romea::MobileBaseController2TD,
-//   controller_interface::ControllerInterface)
-// CLASS_LOADER_REGISTER_CLASS(
-//   romea::MobileBaseController2WD,
-//   controller_interface::ControllerInterface)
+CLASS_LOADER_REGISTER_CLASS(
+  romea::MobileBaseController2TD,
+  controller_interface::ControllerInterface)
+CLASS_LOADER_REGISTER_CLASS(
+  romea::MobileBaseController2WD,
+  controller_interface::ControllerInterface)
 CLASS_LOADER_REGISTER_CLASS(
   romea::MobileBaseController4WD,
   controller_interface::ControllerInterface)

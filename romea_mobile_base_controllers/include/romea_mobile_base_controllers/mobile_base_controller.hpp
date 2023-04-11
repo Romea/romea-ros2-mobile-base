@@ -150,24 +150,24 @@ protected:
 };
 
 
-// using MobileBaseController1FAS2FWD =
-//   MobileBaseController<ControllerInterface1FAS2FWD,OneAxleSteeringKinematic>;
-// using MobileBaseController1FAS2RWD =
-//   MobileBaseController<ControllerInterface1FAS2RWD,OneAxleSteeringKinematic>;
+using MobileBaseController1FAS2FWD =
+  MobileBaseController<ControllerInterface1FAS2FWD, OneAxleSteeringKinematic>;
+using MobileBaseController1FAS2RWD =
+  MobileBaseController<ControllerInterface1FAS2RWD, OneAxleSteeringKinematic>;
 // using MobileBaseController1FWS2RWD =
-//   MobileBaseController<ControllerInterface1FWS2RWD,OneAxleSteeringKinematic>;
+//   MobileBaseController<ControllerInterface1FWS2RWD, OneAxleSteeringKinematic>;
 using MobileBaseController2AS4WD =
   MobileBaseController<ControllerInterface2AS4WD, TwoAxleSteeringKinematic>;
-// using MobileBaseController2FWS2FWD =
-//   MobileBaseController<ControllerInterface2FWS2FWD,TwoWheelSteeringKinematic>;
+using MobileBaseController2FWS2FWD =
+  MobileBaseController<ControllerInterface2FWS2FWD, TwoWheelSteeringKinematic>;
 using MobileBaseController2FWS2RWD =
   MobileBaseController<ControllerInterface2FWS2RWD, TwoWheelSteeringKinematic>;
 using MobileBaseController2FWS4WD =
   MobileBaseController<ControllerInterface2FWS4WD, TwoWheelSteeringKinematic>;
-// using MobileBaseController2WD =
-//   MobileBaseController<ControllerInterface2WD,SkidSteeringKinematic>;
-// using MobileBaseController2TD =
-//   MobileBaseController<ControllerInterface2TD,SkidSteeringKinematic>;
+using MobileBaseController2WD =
+  MobileBaseController<ControllerInterface2WD, SkidSteeringKinematic>;
+using MobileBaseController2TD =
+  MobileBaseController<ControllerInterface2TD, SkidSteeringKinematic>;
 using MobileBaseController4WD =
   MobileBaseController<ControllerInterface4WD, SkidSteeringKinematic>;
 using MobileBaseController4MWD =
