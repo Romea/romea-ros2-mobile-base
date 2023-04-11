@@ -24,8 +24,8 @@ SpinningJointGazeboInterface::SpinningJointGazeboInterface(
     // throw error
   }
 
-  std::cout << " spinning joint_info.name ";
-  std::cout << joint_info.name << std::endl;
+  // std::cout << " spinning joint_info.name ";
+  // std::cout << joint_info.name << std::endl;
   sim_joint_ = parent_model->GetJoint(joint_info.name);
 }
 

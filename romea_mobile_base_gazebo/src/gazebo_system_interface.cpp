@@ -33,7 +33,7 @@ bool GazeboSystemInterface<GazeboInterface, SimulationInterface>::initSim(
   nh_ = model_nh;
   parent_model_ = parent_model;
 
-  RCLCPP_ERROR(this->nh_->get_logger(), "initSim");
+  // RCLCPP_ERROR(this->nh_->get_logger(), "initSim");
 
   return check_physics_engine_configuration_() &&
          init_gazebo_interfaces_(hardware_info) &&
@@ -53,7 +53,7 @@ bool GazeboSystemInterface<GazeboInterface,
     return false;
   }
 
-  RCLCPP_ERROR(this->nh_->get_logger(), "check_physics_engine_configuration_ OK");
+  // RCLCPP_ERROR(this->nh_->get_logger(), "check_physics_engine_configuration_ OK");
 
   return true;
 }
@@ -111,13 +111,11 @@ bool GazeboSystemInterface<GazeboInterface, SimulationInterface>::init_gazebo_in
   const hardware_interface::HardwareInfo & hardware_info)
 {
   try {
-    std::cout << "  hardware_info.joints.size() " << hardware_info.joints.size() << std::endl;
     gazebo_interface_ = std::make_unique<GazeboInterface>(parent_model_, hardware_info, "velocity");
-    RCLCPP_ERROR(this->nh_->get_logger(), "init_gazebo_interfaces_ OK");
-
+    // RCLCPP_ERROR(this->nh_->get_logger(), "init_gazebo_interfaces_ OK");
     return true;
   } catch (std::runtime_error & e) {
-    RCLCPP_ERROR(this->nh_->get_logger(), "init_gazebo_interfaces_ not OK");
+    // RCLCPP_ERROR(this->nh_->get_logger(), "init_gazebo_interfaces_ not OK");
     RCLCPP_ERROR_STREAM(nh_->get_logger(), e.what());
     return false;
   }
@@ -130,10 +128,10 @@ bool GazeboSystemInterface<GazeboInterface, SimulationInterface>::init_hardware_
 {
   try {
     simulation_interface_ = std::make_unique<SimulationInterface>(hardware_info, "velocity");
-    RCLCPP_ERROR(this->nh_->get_logger(), "init_hardware_interfaces_ OK");
+    // RCLCPP_ERROR(this->nh_->get_logger(), "init_hardware_interfaces_ OK");
     return true;
   } catch (std::runtime_error & e) {
-    RCLCPP_ERROR(this->nh_->get_logger(), "init_hardware_interfaces_ not OK");
+    // RCLCPP_ERROR(this->nh_->get_logger(), "init_hardware_interfaces_ not OK");
     RCLCPP_ERROR_STREAM(nh_->get_logger(), e.what());
     return false;
   }

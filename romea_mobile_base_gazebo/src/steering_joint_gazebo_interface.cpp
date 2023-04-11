@@ -11,14 +11,14 @@ SteeringJointGazeboInterface::SteeringJointGazeboInterface(
   gazebo::physics::ModelPtr parent_model,
   const hardware_interface::ComponentInfo & joint_info)
 {
-  std::cout << " steering joint_info.name ";
-  std::cout << joint_info.name << std::endl;
+  // std::cout << " steering joint_info.name ";
+  // std::cout << joint_info.name << std::endl;
 
   sim_joint_ = parent_model->GetJoint(joint_info.name);
 
-  std::cout << " steering joint_info.name ";
-  std::cout << joint_info.name << " ";
-  std::cout << int(sim_joint_.get() != nullptr) << std::endl;
+  // std::cout << " steering joint_info.name ";
+  // std::cout << joint_info.name << " ";
+  // std::cout << int(sim_joint_.get() != nullptr) << std::endl;
 }
 
 //-----------------------------------------------------------------------------
