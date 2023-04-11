@@ -34,8 +34,9 @@ void declare_mobile_base_info_2FWS2FWD(
   declare_eigen_vector_parameter<Eigen::Vector3d>(node, parameters_ns, "control_point");
 }
 
+template<typename Node>
 MobileBaseInfo2FWS2FWD get_mobile_base_info_2FWS2FWD(
-  std::shared_ptr<rclcpp::Node> node,
+  std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
   return {get_two_wheeled_axles_info(node, full_param_name(parameters_ns, "geometry")),
