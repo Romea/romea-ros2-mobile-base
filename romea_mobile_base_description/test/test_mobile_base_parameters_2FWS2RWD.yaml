@@ -11,15 +11,15 @@ front_wheels_steering_control:
     maximal_angle: 5.
 
 rear_wheels_speed_control:
-    command:
-      maximal_speed: 4.
+  command:
+    maximal_speed: 4.
 
 inertia:
   mass: 400.
   center: [401., 402., 403.]
   z_moment: 404.
 
-control_point : [500., 501., 502.]
+control_point: [500., 501., 502.]
 
 joints:
   front_left_wheel_steering_joint_name: J1

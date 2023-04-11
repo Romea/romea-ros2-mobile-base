@@ -58,7 +58,10 @@ def get_maximal_steering_angle_(type):
 
 
 def test_get_kinematic_types():
+    assert get_kinematic_type_("1FAS2FWD") == "one_axle_steering"
     assert get_kinematic_type_("1FAS2RWD") == "one_axle_steering"
+    assert get_kinematic_type_("1FAS4WD") == "one_axle_steering"
+    assert get_kinematic_type_("2AS2FWD") == "two_axle_steering"
     assert get_kinematic_type_("2AS4WD") == "two_axle_steering"
     assert get_kinematic_type_("2FWS2FWD") == "two_wheel_steering"
     assert get_kinematic_type_("2FWS2RWD") == "two_wheel_steering"
@@ -70,8 +73,12 @@ def test_get_kinematic_types():
 
 
 def test_get_command_types():
+    assert get_command_type_("1FAS2FWD") == "one_axle_steering"
     assert get_command_type_("1FAS2RWD") == "one_axle_steering"
+    assert get_command_type_("1FAS4WD") == "one_axle_steering"
     assert get_command_type_("2AS4WD") == "two_axle_steering"
+    assert get_command_type_("2AS2FWD") == "two_axle_steering"
+    assert get_command_type_("2AS2RWD") == "two_axle_steering"
     assert get_command_type_("2FWS2FWD") == "one_axle_steering"
     assert get_command_type_("2FWS2RWD") == "one_axle_steering"
     assert get_command_type_("2FWS4WD") == "one_axle_steering"
@@ -82,7 +89,11 @@ def test_get_command_types():
 
 
 def test_get_wheelbases():
+    assert get_wheelbase_("1FAS2FWD") == 1.0
     assert get_wheelbase_("1FAS2RWD") == 1.0
+    assert get_wheelbase_("1FAS4WD") == 1.0
+    assert get_wheelbase_("2AS2FWD") == 1.0
+    assert get_wheelbase_("2AS2RWD") == 1.0
     assert get_wheelbase_("2AS4WD") == 1.0
     assert get_wheelbase_("2FWS2FWD") == 1.0
     assert get_wheelbase_("2FWS2RWD") == 1.0
@@ -97,7 +108,11 @@ def test_get_wheelbases():
 
 
 def test_get_tracks():
+    assert get_track_("1FAS2FWD") == 2.0
     assert get_track_("1FAS2RWD") == 2.0
+    assert get_track_("1FAS4WD") == 2.0
+    assert get_track_("2AS2FWD") == 2.0
+    assert get_track_("2AS2RWD") == 2.0
     assert get_track_("2AS4WD") == 2.0
     assert get_track_("2FWS2FWD") == 2.0
     assert get_track_("2FWS2RWD") == 2.0
@@ -109,7 +124,11 @@ def test_get_tracks():
 
 
 def get_maximal_linear_speeds():
+    assert get_maximal_linear_speed_("1FAS2FWD") == 4.0
     assert get_maximal_linear_speed_("1FAS2RWD") == 4.0
+    assert get_maximal_linear_speed_("1FAS4WD") == 4.0
+    assert get_maximal_linear_speed_("2AS2FWD") == 4.0
+    assert get_maximal_linear_speed_("2AS2RWD") == 4.0
     assert get_maximal_linear_speed_("2AS4WD") == 4.0
     assert get_maximal_linear_speed_("1FAS2RWD") == 4.0
     assert get_maximal_linear_speed_("2FWS2FWD") == 4.0
@@ -129,7 +148,15 @@ def get_maximal_wheel_angles():
     assert get_maximal_wheel_angle_("4WS4WD") == 5.0
 
     with pytest.raises(LookupError):
+        get_maximal_wheel_angle_("1FAS2FWD")
+    with pytest.raises(LookupError):
         get_maximal_wheel_angle_("1FAS2RWD")
+    with pytest.raises(LookupError):
+        get_maximal_wheel_angle_("1FAS4WD")
+    with pytest.raises(LookupError):
+        get_maximal_wheel_angle_("2AS2FWD")
+    with pytest.raises(LookupError):
+        get_maximal_wheel_angle_("2AS2RWD")
     with pytest.raises(LookupError):
         get_maximal_wheel_angle_("2AS4WD")
     with pytest.raises(LookupError):
@@ -142,7 +169,11 @@ def get_maximal_wheel_angles():
 
 def get_maximal_steering_angles():
 
+    assert get_maximal_steering_angle_("1FAS2FWD") == 5.0
     assert get_maximal_steering_angle_("1FAS2RWD") == 5.0
+    assert get_maximal_steering_angle_("1FAS4WD") == 5.0
+    assert get_maximal_steering_angle_("2AS2FWD") == 5.0
+    assert get_maximal_steering_angle_("2AS2RWD") == 5.0
     assert get_maximal_steering_angle_("2AS4WD") == 5.0
 
     with pytest.raises(LookupError):
@@ -163,9 +194,17 @@ def get_maximal_steering_angles():
 
 def compute_maximal_angular_speed():
     with pytest.raises(LookupError):
+        get_maximal_angular_speed("1FAS2FWD")
+    with pytest.raises(LookupError):
         get_maximal_angular_speed("1FAS2RWD")
     with pytest.raises(LookupError):
+        get_maximal_angular_speed("1FAS4WD")
+    with pytest.raises(LookupError):
         get_maximal_angular_speed("2AS4WD")
+    with pytest.raises(LookupError):
+        get_maximal_angular_speed("2AS2FWD")
+    with pytest.raises(LookupError):
+        get_maximal_angular_speed("2AS2RWD")
     with pytest.raises(LookupError):
         get_maximal_angular_speed("2FWS2FWD")
     with pytest.raises(LookupError):

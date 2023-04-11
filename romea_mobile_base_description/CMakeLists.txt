@@ -17,6 +17,10 @@ if(BUILD_TESTING)
 
   find_package(ament_cmake_pytest REQUIRED)
   configure_file(test/test_mobile_base_parameters_1FAS2RWD.yaml  test/test_mobile_base_parameters_1FAS2RWD.yaml)
+  configure_file(test/test_mobile_base_parameters_1FAS2FWD.yaml  test/test_mobile_base_parameters_1FAS2FWD.yaml)
+  configure_file(test/test_mobile_base_parameters_1FAS4WD.yaml  test/test_mobile_base_parameters_1FAS4WD.yaml)
+  configure_file(test/test_mobile_base_parameters_2AS4WD.yaml  test/test_mobile_base_parameters_2AS2FWD.yaml)
+  configure_file(test/test_mobile_base_parameters_2AS4WD.yaml  test/test_mobile_base_parameters_2AS2RWD.yaml)
   configure_file(test/test_mobile_base_parameters_2AS4WD.yaml  test/test_mobile_base_parameters_2AS4WD.yaml)
   configure_file(test/test_mobile_base_parameters_2FWS2FWD.yaml  test/test_mobile_base_parameters_2FWS2FWD.yaml)
   configure_file(test/test_mobile_base_parameters_2FWS2RWD.yaml  test/test_mobile_base_parameters_2FWS2RWD.yaml)
@@ -28,6 +32,5 @@ if(BUILD_TESTING)
   ament_add_pytest_test(test_mobile_base_description test/test_mobile_base_description.py)
 
 endif()
-# ament_environment_hooks("${CMAKE_CURRENT_SOURCE_DIR}/env-hooks/${PROJECT_NAME}.dsv.in")
 
 ament_package()

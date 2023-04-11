@@ -1,4 +1,4 @@
-type: 2AS4WD
+type: 2AS2FWD
 geometry:
   axles_distance: 1.
   front_axle:
@@ -10,7 +10,7 @@ axles_steering_control:
   command:
     maximal_angle: 5.
 
-wheels_speed_control:
+front_wheels_speed_control:
   command:
     maximal_speed: 4.
 

@@ -1,4 +1,4 @@
-type: 1FAS2RWD
+type: 1FAS4WD
 geometry:
   axles_distance: 1.
   front_axle:
@@ -10,7 +10,7 @@ front_axle_steering_control:
   command:
     maximal_angle: 5.
 
-rear_wheels_speed_control:
+wheels_speed_control:
   command:
     maximal_speed: 4.
 

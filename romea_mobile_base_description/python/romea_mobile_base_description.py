@@ -44,16 +44,13 @@ def get_type(base_description):
 
 def get_kinematic_type(base_description):
     type = get_type(base_description)
-    print("type", type)
-    if type == "2WD" or type == "4WD" or type == "2TD":
+    if type == "2WD" or type == "4WD" or "2T" in type:
         return "skid_steering"
-    elif type == "1FAS2RWD" or type == "1FAS2FWD" or type == "1FAS4WD":
+    elif "1FAS" in type:
         return "one_axle_steering"
-    elif type == "1RAS2RWD" or type == "1RAS2FWD" or type == "1RAS4WD":
-        return "one_axle_steering"
-    elif type == "2AS4WD" or type == "2AS2FWD" or type == "2AS2RWD":
+    elif "2AS" in type:
         return "two_axle_steering"
-    elif type == "2FWS2FWD" or type == "2FWS2RWD" or type == "2FWS4WD":
+    elif "2FWS" in type:
         return "two_wheel_steering"
     elif type == "4WS4WD":
         return "four_wheel_steering"
@@ -208,5 +205,5 @@ def get_maximal_angular_speed(base_description):
 
     else:
         raise LookupError(
-            "No maximal angular speed computation is implement for this type of vehicule : "
+            "No maximal angular speed computation is implemented for this kind of vehicule : "
         )

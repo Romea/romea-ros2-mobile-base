@@ -23,7 +23,7 @@ def generate_launch_description():
 
     declared_arguments.append(
         DeclareLaunchArgument(
-            "prefix", default_value='""', description="Prefix of the joint names."
+            "prefix", default_value='robot_', description="Prefix of the joint names."
         )
     )
 
