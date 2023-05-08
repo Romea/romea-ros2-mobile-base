@@ -221,9 +221,9 @@ CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_shutdown(
 //-----------------------------------------------------------------------------
 template<typename InterfaceType, typename KinematicType>
 controller_interface::return_type MobileBaseController<InterfaceType, KinematicType>::update(
-  const rclcpp::Time & /*time*/, const rclcpp::Duration & period)
+  const rclcpp::Time & time, const rclcpp::Duration & period)
 {
-//  std::cout << "update" << std::endl;
+  std::cout << "update" << time.seconds() << " " << time.nanoseconds() << std::endl;
   update_time_ = get_node()->get_clock()->now();  // why not time?
   // RCLCPP_INFO_STREAM(get_node()->get_logger(), "update_controller_state_");
   update_controller_state_();
