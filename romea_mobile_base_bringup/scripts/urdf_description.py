@@ -14,8 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-
 from romea_mobile_base_bringup import urdf_description
 import sys
 
