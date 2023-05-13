@@ -17,6 +17,7 @@
 #define ROMEA_MOBILE_BASE_UTILS__PARAMS__MOBILE_BASE_GEOMETRY_PARAMETERS_HPP_
 
 // std
+#include <optional>
 #include <limits>
 #include <memory>
 #include <string>
