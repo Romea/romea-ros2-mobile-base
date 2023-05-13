@@ -41,6 +41,7 @@ def launch_setup(context, *args, **kwargs):
 
     mobile_base_controller = Node(
         package="romea_mobile_base_controllers",
+        # package="controller_manager",
         executable="spawner",
         exec_name="mobile_base_controller_spawner",
         arguments=[
@@ -65,7 +66,7 @@ def launch_setup(context, *args, **kwargs):
         # output="screen",
     )
 
-    return [mobile_base_controller, joint_state_broadcaster]
+    return [joint_state_broadcaster, mobile_base_controller]
 
 
 def generate_launch_description():
