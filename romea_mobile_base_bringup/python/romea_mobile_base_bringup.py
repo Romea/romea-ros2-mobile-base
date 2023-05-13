@@ -13,7 +13,7 @@
 # limitations under the License.
 
 
-from romea_common_bringup import MetaDescription, robot_urdf_prefix, robot_namespace
+from romea_common_bringup import MetaDescription, robot_urdf_prefix, robot_prefix
 import importlib
 
 
@@ -48,9 +48,9 @@ def urdf_description(robot_name, mode, meta_description_file_path):
     base_bringup = importlib.import_module(base_type + "_bringup")
 
     urdf_prefix = robot_urdf_prefix(robot_name)
-    ros_namespace = robot_namespace(robot_name)
+    ros_prefix = robot_prefix(robot_name)
 
     if not base_model:
-        return base_bringup.urdf_description(urdf_prefix, mode, ros_namespace)
+        return base_bringup.urdf_description(urdf_prefix, mode, ros_prefix)
     else:
-        return base_bringup.urdf_description(urdf_prefix, mode, base_model, ros_namespace)
+        return base_bringup.urdf_description(urdf_prefix, mode, base_model, ros_prefix)
