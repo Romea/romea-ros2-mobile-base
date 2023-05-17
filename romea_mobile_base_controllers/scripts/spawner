@@ -77,6 +77,7 @@ def controller_manager_namespace(name):
 def main(args=None):
 
     rclpy.init(args=args)
+
     parser = argparse.ArgumentParser()
     parser.add_argument(
         'controller_name', help='Name of the controller')
@@ -118,6 +119,7 @@ def main(args=None):
         raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), param_file)
 
     node = Node('spawner_' + controller_name)
+
     try:
 
         if not wait_for_controller_manager(node, controller_manager_name,
@@ -125,13 +127,18 @@ def main(args=None):
             node.get_logger().error('Controller manager not available')
             return 1
 
+        if "base" in controller_manager_name:
+            time.sleep(3)
+        else:
+            time.sleep(6)
+
         if is_controller_loaded(node, controller_manager_name, controller_name):
             node.get_logger().info('Controller already loaded, skipping load_controller')
         else:
-
             if controller_type:
                 ret = subprocess.run(['ros2', 'param', 'set', controller_manager_name,
                                       controller_name + '.type', controller_type])
+
             ret = load_controller(
                 node, controller_manager_name, controller_name)
             if not ret.ok:

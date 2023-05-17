@@ -55,7 +55,7 @@ def launch_setup(context, *args, **kwargs):
     )
 
     joint_state_broadcaster = Node(
-        package="controller_manager",
+        package="romea_mobile_base_controllers",
         executable="spawner",
         exec_name="joint_state_broadcaster_spawner",
         arguments=[
