@@ -1,81 +1,86 @@
 <?xml version="1.0"?>
 <robot name="robot" xmlns:xacro="http://ros.org/wiki/xacro">
 
-    <xacro:property name="M_PI" value="3.14159"/>
-    <xacro:include filename="$(find romea_mobile_base_description)/urdf/base4WD.chassis.xacro" />
-    <xacro:include filename="$(find romea_mobile_base_description)/ros2_control/base4WD.ros2_control.xacro"/>
-    <xacro:property name="prefix" value=""/>
+  <xacro:property name="M_PI" value="3.14159" />
+  <xacro:include filename="$(find romea_mobile_base_description)/urdf/base4WD.chassis.xacro" />
+  <xacro:include
+    filename="$(find romea_mobile_base_description)/ros2_control/base4WD.ros2_control.xacro" />
+  <xacro:property name="prefix" value="" />
 
-    <!-- Link names -->
-    <xacro:property name="base_link" value="base_link" />
-    <xacro:property name="base_footprint_link" value="base_footprint_link" />
-    <xacro:property name="inertial_link" value="inertial_link_name" />
-    <xacro:property name="front_left_wheel_spinning_link" value="front_left_wheel_spinning_link" />
-    <xacro:property name="front_right_wheel_spinning_link" value="front_right_wheel_spinning_link" />
-    <xacro:property name="rear_left_wheel_spinning_link" value="rear_left_wheel_spinning_link" />
-    <xacro:property name="rear_right_wheel_spinning_link" value="rear_right_wheel_spinning_link" />
+  <!-- Link names -->
+  <xacro:property name="base_link" value="base_link" />
+  <xacro:property name="base_footprint_link" value="base_footprint_link" />
+  <xacro:property name="inertial_link" value="inertial_link_name" />
+  <xacro:property name="front_left_wheel_spinning_link" value="front_left_wheel_spinning_link" />
+  <xacro:property name="front_right_wheel_spinning_link" value="front_right_wheel_spinning_link" />
+  <xacro:property name="rear_left_wheel_spinning_link" value="rear_left_wheel_spinning_link" />
+  <xacro:property name="rear_right_wheel_spinning_link" value="rear_right_wheel_spinning_link" />
 
-    <!-- Joint names -->
-    <xacro:property name="base_footprint_joint" value="base_footprint_joint" />
-    <xacro:property name="inertial_joint" value="inertial_joint" />
-    <xacro:property name="front_left_wheel_spinning_joint" value="front_left_wheel_spinning_joint" />
-    <xacro:property name="front_right_wheel_spinning_joint" value="front_right_wheel_spinning_joint_name" />
-    <xacro:property name="rear_left_wheel_spinning_joint" value="rear_left_wheel_spinning_joint_name" />
-    <xacro:property name="rear_right_wheel_spinning_joint" value="rear_right_wheel_spinning_joint_name" />
+  <!-- Joint names -->
+  <xacro:property name="base_footprint_joint" value="base_footprint_joint" />
+  <xacro:property name="inertial_joint" value="inertial_joint" />
+  <xacro:property name="front_left_wheel_spinning_joint" value="front_left_wheel_spinning_joint" />
+  <xacro:property name="front_right_wheel_spinning_joint"
+    value="front_right_wheel_spinning_joint_name" />
+  <xacro:property name="rear_left_wheel_spinning_joint" value="rear_left_wheel_spinning_joint_name" />
+  <xacro:property name="rear_right_wheel_spinning_joint"
+    value="rear_right_wheel_spinning_joint_name" />
 
-    <!-- Base Properties -->
-    <xacro:property name="ground_clearance" value="0.098"/>
-    <xacro:property name="aabb_length" value="0.54" />
-    <xacro:property name="aabb_width" value="0.40" />
-    <xacro:property name="aabb_height" value="0.18" />
-    <xacro:property name="aabb_center_x" value="0.0" />
-    <xacro:property name="aabb_center_y" value="0.0" />
-    <xacro:property name="aabb_center_z" value="${aabb_height/2.0+ground_clearance}" />
+  <!-- Base Properties -->
+  <xacro:property name="ground_clearance" value="0.098" />
+  <xacro:property name="aabb_length" value="0.54" />
+  <xacro:property name="aabb_width" value="0.40" />
+  <xacro:property name="aabb_height" value="0.18" />
+  <xacro:property name="aabb_center_x" value="0.0" />
+  <xacro:property name="aabb_center_y" value="0.0" />
+  <xacro:property name="aabb_center_z" value="${aabb_height/2.0+ground_clearance}" />
 
-<!--    center: [0., 0., 0.188]-->
-    <xacro:property name="wheelbase" value="0.392"/>
-    <xacro:property name="front_track" value="0.515"/>
-    <xacro:property name="rear_track" value="0.515"/>
+  <!--    center: [0., 0., 0.188]-->
+  <xacro:property name="wheelbase" value="0.392" />
+  <xacro:property name="front_track" value="0.515" />
+  <xacro:property name="rear_track" value="0.515" />
 
-    <xacro:property name="mass_base" value="17" />
-    <xacro:property name="mass_center_x" value="0.0" />
-    <xacro:property name="mass_center_y" value="0.0" />
-    <xacro:property name="mass_center_z" value="0.188" />
+  <xacro:property name="mass_base" value="17" />
+  <xacro:property name="mass_center_x" value="0.0" />
+  <xacro:property name="mass_center_y" value="0.0" />
+  <xacro:property name="mass_center_z" value="0.188" />
 
-    <xacro:property name="maximal_wheel_speed" value="3.0"/>
-    <xacro:property name="body_reference_x" value="0.0" />
+  <xacro:property name="maximal_wheel_speed" value="3.0" />
+  <xacro:property name="body_reference_x" value="0.0" />
 
-    <!-- Wheel Properties -->
-    <xacro:property name="front_wheel_radius" value="0.1315" />
-    <xacro:property name="rear_wheel_radius" value="0.1315" />
-    <xacro:property name="front_wheel_width" value="0.1" />
-    <xacro:property name="rear_wheel_width" value="0.1" />
-    <xacro:property name="front_wheel_mass" value="20." />
-    <xacro:property name="rear_wheel_mass" value="20." />
-    <xacro:property name="wheel_radius" value="${front_wheel_radius}" />
-    <xacro:property name="wheel_width" value="${front_wheel_width}" />
+  <!-- Wheel Properties -->
+  <xacro:property name="front_wheel_radius" value="0.1315" />
+  <xacro:property name="rear_wheel_radius" value="0.1315" />
+  <xacro:property name="front_wheel_width" value="0.1" />
+  <xacro:property name="rear_wheel_width" value="0.1" />
+  <xacro:property name="front_wheel_mass" value="20." />
+  <xacro:property name="rear_wheel_mass" value="20." />
+  <xacro:property name="wheel_radius" value="${front_wheel_radius}" />
+  <xacro:property name="wheel_width" value="${front_wheel_width}" />
 
-    <!-- Wheel Mounting Positions -->
-    <xacro:property name="front_wheel_y_offset" value="0.0" />
-    <xacro:property name="rear_wheel_y_offset" value="0.0" />
-    <xacro:property name="chassis_height" value="${min(front_wheel_radius,rear_wheel_radius)}" />
+  <!-- Wheel Mounting Positions -->
+  <xacro:property name="front_wheel_y_offset" value="0.0" />
+  <xacro:property name="rear_wheel_y_offset" value="0.0" />
+  <xacro:property name="chassis_height" value="${min(front_wheel_radius,rear_wheel_radius)}" />
 
-    <xacro:chassis>
+  <xacro:chassis>
 
-        <visual>
-          <geometry>
-            <box size="${aabb_length} ${aabb_width} ${aabb_height}"/>
-          </geometry>
-          <origin xyz="${aabb_center_x-body_reference_x} ${aabb_center_y}  ${aabb_center_z-chassis_height}" rpy="0 0 0" />
-          <material name="grey">
-            <color rgba="0.6 0.6 0.6 1"/>
-          </material>
-        </visual>
+    <visual>
+      <geometry>
+        <box size="${aabb_length} ${aabb_width} ${aabb_height}" />
+      </geometry>
+      <origin
+        xyz="${aabb_center_x-body_reference_x} ${aabb_center_y}  ${aabb_center_z-chassis_height}"
+        rpy="0 0 0" />
+      <material name="grey">
+        <color rgba="0.6 0.6 0.6 1" />
+      </material>
+    </visual>
 
-        <!-- visual wheel -->
-        <cylinder length="${wheel_width}" radius="${wheel_radius}"/>
-    </xacro:chassis>
+    <!-- visual wheel -->
+    <cylinder length="${wheel_width}" radius="${wheel_radius}" />
+  </xacro:chassis>
 
-    <xacro:base_control mode="test"/>
+  <xacro:base_control mode="test" base_name="base" />
 
 </robot>

@@ -27,6 +27,13 @@ SteeringJointGazeboInterface::SteeringJointGazeboInterface(
   // std::cout << joint_info.name << std::endl;
 
   sim_joint_ = parent_model->GetJoint(joint_info.name);
+  if (sim_joint_ == nullptr) {
+    std::stringstream msg;
+    msg << " Joint called ";
+    msg << joint_info.name;
+    msg << " cannot be get by steering joint gazebo interface";
+    throw std::runtime_error(msg.str());
+  }
 
   // std::cout << " steering joint_info.name ";
   // std::cout << joint_info.name << " ";

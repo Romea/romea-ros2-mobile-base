@@ -24,7 +24,7 @@ def launch_setup(context, *args, **kwargs):
         "base_controller_yaml_filename"
     ).perform(context)
 
-    controller_yaml_filename = "/tmp/mobile_base_controller.yaml"
+    controller_yaml_filename = "/tmp/"+joints_prefix+"_base_controller.yaml"
 
     with open(base_description_yaml_filename, "r") as f:
         base_info = yaml.load(f, Loader=yaml.FullLoader)

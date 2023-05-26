@@ -99,6 +99,6 @@
     <cylinder length="${wheel_width}" radius="${wheel_radius}" />
   </xacro:chassis>
 
-  <xacro:base_control mode="test" />
+  <xacro:base_control mode="test" base_name="base" />
 
 </robot>

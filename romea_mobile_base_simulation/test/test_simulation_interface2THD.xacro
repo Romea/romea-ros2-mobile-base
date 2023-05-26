@@ -1,20 +1,21 @@
 <?xml version='1.0' encoding='utf-8'?>
 <robot name="robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:property name="prefix" value="robot_"/>
-  <xacro:property name="left_sprocket_wheel_spinning_joint" value="joint1"/>
-  <xacro:property name="right_sprocket_wheel_spinning_joint" value="joint2"/>
-  <xacro:property name="front_left_idler_wheel_spinning_joint" value="joint3"/>
-  <xacro:property name="front_right_idler_wheel_spinning_joint" value="joint4"/>
-  <xacro:property name="rear_left_idler_wheel_spinning_joint" value="joint5"/>
-  <xacro:property name="rear_right_idler_wheel_spinning_joint" value="joint6"/>
+  <xacro:property name="prefix" value="robot_" />
+  <xacro:property name="left_sprocket_wheel_spinning_joint" value="joint1" />
+  <xacro:property name="right_sprocket_wheel_spinning_joint" value="joint2" />
+  <xacro:property name="front_left_idler_wheel_spinning_joint" value="joint3" />
+  <xacro:property name="front_right_idler_wheel_spinning_joint" value="joint4" />
+  <xacro:property name="rear_left_idler_wheel_spinning_joint" value="joint5" />
+  <xacro:property name="rear_right_idler_wheel_spinning_joint" value="joint6" />
 
-  <xacro:property name="simulation_hardware_plugin" value="foo"/>
-  <xacro:property name="sprocket_wheel_radius" value="0.8"/>
-  <xacro:property name="idler_wheel_radius" value="0.3"/>
-  <xacro:property name="track_thickness" value="0.1"/>
+  <xacro:property name="simulation_hardware_plugin" value="foo" />
+  <xacro:property name="sprocket_wheel_radius" value="0.8" />
+  <xacro:property name="idler_wheel_radius" value="0.3" />
+  <xacro:property name="track_thickness" value="0.1" />
 
-  <xacro:include filename="$(find romea_mobile_base_description)/ros2_control/base2THD.ros2_control.xacro" />
-  <xacro:base_control mode="simulation"/>
+  <xacro:include
+    filename="$(find romea_mobile_base_description)/ros2_control/base2THD.ros2_control.xacro" />
+  <xacro:base_control mode="simulation" base_name="base" />
 
 </robot>

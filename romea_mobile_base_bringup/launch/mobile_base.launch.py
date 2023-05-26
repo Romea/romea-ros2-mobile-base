@@ -57,11 +57,13 @@ def launch_setup(context, *args, **kwargs):
     meta_description = get_meta_description(context)
     urdf_description = get_urdf_description(context)
 
+    base_name = meta_description.get_name()
     base_type = meta_description.get_type()
     base_model = meta_description.get_model()
 
     launch_arguments = {
         "mode": mode,
+        "base_name": base_name,
         "robot_namespace": robot_namespace,
         "urdf_description": urdf_description
         # initial xyz intial rpy

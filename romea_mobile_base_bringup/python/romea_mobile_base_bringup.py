@@ -43,6 +43,7 @@ def urdf_description(robot_name, mode, meta_description_file_path):
 
     meta_description = MobileBaseMetaDescription(meta_description_file_path)
 
+    base_name = meta_description.get_name()
     base_type = meta_description.get_type()
     base_model = meta_description.get_model()
     base_bringup = importlib.import_module(base_type + "_bringup")
@@ -51,6 +52,6 @@ def urdf_description(robot_name, mode, meta_description_file_path):
     ros_prefix = robot_prefix(robot_name)
 
     if not base_model:
-        return base_bringup.urdf_description(urdf_prefix, mode, ros_prefix)
+        return base_bringup.urdf_description(urdf_prefix, mode, base_name, ros_prefix)
     else:
-        return base_bringup.urdf_description(urdf_prefix, mode, base_model, ros_prefix)
+        return base_bringup.urdf_description(urdf_prefix, mode, base_name, base_model, ros_prefix)
