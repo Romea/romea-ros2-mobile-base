@@ -1,13 +1,13 @@
-name: "adap2e"
+name: "base"
 configuration:
   type: adap2e
   model: fat
 #controller  ???
 records:
-  joint_states : true
-  controller/odom : true
-  controller/odometry : true
-  controller/kinematic : true
+  joint_states: true
+  controller/odom: true
+  controller/odometry: true
+  controller/kinematic: true
 simulation:
   initial_xyz: [1.0, 2.0, 3.0]
-  initial_rpy: [4.0, 5.0, 6.0]  
+  initial_rpy: [4.0, 5.0, 6.0]

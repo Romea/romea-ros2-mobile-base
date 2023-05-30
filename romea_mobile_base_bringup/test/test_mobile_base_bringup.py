@@ -28,7 +28,7 @@ def meta_description():
 
 
 def test_get_name(meta_description):
-    assert meta_description.get_name() == "adap2e"
+    assert meta_description.get_name() == "base"
 
 
 def test_get_type(meta_description):
