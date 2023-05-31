@@ -76,9 +76,11 @@ HardwareInterface1FAS2FWD::export_command_interfaces()
 //-----------------------------------------------------------------------------
 HardwareCommand1FAS2FWD HardwareInterface1FAS2FWD::get_command()const
 {
+  // *INDENT-OFF*
   return {front_axle_steering_joint_.get_command(),
       front_left_wheel_spinning_joint_.get_command(),
       front_right_wheel_spinning_joint_.get_command()};
+  // *INDENT-ON*
 }
 
 //-----------------------------------------------------------------------------

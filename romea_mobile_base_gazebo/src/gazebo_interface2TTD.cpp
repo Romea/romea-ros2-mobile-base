@@ -60,7 +60,6 @@ GazeboInterface2TTD::GazeboInterface2TTD(
 //-----------------------------------------------------------------------------
 SimulationState2TTD GazeboInterface2TTD::get_state() const
 {
-  // *INDENT-OFF*
   return {left_sprocket_wheel_spinning_joint_.get_state(),
       right_sprocket_wheel_spinning_joint_.get_state(),
       left_idler_wheel_spinning_joint_.get_state(),
@@ -69,7 +68,6 @@ SimulationState2TTD GazeboInterface2TTD::get_state() const
       front_right_roller_wheel_spinning_joint_.get_state(),
       rear_left_roller_wheel_spinning_joint_.get_state(),
       rear_right_roller_wheel_spinning_joint_.get_state()};
-  // *INDENT-ON*
 }
 
 //-----------------------------------------------------------------------------
