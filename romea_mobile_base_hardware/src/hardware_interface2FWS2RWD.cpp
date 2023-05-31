@@ -72,10 +72,12 @@ export_command_interfaces()
 //-----------------------------------------------------------------------------
 HardwareCommand2FWS2RWD HardwareInterface2FWS2RWD::get_command()const
 {
+  // *INDENT-OFF*
   return {front_left_wheel_steering_joint_.get_command(),
       front_right_wheel_steering_joint_.get_command(),
       rear_left_wheel_spinning_joint_.get_command(),
       rear_right_wheel_spinning_joint_.get_command()};
+  // *INDENT-ON*
 }
 
 //-----------------------------------------------------------------------------

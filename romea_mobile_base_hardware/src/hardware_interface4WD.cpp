@@ -67,10 +67,12 @@ std::vector<hardware_interface::CommandInterface> HardwareInterface4WD::export_c
 //-----------------------------------------------------------------------------
 HardwareCommand4WD HardwareInterface4WD::get_command()const
 {
+  // *INDENT-OFF*
   return {front_left_wheel_spinning_joint_.get_command(),
       front_right_wheel_spinning_joint_.get_command(),
       rear_left_wheel_spinning_joint_.get_command(),
       rear_right_wheel_spinning_joint_.get_command()};
+  // *INDENT-ON*
 }
 
 //-----------------------------------------------------------------------------

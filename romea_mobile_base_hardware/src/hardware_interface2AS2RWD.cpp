@@ -89,10 +89,12 @@ HardwareInterface2AS2RWD::export_command_interfaces()
 //-----------------------------------------------------------------------------
 HardwareCommand2AS2RWD HardwareInterface2AS2RWD::get_command()const
 {
+  // *INDENT-OFF*
   return {front_axle_steering_joint_.get_command(),
       rear_axle_steering_joint_.get_command(),
       rear_left_wheel_spinning_joint_.get_command(),
       rear_right_wheel_spinning_joint_.get_command()};
+  // *INDENT-ON*
 }
 
 //-----------------------------------------------------------------------------

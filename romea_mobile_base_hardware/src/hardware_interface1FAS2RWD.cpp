@@ -76,9 +76,11 @@ HardwareInterface1FAS2RWD::export_command_interfaces()
 //-----------------------------------------------------------------------------
 HardwareCommand1FAS2RWD HardwareInterface1FAS2RWD::get_command()const
 {
+  // *INDENT-OFF*
   return {front_axle_steering_joint_.get_command(),
       rear_left_wheel_spinning_joint_.get_command(),
       rear_right_wheel_spinning_joint_.get_command()};
+  // *INDENT-ON*
 }
 
 //-----------------------------------------------------------------------------

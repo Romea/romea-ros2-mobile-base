@@ -81,11 +81,13 @@ HardwareInterface1FAS4WD::export_command_interfaces()
 //-----------------------------------------------------------------------------
 HardwareCommand1FAS4WD HardwareInterface1FAS4WD::get_command()const
 {
+  // *INDENT-OFF*
   return {front_axle_steering_joint_.get_command(),
       front_left_wheel_spinning_joint_.get_command(),
       front_right_wheel_spinning_joint_.get_command(),
       rear_left_wheel_spinning_joint_.get_command(),
       rear_right_wheel_spinning_joint_.get_command()};
+  // *INDENT-ON*
 }
 
 //-----------------------------------------------------------------------------

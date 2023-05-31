@@ -74,8 +74,10 @@ HardwareInterface2THD::export_command_interfaces()
 //-----------------------------------------------------------------------------
 HardwareCommand2TD HardwareInterface2THD::get_command()const
 {
+  // *INDENT-OFF*
   return {left_sprocket_wheel_spinning_joint_.get_command(),
       right_sprocket_wheel_spinning_joint_.get_command()};
+  // *INDENT-ON*
 }
 
 //-----------------------------------------------------------------------------

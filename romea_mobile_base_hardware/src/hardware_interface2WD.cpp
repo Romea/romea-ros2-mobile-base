@@ -61,8 +61,10 @@ HardwareInterface2WD::export_command_interfaces()
 //-----------------------------------------------------------------------------
 HardwareCommand2WD HardwareInterface2WD::get_command()const
 {
+  // *INDENT-OFF*
   return {left_wheel_spinning_joint_.get_command(),
       right_wheel_spinning_joint_.get_command()};
+  // *INDENT-ON*
 }
 
 
