@@ -39,7 +39,7 @@ As seen below mobile base meta-description file is a yaml file constituted by fo
 
 Example :
 ```yaml
-name: "adap2e" # name of robot
+name: "base" # name of the base
 configuration: # mobile base basic specifications
   type: adap2e # robot type
   model: fat # robot model (optional)
