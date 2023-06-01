@@ -89,7 +89,7 @@ install(
   DESTINATION share/${PROJECT_NAME})
 
 install(PROGRAMS
-  scripts/spawner
+  scripts/spawner.py
   DESTINATION lib/${PROJECT_NAME}
 )
 install(

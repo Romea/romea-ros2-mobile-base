@@ -42,7 +42,8 @@ def launch_setup(context, *args, **kwargs):
     mobile_base_controller = Node(
         package="romea_mobile_base_controllers",
         # package="controller_manager",
-        executable="spawner",
+        # executable="spawner",
+        executable="spawner.py",
         exec_name="mobile_base_controller_spawner",
         arguments=[
             controller_name,
@@ -56,7 +57,7 @@ def launch_setup(context, *args, **kwargs):
 
     joint_state_broadcaster = Node(
         package="romea_mobile_base_controllers",
-        executable="spawner",
+        executable="spawner.py",
         exec_name="joint_state_broadcaster_spawner",
         arguments=[
             "joint_state_broadcaster",
