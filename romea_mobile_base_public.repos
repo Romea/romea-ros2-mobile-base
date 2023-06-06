@@ -5,7 +5,7 @@ repositories:
     version: main
   romea_core/romea_mobile_base:
     type: git
-    url: https://github.com/Romea/romea-core-mobile_base.git
+    url: https://github.com/Romea/romea-core-mobile-base.git
     version: main
 
   romea_ros2/tools/romea_common:
