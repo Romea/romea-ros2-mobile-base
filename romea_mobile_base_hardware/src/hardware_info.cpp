@@ -128,8 +128,6 @@ const std::string & get_parameter(
   const hardware_interface::HardwareInfo & hardware_info,
   const std::string & parameter_name)
 {
-  std::cout << " parameter_name " << parameter_name << " " << hardware_info.hardware_parameters.at(
-    parameter_name) << std::endl;
   return hardware_info.hardware_parameters.at(parameter_name);
 }
 
