@@ -4,11 +4,13 @@
 
   <name>romea_mobile_base_simulation</name>
   <version>0.0.0</version>
-  <description>The romea_mobile_base_simulation package</description>
+
+  <description>Package containing tools for mobile_base_simulation</description>
 
   <maintainer email="jean.laneurit@inrae.fr">Jean Laneurit</maintainer>
 
-  <license>TODO</license>
+  <license>Apache License 2.0</license>
+
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <depend>rclcpp</depend>

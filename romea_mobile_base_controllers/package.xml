@@ -4,11 +4,11 @@
 
   <name>romea_mobile_base_controllers</name>
   <version>0.0.0</version>
-  <description>The romea_mobile_base_controllers_interfaces package</description>
+  <description>Package containing controllers for different kind of mobile base</description>
 
   <maintainer email="jean.laneurit@inrae.fr">Jean Laneurit</maintainer>
 
-  <license>TODO</license>
+  <license>Apache License 2.0</license>
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <depend>rclcpp</depend>

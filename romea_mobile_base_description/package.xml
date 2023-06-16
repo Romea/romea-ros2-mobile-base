@@ -3,11 +3,12 @@
 <package format="3">
   <name>romea_mobile_base_description</name>
   <version>0.0.0</version>
-  <description>Package with URDF and description files of a robot chassis.</description>
+
+  <description>Package containg URDF and description file for different kinds of mobile base.</description>
 
   <maintainer email="jean.laneurit@inrae.fr">Jean Laneurit</maintainer>
 
-  <license>TODO</license>
+  <license>Apache License 2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
