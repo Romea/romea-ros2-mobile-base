@@ -24,8 +24,8 @@
 
       <joint name="${prefix}${front_left_wheel_spinning_joint}">
         <command_interface name="velocity">
-          <param name="min">-1</param>
-          <param name="max">1</param>
+          <param name="min">${-maximal_wheel_speed/front_wheel_radius}</param>
+          <param name="max">${maximal_wheel_speed/front_wheel_radius}</param>
         </command_interface>
         <state_interface name="position" />
         <state_interface name="velocity" />
@@ -34,8 +34,8 @@
 
       <joint name="${prefix}${front_right_wheel_spinning_joint}">
         <command_interface name="velocity">
-          <param name="min">-1</param>
-          <param name="max">1</param>
+          <param name="min">${-maximal_wheel_speed/front_wheel_radius}</param>
+          <param name="max">${maximal_wheel_speed/front_wheel_radius}</param>
         </command_interface>
         <state_interface name="position" />
         <state_interface name="velocity" />
@@ -44,8 +44,8 @@
 
       <joint name="${prefix}${rear_left_wheel_spinning_joint}">
         <command_interface name="velocity">
-          <param name="min">-1</param>
-          <param name="max">1</param>
+          <param name="min">${-maximal_wheel_speed/rear_wheel_radius}</param>
+          <param name="max">${maximal_wheel_speed/rear_wheel_radius}</param>
         </command_interface>
         <state_interface name="position" />
         <state_interface name="velocity" />
@@ -54,8 +54,8 @@
 
       <joint name="${prefix}${rear_right_wheel_spinning_joint}">
         <command_interface name="velocity">
-          <param name="min">-1</param>
-          <param name="max">1</param>
+          <param name="min">${-maximal_wheel_speed/rear_wheel_radius}</param>
+          <param name="max">${maximal_wheel_speed/rear_wheel_radius}</param>
         </command_interface>
         <state_interface name="position" />
         <state_interface name="velocity" />

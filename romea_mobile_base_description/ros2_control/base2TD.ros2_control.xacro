@@ -25,8 +25,8 @@
 
       <joint name="${prefix}${left_sprocket_wheel_spinning_joint}">
         <command_interface name="velocity">
-          <param name="min">-1</param>
-          <param name="max">1</param>
+          <param name="min">${-maximal_wheel_speed/(sprocket_wheel_radius+track_thickness)} </param>
+          <param name="max">${maximal_wheel_speed/(sprocket_wheel_radius+track_thickness)}</param>
         </command_interface>
         <state_interface name="position" />
         <state_interface name="velocity" />
@@ -35,8 +35,8 @@
 
       <joint name="${prefix}${right_sprocket_wheel_spinning_joint}">
         <command_interface name="velocity">
-          <param name="min">-1</param>
-          <param name="max">1</param>
+          <param name="min">${-maximal_wheel_speed/(sprocket_wheel_radius+track_thickness)}</param>
+          <param name="max">${maximal_wheel_speed/(sprocket_wheel_radius+track_thickness)}</param>
         </command_interface>
         <state_interface name="position" />
         <state_interface name="velocity" />
