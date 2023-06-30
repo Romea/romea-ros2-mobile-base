@@ -6,6 +6,9 @@
   <xacro:property name="front_right_wheel_spinning_joint" value="joint2" />
   <xacro:property name="rear_left_wheel_spinning_joint" value="joint3" />
   <xacro:property name="rear_right_wheel_spinning_joint" value="joint4" />
+  <xacro:property name="maximal_wheel_speed" value="1.0" />
+  <xacro:property name="front_wheel_radius" value="0.2" />
+  <xacro:property name="rear_wheel_radius" value="0.2" />
 
   <xacro:include
     filename="$(find romea_mobile_base_description)/ros2_control/base4WD.ros2_control.xacro" />

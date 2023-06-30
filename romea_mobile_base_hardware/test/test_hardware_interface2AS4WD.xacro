@@ -12,6 +12,10 @@
   <xacro:property name="front_right_wheel_steering_joint" value="joint8" />
   <xacro:property name="rear_left_wheel_steering_joint" value="joint9" />
   <xacro:property name="rear_right_wheel_steering_joint" value="joint10" />
+  <xacro:property name="rear_wheel_radius" value="0.2" />
+  <xacro:property name="front_wheel_radius" value="0.2" />
+  <xacro:property name="maximal_axle_steering_angle" value="0.5" />
+  <xacro:property name="maximal_wheel_speed" value="1.0" />
 
   <xacro:include
     filename="$(find romea_mobile_base_description)/ros2_control/base2AS4WD.ros2_control.xacro" />

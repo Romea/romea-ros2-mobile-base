@@ -6,6 +6,11 @@
   <xacro:property name="right_sprocket_wheel_spinning_joint" value="joint2" />
   <xacro:property name="left_idler_wheel_spinning_joint" value="joint3" />
   <xacro:property name="right_idler_wheel_spinning_joint" value="joint4" />
+  <xacro:property name="maximal_wheel_speed" value="1.0" />
+  <xacro:property name="sprocket_wheel_radius" value="0.2" />
+  <xacro:property name="idler_wheel_radius" value="0.15" />
+  <xacro:property name="track_thickness" value="0.2" />
+
 
   <xacro:include
     filename="$(find romea_mobile_base_description)/ros2_control/base2TD.ros2_control.xacro" />
