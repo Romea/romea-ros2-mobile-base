@@ -66,7 +66,7 @@
       <joint name="${prefix}${rear_left_idler_wheel_spinning_joint}">
         <command_interface name="velocity">
           <param name="min">${-maximal_wheel_speed/(idler_wheel_radius+track_thickness)}</param>
-          <param name="max">${maximal_wheel_speed/(idle_wheel_radius+track_thickness)}</param>
+          <param name="max">${maximal_wheel_speed/(idler_wheel_radius+track_thickness)}</param>
         </command_interface>
         <state_interface name="position" />
         <state_interface name="velocity" />
