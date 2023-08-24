@@ -40,7 +40,7 @@ struct CommandInterfaceConfiguration
 };
 
 
-template<typename CommandType, typename Node>
+template<typename CommandType>
 class CommandInterface
 {
 public:
@@ -48,6 +48,7 @@ public:
   using Configuration = CommandInterfaceConfiguration;
 
 public:
+  template<typename Node>
   CommandInterface(
     std::shared_ptr<Node> node,
     const Configuration & configuration);
@@ -77,13 +78,11 @@ private:
 
   void publish_command_(const bool & timeout);
 
-  void create_timer_(
-    std::shared_ptr<Node> node,
-    const double & period);
+  template<typename Node>
+  void create_timer_(std::shared_ptr<Node> node, const double & period);
 
-  void create_publisher_(
-    std::shared_ptr<Node> node,
-    const std::string & output_message_type);
+  template<typename Node>
+  void create_publisher_(std::shared_ptr<Node> node, const std::string & output_message_type);
 
   void subscribe_to_cmd_mux(
     const int & priority,
@@ -108,8 +107,9 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-template<typename CommandType, typename Node>
-CommandInterface<CommandType, Node>::CommandInterface(
+template<typename CommandType>
+template<typename Node>
+CommandInterface<CommandType>::CommandInterface(
   std::shared_ptr<Node> node,
   const Configuration & configuration)
 : cmd_pub_(nullptr),
@@ -136,8 +136,9 @@ CommandInterface<CommandType, Node>::CommandInterface(
 }
 
 //-----------------------------------------------------------------------------
-template<typename CommandType, typename Node>
-void CommandInterface<CommandType, Node>::create_publisher_(
+template<typename CommandType>
+template<typename Node>
+void CommandInterface<CommandType>::create_publisher_(
   std::shared_ptr<Node> node,
   const std::string & output_message_type)
 {
@@ -145,8 +146,9 @@ void CommandInterface<CommandType, Node>::create_publisher_(
 }
 
 //-----------------------------------------------------------------------------
-template<typename CommandType, typename Node>
-void CommandInterface<CommandType, Node>::create_timer_(
+template<typename CommandType>
+template<typename Node>
+void CommandInterface<CommandType>::create_timer_(
   std::shared_ptr<Node> node,
   const double & period)
 {
@@ -155,8 +157,8 @@ void CommandInterface<CommandType, Node>::create_timer_(
 }
 
 //-----------------------------------------------------------------------------
-template<typename CommandType, typename Node>
-void CommandInterface<CommandType, Node>::subscribe_to_cmd_mux(
+template<typename CommandType>
+void CommandInterface<CommandType>::subscribe_to_cmd_mux(
   const int & priority,
   const double & timeout)
 {
@@ -166,15 +168,15 @@ void CommandInterface<CommandType, Node>::subscribe_to_cmd_mux(
 }
 
 //-----------------------------------------------------------------------------
-template<typename CommandType, typename Node>
-bool CommandInterface<CommandType, Node>::is_started()
+template<typename CommandType>
+bool CommandInterface<CommandType>::is_started()
 {
   return is_started_;
 }
 
 //-----------------------------------------------------------------------------
-template<typename CommandType, typename Node>
-void CommandInterface<CommandType, Node>::start()
+template<typename CommandType>
+void CommandInterface<CommandType>::start()
 {
   std::lock_guard<std::mutex> lock(mutex_);
   if (!is_started_) {
@@ -184,8 +186,8 @@ void CommandInterface<CommandType, Node>::start()
 }
 
 //-----------------------------------------------------------------------------
-template<typename CommandType, typename Node>
-void CommandInterface<CommandType, Node>::stop(bool reset)
+template<typename CommandType>
+void CommandInterface<CommandType>::stop(bool reset)
 {
   std::lock_guard<std::mutex> lock(mutex_);
   if (reset) {
@@ -195,8 +197,8 @@ void CommandInterface<CommandType, Node>::stop(bool reset)
 }
 
 //-----------------------------------------------------------------------------
-template<typename CommandType, typename Node>
-void CommandInterface<CommandType, Node>::enable_emergency_stop()
+template<typename CommandType>
+void CommandInterface<CommandType>::enable_emergency_stop()
 {
   is_emergency_stop_activated_ = true;
   if (!is_started()) {
@@ -205,16 +207,16 @@ void CommandInterface<CommandType, Node>::enable_emergency_stop()
 }
 
 //-----------------------------------------------------------------------------
-template<typename CommandType, typename Node>
-void CommandInterface<CommandType, Node>::disable_emergency_stop()
+template<typename CommandType>
+void CommandInterface<CommandType>::disable_emergency_stop()
 {
   stop(false);
   is_emergency_stop_activated_ = false;
 }
 
 //-----------------------------------------------------------------------------
-template<typename CommandType, typename Node>
-void CommandInterface<CommandType, Node>::connect_timeout_callback(
+template<typename CommandType>
+void CommandInterface<CommandType>::connect_timeout_callback(
   std::function<void(void)> callback)
 {
   timeout_callback_ = callback;
@@ -222,15 +224,15 @@ void CommandInterface<CommandType, Node>::connect_timeout_callback(
 
 
 //-----------------------------------------------------------------------------
-template<typename CommandType, typename Node>
-bool CommandInterface<CommandType, Node>::is_emergency_stop_activated()
+template<typename CommandType>
+bool CommandInterface<CommandType>::is_emergency_stop_activated()
 {
   return is_emergency_stop_activated_;
 }
 
 //-----------------------------------------------------------------------------
-template<typename CommandType, typename Node>
-void CommandInterface<CommandType, Node>::send_command(const CommandType & command)
+template<typename CommandType>
+void CommandInterface<CommandType>::send_command(const CommandType & command)
 {
   if (!is_emergency_stop_activated_) {
     std::lock_guard<std::mutex> lock(mutex_);
@@ -240,8 +242,8 @@ void CommandInterface<CommandType, Node>::send_command(const CommandType & comma
 }
 
 //-----------------------------------------------------------------------------
-template<typename CommandType, typename Node>
-void CommandInterface<CommandType, Node>::send_null_command()
+template<typename CommandType>
+void CommandInterface<CommandType>::send_null_command()
 {
   if (!is_emergency_stop_activated_) {
     std::lock_guard<std::mutex> lock(mutex_);
@@ -251,8 +253,8 @@ void CommandInterface<CommandType, Node>::send_null_command()
 }
 
 //-----------------------------------------------------------------------------
-template<typename CommandType, typename Node>
-void CommandInterface<CommandType, Node>::publish_command_(const bool & timeout)
+template<typename CommandType>
+void CommandInterface<CommandType>::publish_command_(const bool & timeout)
 {
   //  //send command msg
   //  typename VehicleControlTraits<CommandType>::CommandMsg msg;
@@ -276,8 +278,8 @@ void CommandInterface<CommandType, Node>::publish_command_(const bool & timeout)
 }
 
 //-----------------------------------------------------------------------------
-template<typename CommandType, typename Node>
-void CommandInterface<CommandType, Node>::timer_callback_()
+template<typename CommandType>
+void CommandInterface<CommandType>::timer_callback_()
 {
   std::lock_guard<std::mutex> lock(mutex_);
 
