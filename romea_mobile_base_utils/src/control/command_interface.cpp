@@ -28,53 +28,6 @@ namespace romea
 
 //-----------------------------------------------------------------------------
 template<typename CommandType>
-CommandInterface<CommandType>::CommandInterface(
-  std::shared_ptr<rclcpp::Node> node,
-  const Configuration & configuration)
-: cmd_pub_(nullptr),
-  cmd_mux_client_(node),
-  is_started_(false),
-  is_emergency_stop_activated_(false),
-  clock_(node->get_clock()),
-  timer_(),
-  timeout_duration_(0, 0),
-  last_command_date_(),
-  command_(),
-  mutex_(),
-  timeout_callback_(nullptr)
-{
-  const std::string & output_message_type = configuration.output_message_type;
-  const int & priority = configuration.priority;
-  double period = 1 / configuration.rate;
-  double timeout = 2 * period;
-
-  timeout_duration_ = durationFromSecond(timeout);
-  create_publisher_(node, output_message_type);
-  subscribe_to_cmd_mux(priority, timeout);
-  create_timer_(node, period);
-}
-
-//-----------------------------------------------------------------------------
-template<typename CommandType>
-void CommandInterface<CommandType>::create_publisher_(
-  std::shared_ptr<rclcpp::Node> node,
-  const std::string & output_message_type)
-{
-  cmd_pub_ = make_command_publisher<CommandType>(node, output_message_type);
-}
-
-//-----------------------------------------------------------------------------
-template<typename CommandType>
-void CommandInterface<CommandType>::create_timer_(
-  std::shared_ptr<rclcpp::Node> node,
-  const double & period)
-{
-  auto timer_callback = std::bind(&CommandInterface::timer_callback_, this);
-  timer_ = node->create_wall_timer(durationFromSecond(period), timer_callback);
-}
-
-//-----------------------------------------------------------------------------
-template<typename CommandType>
 void CommandInterface<CommandType>::subscribe_to_cmd_mux(
   const int & priority,
   const double & timeout)
@@ -133,7 +86,8 @@ void CommandInterface<CommandType>::disable_emergency_stop()
 
 //-----------------------------------------------------------------------------
 template<typename CommandType>
-void CommandInterface<CommandType>::connect_timeout_callback(std::function<void(void)> callback)
+void CommandInterface<CommandType>::connect_timeout_callback(
+  std::function<void(void)> callback)
 {
   timeout_callback_ = callback;
 }

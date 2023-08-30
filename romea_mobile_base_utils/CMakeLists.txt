@@ -31,6 +31,7 @@ find_package(romea_cmd_mux_utils REQUIRED)
 
 
 add_library(${PROJECT_NAME} SHARED
+    src/control/command_interface.cpp
     src/conversions/command_conversions.cpp
     src/conversions/kinematic_conversions.cpp)
 
