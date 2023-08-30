@@ -50,6 +50,7 @@ void CommandInterface<CommandType>::start()
 {
   std::lock_guard<std::mutex> lock(mutex_);
   if (!is_started_) {
+    cmd_pub_->activate();
     last_command_date_ = clock_->now();
     is_started_ = true;
   }
@@ -158,7 +159,8 @@ void CommandInterface<CommandType>::timer_callback_()
   } else {
     bool timeout = clock_->now() > last_command_date_ + timeout_duration_;
     if (timeout && timeout_callback_) {
-      std::cout << "Command publisher timeout" << std::endl;
+      cmd_pub_->deactivate();
+      RCLCPP_INFO_STREAM(rclcpp::get_logger("command_interface"), "Publisher timeout");
       timeout_callback_();
     }
 
