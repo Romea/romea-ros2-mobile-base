@@ -36,29 +36,33 @@ template<typename CommandType>
 struct CommandTraits;
 
 template<>
-struct CommandTraits<OneAxleSteeringCommand> {
+struct CommandTraits<OneAxleSteeringCommand>
+{
   using Measure = OneAxleSteeringMeasure;
   using MeasureMsg = romea_mobile_base_msgs::msg::OneAxleSteeringMeasureStamped;
 };
 
 template<>
-struct CommandTraits<TwoAxleSteeringCommand> {
+struct CommandTraits<TwoAxleSteeringCommand>
+{
   using Measure = TwoAxleSteeringMeasure;
   using MeasureMsg = romea_mobile_base_msgs::msg::TwoAxleSteeringMeasureStamped;
 };
 
 template<>
-struct CommandTraits<SkidSteeringCommand> {
+struct CommandTraits<SkidSteeringCommand>
+{
   using Measure = SkidSteeringMeasure;
   using MeasureMsg = romea_mobile_base_msgs::msg::SkidSteeringMeasureStamped;
 };
 
 template<>
-struct CommandTraits<OmniSteeringCommand> {
+struct CommandTraits<OmniSteeringCommand>
+{
   using Measure = OmniSteeringMeasure;
   using MeasureMsg = romea_mobile_base_msgs::msg::OmniSteeringMeasureStamped;
 };
 
-}
+}  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_UTILS__CONTROL__COMMAND_TRAITS_HPP_
