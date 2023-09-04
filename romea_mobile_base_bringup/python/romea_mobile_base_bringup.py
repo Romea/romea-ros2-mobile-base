@@ -26,6 +26,9 @@ class MobileBaseMetaDescription:
     def get_name(self):
         return self.meta_description.get("name")
 
+    def get_namespace(self):
+        return self.meta_description.get_or("namespace", None)
+
     def get_type(self):
         return self.meta_description.get("type", "configuration")
 
@@ -37,6 +40,10 @@ class MobileBaseMetaDescription:
 
     def get_simulation_initial_rpy(self):
         return self.meta_description.get("initial_rpy", "simulation")
+
+
+def load_meta_description(meta_description_file_path):
+    return MobileBaseMetaDescription(meta_description_file_path)
 
 
 def urdf_description(robot_name, mode, meta_description_file_path):
