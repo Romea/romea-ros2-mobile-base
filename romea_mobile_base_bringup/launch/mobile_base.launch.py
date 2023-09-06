@@ -47,7 +47,7 @@ def get_meta_description(context):
 
 
 def get_urdf_description(context):
-    return LaunchConfiguration("urdf_description").perform(context)
+    return LaunchConfiguration("robot_urdf_description").perform(context)
 
 
 def launch_setup(context, *args, **kwargs):
@@ -110,7 +110,7 @@ def generate_launch_description():
     )
 
     declared_arguments.append(
-        DeclareLaunchArgument("urdf_description", default_value=urdf_description)
+        DeclareLaunchArgument("robot_urdf_description", default_value=urdf_description)
     )
 
     return LaunchDescription(
