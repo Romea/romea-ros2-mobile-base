@@ -45,3 +45,11 @@ def test_get_simulation_initial_xyz(meta_description):
 
 def test_get_simulation_initial_rpy(meta_description):
     assert meta_description.get_simulation_initial_rpy() == [4.0, 5.0, 6.0]
+
+
+def test_get_records(meta_description):
+    records = meta_description.get_records()
+    assert records["joint_states"] is True
+    assert records["controller/odom"] is True
+    assert records["controller/odometry"] is True
+    assert records["controller/kinematic"] is True

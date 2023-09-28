@@ -41,6 +41,12 @@ class MobileBaseMetaDescription:
     def get_simulation_initial_rpy(self):
         return self.meta_description.get("initial_rpy", "simulation")
 
+    def get_records(self):
+        return self.meta_description.get_or("records", None, {})
+
+    def get_bridge(self):
+        return self.meta_description.get_or("bridge", None, {})
+
 
 def load_meta_description(meta_description_file_path):
     return MobileBaseMetaDescription(meta_description_file_path)
