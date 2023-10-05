@@ -48,4 +48,12 @@
      </description>
    </class>
 
+   <class name="romea_mobile_base_controllers/MobileBaseController2TD"
+          type="romea::MobileBaseController2TD"
+          base_class_type="controller_interface::ControllerInterface">
+     <description>
+       Controller for of 2TD vehicle familly
+     </description>
+   </class>
+
 </library>
