@@ -41,7 +41,8 @@ def generate_launch_description():
             "prefix:=",
             prefix,
             " mode:=view",
-        ]
+        ],
+        on_stderr="ignore",
     )
 
     robot_description = {"robot_description": robot_description_content}
