@@ -45,4 +45,13 @@
       </description>
   </class>
 
+  <class
+    name="romea_mobile_base_gazebo/GazeboSystemInterface2THD"
+    type="romea::GazeboSystemInterface2THD"
+    base_class_type="gazebo_ros2_control::GazeboSystemInterface">
+      <description>
+        GazeboSystemInterface for 2TDH Vehicle
+      </description>
+  </class>
+
 </library>
