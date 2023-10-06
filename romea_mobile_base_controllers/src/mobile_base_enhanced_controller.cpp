@@ -50,7 +50,7 @@ CallbackReturn MobileBaseEnhancedController<InterfaceType, KinematicType>::on_co
     this->load_joints_names_();
     this->init_interface_();
     this->init_angular_speed_pid_();
-    this->init_angular_speed_fiter_();
+    this->init_angular_speed_filter_();
     this->init_publishers_();
     this->init_imu_subscriber_();
     this->init_cmd_subscriber_();
