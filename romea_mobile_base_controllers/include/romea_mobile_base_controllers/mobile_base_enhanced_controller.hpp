@@ -16,60 +16,61 @@
 #ifndef ROMEA_MOBILE_BASE_CONTROLLERS__MOBILE_BASE_ENHANCED_CONTROLLER_HPP_
 #define ROMEA_MOBILE_BASE_CONTROLLERS__MOBILE_BASE_ENHANCED_CONTROLLER_HPP_
 
-//  #include "odometry_controller.hpp"
-//  #include <romea_common_utils/pid_factory.hpp>
+//romea
+#include "romea_core_common/control/PID.hpp"
+#include "romea_core_common/signal/FirstOrderButterworth.hpp"
+#include "romea_mobile_base_controllers/mobile_base_controller.hpp"
 
-//  #include <sensor_msgs/Imu.h>
+// ros
+#include "sensor_msgs/msg/imu.hpp"
+
 
 namespace romea
 {
 
-// template<typename OdometryFrameType, typename KinematicType>
-// class EnhancedMobileBaseController :
-//   public MobileBaseController<OdometryFrameType, KinematicType>
-// {
+template<typename InterfaceType, typename KinematicType>
+class MobileBaseEnhancedController : public MobileBaseController<InterfaceType, KinematicType>
+{
 
-// public:
-//   EnhancedMobileBaseController();
+public:
+  using ImuMsg = sensor_msgs::msg::Imu;
+  using AngularSpeedPID = PID;
+  using AngularSpeedFilter = FirstOrderButterworth;
 
-//   virtual ~EnhancedMobileBaseController() = default;
+public:
+  MobileBaseEnhancedController();
 
-//   /**
-//    * \brief Initialize controller
-//    * \param hw            Velocity joint interface for the wheels
-//    * \param root_nh       Node handle at root namespace
-//    * \param controller_nh Node handle inside the controller namespace
-//    */
-//   virtual bool init(
-//     hardware_interface::RobotHW * hw,
-//     ros::NodeHandle & root_nh,
-//     ros::NodeHandle & controller_nh)override;
+  virtual ~MobileBaseEnhancedController() = default;
 
-//   /**
-//    * \brief Updates controller, i.e. computes the odometry and sets the new velocity commands
-//    * \param time   Current time
-//    * \param period Time since the last called to update
-//    */
-//   virtual void update(const ros::Time & time, const ros::Duration & period) override;
+  controller_interface::return_type update(
+    const rclcpp::Time & time,
+    const rclcpp::Duration & period) override;
 
-// protected:
-//   void initImuSubscriber_(ros::NodeHandle & controller_nh);
+  CallbackReturn on_configure(const rclcpp_lifecycle::State & previous_state) override;
 
-//   void imu_callback_(const sensor_msgs::Imu::ConstPtr & msg);
+protected:
+  void init_imu_subscriber_();
 
-//   void initPID_(ros::NodeHandle & controller_nh);
+  void init_angular_speed_pid_();
 
-// protected:
-//   ros::Subscriber imu_sub_;
-//   std::unique_ptr<PID> angular_speed_pid_;
-//   std::atomic<double> angular_speed_measure_;
+  void init_angular_speed_filter_();
 
-// };
+  void imu_callback_(ImuMsg::ConstSharedPtr msg);
 
-// using EnhancedMobileBaseController4WD = EnhancedMobileBaseController<OdometryFrame4WD,
-//     SkidSteeringKinematic>;
-// using EnhancedMobileBaseController2WD = EnhancedMobileBaseController<OdometryFrame2WD,
-//     SkidSteeringKinematic>;
+protected:
+  rclcpp::Subscription<ImuMsg>::SharedPtr imu_sub_;
+
+  std::unique_ptr<AngularSpeedPID> angular_speed_pid_;
+  std::unique_ptr<AngularSpeedFilter> angular_speed_filter_;
+  std::atomic<double> angular_speed_measure_;
+
+};
+
+using MobileBaseEnhancedController4WD =
+  MobileBaseEnhancedController<ControllerInterface4WD, SkidSteeringKinematic>;
+
+using MobileBaseEnhancedController2TD =
+  MobileBaseEnhancedController<ControllerInterface2TD, SkidSteeringKinematic>;
 
 }  // namespace romea
 

@@ -30,6 +30,7 @@ find_package(romea_mobile_base_utils REQUIRED)
 find_package(controller_interface REQUIRED)
 find_package(realtime_tools REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
   src/interfaces/controller_interface1FAS2FWD.cpp
@@ -45,7 +46,9 @@ add_library(${PROJECT_NAME} SHARED
   src/interfaces/controller_interface_common.cpp
   src/dead_reckoning.cpp
   src/dead_reckoning_publisher.cpp
-  src/mobile_base_controller.cpp)
+  src/mobile_base_controller.cpp
+  src/mobile_base_enhanced_controller.cpp
+  )
 
 ament_target_dependencies(${PROJECT_NAME}
   rclcpp
@@ -57,7 +60,8 @@ ament_target_dependencies(${PROJECT_NAME}
   romea_mobile_base_utils
   realtime_tools
   controller_interface
-  tf2_geometry_msgs)
+  tf2_geometry_msgs
+  sensor_msgs)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>

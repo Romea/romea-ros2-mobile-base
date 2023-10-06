@@ -56,4 +56,12 @@
      </description>
    </class>
 
+   <class name="romea_mobile_base_controllers/MobileBaseEnhancedController2TD"
+          type="romea::MobileBaseEnhancedController2TD"
+          base_class_type="controller_interface::ControllerInterface">
+     <description>
+       Controller for of 2TD vehicle familly using angular speed pid regulation
+     </description>
+   </class>
+
 </library>

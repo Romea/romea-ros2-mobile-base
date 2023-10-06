@@ -221,7 +221,7 @@ CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_shutdown(
 //-----------------------------------------------------------------------------
 template<typename InterfaceType, typename KinematicType>
 controller_interface::return_type MobileBaseController<InterfaceType, KinematicType>::update(
-  const rclcpp::Time & time, const rclcpp::Duration & period)
+  const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
 {
   update_time_ = get_node()->get_clock()->now();  // why not time?
   // RCLCPP_INFO_STREAM(get_node()->get_logger(), "update_controller_state_");
@@ -578,7 +578,7 @@ template class MobileBaseController<ControllerInterface2AS4WD, TwoAxleSteeringKi
 template class MobileBaseController<ControllerInterface2FWS2FWD, TwoWheelSteeringKinematic>;
 template class MobileBaseController<ControllerInterface2FWS2RWD, TwoWheelSteeringKinematic>;
 template class MobileBaseController<ControllerInterface2FWS4WD, TwoWheelSteeringKinematic>;
-// template class MobileBaseController<ControllerInterface2TD, SkidSteeringKinematic>;
+template class MobileBaseController<ControllerInterface2TD, SkidSteeringKinematic>;
 template class MobileBaseController<ControllerInterface2WD, SkidSteeringKinematic>;
 template class MobileBaseController<ControllerInterface4WD, SkidSteeringKinematic>;
 template class MobileBaseController<ControllerInterface4WD, MecanumWheelSteeringKinematic>;
