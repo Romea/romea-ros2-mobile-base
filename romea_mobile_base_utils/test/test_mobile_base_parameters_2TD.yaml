@@ -9,12 +9,20 @@ test_mobile_base_parameters_2TD :
           sprocket_wheel:
             radius: 103.
             x: 104.
-          idler_wheel:
+            z: 104.1
+            mass: 104.2
+          front_idler_wheel:
             radius: 105.
             x: 106.
-          rollers:
+            mass: 106.1
+          rear_idler_wheel:
+            radius: 105.1
+            x: 106.2
+            mass: 106.3
+          roller_wheels:
             radius: 107.
             x: [108.,109.]
+            mass: 110
 
       tracks_speed_control:
          command:

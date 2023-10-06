@@ -37,6 +37,7 @@ void declare_mobile_base_info_2TD(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
+  std::cout << " declare_mobile_base_info_2TD " << std::endl;
   declare_continuous_tracked_axle_info(
     node, full_param_name(parameters_ns, "geometry"));
   declare_wheel_speed_control_info(
@@ -51,6 +52,8 @@ MobileBaseInfo2TD get_mobile_base_info_2TD(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
+  std::cout << " get_mobile_base_info_2TD " << std::endl;
+
   return {get_continuous_tracked_axle_info(
       node, full_param_name(parameters_ns, "geometry")),
     get_wheel_speed_control_info(
