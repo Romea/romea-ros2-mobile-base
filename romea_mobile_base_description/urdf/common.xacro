@@ -8,9 +8,9 @@
 
     <link name="${prefix}${base_footprint_link}"/>
 
-    <gazebo reference="${prefix}${base_link}">
+    <!-- <gazebo reference="${prefix}${base_link}">
       <material>Gazebo/Grey</material>
-    </gazebo>
+    </gazebo> -->
 
     <!-- Base link is the center of the robot -->
     <link name="${prefix}${base_link}">
