@@ -32,7 +32,7 @@ MobileBaseEnhancedController<InterfaceType, KinematicType>::MobileBaseEnhancedCo
     imu_sub_(nullptr),
   angular_speed_pid_(nullptr),
   angular_speed_filter_(nullptr),
-  angular_speed_measure_()
+  angular_speed_measure_(std::numeric_limits<double>::quiet_NaN())
 {
 }
 
@@ -84,10 +84,15 @@ MobileBaseEnhancedController<InterfaceType, KinematicType>::update(
     //    RCLCPP_INFO_STREAM(this->get_node()->get_logger(), " new command ok");
     //    RCLCPP_INFO_STREAM(this->get_node()->get_logger(),"\n"<<current_command_.cmd);
 
-    this->current_command_.cmd.angularSpeed = this->angular_speed_pid_->compute(
-      to_romea_duration(this->current_command_.stamp),
-      this->current_command_.cmd.angularSpeed,
-      this->angular_speed_measure_);
+    if (isfinite(this->angular_speed_measure_)) {
+      this->current_command_.cmd.angularSpeed = this->angular_speed_pid_->compute(
+        to_romea_duration(this->current_command_.stamp),
+        this->current_command_.cmd.angularSpeed,
+        this->angular_speed_measure_);
+    } else {
+      RCLCPP_INFO_STREAM(
+        this->get_node()->get_logger(), " no angular speed provided, check imu input");
+    }
 
     this->clamp_current_command_();
     //    RCLCPP_INFO_STREAM(this->get_node()->get_logger(), " new clamp command");
