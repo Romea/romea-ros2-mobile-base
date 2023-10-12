@@ -1,6 +1,18 @@
 type: 2TD
 geometry:
   tracks_distance: 2.
+  tracks:
+   width: 102.
+   thickness: 102.5
+   sprocket_wheel:
+     radius: 103.
+     x: 104.
+   idler_wheel:
+     radius: 105.
+     x: 106.
+   rollers:
+     radius: 107.
+     x: [108., 109.]
 
 tracks_speed_control:
   command:
@@ -19,15 +31,4 @@ joints:
   left_idler_wheel_spinning_joint_name: J3
   right_idler_wheel_spinning_joint_name: J4
 
-tracks:
-  width: 102.
-  thickness: 102.5
-  sprocket_wheel:
-    radius: 103.
-    x: 104.
-  idler_wheel:
-    radius: 105.
-    x: 106.
-  rollers:
-    radius: 107.
-    x: [108., 109.]
+
