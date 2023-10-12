@@ -166,7 +166,6 @@ std::vector<TrackWheel> get_track_roller_wheels_info(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
-
   auto full_ns = full_param_name(parameters_ns, "roller_wheels");
   std::cout << "get track rollers info " << std::endl;
   auto radius = get_parameter<double>(node, full_ns, "radius");
