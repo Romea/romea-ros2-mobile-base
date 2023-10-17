@@ -27,7 +27,7 @@ test_mobile_base_geometry_paramerters:
           idler_wheel:
             radius: 114.
             x: 115.
-          rollers:
+          roller_wheels:
             radius: 115.1
             x: [115.2, 115.3]
             z: 115.4
@@ -47,6 +47,6 @@ test_mobile_base_geometry_paramerters:
           rear_idler_wheel:
             radius: 122.
             x: 123.
-          rollers:
+          roller_wheels:
             radius: 123.1
             x: [123.2, 123.3]
