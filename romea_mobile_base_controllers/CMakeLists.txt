@@ -47,8 +47,7 @@ add_library(${PROJECT_NAME} SHARED
   src/dead_reckoning.cpp
   src/dead_reckoning_publisher.cpp
   src/mobile_base_controller.cpp
-  src/mobile_base_enhanced_controller.cpp
-  )
+  src/mobile_base_enhanced_controller.cpp)
 
 ament_target_dependencies(${PROJECT_NAME}
   rclcpp
