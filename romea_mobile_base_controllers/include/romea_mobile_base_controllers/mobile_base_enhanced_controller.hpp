@@ -16,7 +16,10 @@
 #ifndef ROMEA_MOBILE_BASE_CONTROLLERS__MOBILE_BASE_ENHANCED_CONTROLLER_HPP_
 #define ROMEA_MOBILE_BASE_CONTROLLERS__MOBILE_BASE_ENHANCED_CONTROLLER_HPP_
 
-//romea
+// std
+#include <memory>
+
+// romea
 #include "romea_core_common/control/PID.hpp"
 #include "romea_core_common/signal/FirstOrderButterworth.hpp"
 #include "romea_mobile_base_controllers/mobile_base_controller.hpp"
@@ -31,7 +34,6 @@ namespace romea
 template<typename InterfaceType, typename KinematicType>
 class MobileBaseEnhancedController : public MobileBaseController<InterfaceType, KinematicType>
 {
-
 public:
   using ImuMsg = sensor_msgs::msg::Imu;
   using AngularSpeedPID = PID;
@@ -63,7 +65,6 @@ protected:
   std::unique_ptr<AngularSpeedPID> angular_speed_pid_;
   std::unique_ptr<AngularSpeedFilter> angular_speed_filter_;
   std::atomic<double> angular_speed_measure_;
-
 };
 
 using MobileBaseEnhancedController4WD =
