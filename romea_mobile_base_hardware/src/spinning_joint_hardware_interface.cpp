@@ -16,6 +16,7 @@
 // std
 #include <string>
 #include <vector>
+#include <sstream>
 
 // local
 #include "romea_mobile_base_hardware/spinning_joint_hardware_interface.hpp"
@@ -31,7 +32,12 @@ RotationalMotionControlType toRotationalMotionCommandType(const std::string & in
   } else if (interface_type == hardware_interface::HW_IF_EFFORT) {
     return RotationalMotionControlType::TORQUE;
   } else {
-    // throw
+
+    std::stringstream msg;
+    msg << "Unable to convert interface type ";
+    msg << interface_type;
+    msg << "to rotational motion control type ";
+    throw std::runtime_error(msg);
   }
 }
 
