@@ -34,7 +34,7 @@ namespace romea
 template<typename InterfaceType, typename KinematicType>
 MobileBaseEnhancedController<InterfaceType, KinematicType>::MobileBaseEnhancedController()
 : MobileBaseController<InterfaceType, KinematicType>::MobileBaseController(),
-    imu_sub_(nullptr),
+  imu_sub_(nullptr),
   angular_speed_pid_(nullptr),
   angular_speed_filter_(nullptr),
   angular_speed_measure_(std::numeric_limits<double>::quiet_NaN())
