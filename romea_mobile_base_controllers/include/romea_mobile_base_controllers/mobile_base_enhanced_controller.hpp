@@ -75,7 +75,7 @@ using MobileBaseEnhancedController4WD =
 using MobileBaseEnhancedController2TD =
   MobileBaseEnhancedController<ControllerInterface2TD, core::SkidSteeringKinematic>;
 
-}  // namespace rosZ
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_CONTROLLERS__MOBILE_BASE_ENHANCED_CONTROLLER_HPP_

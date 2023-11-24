@@ -190,7 +190,7 @@ using MobileBaseController4MWD =
 using MobileBaseController4WS4WD =
   MobileBaseController<ControllerInterface4WS4WD, core::FourWheelSteeringKinematic>;
 
-}  // namespace roos
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_CONTROLLERS__MOBILE_BASE_CONTROLLER_HPP_
