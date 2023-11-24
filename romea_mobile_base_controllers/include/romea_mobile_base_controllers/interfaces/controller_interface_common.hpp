@@ -29,6 +29,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 #if ROS_DISTRO == ROS_GALACTIC
 using HardwareInterfaceNode = rclcpp::Node;
@@ -42,6 +44,7 @@ std::string hardware_velocity_interface_name(const std::string joint_name);
 
 std::string hardware_effort_interface_name(const std::string joint_name);
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_CONTROLLERS__INTERFACES__CONTROLLER_INTERFACE_COMMON_HPP_

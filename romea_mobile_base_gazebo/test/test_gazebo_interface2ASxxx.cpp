@@ -43,9 +43,11 @@ TEST_F(TestGazeboInterface2ASxxx, testSetGet2AS4WD)
   SpawnSDF(sdf_description);
 
   auto hardware_info = hardware_interface::parse_control_resources_from_urdf(urdf_description);
-  romea::GazeboInterface2ASxxx gazebo_interface(GetModel("robot"), hardware_info[0], "velocity");
+  romea::ros2::GazeboInterface2ASxxx gazebo_interface(GetModel("robot"), hardware_info[0],
+    "velocity");
 
-  romea::SimulationCommand2ASxxx command = {0.1, -0.1, 0.2, -0.2, 0.3, -0.3, 2.0, -2.0, 3.0, -3.0};
+  romea::core::SimulationCommand2ASxxx command =
+  {0.1, -0.1, 0.2, -0.2, 0.3, -0.3, 2.0, -2.0, 3.0, -3.0};
   gazebo_interface.set_command(command);
   auto state = gazebo_interface.get_state();
 
@@ -100,9 +102,11 @@ TEST_F(TestGazeboInterface2ASxxx, testSetGet2AS2FWD)
   SpawnSDF(sdf_description);
 
   auto hardware_info = hardware_interface::parse_control_resources_from_urdf(urdf_description);
-  romea::GazeboInterface2ASxxx gazebo_interface(GetModel("robot"), hardware_info[0], "velocity");
+  romea::ros2::GazeboInterface2ASxxx gazebo_interface(GetModel("robot"), hardware_info[0],
+    "velocity");
 
-  romea::SimulationCommand2ASxxx command = {0.1, -0.1, 0.2, -0.2, 0.3, -0.3, 2.0, -2.0, 3.0, -3.0};
+  romea::core::SimulationCommand2ASxxx command =
+  {0.1, -0.1, 0.2, -0.2, 0.3, -0.3, 2.0, -2.0, 3.0, -3.0};
   gazebo_interface.set_command(command);
   auto state = gazebo_interface.get_state();
 
@@ -156,9 +160,12 @@ TEST_F(TestGazeboInterface2ASxxx, testSetGet2AS2RWD)
   SpawnSDF(sdf_description);
 
   auto hardware_info = hardware_interface::parse_control_resources_from_urdf(urdf_description);
-  romea::GazeboInterface2ASxxx gazebo_interface(GetModel("robot"), hardware_info[0], "velocity");
+  romea::ros2::GazeboInterface2ASxxx gazebo_interface(GetModel("robot"), hardware_info[0],
+    "velocity");
 
-  romea::SimulationCommand2ASxxx command = {0.1, -0.1, 0.2, -0.2, 0.3, -0.3, 2.0, -2.0, 3.0, -3.0};
+  romea::core::SimulationCommand2ASxxx command =
+  {0.1, -0.1, 0.2, -0.2, 0.3, -0.3, 2.0, -2.0, 3.0, -3.0};
+
   gazebo_interface.set_command(command);
   auto state = gazebo_interface.get_state();
 

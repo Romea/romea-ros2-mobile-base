@@ -55,17 +55,17 @@ protected:
     //    std::cout << buffer.str() <<std::endl;
 
     info = hardware_interface::parse_control_resources_from_urdf(buffer.str());
-    interface = std::make_unique<romea::SimulationInterface1FAS2FWD>(info[0], "velocity");
+    interface = std::make_unique<romea::ros2::SimulationInterface1FAS2FWD>(info[0], "velocity");
   }
 
-  std::unique_ptr<romea::SimulationInterface1FAS2FWD> interface;
+  std::unique_ptr<romea::ros2::SimulationInterface1FAS2FWD> interface;
   std::vector<hardware_interface::HardwareInfo> info;
 };
 
 
 TEST_F(TestSimulationInterface1FAS2FWD, checkSetCommand)
 {
-  romea::HardwareCommand1FAS2FWD command = {0.3, 2.2471, 2.99038};
+  romea::core::HardwareCommand1FAS2FWD command = {0.3, 2.2471, 2.99038};
 
   auto command_interfaces = interface->export_command_interfaces();
   command_interfaces[0].set_value(command.frontAxleSteeringAngle);
@@ -84,15 +84,15 @@ TEST_F(TestSimulationInterface1FAS2FWD, checkSetCommand)
 
 TEST_F(TestSimulationInterface1FAS2FWD, checkGetState)
 {
-  romea::HardwareCommand1FAS2FWD command = {0.3, 2.2471, 2.99038};
+  romea::core::HardwareCommand1FAS2FWD command = {0.3, 2.2471, 2.99038};
   auto command_interfaces = interface->export_command_interfaces();
   command_interfaces[0].set_value(command.frontAxleSteeringAngle);
   command_interfaces[1].set_value(command.frontLeftWheelSpinningSetPoint);
   command_interfaces[2].set_value(command.frontRightWheelSpinningSetPoint);
 
-  romea::SimulationCommand1FASxxx simulation_command = interface->get_command();
+  romea::core::SimulationCommand1FASxxx simulation_command = interface->get_command();
 
-  romea::SimulationState1FASxxx simulation_state;
+  romea::core::SimulationState1FASxxx simulation_state;
   simulation_state.frontAxleSteeringAngle =
     simulation_command.frontAxleSteeringAngle;
   simulation_state.frontLeftWheelSteeringAngle =

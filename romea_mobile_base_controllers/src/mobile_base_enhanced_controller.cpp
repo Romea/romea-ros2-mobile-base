@@ -29,12 +29,14 @@ const char ANGULAR_SPEED_FILTER_ALPHA_PARAM_NAME[] = "controller.angular_speed.f
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 template<typename InterfaceType, typename KinematicType>
 MobileBaseEnhancedController<InterfaceType, KinematicType>::MobileBaseEnhancedController()
 : MobileBaseController<InterfaceType, KinematicType>::MobileBaseController(),
-  imu_sub_(nullptr),
+    imu_sub_(nullptr),
   angular_speed_pid_(nullptr),
   angular_speed_filter_(nullptr),
   angular_speed_measure_(std::numeric_limits<double>::quiet_NaN())
@@ -68,7 +70,8 @@ CallbackReturn MobileBaseEnhancedController<InterfaceType, KinematicType>::on_co
 }
 
 //-----------------------------------------------------------------------------
-template<typename InterfaceType, typename KinematicType> controller_interface::return_type
+template<typename InterfaceType, typename KinematicType>
+controller_interface::return_type
 MobileBaseEnhancedController<InterfaceType, KinematicType>::update(
   const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
 {
@@ -86,22 +89,27 @@ MobileBaseEnhancedController<InterfaceType, KinematicType>::update(
     //    RCLCPP_INFO_STREAM(this->get_node()->get_logger(),"odometry frame measured");
     //    RCLCPP_INFO_STREAM(this->get_node()->get_logger(),"\n"<<odometry_frame_);
 
-    //    RCLCPP_INFO_STREAM(this->get_node()->get_logger(), " new command ok");
-    //    RCLCPP_INFO_STREAM(this->get_node()->get_logger(),"\n"<<current_command_.cmd);
+    RCLCPP_INFO_STREAM(this->get_node()->get_logger(), " new command ok");
+    RCLCPP_INFO_STREAM(this->get_node()->get_logger(), "\n" << this->current_command_.cmd);
+
+    RCLCPP_INFO_STREAM(
+      this->get_node()->get_logger(), " angular_speed measure " << this->angular_speed_measure_);
 
     if (isfinite(this->angular_speed_measure_)) {
       this->current_command_.cmd.angularSpeed = this->angular_speed_pid_->compute(
         to_romea_duration(this->current_command_.stamp),
         this->current_command_.cmd.angularSpeed,
         this->angular_speed_measure_);
+      RCLCPP_INFO_STREAM(this->get_node()->get_logger(), " new angular speed command");
+      RCLCPP_INFO_STREAM(this->get_node()->get_logger(), "\n" << this->current_command_.cmd);
     } else {
       RCLCPP_INFO_STREAM(
         this->get_node()->get_logger(), " no angular speed provided, check imu input");
     }
 
     this->clamp_current_command_();
-    //    RCLCPP_INFO_STREAM(this->get_node()->get_logger(), " new clamp command");
-    //    RCLCPP_INFO_STREAM(this->get_node()->get_logger(),"\n"<<current_command_.cmd);
+    RCLCPP_INFO_STREAM(this->get_node()->get_logger(), " new clamp command");
+    RCLCPP_INFO_STREAM(this->get_node()->get_logger(), "\n" << this->current_command_.cmd);
 
     this->send_current_command_();
 //    RCLCPP_INFO_STREAM(this->get_node()->get_logger(), "cooucou new command");
@@ -151,17 +159,18 @@ void MobileBaseEnhancedController<InterfaceType, KinematicType>::imu_callback_(
   this->angular_speed_measure_.store(filtered_angular_speed);
 }
 
-template class MobileBaseEnhancedController<ControllerInterface4WD, SkidSteeringKinematic>;
-template class MobileBaseEnhancedController<ControllerInterface2TD, SkidSteeringKinematic>;
+template class MobileBaseEnhancedController<ControllerInterface4WD, core::SkidSteeringKinematic>;
+template class MobileBaseEnhancedController<ControllerInterface2TD, core::SkidSteeringKinematic>;
 
+}  // namespace ros2
 }  // namespace romea
 
 #include "class_loader/register_macro.hpp"
 
 CLASS_LOADER_REGISTER_CLASS(
-  romea::MobileBaseEnhancedController4WD,
+  romea::ros2::MobileBaseEnhancedController4WD,
   controller_interface::ControllerInterface)
 
 CLASS_LOADER_REGISTER_CLASS(
-  romea::MobileBaseEnhancedController2TD,
+  romea::ros2::MobileBaseEnhancedController2TD,
   controller_interface::ControllerInterface)

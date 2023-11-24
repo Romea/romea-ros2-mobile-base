@@ -37,6 +37,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 class DeadReckoningPublisher
 {
@@ -55,7 +57,7 @@ public:
 
   void update(
     const rclcpp::Time & time,
-    const KinematicMeasure & kinematic_measure);
+    const core::KinematicMeasure & kinematic_measure);
 
   void reset();
 
@@ -76,6 +78,7 @@ private:
   DeadReckoning dead_reckoning_;
 };
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_CONTROLLERS__DEAD_RECKONING_PUBLISHER_HPP_

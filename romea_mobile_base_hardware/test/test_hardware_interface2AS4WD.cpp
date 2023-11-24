@@ -61,10 +61,12 @@ protected:
 
   void MakeInterface(const std::string & command_interface_type)
   {
-    interface = std::make_unique<romea::HardwareInterface2AS4WD>(info[0], command_interface_type);
+    interface = std::make_unique<romea::ros2::HardwareInterface2AS4WD>(
+      info[0],
+      command_interface_type);
   }
 
-  std::unique_ptr<romea::HardwareInterface2AS4WD> interface;
+  std::unique_ptr<romea::ros2::HardwareInterface2AS4WD> interface;
   std::vector<hardware_interface::HardwareInfo> info;
 };
 
@@ -114,7 +116,7 @@ TEST_F(TestHarwareInterface2AS4WD, checkSetCurrentState)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
 
-  romea::HardwareState2AS4WD current_state;
+  romea::core::HardwareState2AS4WD current_state;
   current_state.frontAxleSteeringAngle = 1.0;
   current_state.rearAxleSteeringAngle = 2.0;
   current_state.frontLeftWheelSpinningMotion.position = 3.0;
@@ -129,10 +131,10 @@ TEST_F(TestHarwareInterface2AS4WD, checkSetCurrentState)
   current_state.rearRightWheelSpinningMotion.position = 12.0;
   current_state.rearRightWheelSpinningMotion.velocity = 13.0;
   current_state.rearRightWheelSpinningMotion.torque = 14.0;
-  romea::SteeringAngleState front_left_wheel_steering_angle = 15.;
-  romea::SteeringAngleState front_right_wheel_steering_angle = 16.;
-  romea::SteeringAngleState rear_left_wheel_steering_angle = 17.;
-  romea::SteeringAngleState rear_right_wheel_steering_angle = 18.;
+  romea::core::SteeringAngleState front_left_wheel_steering_angle = 15.;
+  romea::core::SteeringAngleState front_right_wheel_steering_angle = 16.;
+  romea::core::SteeringAngleState rear_left_wheel_steering_angle = 17.;
+  romea::core::SteeringAngleState rear_right_wheel_steering_angle = 18.;
 
 
   interface->set_state(
@@ -157,7 +159,7 @@ TEST_F(TestHarwareInterface2AS4WD, checkGetCurrentCommand)
     command_interfaces[i].set_value(i + 1.0);
   }
 
-  romea::HardwareCommand2AS4WD current_command = interface->get_command();
+  romea::core::HardwareCommand2AS4WD current_command = interface->get_command();
 
   EXPECT_DOUBLE_EQ(current_command.frontAxleSteeringAngle, 1.0);
   EXPECT_DOUBLE_EQ(current_command.rearAxleSteeringAngle, 2.0);

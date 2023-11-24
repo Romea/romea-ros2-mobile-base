@@ -55,17 +55,17 @@ protected:
     //    std::cout << buffer.str() <<std::endl;
 
     info = hardware_interface::parse_control_resources_from_urdf(buffer.str());
-    interface = std::make_unique<romea::SimulationInterface2FWS2RWD>(info[0], "velocity");
+    interface = std::make_unique<romea::ros2::SimulationInterface2FWS2RWD>(info[0], "velocity");
   }
 
-  std::unique_ptr<romea::SimulationInterface2FWS2RWD> interface;
+  std::unique_ptr<romea::ros2::SimulationInterface2FWS2RWD> interface;
   std::vector<hardware_interface::HardwareInfo> info;
 };
 
 
 TEST_F(TestSimulationInterface2FWS2RWD, checkSetCommand)
 {
-  romea::HardwareCommand2FWS2RWD command = {-0.392757, -0.675853, 4.16796, 2.4987};
+  romea::core::HardwareCommand2FWS2RWD command = {-0.392757, -0.675853, 4.16796, 2.4987};
 
   auto command_interfaces = interface->export_command_interfaces();
   command_interfaces[0].set_value(command.frontLeftWheelSteeringAngle);
@@ -85,16 +85,16 @@ TEST_F(TestSimulationInterface2FWS2RWD, checkSetCommand)
 
 TEST_F(TestSimulationInterface2FWS2RWD, checkGetState)
 {
-  romea::HardwareCommand2FWS2RWD command = {-0.392757, -0.675853, 4.16796, 2.4987};
+  romea::core::HardwareCommand2FWS2RWD command = {-0.392757, -0.675853, 4.16796, 2.4987};
   auto command_interfaces = interface->export_command_interfaces();
   command_interfaces[0].set_value(command.frontLeftWheelSteeringAngle);
   command_interfaces[1].set_value(command.frontRightWheelSteeringAngle);
   command_interfaces[2].set_value(command.rearLeftWheelSpinningSetPoint);
   command_interfaces[3].set_value(command.rearRightWheelSpinningSetPoint);
 
-  romea::SimulationCommand2FWSxxx simulation_command = interface->get_command();
+  romea::core::SimulationCommand2FWSxxx simulation_command = interface->get_command();
 
-  romea::SimulationState2FWSxxx simulation_state;
+  romea::core::SimulationState2FWSxxx simulation_state;
   simulation_state.frontLeftWheelSteeringAngle =
     simulation_command.frontLeftWheelSteeringAngle;
   simulation_state.frontRightWheelSteeringAngle =

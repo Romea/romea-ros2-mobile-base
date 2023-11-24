@@ -55,11 +55,11 @@ protected:
       make_interface_info(
         hardware_interface::HW_IF_POSITION,
         "", ""));
-    joint = std::make_unique<romea::SteeringJointHardwareInterface>(joint_info);
+    joint = std::make_unique<romea::ros2::SteeringJointHardwareInterface>(joint_info);
   }
 
 
-  std::unique_ptr<romea::SteeringJointHardwareInterface> joint;
+  std::unique_ptr<romea::ros2::SteeringJointHardwareInterface> joint;
   hardware_interface::ComponentInfo joint_info;
 };
 

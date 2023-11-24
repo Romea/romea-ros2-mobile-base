@@ -24,6 +24,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 SimulationInterface2TD::SimulationInterface2TD(
@@ -37,7 +39,7 @@ SimulationInterface2TD::SimulationInterface2TD(
 }
 
 //-----------------------------------------------------------------------------
-SimulationCommand2TD SimulationInterface2TD::get_command()const
+core::SimulationCommand2TD SimulationInterface2TD::get_command()const
 {
   return toSimulationCommand2TD(
     sprocket_wheel_radius_,
@@ -47,7 +49,7 @@ SimulationCommand2TD SimulationInterface2TD::get_command()const
 }
 
 //-----------------------------------------------------------------------------
-void SimulationInterface2TD::set_state(const SimulationState2TD & simulation_state)
+void SimulationInterface2TD::set_state(const core::SimulationState2TD & simulation_state)
 {
   auto hardware_state = toHardwareState2TD(
     sprocket_wheel_radius_,
@@ -75,4 +77,5 @@ SimulationInterface2TD::export_command_interfaces()
   return hardware_interface_.export_command_interfaces();
 }
 
+}  // namespace ros2
 }  // namespace romea

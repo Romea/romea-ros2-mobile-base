@@ -24,6 +24,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 HardwareInterface2THD::HardwareInterface2THD(
@@ -72,7 +74,7 @@ HardwareInterface2THD::export_command_interfaces()
 }
 
 //-----------------------------------------------------------------------------
-HardwareCommand2TD HardwareInterface2THD::get_command()const
+core::HardwareCommand2TD HardwareInterface2THD::get_command()const
 {
   // *INDENT-OFF*
   return {left_sprocket_wheel_spinning_joint_.get_command(),
@@ -81,7 +83,7 @@ HardwareCommand2TD HardwareInterface2THD::get_command()const
 }
 
 //-----------------------------------------------------------------------------
-void HardwareInterface2THD::set_state(const HardwareState2TD & hardware_state)
+void HardwareInterface2THD::set_state(const core::HardwareState2TD & hardware_state)
 {
   left_sprocket_wheel_spinning_joint_.
   set_state(hardware_state.leftSprocketWheelSpinningMotion);
@@ -91,11 +93,11 @@ void HardwareInterface2THD::set_state(const HardwareState2TD & hardware_state)
 
 //-----------------------------------------------------------------------------
 void HardwareInterface2THD::set_state(
-  const HardwareState2TD & hardware_state,
-  const RotationalMotionState & front_left_idler_wheel_spinning_motion,
-  const RotationalMotionState & front_right_idler_wheel_spinning_motion,
-  const RotationalMotionState & rear_left_idler_wheel_spinning_motion,
-  const RotationalMotionState & rear_right_idler_wheel_spinning_motion)
+  const core::HardwareState2TD & hardware_state,
+  const core::RotationalMotionState & front_left_idler_wheel_spinning_motion,
+  const core::RotationalMotionState & front_right_idler_wheel_spinning_motion,
+  const core::RotationalMotionState & rear_left_idler_wheel_spinning_motion,
+  const core::RotationalMotionState & rear_right_idler_wheel_spinning_motion)
 {
   set_state(hardware_state);
 
@@ -109,4 +111,5 @@ void HardwareInterface2THD::set_state(
   set_state(rear_right_idler_wheel_spinning_motion);
 }
 
+}  // namespace ros2
 }  // namespace romea

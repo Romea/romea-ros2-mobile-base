@@ -34,9 +34,11 @@ const char right_sprocket_wheel_spinning_joint_param_name[] =
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
-ControllerInterface2TD::ControllerInterface2TD(const MobileBaseInfo2TD & mobile_base_info)
+ControllerInterface2TD::ControllerInterface2TD(const core::MobileBaseInfo2TD & mobile_base_info)
 : virtual_tracks_radius_(mobile_base_info.geometry.tracks.sprocketWheel.radius +
     mobile_base_info.geometry.tracks.thickness)
 {
@@ -44,7 +46,7 @@ ControllerInterface2TD::ControllerInterface2TD(const MobileBaseInfo2TD & mobile_
 
 //-----------------------------------------------------------------------------
 void ControllerInterface2TD::write(
-  const OdometryFrame2TD & command,
+  const core::OdometryFrame2TD & command,
   LoanedCommandInterfaces & loaned_command_interfaces)const
 {
   loaned_command_interfaces[LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID].
@@ -56,7 +58,7 @@ void ControllerInterface2TD::write(
 //-----------------------------------------------------------------------------
 void ControllerInterface2TD::read(
   const LoanedStateInterfaces & loaned_state_interfaces,
-  OdometryFrame2TD & measurement) const
+  core::OdometryFrame2TD & measurement) const
 {
   measurement.leftTrackLinearSpeed = virtual_tracks_radius_ *
     loaned_state_interfaces[LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID].get_value();
@@ -97,4 +99,5 @@ std::vector<std::string> ControllerInterface2TD::hardware_interface_names(
     hardware_velocity_interface_name(joints_names[RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID])};
 }
 
+}  // namespace ros2
 }  // namespace romea

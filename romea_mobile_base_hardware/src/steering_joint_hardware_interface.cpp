@@ -22,6 +22,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 SteeringJointHardwareInterface::SteeringJointHardwareInterface(
@@ -46,15 +48,16 @@ void SteeringJointHardwareInterface::export_state_interface(
 }
 
 //-----------------------------------------------------------------------------
-SteeringAngleCommand SteeringJointHardwareInterface::get_command()const
+core::SteeringAngleCommand SteeringJointHardwareInterface::get_command()const
 {
   return command_.get();
 }
 
 //-----------------------------------------------------------------------------
-void SteeringJointHardwareInterface::set_state(const SteeringAngleState & state)
+void SteeringJointHardwareInterface::set_state(const core::SteeringAngleState & state)
 {
   feedback_.set(state);
 }
 
+}  // namespace ros2
 }  // namespace romea

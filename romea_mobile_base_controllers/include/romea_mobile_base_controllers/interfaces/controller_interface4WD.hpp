@@ -30,6 +30,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 class ControllerInterface4WD
 {
@@ -48,15 +50,15 @@ public:
   };
 
 public:
-  explicit ControllerInterface4WD(const MobileBaseInfo4WD & mobile_base_info);
+  explicit ControllerInterface4WD(const core::MobileBaseInfo4WD & mobile_base_info);
 
   void write(
-    const OdometryFrame4WD & command,
+    const core::OdometryFrame4WD & command,
     LoanedCommandInterfaces & loaned_command_interfaces)const;
 
   void read(
     const LoanedStateInterfaces & loaned_state_interfaces,
-    OdometryFrame4WD & measurement)const;
+    core::OdometryFrame4WD & measurement)const;
 
 public:
   static void declare_joints_names(
@@ -75,7 +77,7 @@ private:
   double rear_wheels_radius_;
 };
 
-
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_CONTROLLERS__INTERFACES__CONTROLLER_INTERFACE4WD_HPP_

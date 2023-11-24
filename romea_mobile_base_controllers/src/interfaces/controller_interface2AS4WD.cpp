@@ -36,9 +36,12 @@ const char rear_right_wheel_spinning_joint_param_name[] = "rear_right_wheel_spin
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
-ControllerInterface2AS4WD::ControllerInterface2AS4WD(const MobileBaseInfo2AS4WD & mobile_base_info)
+ControllerInterface2AS4WD::ControllerInterface2AS4WD(
+  const core::MobileBaseInfo2AS4WD & mobile_base_info)
 : front_wheels_radius_(mobile_base_info.geometry.frontAxle.wheels.radius),
   rear_wheels_radius_(mobile_base_info.geometry.rearAxle.wheels.radius)
 {
@@ -46,7 +49,7 @@ ControllerInterface2AS4WD::ControllerInterface2AS4WD(const MobileBaseInfo2AS4WD 
 
 //-----------------------------------------------------------------------------
 void ControllerInterface2AS4WD::write(
-  const OdometryFrame2AS4WD & command,
+  const core::OdometryFrame2AS4WD & command,
   LoanedCommandInterfaces & loaned_command_interfaces)const
 {
   loaned_command_interfaces[FRONT_AXLE_STEERING_JOINT_ID].
@@ -66,7 +69,7 @@ void ControllerInterface2AS4WD::write(
 //-----------------------------------------------------------------------------
 void ControllerInterface2AS4WD::read(
   const LoanedStateInterfaces & loaned_state_interfaces,
-  OdometryFrame2AS4WD & measurement)const
+  core::OdometryFrame2AS4WD & measurement)const
 {
   measurement.frontAxleSteeringAngle =
     loaned_state_interfaces[FRONT_AXLE_STEERING_JOINT_ID].get_value();
@@ -119,4 +122,5 @@ std::vector<std::string> ControllerInterface2AS4WD::hardware_interface_names(
     hardware_velocity_interface_name(joints_names[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID])};
 }
 
+}  // namespace ros2
 }  // namespace romea

@@ -30,6 +30,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 class ControllerInterface2TD
 {
@@ -46,15 +48,15 @@ public:
   };
 
 public:
-  explicit ControllerInterface2TD(const MobileBaseInfo2TD & mobile_base_info);
+  explicit ControllerInterface2TD(const core::MobileBaseInfo2TD & mobile_base_info);
 
   void write(
-    const OdometryFrame2TD & command,
+    const core::OdometryFrame2TD & command,
     LoanedCommandInterfaces & loaned_command_interfaces)const;
 
   void read(
     const LoanedStateInterfaces & loaned_state_interfaces,
-    OdometryFrame2TD & measurement)const;
+    core::OdometryFrame2TD & measurement)const;
 
 public:
   static void declare_joints_names(
@@ -72,7 +74,7 @@ private:
   double virtual_tracks_radius_;
 };
 
-
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_CONTROLLERS__INTERFACES__CONTROLLER_INTERFACE2TD_HPP_

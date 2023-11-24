@@ -23,14 +23,16 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 HardwareCommandInterface::HardwareCommandInterface(
   const hardware_interface::InterfaceInfo & interface_info,
   const std::string & joint_name)
 : command_(0.0),
-  command_min_(romea::get_min(interface_info)),
-  command_max_(romea::get_max(interface_info)),
+  command_min_(get_min(interface_info)),
+  command_max_(get_max(interface_info)),
   joint_name_(joint_name),
   interface_type_(interface_info.name)
 {
@@ -84,8 +86,8 @@ HardwareStateInterface::HardwareStateInterface(
   const hardware_interface::InterfaceInfo & interface_info,
   const std::string & joint_name)
 : state_(0.0),
-  state_min_(romea::get_min(interface_info)),
-  state_max_(romea::get_max(interface_info)),
+  state_min_(get_min(interface_info)),
+  state_max_(get_max(interface_info)),
   joint_name_(joint_name),
   interface_type_(interface_info.name)
 {
@@ -118,4 +120,5 @@ const std::string & HardwareStateInterface::get_joint_name() const
   return joint_name_;
 }
 
+}  // namespace ros2
 }  // namespace romea

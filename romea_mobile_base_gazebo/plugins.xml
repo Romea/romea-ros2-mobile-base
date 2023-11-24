@@ -2,7 +2,7 @@
 
   <class
     name="romea_mobile_base_gazebo/GazeboSystemInterface4WD"
-    type="romea::GazeboSystemInterface4WD"
+    type="romea::ros2::GazeboSystemInterface4WD"
     base_class_type="gazebo_ros2_control::GazeboSystemInterface">
       <description>
         GazeboSystemInterface for 4WD Vehicle
@@ -11,7 +11,7 @@
 
   <class
     name="romea_mobile_base_gazebo/GazeboSystemInterface4WS4WD"
-    type="romea::GazeboSystemInterface4WS4WD"
+    type="romea::ros2::GazeboSystemInterface4WS4WD"
     base_class_type="gazebo_ros2_control::GazeboSystemInterface">
       <description>
         GazeboSystemInterface for 4WS4WD Vehicle
@@ -20,7 +20,7 @@
 
   <class
     name="romea_mobile_base_gazebo/GazeboSystemInterface2AS4WD"
-    type="romea::GazeboSystemInterface2AS4WD"
+    type="romea::ros2::GazeboSystemInterface2AS4WD"
     base_class_type="gazebo_ros2_control::GazeboSystemInterface">
       <description>
         GazeboSystemInterface for 2AS4WD Vehicle
@@ -29,7 +29,7 @@
 
   <class
     name="romea_mobile_base_gazebo/GazeboSystemInterface2FWS4WD"
-    type="romea::GazeboSystemInterface2FWS4WD"
+    type="romea::ros2::GazeboSystemInterface2FWS4WD"
     base_class_type="gazebo_ros2_control::GazeboSystemInterface">
       <description>
         GazeboSystemInterface for 2FWS4WD Vehicle
@@ -38,7 +38,7 @@
 
   <class
     name="romea_mobile_base_gazebo/GazeboSystemInterface2FWS2RWD"
-    type="romea::GazeboSystemInterface2FWS2RWD"
+    type="romea::ros2::GazeboSystemInterface2FWS2RWD"
     base_class_type="gazebo_ros2_control::GazeboSystemInterface">
       <description>
         GazeboSystemInterface for 2FWS2RWD Vehicle
@@ -47,7 +47,7 @@
 
   <class
     name="romea_mobile_base_gazebo/GazeboSystemInterface2THD"
-    type="romea::GazeboSystemInterface2THD"
+    type="romea::ros2::GazeboSystemInterface2THD"
     base_class_type="gazebo_ros2_control::GazeboSystemInterface">
       <description>
         GazeboSystemInterface for 2TDH Vehicle

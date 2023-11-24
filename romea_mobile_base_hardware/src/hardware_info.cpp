@@ -60,6 +60,8 @@ get_interface_info(
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 const hardware_interface::ComponentInfo &
@@ -151,4 +153,5 @@ double get_max(const hardware_interface::InterfaceInfo & interface_info)
   }
 }
 
+}  // namespace ros2
 }  // namespace romea

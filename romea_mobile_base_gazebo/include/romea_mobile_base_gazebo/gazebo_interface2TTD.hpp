@@ -27,6 +27,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 class GazeboInterface2TTD
 {
@@ -36,8 +38,8 @@ public:
     const hardware_interface::HardwareInfo & hardware_info,
     const std::string & command_interface_type);
 
-  SimulationState2TTD get_state() const;
-  void set_command(const SimulationCommand2TTD & command);
+  core::SimulationState2TTD get_state() const;
+  void set_command(const core::SimulationCommand2TTD & command);
 
 private:
   SpinningJointGazeboInterface left_sprocket_wheel_spinning_joint_;
@@ -50,6 +52,7 @@ private:
   SpinningJointGazeboInterface rear_right_roller_wheel_spinning_joint_;
 };
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_GAZEBO__GAZEBO_INTERFACE2TTD_HPP_

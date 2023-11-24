@@ -33,6 +33,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 template<typename Node>
 void declare_track_wheel_info(
@@ -96,7 +98,7 @@ void declare_track_roller_wheels_info(
 }
 
 template<typename Node>
-TrackWheel get_track_wheel_info(
+core::TrackWheel get_track_wheel_info(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
@@ -110,7 +112,7 @@ TrackWheel get_track_wheel_info(
 }
 
 template<typename Node>
-TrackWheel get_track_sprocket_wheel_info(
+core::TrackWheel get_track_sprocket_wheel_info(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
@@ -121,7 +123,7 @@ TrackWheel get_track_sprocket_wheel_info(
 }
 
 template<typename Node>
-std::optional<TrackWheel> try_get_track_wheel_info(
+std::optional<core::TrackWheel> try_get_track_wheel_info(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
@@ -135,7 +137,7 @@ std::optional<TrackWheel> try_get_track_wheel_info(
 
 
 template<typename Node>
-std::vector<TrackWheel> get_track_idler_wheels_info(
+std::vector<core::TrackWheel> get_track_idler_wheels_info(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
@@ -162,7 +164,7 @@ std::vector<TrackWheel> get_track_idler_wheels_info(
 }
 
 template<typename Node>
-std::vector<TrackWheel> get_track_roller_wheels_info(
+std::vector<core::TrackWheel> get_track_roller_wheels_info(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
@@ -173,10 +175,10 @@ std::vector<TrackWheel> get_track_roller_wheels_info(
   auto z = get_parameter<double>(node, full_ns, "z");
   z = std::isfinite(z) ? z : radius;
 
-  std::vector<TrackWheel> roller_wheels;
+  std::vector<core::TrackWheel> roller_wheels;
   for (const double & x : x_vector) {
     std::cout << " roller radius " << radius << " x " << x << " z " << z << std::endl;
-    TrackWheel wheel = {radius, x, z};
+    core::TrackWheel wheel = {radius, x, z};
     roller_wheels.push_back(wheel);
   }
   return roller_wheels;
@@ -194,7 +196,7 @@ void declare_wheel_info(
 }
 
 template<typename Node>
-Wheel get_wheel_info(
+core::Wheel get_wheel_info(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
@@ -218,7 +220,7 @@ void declare_continuous_track_info(
 }
 
 template<typename Node>
-ContinuousTrack get_continuous_track_info(
+core::ContinuousTrack get_continuous_track_info(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
@@ -240,7 +242,7 @@ void declare_wheeled_axle_info(
 }
 
 template<typename Node>
-WheeledAxle get_wheeled_axle_info(
+core::WheeledAxle get_wheeled_axle_info(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
@@ -260,7 +262,7 @@ void declare_continuous_tracked_axle_info(
 }
 
 template<typename Node>
-ContinuousTrackedAxle get_continuous_tracked_axle_info(
+core::ContinuousTrackedAxle get_continuous_tracked_axle_info(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
@@ -280,7 +282,7 @@ void declare_two_wheeled_axles_info(
 }
 
 template<typename Node>
-TwoWheeledAxles get_two_wheeled_axles_info(
+core::TwoWheeledAxles get_two_wheeled_axles_info(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
@@ -290,6 +292,7 @@ TwoWheeledAxles get_two_wheeled_axles_info(
 }
 
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_UTILS__PARAMS__MOBILE_BASE_GEOMETRY_PARAMETERS_HPP_

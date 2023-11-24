@@ -24,11 +24,13 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
-KinematicMeasure to_romea(const romea_mobile_base_msgs::msg::KinematicMeasure & msg)
+core::KinematicMeasure to_romea(const romea_mobile_base_msgs::msg::KinematicMeasure & msg)
 {
-  KinematicMeasure kinematicMeasure;
+  core::KinematicMeasure kinematicMeasure;
   kinematicMeasure.longitudinalSpeed = msg.longitudinal_speed;
   kinematicMeasure.lateralSpeed = msg.lateral_speed;
   kinematicMeasure.angularSpeed = msg.angular_speed;
@@ -39,7 +41,7 @@ KinematicMeasure to_romea(const romea_mobile_base_msgs::msg::KinematicMeasure & 
 
 //-----------------------------------------------------------------------------
 void to_ros_msg(
-  const KinematicMeasure & romea_kinematic_measure,
+  const core::KinematicMeasure & romea_kinematic_measure,
   romea_mobile_base_msgs::msg::KinematicMeasure & ros_kinematic_msg)
 {
   ros_kinematic_msg.longitudinal_speed = romea_kinematic_measure.longitudinalSpeed;
@@ -58,7 +60,7 @@ void to_ros_msg(
 void to_ros_msg(
   const rclcpp::Time & stamp,
   const std::string & frame_id,
-  const KinematicMeasure & romea_kinematic_measure,
+  const core::KinematicMeasure & romea_kinematic_measure,
   romea_mobile_base_msgs::msg::KinematicMeasureStamped & ros_kinematic_stamped_msg)
 {
   ros_kinematic_stamped_msg.header.frame_id = frame_id;
@@ -68,7 +70,7 @@ void to_ros_msg(
 
 //-----------------------------------------------------------------------------
 void to_ros_msg(
-  const KinematicMeasure & romea_kinematic_measure,
+  const core::KinematicMeasure & romea_kinematic_measure,
   geometry_msgs::msg::TwistWithCovariance & ros_twist_with_covariance)
 {
   ros_twist_with_covariance.twist.linear.x = romea_kinematic_measure.longitudinalSpeed;
@@ -87,9 +89,10 @@ void to_ros_msg(
 
 
 //-----------------------------------------------------------------------------
-OneAxleSteeringMeasure to_romea(const romea_mobile_base_msgs::msg::OneAxleSteeringMeasure & msg)
+core::OneAxleSteeringMeasure to_romea(
+  const romea_mobile_base_msgs::msg::OneAxleSteeringMeasure & msg)
 {
-  OneAxleSteeringMeasure oneAxleSteeringMeasure;
+  core::OneAxleSteeringMeasure oneAxleSteeringMeasure;
   oneAxleSteeringMeasure.longitudinalSpeed = msg.longitudinal_speed;
   oneAxleSteeringMeasure.steeringAngle = msg.steering_angle;
   oneAxleSteeringMeasure.covariance = Eigen::Matrix2d(msg.covariance.data());
@@ -98,7 +101,7 @@ OneAxleSteeringMeasure to_romea(const romea_mobile_base_msgs::msg::OneAxleSteeri
 
 //-----------------------------------------------------------------------------
 void to_ros_msg(
-  const OneAxleSteeringMeasure & romea_one_axle_steering_measure,
+  const core::OneAxleSteeringMeasure & romea_one_axle_steering_measure,
   romea_mobile_base_msgs::msg::OneAxleSteeringMeasure & ros_one_axle_steering_measure_msg)
 {
   ros_one_axle_steering_measure_msg.longitudinal_speed =
@@ -116,7 +119,7 @@ void to_ros_msg(
 void to_ros_msg(
   const rclcpp::Time & stamp,
   const std::string & frame_id,
-  const OneAxleSteeringMeasure & romea_one_axle_steering_measure,
+  const core::OneAxleSteeringMeasure & romea_one_axle_steering_measure,
   romea_mobile_base_msgs::msg::OneAxleSteeringMeasureStamped & ros_one_axle_steering_measure_msg)
 {
   ros_one_axle_steering_measure_msg.header.frame_id = frame_id;
@@ -126,9 +129,10 @@ void to_ros_msg(
 
 
 //-----------------------------------------------------------------------------
-TwoAxleSteeringMeasure to_romea(const romea_mobile_base_msgs::msg::TwoAxleSteeringMeasure & msg)
+core::TwoAxleSteeringMeasure to_romea(
+  const romea_mobile_base_msgs::msg::TwoAxleSteeringMeasure & msg)
 {
-  TwoAxleSteeringMeasure twoAxleSteeringMeasure;
+  core::TwoAxleSteeringMeasure twoAxleSteeringMeasure;
   twoAxleSteeringMeasure.longitudinalSpeed = msg.longitudinal_speed;
   twoAxleSteeringMeasure.frontSteeringAngle = msg.front_steering_angle;
   twoAxleSteeringMeasure.rearSteeringAngle = msg.rear_steering_angle;
@@ -138,7 +142,7 @@ TwoAxleSteeringMeasure to_romea(const romea_mobile_base_msgs::msg::TwoAxleSteeri
 
 //-----------------------------------------------------------------------------
 void to_ros_msg(
-  const TwoAxleSteeringMeasure & romea_two_axle_steering_measure,
+  const core::TwoAxleSteeringMeasure & romea_two_axle_steering_measure,
   romea_mobile_base_msgs::msg::TwoAxleSteeringMeasure & ros_two_axle_steering_measure_msg)
 {
   ros_two_axle_steering_measure_msg.longitudinal_speed =
@@ -158,7 +162,7 @@ void to_ros_msg(
 void to_ros_msg(
   const rclcpp::Time & stamp,
   const std::string & frame_id,
-  const TwoAxleSteeringMeasure & romea_two_axle_steering_measure,
+  const core::TwoAxleSteeringMeasure & romea_two_axle_steering_measure,
   romea_mobile_base_msgs::msg::TwoAxleSteeringMeasureStamped & ros_two_axle_steering_measure_msg)
 {
   ros_two_axle_steering_measure_msg.header.frame_id = frame_id;
@@ -167,9 +171,9 @@ void to_ros_msg(
 }
 
 //-----------------------------------------------------------------------------
-SkidSteeringMeasure to_romea(const romea_mobile_base_msgs::msg::SkidSteeringMeasure & msg)
+core::SkidSteeringMeasure to_romea(const romea_mobile_base_msgs::msg::SkidSteeringMeasure & msg)
 {
-  SkidSteeringMeasure skidSteeringMeasure;
+  core::SkidSteeringMeasure skidSteeringMeasure;
   skidSteeringMeasure.longitudinalSpeed = msg.longitudinal_speed;
   skidSteeringMeasure.angularSpeed = msg.angular_speed;
   skidSteeringMeasure.covariance = Eigen::Matrix2d(msg.covariance.data());
@@ -177,9 +181,9 @@ SkidSteeringMeasure to_romea(const romea_mobile_base_msgs::msg::SkidSteeringMeas
 }
 
 //-----------------------------------------------------------------------------
-OmniSteeringMeasure to_romea(const romea_mobile_base_msgs::msg::OmniSteeringMeasure & msg)
+core::OmniSteeringMeasure to_romea(const romea_mobile_base_msgs::msg::OmniSteeringMeasure & msg)
 {
-  OmniSteeringMeasure omniSteeringMeasure;
+  core::OmniSteeringMeasure omniSteeringMeasure;
   omniSteeringMeasure.longitudinalSpeed = msg.longitudinal_speed;
   omniSteeringMeasure.lateralSpeed = msg.lateral_speed;
   omniSteeringMeasure.angularSpeed = msg.angular_speed;
@@ -189,7 +193,7 @@ OmniSteeringMeasure to_romea(const romea_mobile_base_msgs::msg::OmniSteeringMeas
 
 //-----------------------------------------------------------------------------
 void to_ros_msg(
-  const OmniSteeringMeasure & romea_omni_steering_measure,
+  const core::OmniSteeringMeasure & romea_omni_steering_measure,
   romea_mobile_base_msgs::msg::OmniSteeringMeasure & ros_omni_steering_measure_msg)
 {
   ros_omni_steering_measure_msg.longitudinal_speed = romea_omni_steering_measure.longitudinalSpeed;
@@ -206,7 +210,7 @@ void to_ros_msg(
 void to_ros_msg(
   const rclcpp::Time & stamp,
   const std::string & frame_id,
-  const OmniSteeringMeasure & romea_omni_steering_measure,
+  const core::OmniSteeringMeasure & romea_omni_steering_measure,
   romea_mobile_base_msgs::msg::OmniSteeringMeasureStamped & ros_omni_steering_measure_msg)
 {
   ros_omni_steering_measure_msg.header.frame_id = frame_id;
@@ -217,7 +221,7 @@ void to_ros_msg(
 
 //-----------------------------------------------------------------------------
 void to_ros_msg(
-  const SkidSteeringMeasure & romea_skid_steering_measure,
+  const core::SkidSteeringMeasure & romea_skid_steering_measure,
   romea_mobile_base_msgs::msg::SkidSteeringMeasure & ros_skid_steering_measure_msg)
 {
   ros_skid_steering_measure_msg.longitudinal_speed = romea_skid_steering_measure.longitudinalSpeed;
@@ -233,7 +237,7 @@ void to_ros_msg(
 void to_ros_msg(
   const rclcpp::Time & stamp,
   const std::string & frame_id,
-  const SkidSteeringMeasure & romea_skid_steering_measure,
+  const core::SkidSteeringMeasure & romea_skid_steering_measure,
   romea_mobile_base_msgs::msg::SkidSteeringMeasureStamped & ros_skid_steering_measure_msg)
 {
   ros_skid_steering_measure_msg.header.frame_id = frame_id;
@@ -241,4 +245,5 @@ void to_ros_msg(
   to_ros_msg(romea_skid_steering_measure, ros_skid_steering_measure_msg.measure);
 }
 
+}  // namespace ros2
 }  // namespace romea

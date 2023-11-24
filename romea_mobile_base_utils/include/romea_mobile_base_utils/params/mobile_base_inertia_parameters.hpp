@@ -30,6 +30,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 template<typename Node>
 void declare_inertia_info(
@@ -45,7 +47,7 @@ void declare_inertia_info(
 }
 
 template<typename Node>
-MobileBaseInertia get_inertia_info(
+core::MobileBaseInertia get_inertia_info(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
@@ -54,6 +56,7 @@ MobileBaseInertia get_inertia_info(
     get_parameter<double>(node, parameters_ns, "z_moment")};
 }
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_UTILS__PARAMS__MOBILE_BASE_INERTIA_PARAMETERS_HPP_

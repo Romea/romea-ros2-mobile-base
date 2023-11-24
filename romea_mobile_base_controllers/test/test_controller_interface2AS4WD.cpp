@@ -53,13 +53,14 @@ protected:
         "-p", "joints.rear_right_wheel_spinning_joint_name:=J6"
       });
 
-    node = std::make_shared<romea::HardwareInterfaceNode>("test_interface_controller_2AS4WD", no);
+    node = std::make_shared<romea::ros2::HardwareInterfaceNode>(
+      "test_interface_controller_2AS4WD", no);
 
     state_values.resize(6);
     command_values.resize(6);
 
-    romea::ControllerInterface2AS4WD::declare_joints_names(node, "joints");
-    joints_names = romea::ControllerInterface2AS4WD::get_joints_names(node, "joints");
+    romea::ros2::ControllerInterface2AS4WD::declare_joints_names(node, "joints");
+    joints_names = romea::ros2::ControllerInterface2AS4WD::get_joints_names(node, "joints");
 
     state_hardware_interfaces.emplace_back(
       joints_names[0], hardware_interface::HW_IF_POSITION,
@@ -110,10 +111,10 @@ protected:
     mobile_info.geometry.rearAxle.wheels.radius = 0.5;
     mobile_info.geometry.frontAxle.wheels.radius = 0.5;
 
-    controller_interface = std::make_unique<romea::ControllerInterface2AS4WD>(mobile_info);
+    controller_interface = std::make_unique<romea::ros2::ControllerInterface2AS4WD>(mobile_info);
   }
 
-  std::shared_ptr<romea::HardwareInterfaceNode> node;
+  std::shared_ptr<romea::ros2::HardwareInterfaceNode> node;
 
   std::vector<double> state_values;
   std::vector<double> command_values;
@@ -122,15 +123,15 @@ protected:
   std::vector<hardware_interface::LoanedStateInterface> state_loaned_interfaces;
   std::vector<hardware_interface::LoanedCommandInterface> command_loaned_interfaces;
 
-  romea::MobileBaseInfo2AS4WD mobile_info;
+  romea::core::MobileBaseInfo2AS4WD mobile_info;
   std::vector<std::string> joints_names;
-  std::unique_ptr<romea::ControllerInterface2AS4WD> controller_interface;
+  std::unique_ptr<romea::ros2::ControllerInterface2AS4WD> controller_interface;
 };
 
 
 TEST_F(TestControllerInterface2AS4WD, checkHardwareInterfaceNames)
 {
-  auto hardware_interface_names = romea::ControllerInterface2AS4WD::hardware_interface_names(
+  auto hardware_interface_names = romea::ros2::ControllerInterface2AS4WD::hardware_interface_names(
     joints_names);
   EXPECT_STREQ(hardware_interface_names[0].c_str(), "J1/position");
   EXPECT_STREQ(hardware_interface_names[1].c_str(), "J2/position");
@@ -142,7 +143,7 @@ TEST_F(TestControllerInterface2AS4WD, checkHardwareInterfaceNames)
 
 TEST_F(TestControllerInterface2AS4WD, checkWrite)
 {
-  romea::OdometryFrame2AS4WD command;
+  romea::core::OdometryFrame2AS4WD command;
   command.frontAxleSteeringAngle = 11;
   command.rearAxleSteeringAngle = 12;
   command.frontLeftWheelLinearSpeed = 1;
@@ -168,7 +169,7 @@ TEST_F(TestControllerInterface2AS4WD, checkGetMeasurement)
   state_values[4] = 6;
   state_values[5] = 8;
 
-  romea::OdometryFrame2AS4WD measure;
+  romea::core::OdometryFrame2AS4WD measure;
   controller_interface->read(state_loaned_interfaces, measure);
   EXPECT_EQ(measure.frontAxleSteeringAngle, 11);
   EXPECT_EQ(measure.rearAxleSteeringAngle, 12);

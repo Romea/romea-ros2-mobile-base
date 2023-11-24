@@ -33,6 +33,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 template<typename Node>
 void declare_mobile_base_info_1FAS2FWD(
@@ -49,7 +51,7 @@ void declare_mobile_base_info_1FAS2FWD(
 }
 
 template<typename Node>
-MobileBaseInfo1FAS2FWD get_mobile_base_info_1FAS2FWD(
+core::MobileBaseInfo1FAS2FWD get_mobile_base_info_1FAS2FWD(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
@@ -62,7 +64,7 @@ MobileBaseInfo1FAS2FWD get_mobile_base_info_1FAS2FWD(
     get_eigen_vector_parameter<Eigen::Vector3d>(node, parameters_ns, "control_point")};
 }
 
-
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_UTILS__PARAMS__MOBILE_BASE_PARAMETERS1FAS2FWD_HPP_

@@ -61,10 +61,11 @@ protected:
 
   void MakeInterface(const std::string & command_interface_type)
   {
-    interface = std::make_unique<romea::HardwareInterface2TTD>(info[0], command_interface_type);
+    interface =
+      std::make_unique<romea::ros2::HardwareInterface2TTD>(info[0], command_interface_type);
   }
 
-  std::unique_ptr<romea::HardwareInterface2TTD> interface;
+  std::unique_ptr<romea::ros2::HardwareInterface2TTD> interface;
   std::vector<hardware_interface::HardwareInfo> info;
 };
 
@@ -103,34 +104,34 @@ TEST_F(TestHarwareInterface2TTD, checkSetCurrentState)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
 
-  romea::HardwareState2TD current_state;
+  romea::core::HardwareState2TD current_state;
   current_state.leftSprocketWheelSpinningMotion.position = 1.0;
   current_state.leftSprocketWheelSpinningMotion.velocity = 2.0;
   current_state.leftSprocketWheelSpinningMotion.torque = 3.0;
   current_state.rightSprocketWheelSpinningMotion.position = 4.0;
   current_state.rightSprocketWheelSpinningMotion.velocity = 5.0;
   current_state.rightSprocketWheelSpinningMotion.torque = 6.0;
-  romea::RotationalMotionState leftIdlerWheelSpinningMotion;
+  romea::core::RotationalMotionState leftIdlerWheelSpinningMotion;
   leftIdlerWheelSpinningMotion.position = 7.0;
   leftIdlerWheelSpinningMotion.velocity = 8.0;
   leftIdlerWheelSpinningMotion.torque = 9.0;
-  romea::RotationalMotionState rightIdlerWheelSpinningMotion;
+  romea::core::RotationalMotionState rightIdlerWheelSpinningMotion;
   rightIdlerWheelSpinningMotion.position = 10.0;
   rightIdlerWheelSpinningMotion.velocity = 11.0;
   rightIdlerWheelSpinningMotion.torque = 12.0;
-  romea::RotationalMotionState frontLeftRollerWheelSpinningMotion;
+  romea::core::RotationalMotionState frontLeftRollerWheelSpinningMotion;
   frontLeftRollerWheelSpinningMotion.position = 13.0;
   frontLeftRollerWheelSpinningMotion.velocity = 14.0;
   frontLeftRollerWheelSpinningMotion.torque = 15.0;
-  romea::RotationalMotionState frontRightRollerWheelSpinningMotion;
+  romea::core::RotationalMotionState frontRightRollerWheelSpinningMotion;
   frontRightRollerWheelSpinningMotion.position = 16.0;
   frontRightRollerWheelSpinningMotion.velocity = 17.0;
   frontRightRollerWheelSpinningMotion.torque = 18.0;
-  romea::RotationalMotionState rearLeftRollerWheelSpinningMotion;
+  romea::core::RotationalMotionState rearLeftRollerWheelSpinningMotion;
   rearLeftRollerWheelSpinningMotion.position = 19.0;
   rearLeftRollerWheelSpinningMotion.velocity = 20.0;
   rearLeftRollerWheelSpinningMotion.torque = 21.0;
-  romea::RotationalMotionState rearRightRollerWheelSpinningMotion;
+  romea::core::RotationalMotionState rearRightRollerWheelSpinningMotion;
   rearRightRollerWheelSpinningMotion.position = 22.0;
   rearRightRollerWheelSpinningMotion.velocity = 23.0;
   rearRightRollerWheelSpinningMotion.torque = 24.0;
@@ -159,7 +160,7 @@ TEST_F(TestHarwareInterface2TTD, checkGetCurrentCommand)
     command_interfaces[i].set_value(i + 1.0);
   }
 
-  romea::HardwareCommand2TD current_command = interface->get_command();
+  romea::core::HardwareCommand2TD current_command = interface->get_command();
 
   EXPECT_DOUBLE_EQ(current_command.leftSprocketWheelSpinningSetPoint, 1.0);
   EXPECT_DOUBLE_EQ(current_command.rightSprocketWheelSpinningSetPoint, 2.0);

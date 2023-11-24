@@ -31,6 +31,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 struct CommandInterfaceConfiguration
 {
@@ -130,7 +132,7 @@ CommandInterface<CommandType>::CommandInterface(
   double period = 1 / configuration.rate;
   double timeout = 2 * period;
 
-  timeout_duration_ = durationFromSecond(timeout);
+  timeout_duration_ = core::durationFromSecond(timeout);
   create_publisher_(node, output_message_type);
   subscribe_to_cmd_mux(priority, timeout);
   create_timer_(node, period);
@@ -154,9 +156,10 @@ void CommandInterface<CommandType>::create_timer_(
   const double & period)
 {
   auto timer_callback = std::bind(&CommandInterface::timer_callback_, this);
-  timer_ = node->create_wall_timer(durationFromSecond(period), timer_callback);
+  timer_ = node->create_wall_timer(core::durationFromSecond(period), timer_callback);
 }
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_UTILS__CONTROL__COMMAND_INTERFACE_HPP_

@@ -48,79 +48,83 @@
 
 namespace romea
 {
+namespace ros2
+{
 
-
-KinematicMeasure to_romea(const romea_mobile_base_msgs::msg::KinematicMeasure & msg);
+core::KinematicMeasure to_romea(const romea_mobile_base_msgs::msg::KinematicMeasure & msg);
 
 void to_ros_msg(
-  const KinematicMeasure & romea_kinematic_measure,
+  const core::KinematicMeasure & romea_kinematic_measure,
   romea_mobile_base_msgs::msg::KinematicMeasure & ros_kinematic_msg);
 
 void to_ros_msg(
   const rclcpp::Time & stamp,
   const std::string & frame_id,
-  const KinematicMeasure & romea_kinematic_measure,
+  const core::KinematicMeasure & romea_kinematic_measure,
   romea_mobile_base_msgs::msg::KinematicMeasureStamped & ros_kinematic_stamped_msg);
 
 void to_ros_msg(
-  const KinematicMeasure & romea_kinematic_measure,
+  const core::KinematicMeasure & romea_kinematic_measure,
   geometry_msgs::msg::TwistWithCovariance & ros_twist_with_covariance);
 
 
-OneAxleSteeringMeasure to_romea(const romea_mobile_base_msgs::msg::OneAxleSteeringMeasure & msg);
+core::OneAxleSteeringMeasure to_romea(
+  const romea_mobile_base_msgs::msg::OneAxleSteeringMeasure & msg);
 
 void to_ros_msg(
-  const OneAxleSteeringMeasure & romea_one_axle_steering_measure,
+  const core::OneAxleSteeringMeasure & romea_one_axle_steering_measure,
   romea_mobile_base_msgs::msg::OneAxleSteeringMeasure & ros_one_axle_steering_measure_msg);
 
 void to_ros_msg(
   const rclcpp::Time & stamp,
   const std::string & frame_id,
-  const OneAxleSteeringMeasure & romea_one_axle_steering_measure,
+  const core::OneAxleSteeringMeasure & romea_one_axle_steering_measure,
   romea_mobile_base_msgs::msg::OneAxleSteeringMeasureStamped & ros_one_axle_steering_measure_msg);
 
 
-TwoAxleSteeringMeasure to_romea(const romea_mobile_base_msgs::msg::TwoAxleSteeringMeasure & msg);
+core::TwoAxleSteeringMeasure to_romea(
+  const romea_mobile_base_msgs::msg::TwoAxleSteeringMeasure & msg);
 
 void to_ros_msg(
-  const TwoAxleSteeringMeasure & romea_two_axle_steering_measure,
+  const core::TwoAxleSteeringMeasure & romea_two_axle_steering_measure,
   romea_mobile_base_msgs::msg::TwoAxleSteeringMeasure & ros_two_axle_steering_measure_msg);
 
 
 void to_ros_msg(
   const rclcpp::Time & stamp,
   const std::string & frame_id,
-  const TwoAxleSteeringMeasure & romea_two_axle_steering_measure,
+  const core::TwoAxleSteeringMeasure & romea_two_axle_steering_measure,
   romea_mobile_base_msgs::msg::TwoAxleSteeringMeasureStamped & ros_two_axle_steering_measure_msg);
 
 
-SkidSteeringMeasure to_romea(const romea_mobile_base_msgs::msg::SkidSteeringMeasure & msg);
+core::SkidSteeringMeasure to_romea(const romea_mobile_base_msgs::msg::SkidSteeringMeasure & msg);
 
 void to_ros_msg(
-  const SkidSteeringMeasure & romea_skid_steering_measure,
+  const core::SkidSteeringMeasure & romea_skid_steering_measure,
   romea_mobile_base_msgs::msg::SkidSteeringMeasure & ros_skid_steering_measure_msg);
 
 
 void to_ros_msg(
   const rclcpp::Time & stamp,
   const std::string & frame_id,
-  const SkidSteeringMeasure & romea_skid_steering_measure,
+  const core::SkidSteeringMeasure & romea_skid_steering_measure,
   romea_mobile_base_msgs::msg::SkidSteeringMeasureStamped & ros_skid_steering_measure_msg);
 
 
-OmniSteeringMeasure to_romea(const romea_mobile_base_msgs::msg::OmniSteeringMeasure & msg);
+core::OmniSteeringMeasure to_romea(const romea_mobile_base_msgs::msg::OmniSteeringMeasure & msg);
 
 void to_ros_msg(
-  const OmniSteeringMeasure & romea_omni_steering_measure,
+  const core::OmniSteeringMeasure & romea_omni_steering_measure,
   romea_mobile_base_msgs::msg::OmniSteeringMeasure & ros_omni_steering_measure_msg);
 
 
 void to_ros_msg(
   const rclcpp::Time & stamp,
   const std::string & frame_id,
-  const OmniSteeringMeasure & romea_omni_steering_measure,
+  const core::OmniSteeringMeasure & romea_omni_steering_measure,
   romea_mobile_base_msgs::msg::OmniSteeringMeasureStamped & ros_omni_steering_measure_msg);
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_UTILS__CONVERSIONS__KINEMATIC_CONVERSIONS_HPP_

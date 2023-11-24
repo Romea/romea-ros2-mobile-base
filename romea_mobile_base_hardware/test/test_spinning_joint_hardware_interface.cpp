@@ -71,12 +71,12 @@ protected:
 
   void MakeJoint(const std::string & command_interface_type)
   {
-    joint = std::make_unique<romea::SpinningJointHardwareInterface>(
+    joint = std::make_unique<romea::ros2::SpinningJointHardwareInterface>(
       joint_info,
       command_interface_type);
   }
 
-  std::unique_ptr<romea::SpinningJointHardwareInterface> joint;
+  std::unique_ptr<romea::ros2::SpinningJointHardwareInterface> joint;
   hardware_interface::ComponentInfo joint_info;
 };
 

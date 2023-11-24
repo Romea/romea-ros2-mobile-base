@@ -20,15 +20,17 @@
 #include <memory>
 #include <string>
 
+// local
+#include "romea_mobile_base_utils/conversions/command_conversions.hpp"
+
 // romea
 #include "romea_common_utils/publishers/data_publisher.hpp"
 #include "romea_common_utils/qos.hpp"
 
-// local
-#include "romea_mobile_base_utils/conversions/command_conversions.hpp"
-
 
 namespace romea
+{
+namespace ros2
 {
 
 template<typename CommandType, typename MsgType, typename NodeType>
@@ -37,8 +39,8 @@ make_command_publisher(
   std::shared_ptr<NodeType> node,
   const std::string & topic_name)
 {
-  return romea::make_data_publisher<CommandType, MsgType>(
-    node, topic_name, romea::reliable(1), false);
+  return make_data_publisher<CommandType, MsgType>(
+    node, topic_name, reliable(1), false);
 }
 
 
@@ -48,16 +50,16 @@ struct CommandPublisher
 };
 
 template<>
-struct CommandPublisher<SkidSteeringCommand>
+struct CommandPublisher<core::SkidSteeringCommand>
 {
-  using PubType = PublisherBase<SkidSteeringCommand>;
+  using PubType = PublisherBase<core::SkidSteeringCommand>;
 
   template<typename MsgType, typename NodeType>
   static std::shared_ptr<PubType> instance(
     std::shared_ptr<NodeType> node,
     const std::string & topic_name)
   {
-    return make_command_publisher<SkidSteeringCommand, MsgType>(node, topic_name);
+    return make_command_publisher<core::SkidSteeringCommand, MsgType>(node, topic_name);
   }
 
   template<typename NodeType>
@@ -80,16 +82,16 @@ struct CommandPublisher<SkidSteeringCommand>
 };
 
 template<>
-struct CommandPublisher<OmniSteeringCommand>
+struct CommandPublisher<core::OmniSteeringCommand>
 {
-  using PubType = PublisherBase<OmniSteeringCommand>;
+  using PubType = PublisherBase<core::OmniSteeringCommand>;
 
   template<typename MsgType, typename NodeType>
   static std::shared_ptr<PubType> instance(
     std::shared_ptr<NodeType> node,
     const std::string & topic_name)
   {
-    return make_command_publisher<OmniSteeringCommand, MsgType>(node, topic_name);
+    return make_command_publisher<core::OmniSteeringCommand, MsgType>(node, topic_name);
   }
 
   template<typename NodeType>
@@ -112,16 +114,16 @@ struct CommandPublisher<OmniSteeringCommand>
 };
 
 template<>
-struct CommandPublisher<OneAxleSteeringCommand>
+struct CommandPublisher<core::OneAxleSteeringCommand>
 {
-  using PubType = PublisherBase<OneAxleSteeringCommand>;
+  using PubType = PublisherBase<core::OneAxleSteeringCommand>;
 
   template<typename MsgType, typename NodeType>
   static std::shared_ptr<PubType> instance(
     std::shared_ptr<NodeType> node,
     const std::string & topic_name)
   {
-    return make_command_publisher<OneAxleSteeringCommand, MsgType>(node, topic_name);
+    return make_command_publisher<core::OneAxleSteeringCommand, MsgType>(node, topic_name);
   }
 
   template<typename NodeType>
@@ -147,16 +149,16 @@ struct CommandPublisher<OneAxleSteeringCommand>
 };
 
 template<>
-struct CommandPublisher<TwoAxleSteeringCommand>
+struct CommandPublisher<core::TwoAxleSteeringCommand>
 {
-  using PubType = PublisherBase<TwoAxleSteeringCommand>;
+  using PubType = PublisherBase<core::TwoAxleSteeringCommand>;
 
   template<typename MsgType, typename NodeType>
   static std::shared_ptr<PubType> instance(
     std::shared_ptr<NodeType> node,
     const std::string & topic_name)
   {
-    return make_command_publisher<TwoAxleSteeringCommand, MsgType>(node, topic_name);
+    return make_command_publisher<core::TwoAxleSteeringCommand, MsgType>(node, topic_name);
   }
 
   template<typename NodeType>
@@ -185,23 +187,24 @@ make_command_publisher(
   std::shared_ptr<NodeType> node,
   const std::string message_type)
 {
-  if constexpr (std::is_same_v<CommandType, SkidSteeringCommand>) {
-    return CommandPublisher<SkidSteeringCommand>::instance(node, message_type);
+  if constexpr (std::is_same_v<CommandType, core::SkidSteeringCommand>) {
+    return CommandPublisher<core::SkidSteeringCommand>::instance(node, message_type);
   }
 
-  if constexpr (std::is_same_v<CommandType, OmniSteeringCommand>) {
-    return CommandPublisher<OmniSteeringCommand>::instance(node, message_type);
+  if constexpr (std::is_same_v<CommandType, core::OmniSteeringCommand>) {
+    return CommandPublisher<core::OmniSteeringCommand>::instance(node, message_type);
   }
 
-  if constexpr (std::is_same_v<CommandType, OneAxleSteeringCommand>) {
-    return CommandPublisher<OneAxleSteeringCommand>::instance(node, message_type);
+  if constexpr (std::is_same_v<CommandType, core::OneAxleSteeringCommand>) {
+    return CommandPublisher<core::OneAxleSteeringCommand>::instance(node, message_type);
   }
 
-  if constexpr (std::is_same_v<CommandType, TwoAxleSteeringCommand>) {
-    return CommandPublisher<TwoAxleSteeringCommand>::instance(node, message_type);
+  if constexpr (std::is_same_v<CommandType, core::TwoAxleSteeringCommand>) {
+    return CommandPublisher<core::TwoAxleSteeringCommand>::instance(node, message_type);
   }
 }
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_UTILS__CONTROL__COMMAND_PUBLISHER_HPP_

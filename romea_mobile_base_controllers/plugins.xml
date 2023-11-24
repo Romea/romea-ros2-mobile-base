@@ -1,7 +1,7 @@
 <library path="romea_mobile_base_controllers">
 
   <class name="romea_mobile_base_controllers/MobileBaseController4WD"
-         type="romea::MobileBaseController4WD"
+         type="romea::ros2::MobileBaseController4WD"
          base_class_type="controller_interface::ControllerInterface">
     <description>
       Controller for 4WD vehicle
@@ -9,7 +9,7 @@
   </class>
 
   <class name="romea_mobile_base_controllers/MobileBaseController4MWD"
-         type="romea::MobileBaseController4MWD"
+         type="romea::ros2::MobileBaseController4MWD"
          base_class_type="controller_interface::ControllerInterface">
     <description>
       Controller for 4MWD vehicle
@@ -17,7 +17,7 @@
   </class>
 
    <class name="romea_mobile_base_controllers/MobileBaseController4WS4WD"
-          type="romea::MobileBaseController4WS4WD"
+          type="romea::ros2::MobileBaseController4WS4WD"
           base_class_type="controller_interface::ControllerInterface">
      <description>
        Controller for 4WS4WD vehicle
@@ -25,7 +25,7 @@
    </class>
 
    <class name="romea_mobile_base_controllers/MobileBaseController2AS4WD"
-          type="romea::MobileBaseController2AS4WD"
+          type="romea::ros2::MobileBaseController2AS4WD"
           base_class_type="controller_interface::ControllerInterface">
      <description>
        Controller for 2AS4WD vehicle
@@ -33,7 +33,7 @@
    </class>
 
    <class name="romea_mobile_base_controllers/MobileBaseController2FWS4WD"
-          type="romea::MobileBaseController2FWS4WD"
+          type="romea::ros2::MobileBaseController2FWS4WD"
           base_class_type="controller_interface::ControllerInterface">
      <description>
        Controller for 2FWS4WD vehicle
@@ -41,7 +41,7 @@
    </class>
 
    <class name="romea_mobile_base_controllers/MobileBaseController2FWS2RWD"
-          type="romea::MobileBaseController2FWS2RWD"
+          type="romea::ros2::MobileBaseController2FWS2RWD"
           base_class_type="controller_interface::ControllerInterface">
      <description>
        Controller for 2FWS2RWD vehicle
@@ -49,7 +49,7 @@
    </class>
 
    <class name="romea_mobile_base_controllers/MobileBaseController2TD"
-          type="romea::MobileBaseController2TD"
+          type="romea::ros2::MobileBaseController2TD"
           base_class_type="controller_interface::ControllerInterface">
      <description>
        Controller for of 2TD vehicle familly
@@ -57,7 +57,7 @@
    </class>
 
    <class name="romea_mobile_base_controllers/MobileBaseEnhancedController2TD"
-          type="romea::MobileBaseEnhancedController2TD"
+          type="romea::ros2::MobileBaseEnhancedController2TD"
           base_class_type="controller_interface::ControllerInterface">
      <description>
        Controller for of 2TD vehicle familly using angular speed pid regulation

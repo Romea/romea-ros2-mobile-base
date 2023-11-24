@@ -61,10 +61,12 @@ protected:
 
   void MakeInterface(const std::string & command_interface_type)
   {
-    interface = std::make_unique<romea::HardwareInterface2AS2FWD>(info[0], command_interface_type);
+    interface = std::make_unique<romea::ros2::HardwareInterface2AS2FWD>(
+      info[0],
+      command_interface_type);
   }
 
-  std::unique_ptr<romea::HardwareInterface2AS2FWD> interface;
+  std::unique_ptr<romea::ros2::HardwareInterface2AS2FWD> interface;
   std::vector<hardware_interface::HardwareInfo> info;
 };
 
@@ -110,7 +112,7 @@ TEST_F(TestHarwareInterface2AS2FWD, checkSetCurrentState)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
 
-  romea::HardwareState2AS2FWD current_state;
+  romea::core::HardwareState2AS2FWD current_state;
   current_state.frontAxleSteeringAngle = 1.0;
   current_state.rearAxleSteeringAngle = 2.0;
   current_state.frontLeftWheelSpinningMotion.position = 3.0;
@@ -119,15 +121,15 @@ TEST_F(TestHarwareInterface2AS2FWD, checkSetCurrentState)
   current_state.frontRightWheelSpinningMotion.position = 6.0;
   current_state.frontRightWheelSpinningMotion.velocity = 7.0;
   current_state.frontRightWheelSpinningMotion.torque = 8.0;
-  romea::SteeringAngleState front_left_wheel_steering_angle = 9.;
-  romea::SteeringAngleState front_right_wheel_steering_angle = 10.;
-  romea::SteeringAngleState rear_left_wheel_steering_angle = 11.;
-  romea::SteeringAngleState rear_right_wheel_steering_angle = 12.;
-  romea::RotationalMotionState rear_left_wheel_spin_motion;
+  romea::core::SteeringAngleState front_left_wheel_steering_angle = 9.;
+  romea::core::SteeringAngleState front_right_wheel_steering_angle = 10.;
+  romea::core::SteeringAngleState rear_left_wheel_steering_angle = 11.;
+  romea::core::SteeringAngleState rear_right_wheel_steering_angle = 12.;
+  romea::core::RotationalMotionState rear_left_wheel_spin_motion;
   rear_left_wheel_spin_motion.position = 13.0;
   rear_left_wheel_spin_motion.velocity = 14.0;
   rear_left_wheel_spin_motion.torque = 15.0;
-  romea::RotationalMotionState rear_right_wheel_spin_motion;
+  romea::core::RotationalMotionState rear_right_wheel_spin_motion;
   rear_right_wheel_spin_motion.position = 16.0;
   rear_right_wheel_spin_motion.velocity = 17.0;
   rear_right_wheel_spin_motion.torque = 18.0;
@@ -157,7 +159,7 @@ TEST_F(TestHarwareInterface2AS2FWD, checkGetCurrentCommand)
     command_interfaces[i].set_value(i + 1.0);
   }
 
-  romea::HardwareCommand2AS2FWD current_command = interface->get_command();
+  romea::core::HardwareCommand2AS2FWD current_command = interface->get_command();
 
   EXPECT_DOUBLE_EQ(current_command.frontAxleSteeringAngle, 1.0);
   EXPECT_DOUBLE_EQ(current_command.rearAxleSteeringAngle, 2.0);

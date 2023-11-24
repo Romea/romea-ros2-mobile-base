@@ -25,6 +25,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 GazeboInterface2WD::GazeboInterface2WD(
@@ -42,17 +44,18 @@ GazeboInterface2WD::GazeboInterface2WD(
 
 
 //-----------------------------------------------------------------------------
-SimulationState2WD GazeboInterface2WD::get_state() const
+core::SimulationState2WD GazeboInterface2WD::get_state() const
 {
   return {left_wheel_spinning_joint_.get_state(),
-      right_wheel_spinning_joint_.get_state()};
+    right_wheel_spinning_joint_.get_state()};
 }
 
 //-----------------------------------------------------------------------------
-void GazeboInterface2WD::set_command(const SimulationCommand2WD & command)
+void GazeboInterface2WD::set_command(const core::SimulationCommand2WD & command)
 {
   left_wheel_spinning_joint_.set_command(command.leftWheelSpinningSetPoint);
   right_wheel_spinning_joint_.set_command(command.rightWheelSpinningSetPoint);
 }
 
+}  // namespace ros2
 }  // namespace romea

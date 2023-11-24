@@ -22,6 +22,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 HardwareInterface2WD::HardwareInterface2WD(
@@ -59,7 +61,7 @@ HardwareInterface2WD::export_command_interfaces()
 
 
 //-----------------------------------------------------------------------------
-HardwareCommand2WD HardwareInterface2WD::get_command()const
+core::HardwareCommand2WD HardwareInterface2WD::get_command()const
 {
   // *INDENT-OFF*
   return {left_wheel_spinning_joint_.get_command(),
@@ -69,10 +71,11 @@ HardwareCommand2WD HardwareInterface2WD::get_command()const
 
 
 //-----------------------------------------------------------------------------
-void HardwareInterface2WD::set_state(const HardwareState2WD & hardware_state)
+void HardwareInterface2WD::set_state(const core::HardwareState2WD & hardware_state)
 {
   left_wheel_spinning_joint_.set_state(hardware_state.leftWheelSpinningMotion);
   right_wheel_spinning_joint_.set_state(hardware_state.rightWheelSpinningMotion);
 }
 
+}  // namespace ros2
 }  // namespace romea

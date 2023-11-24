@@ -28,6 +28,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 class HardwareInterface2TTD
 {
@@ -49,18 +51,18 @@ public:
     const std::string & command_interface_type);
 
 
-  HardwareCommand2TD get_command()const;
+  core::HardwareCommand2TD get_command()const;
 
-  void set_state(const HardwareState2TD & hardware_state);
+  void set_state(const core::HardwareState2TD & hardware_state);
 
   void set_state(
-    const HardwareState2TD & hardware_state,
-    const RotationalMotionState & left_idler_wheel_spinning_motion,
-    const RotationalMotionState & right_idler_wheel_spinning_motion,
-    const RotationalMotionState & front_left_roller_wheel_spinning_motion,
-    const RotationalMotionState & front_right_roller_wheel_spinning_motion,
-    const RotationalMotionState & rear_left_roller_wheel_spinning_motion,
-    const RotationalMotionState & rear_right_roller_wheel_spinning_motion);
+    const core::HardwareState2TD & hardware_state,
+    const core::RotationalMotionState & left_idler_wheel_spinning_motion,
+    const core::RotationalMotionState & right_idler_wheel_spinning_motion,
+    const core::RotationalMotionState & front_left_roller_wheel_spinning_motion,
+    const core::RotationalMotionState & front_right_roller_wheel_spinning_motion,
+    const core::RotationalMotionState & rear_left_roller_wheel_spinning_motion,
+    const core::RotationalMotionState & rear_right_roller_wheel_spinning_motion);
 
   std::vector<hardware_interface::StateInterface> export_state_interfaces();
   std::vector<hardware_interface::CommandInterface> export_command_interfaces();
@@ -76,6 +78,7 @@ private:
   SpinningJointHardwareInterface::Feedback rear_right_roller_wheel_spinning_joint_feedback_;
 };
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_INTERFACE2TTD_HPP_

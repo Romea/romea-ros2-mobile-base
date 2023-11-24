@@ -29,6 +29,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 class HardwareInterface1FAS4WD
 {
@@ -49,14 +51,14 @@ public:
     const std::string & spinning_joint_command_interface_type);
 
 
-  HardwareCommand1FAS4WD get_command()const;
+  core::HardwareCommand1FAS4WD get_command()const;
 
-  void set_state(const HardwareState1FAS4WD & hardware_state);
+  void set_state(const core::HardwareState1FAS4WD & hardware_state);
 
   void set_state(
-    const HardwareState1FAS4WD & hardware_state,
-    const SteeringAngleState & front_left_wheel_steering_angle,
-    const SteeringAngleState & front_right_wheel_steering_angle);
+    const core::HardwareState1FAS4WD & hardware_state,
+    const core::SteeringAngleState & front_left_wheel_steering_angle,
+    const core::SteeringAngleState & front_right_wheel_steering_angle);
 
 
   std::vector<hardware_interface::StateInterface> export_state_interfaces();
@@ -73,6 +75,7 @@ private:
   SteeringJointHardwareInterface::Feedback front_right_wheel_steering_joint_feedback_;
 };
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_INTERFACE1FAS4WD_HPP_

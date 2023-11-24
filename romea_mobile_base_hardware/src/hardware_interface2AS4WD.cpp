@@ -22,6 +22,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 HardwareInterface2AS4WD::HardwareInterface2AS4WD(
@@ -92,7 +94,7 @@ HardwareInterface2AS4WD::export_command_interfaces()
 }
 
 //-----------------------------------------------------------------------------
-HardwareCommand2AS4WD HardwareInterface2AS4WD::get_command()const
+core::HardwareCommand2AS4WD HardwareInterface2AS4WD::get_command()const
 {
   // *INDENT-OFF*
   return {front_axle_steering_joint_.get_command(),
@@ -105,7 +107,7 @@ HardwareCommand2AS4WD HardwareInterface2AS4WD::get_command()const
 }
 
 //-----------------------------------------------------------------------------
-void HardwareInterface2AS4WD::set_state(const HardwareState2AS4WD & hardware_state)
+void HardwareInterface2AS4WD::set_state(const core::HardwareState2AS4WD & hardware_state)
 {
   front_axle_steering_joint_.set_state(hardware_state.frontAxleSteeringAngle);
   rear_axle_steering_joint_.set_state(hardware_state.rearAxleSteeringAngle);
@@ -118,11 +120,11 @@ void HardwareInterface2AS4WD::set_state(const HardwareState2AS4WD & hardware_sta
 
 //-----------------------------------------------------------------------------
 void HardwareInterface2AS4WD::set_state(
-  const HardwareState2AS4WD & hardware_state,
-  const SteeringAngleState & front_left_wheel_steering_angle,
-  const SteeringAngleState & front_right_wheel_steering_angle,
-  const SteeringAngleState & rear_left_wheel_steering_angle,
-  const SteeringAngleState & rear_right_wheel_steering_angle)
+  const core::HardwareState2AS4WD & hardware_state,
+  const core::SteeringAngleState & front_left_wheel_steering_angle,
+  const core::SteeringAngleState & front_right_wheel_steering_angle,
+  const core::SteeringAngleState & rear_left_wheel_steering_angle,
+  const core::SteeringAngleState & rear_right_wheel_steering_angle)
 {
   set_state(hardware_state);
 
@@ -132,4 +134,5 @@ void HardwareInterface2AS4WD::set_state(
   rear_right_wheel_steering_joint_feedback_.set(rear_right_wheel_steering_angle);
 }
 
+}  // namespace ros2
 }  // namespace romea

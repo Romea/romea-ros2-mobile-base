@@ -21,6 +21,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 DeadReckoning::DeadReckoning()
@@ -47,13 +49,15 @@ void DeadReckoning::reset()
 }
 
 //-----------------------------------------------------------------------------
-void DeadReckoning::update(const rclcpp::Time & time, const KinematicMeasure & kinematic_measure)
+void DeadReckoning::update(
+  const rclcpp::Time & time,
+  const core::KinematicMeasure & kinematic_measure)
 {
   if (previous_update_time_.has_value()) {
     double dt = (time - *previous_update_time_).seconds();
     x_ = x_ + previous_longitudinal_speed_ * dt;
     y_ = y_ + previous_lateral_speed_ * dt;
-    heading_ = between0And2Pi(heading_ + previous_angular_speed_ * dt);
+    heading_ = core::between0And2Pi(heading_ + previous_angular_speed_ * dt);
   }
 
   previous_longitudinal_speed_ = kinematic_measure.longitudinalSpeed;
@@ -80,4 +84,5 @@ const double & DeadReckoning::getHeading()const
   return heading_;
 }
 
+}  // namespace ros2
 }  // namespace romea

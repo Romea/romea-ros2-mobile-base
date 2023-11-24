@@ -42,6 +42,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 template<typename HardwareInterface>
 class HardwareSystemInterface : public hardware_interface::SystemInterface
@@ -51,6 +53,8 @@ public:
 
 public:
   HardwareSystemInterface();
+
+  virtual ~HardwareSystemInterface();
 
   CallbackReturn on_init(const hardware_interface::HardwareInfo & hardware_info) override;
 
@@ -101,6 +105,7 @@ using HardwareSystemInterface2TD = HardwareSystemInterface<HardwareInterface2TD>
 using HardwareSystemInterface2THD = HardwareSystemInterface<HardwareInterface2THD>;
 using HardwareSystemInterface2TTD = HardwareSystemInterface<HardwareInterface2TTD>;
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_SYSTEM_INTERFACE_HPP_

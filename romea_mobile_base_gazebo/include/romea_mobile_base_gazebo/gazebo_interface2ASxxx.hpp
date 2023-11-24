@@ -30,6 +30,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 class GazeboInterface2ASxxx
 {
@@ -39,8 +41,8 @@ public:
     const hardware_interface::HardwareInfo & hardware_info,
     const std::string & command_interface_type);
 
-  SimulationState2ASxxx get_state() const;
-  void set_command(const SimulationCommand2ASxxx & command);
+  core::SimulationState2ASxxx get_state() const;
+  void set_command(const core::SimulationCommand2ASxxx & command);
 
 private:
   SteeringJointGazeboInterface front_axle_steering_joint_;
@@ -55,6 +57,7 @@ private:
   SpinningJointGazeboInterface rear_right_wheel_spinning_joint_;
 };
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_GAZEBO__GAZEBO_INTERFACE2ASXXX_HPP_

@@ -28,6 +28,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 
 const hardware_interface::ComponentInfo &
@@ -68,7 +70,7 @@ T get_parameter(
   if constexpr (std::is_same_v<T, std::string>) {
     return parameter;
   } else {
-    return lexical_cast<T>(parameter);
+    return core::lexical_cast<T>(parameter);
   }
 }
 
@@ -85,6 +87,7 @@ T get_parameter_or(
   }
 }
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_INFO_HPP_

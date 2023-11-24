@@ -25,6 +25,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 template<typename CommandType>
@@ -168,10 +170,11 @@ void CommandInterface<CommandType>::timer_callback_()
   }
 }
 
-template class CommandInterface<SkidSteeringCommand>;
-template class CommandInterface<OmniSteeringCommand>;
-template class CommandInterface<OneAxleSteeringCommand>;
-template class CommandInterface<TwoAxleSteeringCommand>;
+template class CommandInterface<core::SkidSteeringCommand>;
+template class CommandInterface<core::OmniSteeringCommand>;
+template class CommandInterface<core::OneAxleSteeringCommand>;
+template class CommandInterface<core::TwoAxleSteeringCommand>;
 
 
+}  // namespace  ros2
 }  // namespace  romea

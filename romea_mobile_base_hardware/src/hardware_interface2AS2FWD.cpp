@@ -22,6 +22,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 HardwareInterface2AS2FWD::HardwareInterface2AS2FWD(
@@ -88,7 +90,7 @@ HardwareInterface2AS2FWD::export_command_interfaces()
 }
 
 //-----------------------------------------------------------------------------
-HardwareCommand2AS2FWD HardwareInterface2AS2FWD::get_command()const
+core::HardwareCommand2AS2FWD HardwareInterface2AS2FWD::get_command()const
 {
   // *INDENT-OFF*
   return {front_axle_steering_joint_.get_command(),
@@ -99,7 +101,7 @@ HardwareCommand2AS2FWD HardwareInterface2AS2FWD::get_command()const
 }
 
 //-----------------------------------------------------------------------------
-void HardwareInterface2AS2FWD::set_state(const HardwareState2AS2FWD & hardware_state)
+void HardwareInterface2AS2FWD::set_state(const core::HardwareState2AS2FWD & hardware_state)
 {
   front_axle_steering_joint_.set_state(hardware_state.frontAxleSteeringAngle);
   rear_axle_steering_joint_.set_state(hardware_state.rearAxleSteeringAngle);
@@ -110,13 +112,13 @@ void HardwareInterface2AS2FWD::set_state(const HardwareState2AS2FWD & hardware_s
 
 //-----------------------------------------------------------------------------
 void HardwareInterface2AS2FWD::set_state(
-  const HardwareState2AS2FWD & hardware_state,
-  const SteeringAngleState & front_left_wheel_steering_angle,
-  const SteeringAngleState & front_right_wheel_steering_angle,
-  const SteeringAngleState & rear_left_wheel_steering_angle,
-  const SteeringAngleState & rear_right_wheel_steering_angle,
-  const RotationalMotionState & rear_left_wheel_spinning_motion,
-  const RotationalMotionState & rear_right_wheel_spinning_motion)
+  const core::HardwareState2AS2FWD & hardware_state,
+  const core::SteeringAngleState & front_left_wheel_steering_angle,
+  const core::SteeringAngleState & front_right_wheel_steering_angle,
+  const core::SteeringAngleState & rear_left_wheel_steering_angle,
+  const core::SteeringAngleState & rear_right_wheel_steering_angle,
+  const core::RotationalMotionState & rear_left_wheel_spinning_motion,
+  const core::RotationalMotionState & rear_right_wheel_spinning_motion)
 {
   set_state(hardware_state);
 
@@ -128,4 +130,5 @@ void HardwareInterface2AS2FWD::set_state(
   rear_right_wheel_spinning_joint_feedback_.set_state(rear_right_wheel_spinning_motion);
 }
 
+}  // namespace ros2
 }  // namespace romea

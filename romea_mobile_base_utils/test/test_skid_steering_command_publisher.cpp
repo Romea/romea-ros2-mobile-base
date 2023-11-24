@@ -23,13 +23,13 @@
 #include "rclcpp/node.hpp"
 
 // romea
-#include "romea_common_utils/listeners/data_listener.hpp"
 #include "romea_mobile_base_msgs/msg/skid_steering_command.hpp"
+#include "romea_mobile_base_utils/control/command_publisher.hpp"
+#include "romea_common_utils/listeners/data_listener.hpp"
 
 
 // local
 #include "../test/test_helper.h"
-#include "romea_mobile_base_utils/control/command_publisher.hpp"
 
 
 class TestSkidSteeringCommandPublisher : public ::testing::Test
@@ -54,15 +54,15 @@ protected:
 
   void make_publisher(const std::string & message_type)
   {
-    publisher = romea::make_command_publisher<romea::SkidSteeringCommand>(node, message_type);
+    publisher = romea::ros2::make_command_publisher<romea::core::SkidSteeringCommand>(
+      node, message_type);
   }
 
   template<typename MsgType>
   void make_listener(std::string topic_name)
   {
-    listener = romea::make_data_listener<romea::SkidSteeringCommand, MsgType>(
-      node, topic_name, romea::best_effort(
-        1));
+    listener = romea::ros2::make_data_listener<romea::core::SkidSteeringCommand, MsgType>(
+      node, topic_name, romea::ros2::best_effort(1));
   }
 
   void init(const std::string & message_type)
@@ -79,10 +79,10 @@ protected:
   }
 
   std::shared_ptr<rclcpp::Node> node;
-  romea::SkidSteeringCommand command;
+  romea::core::SkidSteeringCommand command;
 
-  std::shared_ptr<romea::PublisherBase<romea::SkidSteeringCommand>> publisher;
-  std::shared_ptr<romea::DataListenerBase<romea::SkidSteeringCommand>> listener;
+  std::shared_ptr<romea::ros2::PublisherBase<romea::core::SkidSteeringCommand>> publisher;
+  std::shared_ptr<romea::ros2::DataListenerBase<romea::core::SkidSteeringCommand>> listener;
 };
 
 

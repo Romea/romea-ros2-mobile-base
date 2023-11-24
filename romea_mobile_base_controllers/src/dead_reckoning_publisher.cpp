@@ -40,6 +40,8 @@ const char DEFAULT_ODOM_FRAME_ID[] = "odom";
 
 namespace romea
 {
+namespace ros2
+{
 
 
 //-----------------------------------------------------------------------------
@@ -88,7 +90,7 @@ void DeadReckoningPublisher::initOdomTFPublisher_(
 //-----------------------------------------------------------------------------
 void DeadReckoningPublisher::update(
   const rclcpp::Time & time,
-  const KinematicMeasure & kinematic_measure)
+  const core::KinematicMeasure & kinematic_measure)
 {
   dead_reckoning_.update(time, kinematic_measure);
 
@@ -122,4 +124,5 @@ void DeadReckoningPublisher::reset()
   dead_reckoning_.reset();
 }
 
+}  // namespace ros2
 }  // namespace romea

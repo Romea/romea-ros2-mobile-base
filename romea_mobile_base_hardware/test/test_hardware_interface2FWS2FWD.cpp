@@ -60,10 +60,11 @@ protected:
 
   void MakeInterface(const std::string & command_interface_type)
   {
-    interface = std::make_unique<romea::HardwareInterface2FWS2FWD>(info[0], command_interface_type);
+    interface = std::make_unique<romea::ros2::HardwareInterface2FWS2FWD>(
+      info[0], command_interface_type);
   }
 
-  std::unique_ptr<romea::HardwareInterface2FWS2FWD> interface;
+  std::unique_ptr<romea::ros2::HardwareInterface2FWS2FWD> interface;
   std::vector<hardware_interface::HardwareInfo> info;
 };
 
@@ -104,7 +105,7 @@ TEST_F(TestHarwareInterface2FWS2FWD, checkSetCurrentState)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
 
-  romea::HardwareState2FWS2FWD current_state;
+  romea::core::HardwareState2FWS2FWD current_state;
   current_state.frontLeftWheelSteeringAngle = 1.0;
   current_state.frontRightWheelSteeringAngle = 2.0;
   current_state.frontLeftWheelSpinningMotion.position = 3.0;
@@ -113,11 +114,11 @@ TEST_F(TestHarwareInterface2FWS2FWD, checkSetCurrentState)
   current_state.frontRightWheelSpinningMotion.position = 6.0;
   current_state.frontRightWheelSpinningMotion.velocity = 7.0;
   current_state.frontRightWheelSpinningMotion.torque = 8.0;
-  romea::RotationalMotionState rear_left_wheel_spinning_set_point;
+  romea::core::RotationalMotionState rear_left_wheel_spinning_set_point;
   rear_left_wheel_spinning_set_point.position = 9.0;
   rear_left_wheel_spinning_set_point.velocity = 10.0;
   rear_left_wheel_spinning_set_point.torque = 11.0;
-  romea::RotationalMotionState rear_right_wheel_spinning_set_point;
+  romea::core::RotationalMotionState rear_right_wheel_spinning_set_point;
   rear_right_wheel_spinning_set_point.position = 12.0;
   rear_right_wheel_spinning_set_point.velocity = 13.0;
   rear_right_wheel_spinning_set_point.torque = 14.0;
@@ -143,7 +144,7 @@ TEST_F(TestHarwareInterface2FWS2FWD, checkGetCurrentCommand)
     command_interfaces[i].set_value(i + 1.0);
   }
 
-  romea::HardwareCommand2FWS2FWD current_command = interface->get_command();
+  romea::core::HardwareCommand2FWS2FWD current_command = interface->get_command();
 
   EXPECT_DOUBLE_EQ(current_command.frontLeftWheelSteeringAngle, 1.0);
   EXPECT_DOUBLE_EQ(current_command.frontRightWheelSteeringAngle, 2.0);

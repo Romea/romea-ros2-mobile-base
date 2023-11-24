@@ -24,6 +24,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 GazeboInterface4WS4WD::GazeboInterface4WS4WD(
@@ -54,20 +56,20 @@ GazeboInterface4WS4WD::GazeboInterface4WS4WD(
 }
 
 //-----------------------------------------------------------------------------
-SimulationState4WS4WD GazeboInterface4WS4WD::get_state() const
+core::SimulationState4WS4WD GazeboInterface4WS4WD::get_state() const
 {
   return {front_left_wheel_steering_joint_.get_state(),
-      front_right_wheel_steering_joint_.get_state(),
-      rear_left_wheel_steering_joint_.get_state(),
-      rear_right_wheel_steering_joint_.get_state(),
-      front_left_wheel_spinning_joint_.get_state(),
-      front_right_wheel_spinning_joint_.get_state(),
-      rear_left_wheel_spinning_joint_.get_state(),
-      rear_right_wheel_spinning_joint_.get_state()};
+    front_right_wheel_steering_joint_.get_state(),
+    rear_left_wheel_steering_joint_.get_state(),
+    rear_right_wheel_steering_joint_.get_state(),
+    front_left_wheel_spinning_joint_.get_state(),
+    front_right_wheel_spinning_joint_.get_state(),
+    rear_left_wheel_spinning_joint_.get_state(),
+    rear_right_wheel_spinning_joint_.get_state()};
 }
 
 //-----------------------------------------------------------------------------
-void GazeboInterface4WS4WD::set_command(const SimulationCommand4WS4WD & command)
+void GazeboInterface4WS4WD::set_command(const core::SimulationCommand4WS4WD & command)
 {
   front_left_wheel_steering_joint_.set_command(command.frontLeftWheelSteeringAngle);
   front_right_wheel_steering_joint_.set_command(command.frontRightWheelSteeringAngle);
@@ -79,4 +81,5 @@ void GazeboInterface4WS4WD::set_command(const SimulationCommand4WS4WD & command)
   rear_right_wheel_spinning_joint_.set_command(command.rearRightWheelSpinningSetPoint);
 }
 
+}  // namespace ros2
 }  // namespace romea

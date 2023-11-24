@@ -23,6 +23,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 template<typename GazeboInterface, typename SimulationInterface>
@@ -190,24 +192,25 @@ template class GazeboSystemInterface<GazeboInterface2WD, SimulationInterface2WD>
 template class GazeboSystemInterface<GazeboInterface4WD, SimulationInterface4WD>;
 template class GazeboSystemInterface<GazeboInterface4WS4WD, SimulationInterface4WS4WD>;
 
+}  // namespace ros2
 }  // namespace romea
 
 #include "pluginlib/class_list_macros.hpp"  // NOLINT
 PLUGINLIB_EXPORT_CLASS(
-  romea::GazeboSystemInterface4WD,
+  romea::ros2::GazeboSystemInterface4WD,
   gazebo_ros2_control::GazeboSystemInterface)
 PLUGINLIB_EXPORT_CLASS(
-  romea::GazeboSystemInterface4WS4WD,
+  romea::ros2::GazeboSystemInterface4WS4WD,
   gazebo_ros2_control::GazeboSystemInterface)
 PLUGINLIB_EXPORT_CLASS(
-  romea::GazeboSystemInterface2AS4WD,
+  romea::ros2::GazeboSystemInterface2AS4WD,
   gazebo_ros2_control::GazeboSystemInterface)
 PLUGINLIB_EXPORT_CLASS(
-  romea::GazeboSystemInterface2FWS4WD,
+  romea::ros2::GazeboSystemInterface2FWS4WD,
   gazebo_ros2_control::GazeboSystemInterface)
 PLUGINLIB_EXPORT_CLASS(
-  romea::GazeboSystemInterface2FWS2RWD,
+  romea::ros2::GazeboSystemInterface2FWS2RWD,
   gazebo_ros2_control::GazeboSystemInterface)
 PLUGINLIB_EXPORT_CLASS(
-  romea::GazeboSystemInterface2THD,
+  romea::ros2::GazeboSystemInterface2THD,
   gazebo_ros2_control::GazeboSystemInterface)

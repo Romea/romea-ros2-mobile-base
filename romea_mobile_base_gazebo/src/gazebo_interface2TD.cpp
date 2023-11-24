@@ -24,6 +24,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 GazeboInterface2TD::GazeboInterface2TD(
@@ -46,16 +48,16 @@ GazeboInterface2TD::GazeboInterface2TD(
 }
 
 //-----------------------------------------------------------------------------
-SimulationState2TD GazeboInterface2TD::get_state() const
+core::SimulationState2TD GazeboInterface2TD::get_state() const
 {
   return {left_sprocket_wheel_spinning_joint_.get_state(),
-      right_sprocket_wheel_spinning_joint_.get_state(),
-      left_idler_wheel_spinning_joint_.get_state(),
-      right_idler_wheel_spinning_joint_.get_state()};
+    right_sprocket_wheel_spinning_joint_.get_state(),
+    left_idler_wheel_spinning_joint_.get_state(),
+    right_idler_wheel_spinning_joint_.get_state()};
 }
 
 //-----------------------------------------------------------------------------
-void GazeboInterface2TD::set_command(const SimulationCommand2TD & command)
+void GazeboInterface2TD::set_command(const core::SimulationCommand2TD & command)
 {
   left_sprocket_wheel_spinning_joint_.set_command(command.leftSprocketWheelSpinningSetPoint);
   right_sprocket_wheel_spinning_joint_.set_command(command.rightSprocketWheelSpinningSetPoint);
@@ -116,4 +118,5 @@ void GazeboInterface2TD::set_command(const SimulationCommand2TD & command)
 //       hardware_interface);
 //}
 
+}  // namespace ros2
 }  // namespace romea

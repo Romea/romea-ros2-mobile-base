@@ -49,13 +49,14 @@ protected:
         "-p", "joints.right_sprocket_wheel_spinning_joint_name:=J2",
       });
 
-    node = std::make_shared<romea::HardwareInterfaceNode>("test_interface_controller_2TD", no);
+    node =
+      std::make_shared<romea::ros2::HardwareInterfaceNode>("test_interface_controller_2TD", no);
 
     state_values.resize(2);
     command_values.resize(2);
 
-    romea::ControllerInterface2TD::declare_joints_names(node, "joints");
-    joints_names = romea::ControllerInterface2TD::get_joints_names(node, "joints");
+    romea::ros2::ControllerInterface2TD::declare_joints_names(node, "joints");
+    joints_names = romea::ros2::ControllerInterface2TD::get_joints_names(node, "joints");
 
     state_hardware_interfaces.emplace_back(
       joints_names[0], hardware_interface::HW_IF_VELOCITY,
@@ -82,10 +83,10 @@ protected:
     mobile_info.geometry.tracks.thickness = 0.1;
     mobile_info.geometry.tracks.sprocketWheel.radius = 0.4;
 
-    controller_interface = std::make_unique<romea::ControllerInterface2TD>(mobile_info);
+    controller_interface = std::make_unique<romea::ros2::ControllerInterface2TD>(mobile_info);
   }
 
-  std::shared_ptr<romea::HardwareInterfaceNode> node;
+  std::shared_ptr<romea::ros2::HardwareInterfaceNode> node;
 
   std::vector<double> state_values;
   std::vector<double> command_values;
@@ -94,15 +95,15 @@ protected:
   std::vector<hardware_interface::LoanedStateInterface> state_loaned_interfaces;
   std::vector<hardware_interface::LoanedCommandInterface> command_loaned_interfaces;
 
-  romea::MobileBaseInfo2TD mobile_info;
+  romea::core::MobileBaseInfo2TD mobile_info;
   std::vector<std::string> joints_names;
-  std::unique_ptr<romea::ControllerInterface2TD> controller_interface;
+  std::unique_ptr<romea::ros2::ControllerInterface2TD> controller_interface;
 };
 
 
 TEST_F(TestControllerInterface2TD, checkHardwareInterfaceNames)
 {
-  auto hardware_interface_names = romea::ControllerInterface2TD::hardware_interface_names(
+  auto hardware_interface_names = romea::ros2::ControllerInterface2TD::hardware_interface_names(
     joints_names);
   EXPECT_STREQ(hardware_interface_names[0].c_str(), "J1/velocity");
   EXPECT_STREQ(hardware_interface_names[1].c_str(), "J2/velocity");
@@ -110,7 +111,7 @@ TEST_F(TestControllerInterface2TD, checkHardwareInterfaceNames)
 
 TEST_F(TestControllerInterface2TD, checkWrite)
 {
-  romea::OdometryFrame2TD command;
+  romea::core::OdometryFrame2TD command;
   command.leftTrackLinearSpeed = 1;
   command.rightTrackLinearSpeed = 2;
 
@@ -124,7 +125,7 @@ TEST_F(TestControllerInterface2TD, checkRead)
   state_values[0] = 2;
   state_values[1] = 4;
 
-  romea::OdometryFrame2TD measure;
+  romea::core::OdometryFrame2TD measure;
   controller_interface->read(state_loaned_interfaces, measure);
   EXPECT_EQ(measure.leftTrackLinearSpeed, 1);
   EXPECT_EQ(measure.rightTrackLinearSpeed, 2);

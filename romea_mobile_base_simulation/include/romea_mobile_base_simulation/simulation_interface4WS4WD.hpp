@@ -23,9 +23,12 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 using SimulationInterface4WS4WD = HardwareInterface4WS4WD;
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_SIMULATION__SIMULATION_INTERFACE4WS4WD_HPP_

@@ -53,6 +53,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 template<typename GazeboInterface, typename SimulationInterface>
 class GazeboSystemInterface : public gazebo_ros2_control::GazeboSystemInterface
@@ -132,6 +134,7 @@ using GazeboSystemInterface4WD =
 using GazeboSystemInterface4WS4WD =
   GazeboSystemInterface<GazeboInterface4WS4WD, SimulationInterface4WS4WD>;
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_GAZEBO__GAZEBO_SYSTEM_INTERFACE_HPP_

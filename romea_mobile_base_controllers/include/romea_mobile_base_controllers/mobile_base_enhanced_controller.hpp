@@ -30,14 +30,16 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 template<typename InterfaceType, typename KinematicType>
 class MobileBaseEnhancedController : public MobileBaseController<InterfaceType, KinematicType>
 {
 public:
   using ImuMsg = sensor_msgs::msg::Imu;
-  using AngularSpeedPID = PID;
-  using AngularSpeedFilter = FirstOrderButterworth;
+  using AngularSpeedPID = core::PID;
+  using AngularSpeedFilter = core::FirstOrderButterworth;
 
 public:
   MobileBaseEnhancedController();
@@ -68,11 +70,12 @@ protected:
 };
 
 using MobileBaseEnhancedController4WD =
-  MobileBaseEnhancedController<ControllerInterface4WD, SkidSteeringKinematic>;
+  MobileBaseEnhancedController<ControllerInterface4WD, core::SkidSteeringKinematic>;
 
 using MobileBaseEnhancedController2TD =
-  MobileBaseEnhancedController<ControllerInterface2TD, SkidSteeringKinematic>;
+  MobileBaseEnhancedController<ControllerInterface2TD, core::SkidSteeringKinematic>;
 
+}  // namespace rosZ
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_CONTROLLERS__MOBILE_BASE_ENHANCED_CONTROLLER_HPP_

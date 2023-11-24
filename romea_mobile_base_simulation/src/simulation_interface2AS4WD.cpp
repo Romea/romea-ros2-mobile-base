@@ -25,6 +25,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 SimulationInterface2AS4WD::SimulationInterface2AS4WD(
@@ -38,7 +40,7 @@ SimulationInterface2AS4WD::SimulationInterface2AS4WD(
 }
 
 //-----------------------------------------------------------------------------
-SimulationCommand2AS4WD SimulationInterface2AS4WD::get_command()const
+core::SimulationCommand2AS4WD SimulationInterface2AS4WD::get_command()const
 {
   return toSimulationCommand2AS4WD(
     wheelbase_,
@@ -48,7 +50,7 @@ SimulationCommand2AS4WD SimulationInterface2AS4WD::get_command()const
 }
 
 //-----------------------------------------------------------------------------
-void SimulationInterface2AS4WD::set_state(const SimulationState2AS4WD & simulation_state)
+void SimulationInterface2AS4WD::set_state(const core::SimulationState2AS4WD & simulation_state)
 {
   auto hardware_state = toHardwareState2AS4WD(
     wheelbase_,
@@ -78,4 +80,5 @@ SimulationInterface2AS4WD::export_command_interfaces()
   return hardware_interface_.export_command_interfaces();
 }
 
+}  // namespace ros2
 }  // namespace romea

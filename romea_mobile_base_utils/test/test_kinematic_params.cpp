@@ -59,7 +59,7 @@ TEST_F(TestKinematicParams, load4WDtoSkidSteeringKinematicParams)
   loadYaml(std::string(TEST_DIR) + std::string("/data/4WD_params.yaml"));
 
   romea::NodeParameters node_parameters(node);
-  romea::SkidSteeringKinematic::Parameters kinematic_parameters;
+  romea::core::SkidSteeringKinematic::Parameters kinematic_parameters;
   load_kinematic_params(node_parameters, kinematic_parameters);
 
   EXPECT_DOUBLE_EQ(kinematic_parameters.wheelTrack, 0.515);
@@ -74,7 +74,7 @@ TEST_F(TestKinematicParams, load4WS4WDtoFourWheelSteeringKinematicParams)
   loadYaml(std::string(TEST_DIR) + std::string("/data/4WS4WD_params.yaml"));
 
   romea::NodeParameters node_parameters(node);
-  romea::FourWheelSteeringKinematic::Parameters kinematic_parameters;
+  romea::core::FourWheelSteeringKinematic::Parameters kinematic_parameters;
   load_kinematic_params(node_parameters, kinematic_parameters);
 
   EXPECT_DOUBLE_EQ(kinematic_parameters.frontWheelBase, 1.2);
@@ -94,7 +94,7 @@ TEST_F(TestKinematicParams, load4WS4WDtoTwoAxleKinematicParams) {
   loadYaml(std::string(TEST_DIR) + std::string("/data/4WS4WD_params.yaml"));
 
   romea::NodeParameters node_parameters(node);
-  romea::TwoAxleSteeringKinematic::Parameters kinematic_parameters;
+  romea::core::TwoAxleSteeringKinematic::Parameters kinematic_parameters;
   load_kinematic_params(node_parameters, kinematic_parameters);
 
   EXPECT_DOUBLE_EQ(kinematic_parameters.frontWheelBase, 1.2);
@@ -115,7 +115,7 @@ TEST_F(TestKinematicParams, load2WS4WDtoTwoWheelSteeringKinematicParams) {
   loadYaml(std::string(TEST_DIR) + std::string("/data/2FWS4WD_params.yaml"));
 
   romea::NodeParameters node_parameters(node);
-  romea::TwoWheelSteeringKinematic::Parameters kinematic_parameters;
+  romea::core::TwoWheelSteeringKinematic::Parameters kinematic_parameters;
   load_kinematic_params(node_parameters, kinematic_parameters);
 
   EXPECT_DOUBLE_EQ(kinematic_parameters.frontWheelBase, 2);
@@ -137,7 +137,7 @@ TEST_F(TestKinematicParams, load2WS4WDtoOneSteeringKinematicParams) {
   loadYaml(std::string(TEST_DIR) + std::string("data/2FWS4WD_params.yaml"));
 
   romea::NodeParameters node_parameters(node);
-  romea::OneAxleSteeringKinematic::Parameters kinematic_parameters;
+  romea::core::OneAxleSteeringKinematic::Parameters kinematic_parameters;
   load_kinematic_params(node_parameters, kinematic_parameters);
 
   EXPECT_DOUBLE_EQ(kinematic_parameters.frontWheelBase, 2);

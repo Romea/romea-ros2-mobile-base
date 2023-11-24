@@ -61,10 +61,12 @@ protected:
 
   void MakeInterface(const std::string & command_interface_type)
   {
-    interface = std::make_unique<romea::HardwareInterface1FAS4WD>(info[0], command_interface_type);
+    interface = std::make_unique<romea::ros2::HardwareInterface1FAS4WD>(
+      info[0],
+      command_interface_type);
   }
 
-  std::unique_ptr<romea::HardwareInterface1FAS4WD> interface;
+  std::unique_ptr<romea::ros2::HardwareInterface1FAS4WD> interface;
   std::vector<hardware_interface::HardwareInfo> info;
 };
 
@@ -108,7 +110,7 @@ TEST_F(TestHarwareInterface1FAS4WD, checkSetCurrentState)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
 
-  romea::HardwareState1FAS4WD current_state;
+  romea::core::HardwareState1FAS4WD current_state;
   current_state.frontAxleSteeringAngle = 1.0;
   current_state.frontLeftWheelSpinningMotion.position = 2.0;
   current_state.frontLeftWheelSpinningMotion.velocity = 3.0;
@@ -123,8 +125,8 @@ TEST_F(TestHarwareInterface1FAS4WD, checkSetCurrentState)
   current_state.rearRightWheelSpinningMotion.velocity = 12.0;
   current_state.rearRightWheelSpinningMotion.torque = 13.0;
 
-  romea::SteeringAngleState front_left_wheel_steering_angle = 14.0;
-  romea::SteeringAngleState front_right_wheel_steering_angle = 15.0;
+  romea::core::SteeringAngleState front_left_wheel_steering_angle = 14.0;
+  romea::core::SteeringAngleState front_right_wheel_steering_angle = 15.0;
 
   interface->set_state(
     current_state,
@@ -146,7 +148,7 @@ TEST_F(TestHarwareInterface1FAS4WD, checkGetCurrentCommand)
     command_interfaces[i].set_value(i + 1.0);
   }
 
-  romea::HardwareCommand1FAS4WD current_command = interface->get_command();
+  romea::core::HardwareCommand1FAS4WD current_command = interface->get_command();
   EXPECT_DOUBLE_EQ(current_command.frontAxleSteeringAngle, 1.0);
   EXPECT_DOUBLE_EQ(current_command.frontLeftWheelSpinningSetPoint, 2.0);
   EXPECT_DOUBLE_EQ(current_command.frontRightWheelSpinningSetPoint, 3.0);

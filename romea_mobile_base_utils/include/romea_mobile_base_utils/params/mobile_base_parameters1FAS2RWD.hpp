@@ -31,6 +31,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 template<typename Node>
 void declare_mobile_base_info_1FAS2RWD(
@@ -54,7 +56,7 @@ void declare_mobile_base_info_1FAS2RWD(
 }
 
 template<typename Node>
-MobileBaseInfo1FAS2RWD get_mobile_base_info_1FAS2RWD(
+core::MobileBaseInfo1FAS2RWD get_mobile_base_info_1FAS2RWD(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
@@ -68,6 +70,7 @@ MobileBaseInfo1FAS2RWD get_mobile_base_info_1FAS2RWD(
 }
 
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_UTILS__PARAMS__MOBILE_BASE_PARAMETERS1FAS2RWD_HPP_

@@ -29,15 +29,17 @@
 
 namespace romea
 {
+namespace ros2
+{
 
-RotationalMotionControlType toRotationalMotionCommandType(const std::string & interface_type);
+core::RotationalMotionControlType toRotationalMotionCommandType(const std::string & interface_type);
 
 
 class SpinningJointHardwareInterface
 {
 public:
   using Command = HardwareCommandInterface;
-  using CommandType = RotationalMotionControlType;
+  using CommandType = core::RotationalMotionControlType;
 
   struct Feedback
   {
@@ -46,7 +48,7 @@ public:
     HardwareStateInterface velocity;
     HardwareStateInterface torque;
 
-    void set_state(const RotationalMotionState & state);
+    void set_state(const core::RotationalMotionState & state);
 
     void export_state_interfaces(
       std::vector<hardware_interface::StateInterface> & state_interfaces);
@@ -58,7 +60,7 @@ public:
     const std::string & spinning_joint_command_interface_type);
 
   double get_command() const;
-  void set_state(const RotationalMotionState & state);
+  void set_state(const core::RotationalMotionState & state);
 
   void export_command_interface(
     std::vector<hardware_interface::CommandInterface> & command_interfaces);
@@ -69,6 +71,7 @@ private:
   Feedback feedback_;
 };
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_HARDWARE__SPINNING_JOINT_HARDWARE_INTERFACE_HPP_

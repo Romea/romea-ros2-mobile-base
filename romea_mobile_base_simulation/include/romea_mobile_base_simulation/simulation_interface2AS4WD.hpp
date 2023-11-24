@@ -27,6 +27,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 class SimulationInterface2AS4WD
 {
@@ -35,8 +37,8 @@ public:
     const hardware_interface::HardwareInfo & hardware_info,
     const std::string & spinning_joint_command_interface_type);
 
-  SimulationCommand2AS4WD get_command()const;
-  void set_state(const SimulationState2AS4WD & hardware_state);
+  core::SimulationCommand2AS4WD get_command()const;
+  void set_state(const core::SimulationState2AS4WD & hardware_state);
 
   std::vector<hardware_interface::StateInterface> export_state_interfaces();
   std::vector<hardware_interface::CommandInterface> export_command_interfaces();
@@ -49,6 +51,7 @@ private:
   const double rear_track_;
 };
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_SIMULATION__SIMULATION_INTERFACE2AS4WD_HPP_

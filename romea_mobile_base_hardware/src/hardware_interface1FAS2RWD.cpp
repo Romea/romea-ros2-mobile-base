@@ -21,6 +21,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 HardwareInterface1FAS2RWD::HardwareInterface1FAS2RWD(
@@ -74,7 +76,7 @@ HardwareInterface1FAS2RWD::export_command_interfaces()
 }
 
 //-----------------------------------------------------------------------------
-HardwareCommand1FAS2RWD HardwareInterface1FAS2RWD::get_command()const
+core::HardwareCommand1FAS2RWD HardwareInterface1FAS2RWD::get_command()const
 {
   // *INDENT-OFF*
   return {front_axle_steering_joint_.get_command(),
@@ -84,7 +86,7 @@ HardwareCommand1FAS2RWD HardwareInterface1FAS2RWD::get_command()const
 }
 
 //-----------------------------------------------------------------------------
-void HardwareInterface1FAS2RWD::set_state(const HardwareState1FAS2RWD & hardware_state)
+void HardwareInterface1FAS2RWD::set_state(const core::HardwareState1FAS2RWD & hardware_state)
 {
   front_axle_steering_joint_.set_state(hardware_state.frontAxleSteeringAngle);
   rear_left_wheel_spinning_joint_.set_state(hardware_state.rearLeftWheelSpinningMotion);
@@ -93,11 +95,11 @@ void HardwareInterface1FAS2RWD::set_state(const HardwareState1FAS2RWD & hardware
 
 //-----------------------------------------------------------------------------
 void HardwareInterface1FAS2RWD::set_state(
-  const HardwareState1FAS2RWD & hardware_state,
-  const SteeringAngleState & front_left_wheel_steering_angle,
-  const SteeringAngleState & front_right_wheel_steering_angle,
-  const RotationalMotionState & front_left_wheel_spinning_motion,
-  const RotationalMotionState & front_right_wheel_spinning_motion)
+  const core::HardwareState1FAS2RWD & hardware_state,
+  const core::SteeringAngleState & front_left_wheel_steering_angle,
+  const core::SteeringAngleState & front_right_wheel_steering_angle,
+  const core::RotationalMotionState & front_left_wheel_spinning_motion,
+  const core::RotationalMotionState & front_right_wheel_spinning_motion)
 {
   set_state(hardware_state);
 
@@ -108,4 +110,5 @@ void HardwareInterface1FAS2RWD::set_state(
   front_right_wheel_spinning_joint_feedback_.set_state(front_right_wheel_spinning_motion);
 }
 
+}  // namespace ros2
 }  // namespace romea

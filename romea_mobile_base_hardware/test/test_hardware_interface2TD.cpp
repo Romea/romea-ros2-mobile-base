@@ -61,10 +61,11 @@ protected:
 
   void MakeInterface(const std::string & command_interface_type)
   {
-    interface = std::make_unique<romea::HardwareInterface2TD>(info[0], command_interface_type);
+    interface =
+      std::make_unique<romea::ros2::HardwareInterface2TD>(info[0], command_interface_type);
   }
 
-  std::unique_ptr<romea::HardwareInterface2TD> interface;
+  std::unique_ptr<romea::ros2::HardwareInterface2TD> interface;
   std::vector<hardware_interface::HardwareInfo> info;
 };
 
@@ -99,18 +100,18 @@ TEST_F(TestHarwareInterface2TD, checkSetCurrentState)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
 
-  romea::HardwareState2TD current_state;
+  romea::core::HardwareState2TD current_state;
   current_state.leftSprocketWheelSpinningMotion.position = 1.0;
   current_state.leftSprocketWheelSpinningMotion.velocity = 2.0;
   current_state.leftSprocketWheelSpinningMotion.torque = 3.0;
   current_state.rightSprocketWheelSpinningMotion.position = 4.0;
   current_state.rightSprocketWheelSpinningMotion.velocity = 5.0;
   current_state.rightSprocketWheelSpinningMotion.torque = 6.0;
-  romea::RotationalMotionState leftIdlerWheelSpinningMotion;
+  romea::core::RotationalMotionState leftIdlerWheelSpinningMotion;
   leftIdlerWheelSpinningMotion.position = 7.0;
   leftIdlerWheelSpinningMotion.velocity = 8.0;
   leftIdlerWheelSpinningMotion.torque = 9.0;
-  romea::RotationalMotionState rightIdlerWheelSpinningMotion;
+  romea::core::RotationalMotionState rightIdlerWheelSpinningMotion;
   rightIdlerWheelSpinningMotion.position = 10.0;
   rightIdlerWheelSpinningMotion.velocity = 11.0;
   rightIdlerWheelSpinningMotion.torque = 12.0;
@@ -135,7 +136,7 @@ TEST_F(TestHarwareInterface2TD, checkGetCurrentCommand)
     command_interfaces[i].set_value(i + 1.0);
   }
 
-  romea::HardwareCommand2TD current_command = interface->get_command();
+  romea::core::HardwareCommand2TD current_command = interface->get_command();
   EXPECT_DOUBLE_EQ(current_command.leftSprocketWheelSpinningSetPoint, 1.0);
   EXPECT_DOUBLE_EQ(current_command.rightSprocketWheelSpinningSetPoint, 2.0);
 }

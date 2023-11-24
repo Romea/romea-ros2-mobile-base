@@ -17,6 +17,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 SteeringJointGazeboInterface::SteeringJointGazeboInterface(
@@ -52,4 +54,5 @@ double SteeringJointGazeboInterface::get_state() const
   return sim_joint_->Position(0);
 }
 
+}  // namespace ros2
 }  // namespace romea

@@ -21,6 +21,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 HardwareInterface2FWS2FWD::HardwareInterface2FWS2FWD(
@@ -70,7 +72,7 @@ export_command_interfaces()
 
 
 //-----------------------------------------------------------------------------
-HardwareCommand2FWS2FWD HardwareInterface2FWS2FWD::get_command()const
+core::HardwareCommand2FWS2FWD HardwareInterface2FWS2FWD::get_command()const
 {
   // *INDENT-OFF*
   return {front_left_wheel_steering_joint_.get_command(),
@@ -81,7 +83,7 @@ HardwareCommand2FWS2FWD HardwareInterface2FWS2FWD::get_command()const
 }
 
 //-----------------------------------------------------------------------------
-void HardwareInterface2FWS2FWD::set_state(const HardwareState2FWS2FWD & hardware_state)
+void HardwareInterface2FWS2FWD::set_state(const core::HardwareState2FWS2FWD & hardware_state)
 {
   front_left_wheel_steering_joint_.
   set_state(hardware_state.frontLeftWheelSteeringAngle);
@@ -96,9 +98,9 @@ void HardwareInterface2FWS2FWD::set_state(const HardwareState2FWS2FWD & hardware
 
 //-----------------------------------------------------------------------------
 void HardwareInterface2FWS2FWD::set_state(
-  const HardwareState2FWS2FWD & hardware_state,
-  const RotationalMotionState & rear_left_wheel_spinning_motion,
-  const RotationalMotionState & rear_right_wheel_spinning_motion)
+  const core::HardwareState2FWS2FWD & hardware_state,
+  const core::RotationalMotionState & rear_left_wheel_spinning_motion,
+  const core::RotationalMotionState & rear_right_wheel_spinning_motion)
 {
   set_state(hardware_state);
 
@@ -106,4 +108,5 @@ void HardwareInterface2FWS2FWD::set_state(
   rear_right_wheel_spinning_joint_feedback_.set_state(rear_right_wheel_spinning_motion);
 }
 
+}  // namespace ros2
 }  // namespace romea

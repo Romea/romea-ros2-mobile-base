@@ -29,6 +29,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 class HardwareInterface2FWS4WD
 {
@@ -47,8 +49,8 @@ public:
     const hardware_interface::HardwareInfo & hardware_info,
     const std::string & wheel_spinning_joint_command_interface_type);
 
-  HardwareCommand2FWS4WD get_command()const;
-  void set_state(const HardwareState2FWS4WD & hardware_state);
+  core::HardwareCommand2FWS4WD get_command()const;
+  void set_state(const core::HardwareState2FWS4WD & hardware_state);
 
   std::vector<hardware_interface::StateInterface> export_state_interfaces();
   std::vector<hardware_interface::CommandInterface> export_command_interfaces();
@@ -62,6 +64,7 @@ private:
   SpinningJointHardwareInterface rear_right_wheel_spinning_joint_;
 };
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_INTERFACE2FWS4WD_HPP_

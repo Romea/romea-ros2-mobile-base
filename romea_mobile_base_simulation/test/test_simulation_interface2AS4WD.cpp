@@ -56,10 +56,10 @@ protected:
     //    std::cout << buffer.str() <<std::endl;
 
     info = hardware_interface::parse_control_resources_from_urdf(buffer.str());
-    interface = std::make_unique<romea::SimulationInterface2AS4WD>(info[0], "velocity");
+    interface = std::make_unique<romea::ros2::SimulationInterface2AS4WD>(info[0], "velocity");
   }
 
-  std::unique_ptr<romea::SimulationInterface2AS4WD> interface;
+  std::unique_ptr<romea::ros2::SimulationInterface2AS4WD> interface;
   std::vector<hardware_interface::HardwareInfo> info;
 };
 

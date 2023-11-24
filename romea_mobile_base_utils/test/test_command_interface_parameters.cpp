@@ -56,9 +56,9 @@ protected:
 
 TEST_F(TestCommandInterfaceParams, getParameterWithPriority)
 {
-  romea::declare_command_interface_configuration(node, "with_priority");
+  romea::ros2::declare_command_interface_configuration(node, "with_priority");
 
-  auto config = romea::get_command_interface_configuration(node, "with_priority");
+  auto config = romea::ros2::get_command_interface_configuration(node, "with_priority");
 
   EXPECT_STREQ(config.output_message_type.c_str(), "foo");
   EXPECT_EQ(config.priority, 127);
@@ -68,9 +68,9 @@ TEST_F(TestCommandInterfaceParams, getParameterWithPriority)
 
 TEST_F(TestCommandInterfaceParams, getParameterWithoutPriority)
 {
-  romea::declare_command_interface_configuration(node, "without_priority");
+  romea::ros2::declare_command_interface_configuration(node, "without_priority");
 
-  auto config = romea::get_command_interface_configuration(node, "without_priority");
+  auto config = romea::ros2::get_command_interface_configuration(node, "without_priority");
 
   EXPECT_STREQ(config.output_message_type.c_str(), "bar");
   EXPECT_EQ(config.priority, -1);

@@ -30,6 +30,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 class ControllerInterface1FAS2FWD
 {
@@ -48,15 +50,15 @@ public:
   };
 
 public:
-  explicit ControllerInterface1FAS2FWD(const MobileBaseInfo1FAS2FWD & mobile_base_info);
+  explicit ControllerInterface1FAS2FWD(const core::MobileBaseInfo1FAS2FWD & mobile_base_info);
 
   void write(
-    const OdometryFrame1FAS2FWD & command,
+    const core::OdometryFrame1FAS2FWD & command,
     LoanedCommandInterfaces & loaned_command_interfaces)const;
 
   void read(
     const LoanedStateInterfaces & loaned_state_interfaces,
-    OdometryFrame1FAS2FWD & measurement)const;
+    core::OdometryFrame1FAS2FWD & measurement)const;
 
 public:
   static void declare_joints_names(
@@ -74,7 +76,7 @@ private:
   double front_wheel_radius_;
 };
 
-
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_CONTROLLERS__INTERFACES__CONTROLLER_INTERFACE1FAS2FWD_HPP_

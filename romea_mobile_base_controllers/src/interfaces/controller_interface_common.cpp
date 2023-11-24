@@ -21,6 +21,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 std::string hardware_position_interface_name(const std::string joint_name)
 {
@@ -37,4 +39,5 @@ std::string hardware_effort_interface_name(const std::string joint_name)
   return joint_name + "/" + hardware_interface::HW_IF_EFFORT;
 }
 
+}  // namespace ros2
 }  // namespace romea

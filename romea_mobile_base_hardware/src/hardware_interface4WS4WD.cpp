@@ -22,6 +22,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 HardwareInterface4WS4WD::HardwareInterface4WS4WD(
@@ -84,7 +86,7 @@ HardwareInterface4WS4WD::export_command_interfaces()
 }
 
 //-----------------------------------------------------------------------------
-HardwareCommand4WS4WD HardwareInterface4WS4WD::get_command()const
+core::HardwareCommand4WS4WD HardwareInterface4WS4WD::get_command()const
 {
   // *INDENT-OFF*
   return {front_left_wheel_steering_joint_.get_command(),
@@ -99,7 +101,7 @@ HardwareCommand4WS4WD HardwareInterface4WS4WD::get_command()const
 }
 
 //-----------------------------------------------------------------------------
-void HardwareInterface4WS4WD::set_state(const HardwareState4WS4WD & hardware_state)
+void HardwareInterface4WS4WD::set_state(const core::HardwareState4WS4WD & hardware_state)
 {
   front_left_wheel_steering_joint_.
   set_state(hardware_state.frontLeftWheelSteeringAngle);
@@ -120,4 +122,5 @@ void HardwareInterface4WS4WD::set_state(const HardwareState4WS4WD & hardware_sta
   set_state(hardware_state.rearRightWheelSpinningMotion);
 }
 
+}  // namespace ros2
 }  // namespace romea

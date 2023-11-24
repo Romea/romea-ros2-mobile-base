@@ -31,38 +31,41 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 template<typename CommandType>
 struct CommandTraits;
 
 template<>
-struct CommandTraits<OneAxleSteeringCommand>
+struct CommandTraits<core::OneAxleSteeringCommand>
 {
-  using Measure = OneAxleSteeringMeasure;
+  using Measure = core::OneAxleSteeringMeasure;
   using MeasureMsg = romea_mobile_base_msgs::msg::OneAxleSteeringMeasureStamped;
 };
 
 template<>
-struct CommandTraits<TwoAxleSteeringCommand>
+struct CommandTraits<core::TwoAxleSteeringCommand>
 {
-  using Measure = TwoAxleSteeringMeasure;
+  using Measure = core::TwoAxleSteeringMeasure;
   using MeasureMsg = romea_mobile_base_msgs::msg::TwoAxleSteeringMeasureStamped;
 };
 
 template<>
-struct CommandTraits<SkidSteeringCommand>
+struct CommandTraits<core::SkidSteeringCommand>
 {
-  using Measure = SkidSteeringMeasure;
+  using Measure = core::SkidSteeringMeasure;
   using MeasureMsg = romea_mobile_base_msgs::msg::SkidSteeringMeasureStamped;
 };
 
 template<>
-struct CommandTraits<OmniSteeringCommand>
+struct CommandTraits<core::OmniSteeringCommand>
 {
-  using Measure = OmniSteeringMeasure;
+  using Measure = core::OmniSteeringMeasure;
   using MeasureMsg = romea_mobile_base_msgs::msg::OmniSteeringMeasureStamped;
 };
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_UTILS__CONTROL__COMMAND_TRAITS_HPP_

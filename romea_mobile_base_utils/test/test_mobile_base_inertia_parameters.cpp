@@ -58,8 +58,8 @@ TEST_F(TestMobileBaseInertiaParams, GetFullDescription)
 {
   loadYaml(std::string(TEST_DIR) + "/test_mobile_base_inertia_parameters.yaml");
 
-  romea::declare_inertia_info(node, "inertia");
-  auto inertia = romea::get_inertia_info(node, "inertia");
+  romea::ros2::declare_inertia_info(node, "inertia");
+  auto inertia = romea::ros2::get_inertia_info(node, "inertia");
   EXPECT_DOUBLE_EQ(inertia.mass, 1);
   EXPECT_DOUBLE_EQ(inertia.center.x(), 2);
   EXPECT_DOUBLE_EQ(inertia.center.y(), 3);
@@ -72,8 +72,8 @@ TEST_F(TestMobileBaseInertiaParams, GetDescriptionWithoutCenterPosition)
 {
   loadYaml(std::string(TEST_DIR) + "/test_mobile_base_inertia_parameters.yaml");
 
-  romea::declare_inertia_info(node, "inertia_miss_center");
-  auto inertia = romea::get_inertia_info(node, "inertia_miss_center");
+  romea::ros2::declare_inertia_info(node, "inertia_miss_center");
+  auto inertia = romea::ros2::get_inertia_info(node, "inertia_miss_center");
   EXPECT_DOUBLE_EQ(inertia.mass, 1);
   EXPECT_DOUBLE_EQ(inertia.center.x(), 0);
   EXPECT_DOUBLE_EQ(inertia.center.y(), 0);

@@ -32,13 +32,15 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 template<typename Node>
 void declare_minimal_longitudinal_speed(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
-  romea::declare_parameter_with_default<double>(
+  declare_parameter_with_default<double>(
     node, parameters_ns, "minimal_longitudinal_speed", -std::numeric_limits<double>::max());
 }
 
@@ -47,7 +49,7 @@ void declare_maximal_longitudinal_speed(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
-  romea::declare_parameter_with_default<double>(
+  declare_parameter_with_default<double>(
     node, parameters_ns, "maximal_longitudinal_speed",
     std::numeric_limits<double>::max());
 }
@@ -57,7 +59,7 @@ void declare_maximal_lateral_speed(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
-  romea::declare_parameter_with_default<double>(
+  declare_parameter_with_default<double>(
     node, parameters_ns, "maximal_lateral_speed",
     std::numeric_limits<double>::max());
 }
@@ -67,7 +69,7 @@ void declare_maximal_angular_speed(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
-  romea::declare_parameter_with_default<double>(
+  declare_parameter_with_default<double>(
     node, parameters_ns, "maximal_angular_speed",
     std::numeric_limits<double>::max());
 }
@@ -77,7 +79,7 @@ void declare_maximal_steering_angle(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
-  romea::declare_parameter_with_default<double>(
+  declare_parameter_with_default<double>(
     node, parameters_ns, "maximal_steering_angle", M_PI_2);
 }
 
@@ -86,7 +88,7 @@ void declare_maximal_front_steering_angle(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
-  romea::declare_parameter_with_default<double>(
+  declare_parameter_with_default<double>(
     node, parameters_ns, "maximal_front_steering_angle", M_PI_2);
 }
 
@@ -95,7 +97,7 @@ void declare_maximal_rear_steering_angle(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
-  romea::declare_parameter_with_default<double>(
+  declare_parameter_with_default<double>(
     node, parameters_ns, "maximal_rear_steering_angle", M_PI_2);
 }
 
@@ -146,7 +148,7 @@ double get_minimal_longitudinal_speed(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
-  return romea::get_parameter_or<double>(
+  return get_parameter_or<double>(
     node, parameters_ns, "minimal_longitudinal_speed",
     -std::numeric_limits<double>::max());
 }
@@ -156,7 +158,7 @@ double get_maximal_longitudinal_speed(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
-  return romea::get_parameter_or<double>(
+  return get_parameter_or<double>(
     node, parameters_ns, "maximal_longitudinal_speed",
     std::numeric_limits<double>::max());
 }
@@ -166,7 +168,7 @@ double get_maximal_lateral_speed(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
-  return romea::get_parameter_or<double>(
+  return get_parameter_or<double>(
     node, parameters_ns, "maximal_lateral_speed",
     std::numeric_limits<double>::max());
 }
@@ -176,7 +178,7 @@ double get_maximal_angular_speed(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
-  return romea::get_parameter_or<double>(
+  return get_parameter_or<double>(
     node, parameters_ns, "maximal_angular_speed",
     std::numeric_limits<double>::max());
 }
@@ -186,7 +188,7 @@ double get_maximal_steering_angle(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
-  return romea::get_parameter_or<double>(
+  return get_parameter_or<double>(
     node, parameters_ns, "maximal_steering_angle", M_PI_2);
 }
 
@@ -195,7 +197,7 @@ double get_maximal_front_steering_angle(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
-  return romea::get_parameter_or<double>(
+  return get_parameter_or<double>(
     node, parameters_ns, "maximal_front_steering_angle", M_PI_2);
 }
 
@@ -204,28 +206,28 @@ double get_maximal_rear_steering_angle(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
-  return romea::get_parameter_or<double>(
+  return get_parameter_or<double>(
     node, parameters_ns, "maximal_rear_steering_angle", M_PI_2);
 }
 
 
 template<typename Node>
-SkidSteeringCommandLimits get_skid_steering_command_limits(
+core::SkidSteeringCommandLimits get_skid_steering_command_limits(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
-  return SkidSteeringCommandLimits(
+  return core::SkidSteeringCommandLimits(
     get_minimal_longitudinal_speed(node, parameters_ns),
     get_maximal_longitudinal_speed(node, parameters_ns),
     get_maximal_angular_speed(node, parameters_ns));
 }
 
 template<typename Node>
-OmniSteeringCommandLimits get_omni_steering_command_limits(
+core::OmniSteeringCommandLimits get_omni_steering_command_limits(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
-  return OmniSteeringCommandLimits(
+  return core::OmniSteeringCommandLimits(
     get_minimal_longitudinal_speed(node, parameters_ns),
     get_maximal_longitudinal_speed(node, parameters_ns),
     get_maximal_lateral_speed(node, parameters_ns),
@@ -234,22 +236,22 @@ OmniSteeringCommandLimits get_omni_steering_command_limits(
 
 
 template<typename Node>
-OneAxleSteeringCommandLimits get_one_axle_steering_command_limits(
+core::OneAxleSteeringCommandLimits get_one_axle_steering_command_limits(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
-  return OneAxleSteeringCommandLimits(
+  return core::OneAxleSteeringCommandLimits(
     get_minimal_longitudinal_speed(node, parameters_ns),
     get_maximal_longitudinal_speed(node, parameters_ns),
     get_maximal_steering_angle(node, parameters_ns));
 }
 
 template<typename Node>
-TwoAxleSteeringCommandLimits get_two_axle_steering_command_limits(
+core::TwoAxleSteeringCommandLimits get_two_axle_steering_command_limits(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
-  return TwoAxleSteeringCommandLimits(
+  return core::TwoAxleSteeringCommandLimits(
     get_minimal_longitudinal_speed(node, parameters_ns),
     get_maximal_longitudinal_speed(node, parameters_ns),
     get_maximal_front_steering_angle(node, parameters_ns),
@@ -262,13 +264,13 @@ void declare_command_limits(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
-  if constexpr (std::is_same_v<Limits, SkidSteeringCommandLimits>) {
+  if constexpr (std::is_same_v<Limits, core::SkidSteeringCommandLimits>) {
     declare_skid_steering_command_limits(node, parameters_ns);
-  } else if constexpr (std::is_same_v<Limits, OmniSteeringCommandLimits>) {
+  } else if constexpr (std::is_same_v<Limits, core::OmniSteeringCommandLimits>) {
     declare_omni_steering_command_limits(node, parameters_ns);
-  } else if constexpr (std::is_same_v<Limits, OneAxleSteeringCommandLimits>) {
+  } else if constexpr (std::is_same_v<Limits, core::OneAxleSteeringCommandLimits>) {
     declare_one_axle_steering_command_limits(node, parameters_ns);
-  } else if constexpr (std::is_same_v<Limits, TwoAxleSteeringCommandLimits>) {
+  } else if constexpr (std::is_same_v<Limits, core::TwoAxleSteeringCommandLimits>) {
     declare_two_axle_steering_command_limits(node, parameters_ns);
   }
 }
@@ -279,17 +281,18 @@ Limits get_command_limits(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
-  if constexpr (std::is_same_v<Limits, SkidSteeringCommandLimits>) {
+  if constexpr (std::is_same_v<Limits, core::SkidSteeringCommandLimits>) {
     return get_skid_steering_command_limits(node, parameters_ns);
-  } else if constexpr (std::is_same_v<Limits, OmniSteeringCommandLimits>) {
+  } else if constexpr (std::is_same_v<Limits, core::OmniSteeringCommandLimits>) {
     return get_omni_steering_command_limits(node, parameters_ns);
-  } else if constexpr (std::is_same_v<Limits, OneAxleSteeringCommandLimits>) {
+  } else if constexpr (std::is_same_v<Limits, core::OneAxleSteeringCommandLimits>) {
     return get_one_axle_steering_command_limits(node, parameters_ns);
-  } else if constexpr (std::is_same_v<Limits, TwoAxleSteeringCommandLimits>) {
+  } else if constexpr (std::is_same_v<Limits, core::TwoAxleSteeringCommandLimits>) {
     return get_two_axle_steering_command_limits(node, parameters_ns);
   }
 }
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_UTILS__PARAMS__COMMAND_LIMITS_PARAMETERS_HPP_

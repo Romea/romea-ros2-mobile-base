@@ -62,10 +62,11 @@ protected:
 
   void MakeInterface(const std::string & command_interface_type)
   {
-    interface = std::make_unique<romea::HardwareInterface4WD>(info[0], command_interface_type);
+    interface =
+      std::make_unique<romea::ros2::HardwareInterface4WD>(info[0], command_interface_type);
   }
 
-  std::unique_ptr<romea::HardwareInterface4WD> interface;
+  std::unique_ptr<romea::ros2::HardwareInterface4WD> interface;
   std::vector<hardware_interface::HardwareInfo> info;
 };
 
@@ -104,7 +105,7 @@ TEST_F(TestHarwareInterface4WD, checkSetCurrentState)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
 
-  romea::HardwareState4WD current_state;
+  romea::core::HardwareState4WD current_state;
   current_state.frontLeftWheelSpinningMotion.position = 1.0;
   current_state.frontLeftWheelSpinningMotion.velocity = 2.0;
   current_state.frontLeftWheelSpinningMotion.torque = 3.0;
@@ -135,7 +136,7 @@ TEST_F(TestHarwareInterface4WD, checkGetCurrentCommand)
     command_interfaces[i].set_value(i + 1.0);
   }
 
-  romea::HardwareCommand4WD current_command = interface->get_command();
+  romea::core::HardwareCommand4WD current_command = interface->get_command();
 
   EXPECT_DOUBLE_EQ(current_command.frontLeftWheelSpinningSetPoint, 1.0);
   EXPECT_DOUBLE_EQ(current_command.frontRightWheelSpinningSetPoint, 2.0);

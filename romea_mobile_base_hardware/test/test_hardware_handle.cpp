@@ -83,8 +83,8 @@ protected:
 
 TEST_F(TestHardwareInterfaceHandle, checkMakeHardwareCommandInterface)
 {
-  auto joint_info = romea::get_joint_info(info, "joint1");
-  auto interface = romea::HardwareCommandInterface(joint_info, "position");
+  auto joint_info = romea::ros2::get_joint_info(info, "joint1");
+  auto interface = romea::ros2::HardwareCommandInterface(joint_info, "position");
 
   EXPECT_STREQ(interface.get_joint_name().c_str(), "joint1");
   EXPECT_STREQ(interface.get_interface_type().c_str(), "position");
@@ -92,14 +92,14 @@ TEST_F(TestHardwareInterfaceHandle, checkMakeHardwareCommandInterface)
 
 TEST_F(TestHardwareInterfaceHandle, failedToMakeHardwareCommandInterface)
 {
-  auto joint_info = romea::get_joint_info(info, "joint1");
-  EXPECT_THROW(romea::HardwareCommandInterface(joint_info, "effort"), std::runtime_error);
+  auto joint_info = romea::ros2::get_joint_info(info, "joint1");
+  EXPECT_THROW(romea::ros2::HardwareCommandInterface(joint_info, "effort"), std::runtime_error);
 }
 
 TEST_F(TestHardwareInterfaceHandle, checkMakeHardwareStateInterface)
 {
-  auto joint_info = romea::get_joint_info(info, "joint2");
-  auto interface = romea::HardwareStateInterface(joint_info, "effort");
+  auto joint_info = romea::ros2::get_joint_info(info, "joint2");
+  auto interface = romea::ros2::HardwareStateInterface(joint_info, "effort");
 
   EXPECT_STREQ(interface.get_joint_name().c_str(), "joint2");
   EXPECT_STREQ(interface.get_interface_type().c_str(), "effort");
@@ -107,6 +107,6 @@ TEST_F(TestHardwareInterfaceHandle, checkMakeHardwareStateInterface)
 
 TEST_F(TestHardwareInterfaceHandle, failedToMakeHardwareStateInterface)
 {
-  auto joint_info = romea::get_joint_info(info, "joint2");
-  EXPECT_THROW(romea::HardwareStateInterface(joint_info, "position"), std::runtime_error);
+  auto joint_info = romea::ros2::get_joint_info(info, "joint2");
+  EXPECT_THROW(romea::ros2::HardwareStateInterface(joint_info, "position"), std::runtime_error);
 }

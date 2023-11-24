@@ -56,17 +56,17 @@ protected:
     //    std::cout << buffer.str() <<std::endl;
 
     info = hardware_interface::parse_control_resources_from_urdf(buffer.str());
-    interface = std::make_unique<romea::SimulationInterface2THD>(info[0], "velocity");
+    interface = std::make_unique<romea::ros2::SimulationInterface2THD>(info[0], "velocity");
   }
 
-  std::unique_ptr<romea::SimulationInterface2THD> interface;
+  std::unique_ptr<romea::ros2::SimulationInterface2THD> interface;
   std::vector<hardware_interface::HardwareInfo> info;
 };
 
 
 TEST_F(TestSimulationInterface2THD, checkGetCommand)
 {
-  romea::HardwareCommand2TD command = {0.611111, 1.6111};
+  romea::core::HardwareCommand2TD command = {0.611111, 1.6111};
 
   auto command_interfaces = interface->export_command_interfaces();
   command_interfaces[0].set_value(command.leftSprocketWheelSpinningSetPoint);
@@ -87,14 +87,14 @@ TEST_F(TestSimulationInterface2THD, checkGetCommand)
 
 TEST_F(TestSimulationInterface2THD, checkGetState)
 {
-  romea::HardwareCommand2TD command = {0.611111, 1.6111};
+  romea::core::HardwareCommand2TD command = {0.611111, 1.6111};
 
   auto command_interfaces = interface->export_command_interfaces();
   command_interfaces[0].set_value(command.leftSprocketWheelSpinningSetPoint);
   command_interfaces[1].set_value(command.rightSprocketWheelSpinningSetPoint);
   auto simulation_command = interface->get_command();
 
-  romea::SimulationState2THD simulation_state;
+  romea::core::SimulationState2THD simulation_state;
   simulation_state.leftSprocketWheelSpinningMotion.velocity =
     simulation_command.leftSprocketWheelSpinningSetPoint;
   simulation_state.rightSprocketWheelSpinningMotion.velocity =

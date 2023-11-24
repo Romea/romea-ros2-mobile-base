@@ -22,6 +22,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 HardwareInterface4WD::HardwareInterface4WD(
@@ -65,7 +67,7 @@ std::vector<hardware_interface::CommandInterface> HardwareInterface4WD::export_c
 }
 
 //-----------------------------------------------------------------------------
-HardwareCommand4WD HardwareInterface4WD::get_command()const
+core::HardwareCommand4WD HardwareInterface4WD::get_command()const
 {
   // *INDENT-OFF*
   return {front_left_wheel_spinning_joint_.get_command(),
@@ -76,7 +78,7 @@ HardwareCommand4WD HardwareInterface4WD::get_command()const
 }
 
 //-----------------------------------------------------------------------------
-void HardwareInterface4WD::set_state(const HardwareState4WD & hardware_state)
+void HardwareInterface4WD::set_state(const core::HardwareState4WD & hardware_state)
 {
   front_left_wheel_spinning_joint_.
   set_state(hardware_state.frontLeftWheelSpinningMotion);
@@ -89,4 +91,5 @@ void HardwareInterface4WD::set_state(const HardwareState4WD & hardware_state)
   set_state(hardware_state.rearRightWheelSpinningMotion);
 }
 
+}  // namespace ros2
 }  // namespace romea

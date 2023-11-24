@@ -28,6 +28,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 class HardwareInterface2WD
 {
@@ -42,8 +44,8 @@ public:
     const hardware_interface::HardwareInfo & hardware_info,
     const std::string & command_interface_type);
 
-  HardwareCommand2WD get_command()const;
-  void set_state(const HardwareState2WD & hardware_state);
+  core::HardwareCommand2WD get_command()const;
+  void set_state(const core::HardwareState2WD & hardware_state);
 
   std::vector<hardware_interface::StateInterface> export_state_interfaces();
   std::vector<hardware_interface::CommandInterface> export_command_interfaces();
@@ -54,6 +56,7 @@ private:
 };
 
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_INTERFACE2WD_HPP_

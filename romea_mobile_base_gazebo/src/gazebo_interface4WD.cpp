@@ -25,6 +25,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 GazeboInterface4WD::GazeboInterface4WD(
@@ -47,16 +49,16 @@ GazeboInterface4WD::GazeboInterface4WD(
 }
 
 //-----------------------------------------------------------------------------
-SimulationState4WD GazeboInterface4WD::get_state() const
+core::SimulationState4WD GazeboInterface4WD::get_state() const
 {
   return {front_left_wheel_spinning_joint_.get_state(),
-      front_right_wheel_spinning_joint_.get_state(),
-      rear_left_wheel_spinning_joint_.get_state(),
-      rear_right_wheel_spinning_joint_.get_state()};
+    front_right_wheel_spinning_joint_.get_state(),
+    rear_left_wheel_spinning_joint_.get_state(),
+    rear_right_wheel_spinning_joint_.get_state()};
 }
 
 //-----------------------------------------------------------------------------
-void GazeboInterface4WD::set_command(const SimulationCommand4WD & command)
+void GazeboInterface4WD::set_command(const core::SimulationCommand4WD & command)
 {
   front_left_wheel_spinning_joint_.set_command(command.frontLeftWheelSpinningSetPoint);
   front_right_wheel_spinning_joint_.set_command(command.frontRightWheelSpinningSetPoint);
@@ -64,4 +66,5 @@ void GazeboInterface4WD::set_command(const SimulationCommand4WD & command)
   rear_right_wheel_spinning_joint_.set_command(command.rearRightWheelSpinningSetPoint);
 }
 
+}  // namespace ros2
 }  // namespace romea

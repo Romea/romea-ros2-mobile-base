@@ -26,6 +26,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 class SteeringJointGazeboInterface
 {
@@ -42,6 +44,7 @@ private:
   gazebo::physics::JointPtr sim_joint_;
 };
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_GAZEBO__STEERING_JOINT_GAZEBO_INTERFACE_HPP_

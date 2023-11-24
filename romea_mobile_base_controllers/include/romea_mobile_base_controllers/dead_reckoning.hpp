@@ -28,13 +28,15 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 class DeadReckoning
 {
 public:
   DeadReckoning();
 
-  void update(const rclcpp::Time & time, const KinematicMeasure & kinematic_measure);
+  void update(const rclcpp::Time & time, const core::KinematicMeasure & kinematic_measure);
 
   const double & getX()const;
 
@@ -55,6 +57,7 @@ private:
   double previous_angular_speed_;
 };
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_CONTROLLERS__DEAD_RECKONING_HPP_

@@ -24,6 +24,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 GazeboInterface2TTD::GazeboInterface2TTD(
@@ -58,20 +60,20 @@ GazeboInterface2TTD::GazeboInterface2TTD(
 }
 
 //-----------------------------------------------------------------------------
-SimulationState2TTD GazeboInterface2TTD::get_state() const
+core::SimulationState2TTD GazeboInterface2TTD::get_state() const
 {
   return {left_sprocket_wheel_spinning_joint_.get_state(),
-      right_sprocket_wheel_spinning_joint_.get_state(),
-      left_idler_wheel_spinning_joint_.get_state(),
-      right_idler_wheel_spinning_joint_.get_state(),
-      front_left_roller_wheel_spinning_joint_.get_state(),
-      front_right_roller_wheel_spinning_joint_.get_state(),
-      rear_left_roller_wheel_spinning_joint_.get_state(),
-      rear_right_roller_wheel_spinning_joint_.get_state()};
+    right_sprocket_wheel_spinning_joint_.get_state(),
+    left_idler_wheel_spinning_joint_.get_state(),
+    right_idler_wheel_spinning_joint_.get_state(),
+    front_left_roller_wheel_spinning_joint_.get_state(),
+    front_right_roller_wheel_spinning_joint_.get_state(),
+    rear_left_roller_wheel_spinning_joint_.get_state(),
+    rear_right_roller_wheel_spinning_joint_.get_state()};
 }
 
 //-----------------------------------------------------------------------------
-void GazeboInterface2TTD::set_command(const SimulationCommand2TTD & command)
+void GazeboInterface2TTD::set_command(const core::SimulationCommand2TTD & command)
 {
   left_sprocket_wheel_spinning_joint_.set_command(
     command.leftSprocketWheelSpinningSetPoint);
@@ -186,4 +188,5 @@ void GazeboInterface2TTD::set_command(const SimulationCommand2TTD & command)
 
 //}
 
+}  // namespace ros2
 }  // namespace romea

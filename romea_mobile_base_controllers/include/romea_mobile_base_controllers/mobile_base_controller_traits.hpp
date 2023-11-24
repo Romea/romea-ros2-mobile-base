@@ -63,6 +63,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 template<class ControllerInterface, class KinematicType>
 struct MobileBaseControllerTraits
@@ -70,160 +72,161 @@ struct MobileBaseControllerTraits
 };
 
 template<>
-struct MobileBaseControllerTraits<ControllerInterface1FAS2RWD, OneAxleSteeringKinematic>
+struct MobileBaseControllerTraits<ControllerInterface1FAS2RWD, core::OneAxleSteeringKinematic>
 {
-  using Kinematic = OneAxleSteeringKinematic;
-  using Command = OneAxleSteeringCommand;
+  using Kinematic = core::OneAxleSteeringKinematic;
+  using Command = core::OneAxleSteeringCommand;
   using CommandMsg = romea_mobile_base_msgs::msg::OneAxleSteeringCommand;
   using CommandRosMsg = ackermann_msgs::msg::AckermannDrive;
-  using CommandLimits = OneAxleSteeringCommandLimits;
-  using OdometryFrame = OdometryFrame1FAS2RWD;
-  using OdometryMeasure = OneAxleSteeringMeasure;
+  using CommandLimits = core::OneAxleSteeringCommandLimits;
+  using OdometryFrame = core::OdometryFrame1FAS2RWD;
+  using OdometryMeasure = core::OneAxleSteeringMeasure;
   using OdometryMeasureMsg = romea_mobile_base_msgs::msg::OneAxleSteeringMeasureStamped;
-  using MobileBaseInfo = MobileBaseInfo1FAS2RWD;
+  using MobileBaseInfo = core::MobileBaseInfo1FAS2RWD;
 };
 
 template<>
-struct MobileBaseControllerTraits<ControllerInterface1FAS2FWD, OneAxleSteeringKinematic>
+struct MobileBaseControllerTraits<ControllerInterface1FAS2FWD, core::OneAxleSteeringKinematic>
 {
-  using Kinematic = OneAxleSteeringKinematic;
-  using Command = OneAxleSteeringCommand;
+  using Kinematic = core::OneAxleSteeringKinematic;
+  using Command = core::OneAxleSteeringCommand;
   using CommandMsg = romea_mobile_base_msgs::msg::OneAxleSteeringCommand;
   using CommandRosMsg = ackermann_msgs::msg::AckermannDrive;
-  using CommandLimits = OneAxleSteeringCommandLimits;
-  using OdometryFrame = OdometryFrame1FAS2FWD;
-  using OdometryMeasure = OneAxleSteeringMeasure;
+  using CommandLimits = core::OneAxleSteeringCommandLimits;
+  using OdometryFrame = core::OdometryFrame1FAS2FWD;
+  using OdometryMeasure = core::OneAxleSteeringMeasure;
   using OdometryMeasureMsg = romea_mobile_base_msgs::msg::OneAxleSteeringMeasureStamped;
-  using MobileBaseInfo = MobileBaseInfo1FAS2FWD;
+  using MobileBaseInfo = core::MobileBaseInfo1FAS2FWD;
 };
 
 template<>
-struct MobileBaseControllerTraits<ControllerInterface2AS4WD, TwoAxleSteeringKinematic>
+struct MobileBaseControllerTraits<ControllerInterface2AS4WD, core::TwoAxleSteeringKinematic>
 {
-  using Kinematic = TwoAxleSteeringKinematic;
-  using Command = TwoAxleSteeringCommand;
+  using Kinematic = core::TwoAxleSteeringKinematic;
+  using Command = core::TwoAxleSteeringCommand;
   using CommandMsg = romea_mobile_base_msgs::msg::TwoAxleSteeringCommand;
   using CommandRosMsg = four_wheel_steering_msgs::msg::FourWheelSteering;
-  using CommandLimits = TwoAxleSteeringCommandLimits;
-  using OdometryFrame = OdometryFrame2AS4WD;
-  using OdometryMeasure = TwoAxleSteeringMeasure;
+  using CommandLimits = core::TwoAxleSteeringCommandLimits;
+  using OdometryFrame = core::OdometryFrame2AS4WD;
+  using OdometryMeasure = core::TwoAxleSteeringMeasure;
   using OdometryMeasureMsg = romea_mobile_base_msgs::msg::TwoAxleSteeringMeasureStamped;
-  using MobileBaseInfo = MobileBaseInfo2AS4WD;
+  using MobileBaseInfo = core::MobileBaseInfo2AS4WD;
 };
 
 template<>
-struct MobileBaseControllerTraits<ControllerInterface2FWS2FWD, TwoWheelSteeringKinematic>
+struct MobileBaseControllerTraits<ControllerInterface2FWS2FWD, core::TwoWheelSteeringKinematic>
 {
-  using Kinematic = TwoWheelSteeringKinematic;
-  using Command = OneAxleSteeringCommand;
+  using Kinematic = core::TwoWheelSteeringKinematic;
+  using Command = core::OneAxleSteeringCommand;
   using CommandMsg = romea_mobile_base_msgs::msg::OneAxleSteeringCommand;
   using CommandRosMsg = ackermann_msgs::msg::AckermannDrive;
-  using CommandLimits = OneAxleSteeringCommandLimits;
-  using OdometryFrame = OdometryFrame2FWS2FWD;
-  using OdometryMeasure = OneAxleSteeringMeasure;
+  using CommandLimits = core::OneAxleSteeringCommandLimits;
+  using OdometryFrame = core::OdometryFrame2FWS2FWD;
+  using OdometryMeasure = core::OneAxleSteeringMeasure;
   using OdometryMeasureMsg = romea_mobile_base_msgs::msg::OneAxleSteeringMeasureStamped;
-  using MobileBaseInfo = MobileBaseInfo2FWS2FWD;
+  using MobileBaseInfo = core::MobileBaseInfo2FWS2FWD;
 };
 
 template<>
-struct MobileBaseControllerTraits<ControllerInterface2FWS2RWD, TwoWheelSteeringKinematic>
+struct MobileBaseControllerTraits<ControllerInterface2FWS2RWD, core::TwoWheelSteeringKinematic>
 {
-  using Kinematic = TwoWheelSteeringKinematic;
-  using Command = OneAxleSteeringCommand;
+  using Kinematic = core::TwoWheelSteeringKinematic;
+  using Command = core::OneAxleSteeringCommand;
   using CommandMsg = romea_mobile_base_msgs::msg::OneAxleSteeringCommand;
   using CommandRosMsg = ackermann_msgs::msg::AckermannDrive;
-  using CommandLimits = OneAxleSteeringCommandLimits;
-  using OdometryFrame = OdometryFrame2FWS2RWD;
-  using OdometryMeasure = OneAxleSteeringMeasure;
+  using CommandLimits = core::OneAxleSteeringCommandLimits;
+  using OdometryFrame = core::OdometryFrame2FWS2RWD;
+  using OdometryMeasure = core::OneAxleSteeringMeasure;
   using OdometryMeasureMsg = romea_mobile_base_msgs::msg::OneAxleSteeringMeasureStamped;
-  using MobileBaseInfo = MobileBaseInfo2FWS2RWD;
+  using MobileBaseInfo = core::MobileBaseInfo2FWS2RWD;
 };
 
 template<>
-struct MobileBaseControllerTraits<ControllerInterface2FWS4WD, TwoWheelSteeringKinematic>
+struct MobileBaseControllerTraits<ControllerInterface2FWS4WD, core::TwoWheelSteeringKinematic>
 {
-  using Kinematic = TwoWheelSteeringKinematic;
-  using Command = OneAxleSteeringCommand;
+  using Kinematic = core::TwoWheelSteeringKinematic;
+  using Command = core::OneAxleSteeringCommand;
   using CommandMsg = romea_mobile_base_msgs::msg::OneAxleSteeringCommand;
   using CommandRosMsg = ackermann_msgs::msg::AckermannDrive;
-  using CommandLimits = OneAxleSteeringCommandLimits;
-  using OdometryFrame = OdometryFrame2FWS4WD;
-  using OdometryMeasure = OneAxleSteeringMeasure;
+  using CommandLimits = core::OneAxleSteeringCommandLimits;
+  using OdometryFrame = core::OdometryFrame2FWS4WD;
+  using OdometryMeasure = core::OneAxleSteeringMeasure;
   using OdometryMeasureMsg = romea_mobile_base_msgs::msg::OneAxleSteeringMeasureStamped;
-  using MobileBaseInfo = MobileBaseInfo2FWS4WD;
+  using MobileBaseInfo = core::MobileBaseInfo2FWS4WD;
 };
 
 template<>
-struct MobileBaseControllerTraits<ControllerInterface4WD, SkidSteeringKinematic>
+struct MobileBaseControllerTraits<ControllerInterface4WD, core::SkidSteeringKinematic>
 {
-  using Kinematic = SkidSteeringKinematic;
-  using Command = SkidSteeringCommand;
+  using Kinematic = core::SkidSteeringKinematic;
+  using Command = core::SkidSteeringCommand;
   using CommandMsg = romea_mobile_base_msgs::msg::SkidSteeringCommand;
   using CommandRosMsg = geometry_msgs::msg::Twist;
-  using CommandLimits = SkidSteeringCommandLimits;
-  using OdometryFrame = OdometryFrame4WD;
-  using OdometryMeasure = SkidSteeringMeasure;
+  using CommandLimits = core::SkidSteeringCommandLimits;
+  using OdometryFrame = core::OdometryFrame4WD;
+  using OdometryMeasure = core::SkidSteeringMeasure;
   using OdometryMeasureMsg = romea_mobile_base_msgs::msg::SkidSteeringMeasureStamped;
-  using MobileBaseInfo = MobileBaseInfo4WD;
+  using MobileBaseInfo = core::MobileBaseInfo4WD;
 };
 
 template<>
-struct MobileBaseControllerTraits<ControllerInterface2WD, SkidSteeringKinematic>
+struct MobileBaseControllerTraits<ControllerInterface2WD, core::SkidSteeringKinematic>
 {
-  using Kinematic = SkidSteeringKinematic;
-  using Command = SkidSteeringCommand;
+  using Kinematic = core::SkidSteeringKinematic;
+  using Command = core::SkidSteeringCommand;
   using CommandMsg = romea_mobile_base_msgs::msg::SkidSteeringCommand;
   using CommandRosMsg = geometry_msgs::msg::Twist;
-  using CommandLimits = SkidSteeringCommandLimits;
-  using OdometryFrame = OdometryFrame2WD;
-  using OdometryMeasure = SkidSteeringMeasure;
+  using CommandLimits = core::SkidSteeringCommandLimits;
+  using OdometryFrame = core::OdometryFrame2WD;
+  using OdometryMeasure = core::SkidSteeringMeasure;
   using OdometryMeasureMsg = romea_mobile_base_msgs::msg::SkidSteeringMeasureStamped;
-  using MobileBaseInfo = MobileBaseInfo2WD;
+  using MobileBaseInfo = core::MobileBaseInfo2WD;
 };
 
 template<>
-struct MobileBaseControllerTraits<ControllerInterface2TD, SkidSteeringKinematic>
+struct MobileBaseControllerTraits<ControllerInterface2TD, core::SkidSteeringKinematic>
 {
-  using Kinematic = SkidSteeringKinematic;
-  using Command = SkidSteeringCommand;
+  using Kinematic = core::SkidSteeringKinematic;
+  using Command = core::SkidSteeringCommand;
   using CommandMsg = romea_mobile_base_msgs::msg::SkidSteeringCommand;
   using CommandRosMsg = geometry_msgs::msg::Twist;
-  using CommandLimits = SkidSteeringCommandLimits;
-  using OdometryFrame = OdometryFrame2TD;
-  using OdometryMeasure = SkidSteeringMeasure;
+  using CommandLimits = core::SkidSteeringCommandLimits;
+  using OdometryFrame = core::OdometryFrame2TD;
+  using OdometryMeasure = core::SkidSteeringMeasure;
   using OdometryMeasureMsg = romea_mobile_base_msgs::msg::SkidSteeringMeasureStamped;
-  using MobileBaseInfo = MobileBaseInfo2TD;
+  using MobileBaseInfo = core::MobileBaseInfo2TD;
 };
 
 
 template<>
-struct MobileBaseControllerTraits<ControllerInterface4WD, MecanumWheelSteeringKinematic>
+struct MobileBaseControllerTraits<ControllerInterface4WD, core::MecanumWheelSteeringKinematic>
 {
-  using Kinematic = MecanumWheelSteeringKinematic;
-  using Command = OmniSteeringCommand;
+  using Kinematic = core::MecanumWheelSteeringKinematic;
+  using Command = core::OmniSteeringCommand;
   using CommandMsg = romea_mobile_base_msgs::msg::OmniSteeringCommand;
   using CommandRosMsg = geometry_msgs::msg::Twist;
-  using CommandLimits = OmniSteeringCommandLimits;
-  using OdometryFrame = OdometryFrame4WD;
-  using OdometryMeasure = OmniSteeringMeasure;
+  using CommandLimits = core::OmniSteeringCommandLimits;
+  using OdometryFrame = core::OdometryFrame4WD;
+  using OdometryMeasure = core::OmniSteeringMeasure;
   using OdometryMeasureMsg = romea_mobile_base_msgs::msg::OmniSteeringMeasureStamped;
-  using MobileBaseInfo = MobileBaseInfo4WD;
+  using MobileBaseInfo = core::MobileBaseInfo4WD;
 };
 
 template<>
-struct MobileBaseControllerTraits<ControllerInterface4WS4WD, FourWheelSteeringKinematic>
+struct MobileBaseControllerTraits<ControllerInterface4WS4WD, core::FourWheelSteeringKinematic>
 {
-  using Kinematic = FourWheelSteeringKinematic;
-  using Command = TwoAxleSteeringCommand;
+  using Kinematic = core::FourWheelSteeringKinematic;
+  using Command = core::TwoAxleSteeringCommand;
   using CommandMsg = romea_mobile_base_msgs::msg::TwoAxleSteeringCommand;
   using CommandRosMsg = four_wheel_steering_msgs::msg::FourWheelSteering;
-  using CommandLimits = TwoAxleSteeringCommandLimits;
-  using OdometryFrame = OdometryFrame4WS4WD;
-  using OdometryMeasure = TwoAxleSteeringMeasure;
+  using CommandLimits = core::TwoAxleSteeringCommandLimits;
+  using OdometryFrame = core::OdometryFrame4WS4WD;
+  using OdometryMeasure = core::TwoAxleSteeringMeasure;
   using OdometryMeasureMsg = romea_mobile_base_msgs::msg::TwoAxleSteeringMeasureStamped;
-  using MobileBaseInfo = MobileBaseInfo4WS4WD;
+  using MobileBaseInfo = core::MobileBaseInfo4WS4WD;
 };
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_CONTROLLERS__MOBILE_BASE_CONTROLLER_TRAITS_HPP_

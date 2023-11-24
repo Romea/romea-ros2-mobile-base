@@ -55,10 +55,10 @@ protected:
 
 TEST_F(TestCommandLimits, getSkidSteeringCommandLimits)
 {
-  romea::declare_command_limits<romea::SkidSteeringCommandLimits>(
+  romea::ros2::declare_command_limits<romea::core::SkidSteeringCommandLimits>(
     node, "skid_steering_command_limits");
 
-  auto limits = romea::get_command_limits<romea::SkidSteeringCommandLimits>(
+  auto limits = romea::ros2::get_command_limits<romea::core::SkidSteeringCommandLimits>(
     node, "skid_steering_command_limits");
 
   EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.lower(), -1);
@@ -68,10 +68,10 @@ TEST_F(TestCommandLimits, getSkidSteeringCommandLimits)
 
 TEST_F(TestCommandLimits, getOmniSteeringCommandLimits)
 {
-  romea::declare_command_limits<romea::OmniSteeringCommandLimits>(
+  romea::ros2::declare_command_limits<romea::core::OmniSteeringCommandLimits>(
     node, "omni_steering_command_limits");
 
-  auto limits = romea::get_command_limits<romea::OmniSteeringCommandLimits>(
+  auto limits = romea::ros2::get_command_limits<romea::core::OmniSteeringCommandLimits>(
     node, "omni_steering_command_limits");
 
   EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.lower(), 0);
@@ -82,10 +82,10 @@ TEST_F(TestCommandLimits, getOmniSteeringCommandLimits)
 
 TEST_F(TestCommandLimits, getOneAxleSteeringCommandLimits)
 {
-  romea::declare_command_limits<romea::OneAxleSteeringCommandLimits>(
+  romea::ros2::declare_command_limits<romea::core::OneAxleSteeringCommandLimits>(
     node, "one_axle_steering_command_limits");
 
-  auto limits = romea::get_command_limits<romea::OneAxleSteeringCommandLimits>(
+  auto limits = romea::ros2::get_command_limits<romea::core::OneAxleSteeringCommandLimits>(
     node, "one_axle_steering_command_limits");
 
   EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.lower(), -2);
@@ -95,10 +95,10 @@ TEST_F(TestCommandLimits, getOneAxleSteeringCommandLimits)
 
 TEST_F(TestCommandLimits, getTwoAxleSteeringCommandLimits)
 {
-  romea::declare_command_limits<romea::TwoAxleSteeringCommandLimits>(
+  romea::ros2::declare_command_limits<romea::core::TwoAxleSteeringCommandLimits>(
     node, "two_axle_steering_command_limits");
 
-  auto limits = romea::get_command_limits<romea::TwoAxleSteeringCommandLimits>(
+  auto limits = romea::ros2::get_command_limits<romea::core::TwoAxleSteeringCommandLimits>(
     node, "two_axle_steering_command_limits");
 
   EXPECT_DOUBLE_EQ(limits.longitudinalSpeed.lower(), -1);

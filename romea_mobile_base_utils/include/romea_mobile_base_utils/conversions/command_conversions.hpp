@@ -33,81 +33,84 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 
 void to_ros_msg(
-  const romea::TwoAxleSteeringCommand & romea_two_axle_steering_command,
+  const core::TwoAxleSteeringCommand & romea_two_axle_steering_command,
   four_wheel_steering_msgs::msg::FourWheelSteering & ros_four_wheel_steering_msg);
 
 void to_romea(
   const four_wheel_steering_msgs::msg::FourWheelSteering & ros_four_wheel_steering_msg,
-  romea::TwoAxleSteeringCommand & romea_two_axle_steering_command);
+  core::TwoAxleSteeringCommand & romea_two_axle_steering_command);
 
 void to_ros_msg(
-  const romea::OneAxleSteeringCommand & romea_one_axle_steering_command,
+  const core::OneAxleSteeringCommand & romea_one_axle_steering_command,
   ackermann_msgs::msg::AckermannDrive & ros_ackerman_drive_msg);
 
 void to_romea(
   const ackermann_msgs::msg::AckermannDrive & ros_ackerman_drive_msg,
-  romea::OneAxleSteeringCommand & romea_one_axle_steering_command);
+  core::OneAxleSteeringCommand & romea_one_axle_steering_command);
 
 void to_ros_msg(
-  const romea::OneAxleSteeringCommand & romea_one_axle_steering_command,
+  const core::OneAxleSteeringCommand & romea_one_axle_steering_command,
   geometry_msgs::msg::Twist & ros_twist_msg);
 
 void to_romea(
   const geometry_msgs::msg::Twist & ros_twist_msg,
-  romea::OneAxleSteeringCommand & romea_one_axle_steering_command);
+  core::OneAxleSteeringCommand & romea_one_axle_steering_command);
 
 void to_ros_msg(
-  const romea::SkidSteeringCommand & romea_skid_steering_command,
+  const core::SkidSteeringCommand & romea_skid_steering_command,
   geometry_msgs::msg::Twist & ros_twist_msg);
 
 void to_romea(
   const geometry_msgs::msg::Twist & ros_twist_msg,
-  romea::SkidSteeringCommand & romea_skid_steering_command);
+  core::SkidSteeringCommand & romea_skid_steering_command);
 
 void to_ros_msg(
-  const romea::OmniSteeringCommand & romea_omni_steering_command,
+  const core::OmniSteeringCommand & romea_omni_steering_command,
   geometry_msgs::msg::Twist & ros_twist_msg);
 
 void to_romea(
   const geometry_msgs::msg::Twist & ros_twist_msg,
-  romea::OmniSteeringCommand & romea_omni_steering_command);
+  core::OmniSteeringCommand & romea_omni_steering_command);
 
 void to_ros_msg(
-  const romea::TwoAxleSteeringCommand & romea_two_axle_steering_command,
+  const core::TwoAxleSteeringCommand & romea_two_axle_steering_command,
   romea_mobile_base_msgs::msg::TwoAxleSteeringCommand & ros_two_axle_steering_command_msg);
 
 void to_romea(
   const romea_mobile_base_msgs::msg::TwoAxleSteeringCommand & ros_two_axle_steering_command_msg,
-  romea::TwoAxleSteeringCommand & romea_two_axle_steering_command);
+  core::TwoAxleSteeringCommand & romea_two_axle_steering_command);
 
 void to_ros_msg(
-  const romea::OneAxleSteeringCommand & romea_one_axle_steering_command,
+  const core::OneAxleSteeringCommand & romea_one_axle_steering_command,
   romea_mobile_base_msgs::msg::OneAxleSteeringCommand & ros_oxe_axle_steering_command_msg);
 
 void to_romea(
   const romea_mobile_base_msgs::msg::OneAxleSteeringCommand & ros_one_axle_steering_command_msg,
-  romea::OneAxleSteeringCommand & romea_one_axle_steering_command);
+  core::OneAxleSteeringCommand & romea_one_axle_steering_command);
 
 void to_ros_msg(
-  const romea::SkidSteeringCommand & romea_skid_steering_command,
+  const core::SkidSteeringCommand & romea_skid_steering_command,
   romea_mobile_base_msgs::msg::SkidSteeringCommand & romea_skid_steering_command_msg);
 
 void to_romea(
   const romea_mobile_base_msgs::msg::SkidSteeringCommand & ros_skid_steering_command_msg,
-  romea::SkidSteeringCommand & romea_skid_steering_command);
+  core::SkidSteeringCommand & romea_skid_steering_command);
 
 void to_ros_msg(
-  const romea::OmniSteeringCommand & romea_omni_steering_command,
+  const core::OmniSteeringCommand & romea_omni_steering_command,
   romea_mobile_base_msgs::msg::OmniSteeringCommand & romea_omni_steering_command_msg);
 
 void to_romea(
   const romea_mobile_base_msgs::msg::OmniSteeringCommand & ros_omni_steering_command_msg,
-  romea::OmniSteeringCommand & romea_omni_steering_command);
+  core::OmniSteeringCommand & romea_omni_steering_command);
 
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_UTILS__CONVERSIONS__COMMAND_CONVERSIONS_HPP_

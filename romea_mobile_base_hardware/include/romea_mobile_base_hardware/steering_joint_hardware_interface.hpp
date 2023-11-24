@@ -27,6 +27,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 class SteeringJointHardwareInterface
 {
@@ -37,8 +39,8 @@ public:
 public:
   explicit SteeringJointHardwareInterface(const hardware_interface::ComponentInfo & joint_info);
 
-  SteeringAngleCommand get_command() const;
-  void set_state(const SteeringAngleState & state);
+  core::SteeringAngleCommand get_command() const;
+  void set_state(const core::SteeringAngleState & state);
 
   void export_command_interface(
     std::vector<hardware_interface::CommandInterface> & hardware_interfaces);
@@ -50,6 +52,7 @@ private:
   Feedback feedback_;
 };
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_HARDWARE__STEERING_JOINT_HARDWARE_INTERFACE_HPP_

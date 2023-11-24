@@ -27,6 +27,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 class GazeboInterface2WD
 {
@@ -37,14 +39,15 @@ public:
     const std::string & command_interface_type);
 
 
-  SimulationState2WD get_state() const;
-  void set_command(const SimulationCommand2WD & command);
+  core::SimulationState2WD get_state() const;
+  void set_command(const core::SimulationCommand2WD & command);
 
 private:
   SpinningJointGazeboInterface left_wheel_spinning_joint_;
   SpinningJointGazeboInterface right_wheel_spinning_joint_;
 };
 
+}  // namespace ros2
 }  // namespace romea
 
 

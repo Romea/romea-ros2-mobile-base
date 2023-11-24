@@ -29,6 +29,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 class SpinningJointGazeboInterface
 {
@@ -39,13 +41,14 @@ public:
     const std::string & command_interface_type);
 
   void set_command(const double & command);
-  RotationalMotionState get_state()const;
+  core::RotationalMotionState get_state()const;
 
 private:
-  RotationalMotionControlType control_type;
+  core::RotationalMotionControlType control_type;
   gazebo::physics::JointPtr sim_joint_;
 };
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_GAZEBO__SPINNING_JOINT_GAZEBO_INTERFACE_HPP_

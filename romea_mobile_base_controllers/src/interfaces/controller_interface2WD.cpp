@@ -33,16 +33,18 @@ const char right_wheel_spinning_joint_param_name[] = "right_wheel_spinning_joint
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
-ControllerInterface2WD::ControllerInterface2WD(const MobileBaseInfo2WD & mobile_base_info)
+ControllerInterface2WD::ControllerInterface2WD(const core::MobileBaseInfo2WD & mobile_base_info)
 : wheels_radius_(mobile_base_info.geometry.wheels.radius)
 {
 }
 
 //-----------------------------------------------------------------------------
 void ControllerInterface2WD::write(
-  const OdometryFrame2WD & command,
+  const core::OdometryFrame2WD & command,
   LoanedCommandInterfaces & loaned_command_interfaces)const
 {
   loaned_command_interfaces[LEFT_WHEEL_SPINNING_JOINT_ID].set_value(
@@ -54,7 +56,7 @@ void ControllerInterface2WD::write(
 //-----------------------------------------------------------------------------
 void ControllerInterface2WD::read(
   const LoanedStateInterfaces & loaned_state_interfaces,
-  OdometryFrame2WD & measurement) const
+  core::OdometryFrame2WD & measurement) const
 {
   measurement.leftWheelLinearSpeed = wheels_radius_ *
     loaned_state_interfaces[LEFT_WHEEL_SPINNING_JOINT_ID].get_value();
@@ -86,4 +88,5 @@ std::vector<std::string> ControllerInterface2WD::hardware_interface_names(
     hardware_velocity_interface_name(joints_names[RIGHT_WHEEL_SPINNING_JOINT_ID])};
 }
 
+}  // namespace ros2
 }  // namespace romea

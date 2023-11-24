@@ -24,20 +24,21 @@
 
 namespace romea
 {
+namespace ros2
+{
 
-RotationalMotionControlType toRotationalMotionCommandType(const std::string & interface_type)
+core::RotationalMotionControlType toRotationalMotionCommandType(const std::string & interface_type)
 {
   if (interface_type == hardware_interface::HW_IF_VELOCITY) {
-    return RotationalMotionControlType::VELOCITY;
+    return core::RotationalMotionControlType::VELOCITY;
   } else if (interface_type == hardware_interface::HW_IF_EFFORT) {
-    return RotationalMotionControlType::TORQUE;
+    return core::RotationalMotionControlType::TORQUE;
   } else {
-
     std::stringstream msg;
     msg << "Unable to convert interface type ";
     msg << interface_type;
     msg << "to rotational motion control type ";
-    throw std::runtime_error(msg);
+    throw std::runtime_error(msg.str());
   }
 }
 
@@ -83,7 +84,7 @@ void SpinningJointHardwareInterface::Feedback::export_state_interfaces(
 }
 
 //-----------------------------------------------------------------------------
-void SpinningJointHardwareInterface::Feedback::set_state(const RotationalMotionState & state)
+void SpinningJointHardwareInterface::Feedback::set_state(const core::RotationalMotionState & state)
 {
   position.set(state.position);
   velocity.set(state.velocity);
@@ -97,9 +98,10 @@ double SpinningJointHardwareInterface::get_command() const
 }
 
 //-----------------------------------------------------------------------------
-void SpinningJointHardwareInterface::set_state(const RotationalMotionState & state)
+void SpinningJointHardwareInterface::set_state(const core::RotationalMotionState & state)
 {
   feedback_.set_state(state);
 }
 
+}  // namespace ros2
 }  // namespace romea

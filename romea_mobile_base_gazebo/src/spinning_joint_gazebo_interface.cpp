@@ -21,6 +21,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 SpinningJointGazeboInterface::SpinningJointGazeboInterface(
@@ -29,9 +31,9 @@ SpinningJointGazeboInterface::SpinningJointGazeboInterface(
   const std::string & command_interface_type)
 {
   if (!command_interface_type.compare(hardware_interface::HW_IF_VELOCITY)) {
-    control_type = RotationalMotionControlType::VELOCITY;
+    control_type = core::RotationalMotionControlType::VELOCITY;
   } else if (!command_interface_type.compare(hardware_interface::HW_IF_EFFORT)) {
-    control_type = RotationalMotionControlType::TORQUE;
+    control_type = core::RotationalMotionControlType::TORQUE;
   } else {
     // throw error
   }
@@ -52,7 +54,7 @@ SpinningJointGazeboInterface::SpinningJointGazeboInterface(
 //-----------------------------------------------------------------------------
 void SpinningJointGazeboInterface::set_command(const double & command)
 {
-  if (control_type == RotationalMotionControlType::VELOCITY) {
+  if (control_type == core::RotationalMotionControlType::VELOCITY) {
     sim_joint_->SetVelocity(0, command);
   } else {
     sim_joint_->SetForce(0, command);
@@ -60,13 +62,14 @@ void SpinningJointGazeboInterface::set_command(const double & command)
 }
 
 //-----------------------------------------------------------------------------
-RotationalMotionState SpinningJointGazeboInterface::get_state() const
+core::RotationalMotionState SpinningJointGazeboInterface::get_state() const
 {
-  RotationalMotionState state;
+  core::RotationalMotionState state;
   state.position = sim_joint_->Position(0);
   state.velocity = sim_joint_->GetVelocity(0);
   state.torque = sim_joint_->GetForce(0);
   return state;
 }
 
+}  // namespace ros2
 }  // namespace romea

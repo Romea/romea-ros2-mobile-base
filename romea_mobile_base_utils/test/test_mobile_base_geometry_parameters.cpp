@@ -58,8 +58,8 @@ TEST_F(TestMobileBaseGeometryParams, GetWheeInfo)
 {
   loadYaml(std::string(TEST_DIR) + "/test_mobile_base_geometry_parameters.yaml");
 
-  romea::declare_wheel_info(node, "wheeled_geometry.front_axle.wheels");
-  romea::Wheel wheel = romea::get_wheel_info(node, "wheeled_geometry.front_axle.wheels");
+  romea::ros2::declare_wheel_info(node, "wheeled_geometry.front_axle.wheels");
+  auto wheel = romea::ros2::get_wheel_info(node, "wheeled_geometry.front_axle.wheels");
   EXPECT_DOUBLE_EQ(wheel.radius, 103);
   EXPECT_DOUBLE_EQ(wheel.width, 104);
   EXPECT_DOUBLE_EQ(wheel.hubCarrierOffset, 105);
@@ -69,8 +69,8 @@ TEST_F(TestMobileBaseGeometryParams, GetContinousTrackInfo)
 {
   loadYaml(std::string(TEST_DIR) + "/test_mobile_base_geometry_parameters.yaml");
 
-  romea::declare_continuous_track_info(node, "tracked_geometry.front_axle.tracks");
-  auto track = romea::get_continuous_track_info(node, "tracked_geometry.front_axle.tracks");
+  romea::ros2::declare_continuous_track_info(node, "tracked_geometry.front_axle.tracks");
+  auto track = romea::ros2::get_continuous_track_info(node, "tracked_geometry.front_axle.tracks");
   EXPECT_DOUBLE_EQ(track.width, 111);
   EXPECT_DOUBLE_EQ(track.thickness, 111.5);
   EXPECT_DOUBLE_EQ(track.sprocketWheel.radius, 112);
@@ -93,8 +93,8 @@ TEST_F(TestMobileBaseGeometryParams, GetTriangleContinousTrackInfo)
 {
   loadYaml(std::string(TEST_DIR) + "/test_mobile_base_geometry_parameters.yaml");
 
-  romea::declare_continuous_track_info(node, "tracked_geometry.rear_axle.tracks");
-  auto track = romea::get_continuous_track_info(node, "tracked_geometry.rear_axle.tracks");
+  romea::ros2::declare_continuous_track_info(node, "tracked_geometry.rear_axle.tracks");
+  auto track = romea::ros2::get_continuous_track_info(node, "tracked_geometry.rear_axle.tracks");
   EXPECT_DOUBLE_EQ(track.width, 117);
   EXPECT_DOUBLE_EQ(track.thickness, 117.5);
   EXPECT_DOUBLE_EQ(track.sprocketWheel.radius, 118);
@@ -120,8 +120,8 @@ TEST_F(TestMobileBaseGeometryParams, GetWheeledAxleInfo)
 {
   loadYaml(std::string(TEST_DIR) + "/test_mobile_base_geometry_parameters.yaml");
 
-  romea::declare_wheeled_axle_info(node, "wheeled_geometry.front_axle");
-  auto axle = romea::get_wheeled_axle_info(node, "wheeled_geometry.front_axle");
+  romea::ros2::declare_wheeled_axle_info(node, "wheeled_geometry.front_axle");
+  auto axle = romea::ros2::get_wheeled_axle_info(node, "wheeled_geometry.front_axle");
   EXPECT_DOUBLE_EQ(axle.wheelsDistance, 102);
   EXPECT_DOUBLE_EQ(axle.wheels.radius, 103);
   EXPECT_DOUBLE_EQ(axle.wheels.width, 104);
@@ -132,8 +132,8 @@ TEST_F(TestMobileBaseGeometryParams, GetContinuousTrackedAxleInfo)
 {
   loadYaml(std::string(TEST_DIR) + "/test_mobile_base_geometry_parameters.yaml");
 
-  romea::declare_continuous_tracked_axle_info(node, "tracked_geometry.front_axle");
-  auto axle = romea::get_continuous_tracked_axle_info(node, "tracked_geometry.front_axle");
+  romea::ros2::declare_continuous_tracked_axle_info(node, "tracked_geometry.front_axle");
+  auto axle = romea::ros2::get_continuous_tracked_axle_info(node, "tracked_geometry.front_axle");
   EXPECT_DOUBLE_EQ(axle.tracksDistance, 110);
   EXPECT_DOUBLE_EQ(axle.tracks.width, 111);
   EXPECT_DOUBLE_EQ(axle.tracks.thickness, 111.5);
@@ -157,8 +157,8 @@ TEST_F(TestMobileBaseGeometryParams, GetTriangleContinuousTrackedAxleInfo)
 {
   loadYaml(std::string(TEST_DIR) + "/test_mobile_base_geometry_parameters.yaml");
 
-  romea::declare_continuous_tracked_axle_info(node, "tracked_geometry.rear_axle");
-  auto axle = romea::get_continuous_tracked_axle_info(node, "tracked_geometry.rear_axle");
+  romea::ros2::declare_continuous_tracked_axle_info(node, "tracked_geometry.rear_axle");
+  auto axle = romea::ros2::get_continuous_tracked_axle_info(node, "tracked_geometry.rear_axle");
   EXPECT_DOUBLE_EQ(axle.tracksDistance, 116);
   EXPECT_DOUBLE_EQ(axle.tracks.width, 117);
   EXPECT_DOUBLE_EQ(axle.tracks.thickness, 117.5);
@@ -185,8 +185,8 @@ TEST_F(TestMobileBaseGeometryParams, GetTwoWheelAxlesInfo)
 {
   loadYaml(std::string(TEST_DIR) + "/test_mobile_base_geometry_parameters.yaml");
 
-  romea::declare_two_wheeled_axles_info(node, "wheeled_geometry");
-  auto axles = romea::get_two_wheeled_axles_info(node, "wheeled_geometry");
+  romea::ros2::declare_two_wheeled_axles_info(node, "wheeled_geometry");
+  auto axles = romea::ros2::get_two_wheeled_axles_info(node, "wheeled_geometry");
   EXPECT_DOUBLE_EQ(axles.axlesDistance, 101);
   EXPECT_DOUBLE_EQ(axles.frontAxle.wheelsDistance, 102);
   EXPECT_DOUBLE_EQ(axles.frontAxle.wheels.radius, 103);

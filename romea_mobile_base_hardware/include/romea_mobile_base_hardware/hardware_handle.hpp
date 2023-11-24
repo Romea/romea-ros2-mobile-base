@@ -33,6 +33,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 
 class HardwareCommandInterface
@@ -89,6 +91,7 @@ private:
   std::string interface_type_;
 };
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_HANDLE_HPP_

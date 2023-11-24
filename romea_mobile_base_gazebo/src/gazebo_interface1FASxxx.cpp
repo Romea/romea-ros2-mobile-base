@@ -25,6 +25,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 GazeboInterface1FASxxx::GazeboInterface1FASxxx(
@@ -53,19 +55,19 @@ GazeboInterface1FASxxx::GazeboInterface1FASxxx(
 }
 
 //-----------------------------------------------------------------------------
-SimulationState1FASxxx GazeboInterface1FASxxx::get_state() const
+core::SimulationState1FASxxx GazeboInterface1FASxxx::get_state() const
 {
   return {front_axle_steering_joint_.get_state(),
-      front_left_wheel_steering_joint_.get_state(),
-      front_right_wheel_steering_joint_.get_state(),
-      front_left_wheel_spinning_joint_.get_state(),
-      front_right_wheel_spinning_joint_.get_state(),
-      rear_left_wheel_spinning_joint_.get_state(),
-      rear_right_wheel_spinning_joint_.get_state()};
+    front_left_wheel_steering_joint_.get_state(),
+    front_right_wheel_steering_joint_.get_state(),
+    front_left_wheel_spinning_joint_.get_state(),
+    front_right_wheel_spinning_joint_.get_state(),
+    rear_left_wheel_spinning_joint_.get_state(),
+    rear_right_wheel_spinning_joint_.get_state()};
 }
 
 //-----------------------------------------------------------------------------
-void GazeboInterface1FASxxx::set_command(const SimulationCommand1FASxxx & command)
+void GazeboInterface1FASxxx::set_command(const core::SimulationCommand1FASxxx & command)
 {
   front_axle_steering_joint_.set_command(command.frontAxleSteeringAngle);
   front_left_wheel_steering_joint_.set_command(command.frontLeftWheelSteeringAngle);
@@ -76,4 +78,5 @@ void GazeboInterface1FASxxx::set_command(const SimulationCommand1FASxxx & comman
   rear_right_wheel_spinning_joint_.set_command(command.rearRightWheelSpinningSetPoint);
 }
 
+}  // namespace ros2
 }  // namespace romea

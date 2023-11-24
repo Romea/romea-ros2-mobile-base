@@ -30,6 +30,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 template<typename Node>
 void declare_steering_angle_control_info(
@@ -47,7 +49,7 @@ void declare_steering_angle_control_info(
 }
 
 template<typename Node>
-SteeringAngleControl get_steering_angle_control_info(
+core::SteeringAngleControl get_steering_angle_control_info(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
@@ -73,7 +75,7 @@ void declare_wheel_speed_control_info(
 }
 
 template<typename Node>
-WheelSpeedControl get_wheel_speed_control_info(
+core::WheelSpeedControl get_wheel_speed_control_info(
   std::shared_ptr<Node> node,
   const std::string & parameters_ns)
 {
@@ -83,6 +85,7 @@ WheelSpeedControl get_wheel_speed_control_info(
       get_parameter<double>(node, parameters_ns, "command.maximal_acceleration")}};
 }
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_UTILS__PARAMS__MOBILE_BASE_CONTROL_PARAMETERS_HPP_

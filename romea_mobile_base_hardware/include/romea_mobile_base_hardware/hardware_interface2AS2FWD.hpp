@@ -29,6 +29,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 class HardwareInterface2AS2FWD
 {
@@ -51,18 +53,18 @@ public:
     const hardware_interface::HardwareInfo & hardware_info,
     const std::string & spinning_joint_command_interface_type);
 
-  HardwareCommand2AS2FWD get_command()const;
+  core::HardwareCommand2AS2FWD get_command()const;
 
-  void set_state(const HardwareState2AS2FWD & hardware_state);
+  void set_state(const core::HardwareState2AS2FWD & hardware_state);
 
   void set_state(
-    const HardwareState2AS2FWD & hardware_state,
-    const SteeringAngleState & front_left_wheel_steering_angle,
-    const SteeringAngleState & front_right_wheel_steering_angle,
-    const SteeringAngleState & rear_left_wheel_steering_angle,
-    const SteeringAngleState & rear_right_wheel_steering_angle,
-    const RotationalMotionState & rear_left_wheel_spinning_motion,
-    const RotationalMotionState & rear_right_wheel_spinning_motion);
+    const core::HardwareState2AS2FWD & hardware_state,
+    const core::SteeringAngleState & front_left_wheel_steering_angle,
+    const core::SteeringAngleState & front_right_wheel_steering_angle,
+    const core::SteeringAngleState & rear_left_wheel_steering_angle,
+    const core::SteeringAngleState & rear_right_wheel_steering_angle,
+    const core::RotationalMotionState & rear_left_wheel_spinning_motion,
+    const core::RotationalMotionState & rear_right_wheel_spinning_motion);
 
   std::vector<hardware_interface::StateInterface> export_state_interfaces();
   std::vector<hardware_interface::CommandInterface> export_command_interfaces();
@@ -81,7 +83,7 @@ private:
   SpinningJointHardwareInterface::Feedback rear_right_wheel_spinning_joint_feedback_;
 };
 
-
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_INTERFACE2AS2FWD_HPP_

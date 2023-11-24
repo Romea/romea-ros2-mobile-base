@@ -20,15 +20,15 @@
 #include "gtest/gtest.h"
 
 // romea
-#include "romea_common_utils/listeners/data_listener.hpp"
 #include "romea_mobile_base_msgs/msg/skid_steering_command.hpp"
+#include "romea_mobile_base_utils/control/command_publisher.hpp"
+#include "romea_common_utils/listeners/data_listener.hpp"
 
 // ros
 #include "rclcpp/node.hpp"
 
 // local
 #include "../test/test_helper.h"
-#include "romea_mobile_base_utils/control/command_publisher.hpp"
 
 class TestOmniSteeringCommandPublisher : public ::testing::Test
 {
@@ -53,16 +53,16 @@ protected:
 
   void make_publisher(const std::string & message_type)
   {
-    publisher = romea::make_command_publisher<romea::OmniSteeringCommand>(node, message_type);
+    publisher = romea::ros2::make_command_publisher<romea::core::OmniSteeringCommand>(
+      node, message_type);
     publisher->activate();
   }
 
   template<typename MsgType>
   void make_listener(std::string topic_name)
   {
-    listener = romea::make_data_listener<romea::OmniSteeringCommand, MsgType>(
-      node, topic_name, romea::best_effort(
-        1));
+    listener = romea::ros2::make_data_listener<romea::core::OmniSteeringCommand, MsgType>(
+      node, topic_name, romea::ros2::best_effort(1));
   }
 
   void init(const std::string & message_type)
@@ -76,10 +76,10 @@ protected:
   }
 
   std::shared_ptr<rclcpp::Node> node;
-  romea::OmniSteeringCommand command;
+  romea::core::OmniSteeringCommand command;
 
-  std::shared_ptr<romea::PublisherBase<romea::OmniSteeringCommand>> publisher;
-  std::shared_ptr<romea::DataListenerBase<romea::OmniSteeringCommand>> listener;
+  std::shared_ptr<romea::ros2::PublisherBase<romea::core::OmniSteeringCommand>> publisher;
+  std::shared_ptr<romea::ros2::DataListenerBase<romea::core::OmniSteeringCommand>> listener;
 };
 
 

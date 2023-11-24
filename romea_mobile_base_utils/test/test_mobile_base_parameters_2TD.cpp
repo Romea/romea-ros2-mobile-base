@@ -55,8 +55,8 @@ protected:
 
 TEST_F(TestMobileBaseParams2TD, checkGetInfo)
 {
-  romea::declare_mobile_base_info_2TD(node, "base");
-  auto base_info = romea::get_mobile_base_info_2TD(node, "base");
+  romea::ros2::declare_mobile_base_info_2TD(node, "base");
+  auto base_info = romea::ros2::get_mobile_base_info_2TD(node, "base");
   EXPECT_DOUBLE_EQ(base_info.geometry.tracksDistance, 100);
   EXPECT_DOUBLE_EQ(base_info.geometry.tracks.width, 102);
   EXPECT_DOUBLE_EQ(base_info.geometry.tracks.thickness, 102.5);

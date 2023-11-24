@@ -27,6 +27,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 template<typename Node>
 void declare_command_interface_configuration(
@@ -50,6 +52,7 @@ CommandInterfaceConfiguration get_command_interface_configuration(
     get_parameter<double>(node, parameters_ns, "rate")};
 }
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_UTILS__PARAMS__COMMAND_INTERFACE_PARAMETERS_HPP_

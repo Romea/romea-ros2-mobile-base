@@ -39,6 +39,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 using CallbackReturn = rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn;
 
@@ -63,6 +65,7 @@ class MobileBaseController : public controller_interface::ControllerInterface
     typename MobileBaseControllerTraits<InterfaceType, KinematicType>::OdometryMeasure;
   using OdometryMeasureMsg =
     typename MobileBaseControllerTraits<InterfaceType, KinematicType>::OdometryMeasureMsg;
+  using KinematicMeasure = core::KinematicMeasure;
 
   using OdometryMeasurePublisher =
     RealtimeStampedMessagePublisher<OdometryMeasure, OdometryMeasureMsg>;
@@ -76,7 +79,7 @@ class MobileBaseController : public controller_interface::ControllerInterface
     rclcpp::Time stamp;
   };
 
-  using StampedCommandBuffer = SharedOptionalVariable<StampedCommand>;
+  using StampedCommandBuffer = core::SharedOptionalVariable<StampedCommand>;
 
 public:
   MobileBaseController();
@@ -163,30 +166,31 @@ protected:
 
 
 using MobileBaseController1FAS2FWD =
-  MobileBaseController<ControllerInterface1FAS2FWD, OneAxleSteeringKinematic>;
+  MobileBaseController<ControllerInterface1FAS2FWD, core::OneAxleSteeringKinematic>;
 using MobileBaseController1FAS2RWD =
-  MobileBaseController<ControllerInterface1FAS2RWD, OneAxleSteeringKinematic>;
+  MobileBaseController<ControllerInterface1FAS2RWD, core::OneAxleSteeringKinematic>;
 // using MobileBaseController1FWS2RWD =
-//   MobileBaseController<ControllerInterface1FWS2RWD, OneAxleSteeringKinematic>;
+//   MobileBaseController<ControllerInterface1FWS2RWD, core::OneAxleSteeringKinematic>;
 using MobileBaseController2AS4WD =
-  MobileBaseController<ControllerInterface2AS4WD, TwoAxleSteeringKinematic>;
+  MobileBaseController<ControllerInterface2AS4WD, core::TwoAxleSteeringKinematic>;
 using MobileBaseController2FWS2FWD =
-  MobileBaseController<ControllerInterface2FWS2FWD, TwoWheelSteeringKinematic>;
+  MobileBaseController<ControllerInterface2FWS2FWD, core::TwoWheelSteeringKinematic>;
 using MobileBaseController2FWS2RWD =
-  MobileBaseController<ControllerInterface2FWS2RWD, TwoWheelSteeringKinematic>;
+  MobileBaseController<ControllerInterface2FWS2RWD, core::TwoWheelSteeringKinematic>;
 using MobileBaseController2FWS4WD =
-  MobileBaseController<ControllerInterface2FWS4WD, TwoWheelSteeringKinematic>;
+  MobileBaseController<ControllerInterface2FWS4WD, core::TwoWheelSteeringKinematic>;
 using MobileBaseController2WD =
-  MobileBaseController<ControllerInterface2WD, SkidSteeringKinematic>;
+  MobileBaseController<ControllerInterface2WD, core::SkidSteeringKinematic>;
 using MobileBaseController2TD =
-  MobileBaseController<ControllerInterface2TD, SkidSteeringKinematic>;
+  MobileBaseController<ControllerInterface2TD, core::SkidSteeringKinematic>;
 using MobileBaseController4WD =
-  MobileBaseController<ControllerInterface4WD, SkidSteeringKinematic>;
+  MobileBaseController<ControllerInterface4WD, core::SkidSteeringKinematic>;
 using MobileBaseController4MWD =
-  MobileBaseController<ControllerInterface4WD, MecanumWheelSteeringKinematic>;
+  MobileBaseController<ControllerInterface4WD, core::MecanumWheelSteeringKinematic>;
 using MobileBaseController4WS4WD =
-  MobileBaseController<ControllerInterface4WS4WD, FourWheelSteeringKinematic>;
+  MobileBaseController<ControllerInterface4WS4WD, core::FourWheelSteeringKinematic>;
 
+}  // namespace roos
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_CONTROLLERS__MOBILE_BASE_CONTROLLER_HPP_
