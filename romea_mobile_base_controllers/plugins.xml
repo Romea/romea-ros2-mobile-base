@@ -24,6 +24,14 @@
      </description>
    </class>
 
+   <class name="romea_mobile_base_controllers/MobileBaseController1FAS2RWD"
+          type="romea::ros2::MobileBaseController1FAS2RWD"
+          base_class_type="controller_interface::ControllerInterface">
+     <description>
+       Controller for 1FAS2RWD vehicle
+     </description>
+   </class>
+
    <class name="romea_mobile_base_controllers/MobileBaseController2AS4WD"
           type="romea::ros2::MobileBaseController2AS4WD"
           base_class_type="controller_interface::ControllerInterface">
