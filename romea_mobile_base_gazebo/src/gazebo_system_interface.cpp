@@ -203,6 +203,9 @@ PLUGINLIB_EXPORT_CLASS(
   romea::ros2::GazeboSystemInterface4WS4WD,
   gazebo_ros2_control::GazeboSystemInterface)
 PLUGINLIB_EXPORT_CLASS(
+  romea::ros2::GazeboSystemInterface1FAS2RWD,
+  gazebo_ros2_control::GazeboSystemInterface)
+PLUGINLIB_EXPORT_CLASS(
   romea::ros2::GazeboSystemInterface2AS4WD,
   gazebo_ros2_control::GazeboSystemInterface)
 PLUGINLIB_EXPORT_CLASS(

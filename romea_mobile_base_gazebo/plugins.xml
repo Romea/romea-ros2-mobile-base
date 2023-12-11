@@ -19,6 +19,15 @@
   </class>
 
   <class
+    name="romea_mobile_base_gazebo/GazeboSystemInterface1FAS2RWD"
+    type="romea::ros2::GazeboSystemInterface1FAS2RWD"
+    base_class_type="gazebo_ros2_control::GazeboSystemInterface">
+      <description>
+        GazeboSystemInterface for 1FAS2RWD Vehicle
+      </description>
+  </class>
+
+  <class
     name="romea_mobile_base_gazebo/GazeboSystemInterface2AS4WD"
     type="romea::ros2::GazeboSystemInterface2AS4WD"
     base_class_type="gazebo_ros2_control::GazeboSystemInterface">
