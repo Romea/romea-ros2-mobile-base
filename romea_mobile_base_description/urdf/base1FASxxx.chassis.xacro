@@ -6,7 +6,7 @@
   <xacro:include filename="$(find romea_mobile_base_description)/urdf/wheel_steered.xacro" />
   <xacro:include filename="$(find romea_mobile_base_description)/urdf/axle_steering.xacro" />
 
-  <xacro:macro name="chassis" params="*visual_chassis *visual_steering *visual_wheel">
+  <xacro:macro name="chassis" params="*visual_chassis *visual_front_steering *visual_front_wheel *visual_rear_wheel">
 
     <xacro:common>
       <xacro:insert_block name="visual_chassis"/>
@@ -29,8 +29,8 @@
                          wheel_radius="${front_wheel_radius}"
                          left_right="-1">
        <origin xyz="${wheelbase/2-body_reference_x} ${front_track/2} ${front_wheel_radius - chassis_height}" rpy="0 0 0" />
-       <xacro:insert_block name="visual_steering"/>
-       <xacro:insert_block name="visual_wheel"/>
+       <xacro:insert_block name="visual_front_steering"/>
+       <xacro:insert_block name="visual_front_wheel"/>
      </xacro:wheel_steered>
 
      <xacro:wheel_steered parent_link="${base_link}"
@@ -44,8 +44,8 @@
                           wheel_radius="${front_wheel_radius}"
                           left_right="1">
        <origin xyz="${wheelbase/2-body_reference_x} ${-front_track/2} ${front_wheel_radius - chassis_height}" rpy="0 0 0" />
-       <xacro:insert_block name="visual_steering"/>
-       <xacro:insert_block name="visual_wheel"/>
+       <xacro:insert_block name="visual_front_steering"/>
+       <xacro:insert_block name="visual_front_wheel"/>
      </xacro:wheel_steered>
 
      <xacro:wheel parent_link="${base_link}"
@@ -56,7 +56,7 @@
                   wheel_radius="${rear_wheel_radius}"
                   left_right="-1">
       <origin xyz="${-wheelbase/2-body_reference_x} ${rear_track/2} ${rear_wheel_radius  - chassis_height}" rpy="${-M_PI/2} 0 0" />
-      <xacro:insert_block name="visual_wheel"/>
+      <xacro:insert_block name="visual_rear_wheel"/>
     </xacro:wheel>
 
     <xacro:wheel parent_link="${base_link}"
@@ -67,7 +67,7 @@
                  wheel_radius="${rear_wheel_radius}"
                  left_right="1">
       <origin xyz="${-wheelbase/2-body_reference_x} ${-rear_track/2} ${rear_wheel_radius - chassis_height}" rpy="${-M_PI/2} 0 0" />
-      <xacro:insert_block name="visual_wheel"/>
+      <xacro:insert_block name="visual_rear_wheel"/>
     </xacro:wheel>
 
   </xacro:macro>
