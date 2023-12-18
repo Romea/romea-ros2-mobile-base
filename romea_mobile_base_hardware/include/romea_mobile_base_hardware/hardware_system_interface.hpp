@@ -19,6 +19,7 @@
 // std
 #include <vector>
 #include <memory>
+#include <string>
 
 // ros
 #include "hardware_interface/system_interface.hpp"
@@ -52,7 +53,7 @@ public:
   using CallbackReturn = rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn;
 
 public:
-  HardwareSystemInterface(const std::string & hardware_interface_name = "HardwareInterface");
+  explicit HardwareSystemInterface(const std::string & hardware_interface_name = "HardwareInterface");
 
   virtual ~HardwareSystemInterface() = default;
 
