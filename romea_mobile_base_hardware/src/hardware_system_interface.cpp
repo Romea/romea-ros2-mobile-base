@@ -31,20 +31,11 @@ namespace ros2
 
 //-----------------------------------------------------------------------------
 template<typename HardwareInterface>
-HardwareSystemInterface<HardwareInterface>::HardwareSystemInterface()
-: hardware_interface_(nullptr)
+HardwareSystemInterface<HardwareInterface>::HardwareSystemInterface(
+  const std::string & hardware_interface_name)
+: hardware_interface_name_(hardware_interface_name),
+  hardware_interface_(nullptr)
 {
-  RCLCPP_FATAL_STREAM(rclcpp::get_logger("HardwareSystemInterface"), "HardwareSystemInterface");
-  std::cout << " HardwareSystemInterface " << std::endl;
-}
-//-----------------------------------------------------------------------------
-template<typename HardwareInterface>
-HardwareSystemInterface<HardwareInterface>::~HardwareSystemInterface()
-{
-  // force deactive when interface has not been deactivated by controller manager
-  if (lifecycle_state_.id() == 3) {
-    on_deactivate(lifecycle_state_);
-  }
 }
 
 //-----------------------------------------------------------------------------
@@ -103,11 +94,9 @@ hardware_interface::return_type HardwareSystemInterface<HardwareInterface>::load
   const hardware_interface::HardwareInfo & hardware_info)
 {
   try {
-    std::cout << " tyr to load interface" << std::endl;
     hardware_interface_ = std::make_unique<HardwareInterface>(
       hardware_info,
       hardware_interface::HW_IF_VELOCITY);
-    std::cout << " tyr to load interface OK" << std::endl;
     return hardware_interface::return_type::OK;
   } catch (std::runtime_error & e) {
     RCLCPP_FATAL_STREAM(rclcpp::get_logger("HardwareSystemInterface"), e.what());
@@ -123,7 +112,7 @@ HardwareSystemInterface<HardwareInterface>::on_configure(
 {
   RCLCPP_ERROR_STREAM(
     rclcpp::get_logger(
-      "HardwareSystemInterface"),
+      hardware_interface_name_),
     "on_configure : previous state " << int(previous_state.id()) << " " <<
       previous_state.label());
   return CallbackReturn::SUCCESS;
@@ -142,7 +131,7 @@ HardwareSystemInterface<HardwareInterface>::on_cleanup(
   const rclcpp_lifecycle::State & previous_state)
 {
   RCLCPP_ERROR_STREAM(
-    rclcpp::get_logger("HardwareSystemInterface"),
+    rclcpp::get_logger(hardware_interface_name_),
     "on_cleanup : previous state " << int(previous_state.id()) << " " << previous_state.label());
 
   return CallbackReturn::SUCCESS;
@@ -156,7 +145,7 @@ HardwareSystemInterface<HardwareInterface>::on_activate(
   const rclcpp_lifecycle::State & previous_state)
 {
   RCLCPP_ERROR_STREAM(
-    rclcpp::get_logger("HardwareSystemInterface"),
+    rclcpp::get_logger(hardware_interface_name_),
     "on_activate : previous state " << int(previous_state.id()) << " " << previous_state.label());
 
   if (connect_() == hardware_interface::return_type::OK) {
@@ -173,14 +162,14 @@ HardwareSystemInterface<HardwareInterface>::on_deactivate(
   const rclcpp_lifecycle::State & previous_state)
 {
   RCLCPP_ERROR_STREAM(
-    rclcpp::get_logger("HardwareSystemInterface"),
+    rclcpp::get_logger(hardware_interface_name_),
     "on_deactivate : previous state" << int(previous_state.id()) << " " <<
       previous_state.label());
 
   if (disconnect_() == hardware_interface::return_type::OK) {
     return CallbackReturn::SUCCESS;
   } else {
-    RCLCPP_ERROR_STREAM(rclcpp::get_logger("HardwareSystemInterface"), "on_cleanup raised error");
+    RCLCPP_ERROR_STREAM(rclcpp::get_logger(hardware_interface_name_), "on_cleanup raised error");
     return CallbackReturn::ERROR;
   }
 }
@@ -192,7 +181,7 @@ HardwareSystemInterface<HardwareInterface>::on_shutdown(
   const rclcpp_lifecycle::State & previous_state)
 {
   RCLCPP_ERROR_STREAM(
-    rclcpp::get_logger("HardwareSystemInterface"),
+    rclcpp::get_logger(hardware_interface_name_),
     "on_shutdownn : previous state " << int(previous_state.id()) << " " << previous_state.label());
 
   if (static_cast<int>(previous_state.id()) == 1) {
@@ -210,11 +199,8 @@ rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
 HardwareSystemInterface<HardwareInterface>::on_error(
   const rclcpp_lifecycle::State & previous_state)
 {
-  std::cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" <<
-    std::endl;
   RCLCPP_ERROR_STREAM(
-    rclcpp::get_logger(
-      "HardwareSystemInterface"),
+    rclcpp::get_logger(hardware_interface_name_),
     "on_error : previous state " << int(previous_state.id()) << " " << previous_state.label());
   return CallbackReturn::FAILURE;
 }

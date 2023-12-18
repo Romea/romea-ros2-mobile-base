@@ -52,9 +52,9 @@ public:
   using CallbackReturn = rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn;
 
 public:
-  HardwareSystemInterface();
+  HardwareSystemInterface(const std::string & hardware_interface_name = "HardwareInterface");
 
-  virtual ~HardwareSystemInterface();
+  virtual ~HardwareSystemInterface() = default;
 
   CallbackReturn on_init(const hardware_interface::HardwareInfo & hardware_info) override;
 
@@ -86,6 +86,7 @@ protected:
     const hardware_interface::HardwareInfo & hardware_info);
 
 protected:
+  std::string hardware_interface_name_;
   std::unique_ptr<HardwareInterface> hardware_interface_;
 };
 
