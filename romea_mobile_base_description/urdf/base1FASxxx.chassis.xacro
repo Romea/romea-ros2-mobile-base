@@ -14,16 +14,23 @@
 
     <xacro:axle_steering parent_link="${base_link}"
                          axle_steering_link="${front_axle_steering_link}"
-                         axle_steering_joint="${front_axle_steering_joint}">
+                         axle_steering_joint="${front_axle_steering_joint}"
+                         steering_link_mass="${front_axle_steering_link_mass}"
+                         steering_link_x="${front_axle_steering_link_x}"
+                         steering_link_y="${front_axle_steering_link_y}"
+                         steering_link_z="${front_axle_steering_link_z}">
        <origin xyz="${wheelbase/2-body_reference_x} 0 ${front_wheel_radius - chassis_height}" rpy="0 0 0" />
     </xacro:axle_steering>
 
     <xacro:wheel_steered parent_link="${base_link}"
                          wheel_steering_link="${front_left_wheel_steering_link}"
                          wheel_steering_joint="${front_left_wheel_steering_joint}"
+                         steering_link_mass="${front_wheel_steering_link_mass}"
+                         steering_link_xz="${front_wheel_steering_link_xz}"
+                         steering_link_y="${front_wheel_steering_link_y}"
                          wheel_spinning_link="${front_left_wheel_spinning_link}"
                          wheel_spinning_joint="${front_left_wheel_spinning_joint}"
-                         wheel_origin_y="${front_wheel_y_offset}"
+                         wheel_origin_y="${front_hub_carrier_offset}"
                          wheel_mass="${front_wheel_mass}"
                          wheel_width="${front_wheel_width}"
                          wheel_radius="${front_wheel_radius}"
@@ -36,9 +43,12 @@
      <xacro:wheel_steered parent_link="${base_link}"
                           wheel_steering_link="${front_right_wheel_steering_link}"
                           wheel_steering_joint="${front_right_wheel_steering_joint}"
+                          steering_link_mass="${front_wheel_steering_link_mass}"
+                          steering_link_xz="${front_wheel_steering_link_xz}"
+                          steering_link_y="${front_wheel_steering_link_y}"
                           wheel_spinning_link="${front_right_wheel_spinning_link}"
                           wheel_spinning_joint="${front_right_wheel_spinning_joint}"
-                          wheel_origin_y="${-front_wheel_y_offset}"
+                          wheel_origin_y="${-front_hub_carrier_offset}"
                           wheel_mass="${front_wheel_mass}"
                           wheel_width="${front_wheel_width}"
                           wheel_radius="${front_wheel_radius}"

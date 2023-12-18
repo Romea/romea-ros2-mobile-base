@@ -5,7 +5,7 @@
 
   <xacro:include filename="$(find romea_mobile_base_description)/urdf/wheel.xacro" />
 
-  <xacro:macro name="wheel_steered" params="parent_link wheel_steering_link wheel_steering_joint wheel_spinning_link wheel_spinning_joint wheel_origin_y wheel_mass wheel_width wheel_radius left_right *joint_origin *visual_steering *visual_wheel">
+  <xacro:macro name="wheel_steered" params="parent_link wheel_steering_link wheel_steering_joint  steering_link_mass steering_link_xz steering_link_y wheel_spinning_link wheel_spinning_joint wheel_origin_y wheel_mass wheel_width wheel_radius left_right *joint_origin *visual_steering *visual_wheel">
 
     <link name="${prefix}${wheel_steering_link}">
       <visual>
