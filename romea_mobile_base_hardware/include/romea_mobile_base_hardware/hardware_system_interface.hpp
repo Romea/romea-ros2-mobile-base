@@ -53,7 +53,7 @@ public:
   using CallbackReturn = rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn;
 
 public:
-  explicit HardwareSystemInterface(const std::string & hardware_interface_name = "HardwareInterface");
+  explicit HardwareSystemInterface(const std::string & hardware_interface_name = "HardwareInterface");  // NOLINT
 
   virtual ~HardwareSystemInterface() = default;
 
