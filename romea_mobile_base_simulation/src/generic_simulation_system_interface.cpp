@@ -56,7 +56,7 @@ GenericSimulationSystemInterface<HardwareInterface>::on_init(
   if (load_info_(hardware_info) == hardware_interface::return_type::OK &&
     load_interface_(hardware_info) == hardware_interface::return_type::OK)
   {
-    node_ = std::make_shared<rclcpp::Node>("joint_state_bridge");
+    node_ = std::make_shared<rclcpp::Node>("bridge");
 
     joint_state_pub_ = node_->create_publisher<sensor_msgs::msg::JointState>(
       "bridge/joint_state_command", sensor_data_qos());
@@ -184,8 +184,8 @@ template<typename HardwareInterface>
 hardware_interface::return_type GenericSimulationSystemInterface<HardwareInterface>::read()
 #else
 hardware_interface::return_type GenericSimulationSystemInterface<HardwareInterface>::read(
-  const rclcpp::Time & time,
-  const rclcpp::Duration & period)
+  const rclcpp::Time & /*time*/,
+  const rclcpp::Duration & /*period*/)
 #endif
 {
   rclcpp::spin_some(node_);
@@ -203,8 +203,8 @@ template<typename HardwareInterface>
 hardware_interface::return_type GenericSimulationSystemInterface<HardwareInterface>::write()
 #else
 hardware_interface::return_type GenericSimulationSystemInterface<HardwareInterface>::write(
-  const rclcpp::Time & time,
-  const rclcpp::Duration & period)
+  const rclcpp::Time & /*time*/,
+  const rclcpp::Duration & /*period*/)
 #endif
 {
   command_ = hardware_interface_->get_joint_state_command();

@@ -53,8 +53,7 @@ add_library(${PROJECT_NAME} SHARED
   src/hardware_interface4WS4WD.cpp
   src/hardware_system_interface.cpp
   src/spinning_joint_hardware_interface.cpp
-  src/steering_joint_hardware_interface.cpp
-  )
+  src/steering_joint_hardware_interface.cpp)
 
 ament_target_dependencies(${PROJECT_NAME}
   rclcpp
