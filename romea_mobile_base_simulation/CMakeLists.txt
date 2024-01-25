@@ -61,6 +61,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
+target_compile_definitions(${PROJECT_NAME} PUBLIC ROS_DISTRO=${ROS_DISTRO})
+
 pluginlib_export_plugin_description_file(hardware_interface plugins.xml)
 
 ament_export_dependencies(hardware_interface)
