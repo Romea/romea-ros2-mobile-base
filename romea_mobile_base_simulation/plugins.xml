@@ -1,0 +1,17 @@
+<library path="romea_mobile_base_simulation">
+  <class name="romea_mobile_base_simulation/GenericSimulationSystemInterface2FWS4WD"
+    type="romea::ros2::GenericSimulationSystemInterface2FWS4WD"
+    base_class_type="hardware_interface::SystemInterface">
+    <description>
+      Generic simulation interface for 2FWS4WD robot
+    </description>
+  </class>
+  <class name="romea_mobile_base_simulation/GenericSimulationSystemInterface4WS4WD"
+    type="romea::ros2::GenericSimulationSystemInterface4WS4WD"
+    base_class_type="hardware_interface::SystemInterface">
+    <description>
+      Generic simulation interface for 4WS4WD robot
+    </description>
+  </class>
+
+</library>

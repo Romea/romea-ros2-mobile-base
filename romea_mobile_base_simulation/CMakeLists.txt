@@ -31,6 +31,8 @@ find_package(romea_mobile_base_hardware REQUIRED)
 find_package(hardware_interface REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
+  src/generic_simulation_system_interface.cpp
+  src/simulation_interface1FAS2FWD.cpp
   src/simulation_interface1FAS2FWD.cpp
   src/simulation_interface1FAS2RWD.cpp
   src/simulation_interface2AS4WD.cpp
@@ -55,6 +57,8 @@ ament_target_dependencies(${PROJECT_NAME}
 target_include_directories(${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
+
+pluginlib_export_plugin_description_file(hardware_interface plugins.xml)
 
 ament_export_dependencies(hardware_interface)
 ament_export_dependencies(rclcpp)
