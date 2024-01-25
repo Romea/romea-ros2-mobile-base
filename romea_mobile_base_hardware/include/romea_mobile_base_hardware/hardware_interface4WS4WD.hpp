@@ -33,9 +33,9 @@ namespace romea
 namespace ros2
 {
 
-class HardwareInterface4WS4WD
+struct HardwareInterface4WS4WD
 {
-public:
+// public:
   enum JointIDs
   {
     FRONT_LEFT_WHEEL_STEERING_JOINT_ID = 0,
@@ -55,10 +55,16 @@ public:
   core::HardwareCommand4WS4WD get_command()const;
   void set_state(const core::HardwareState4WS4WD & hardware_state);
 
+  core::HardwareCommand4WS4WD get_hardware_command() const;
+  sensor_msgs::msg::JointState get_joint_state_command() const;
+
+  void set_feedback(const core::HardwareState4WS4WD & hardware_state);
+  void set_feedback(const sensor_msgs::msg::JointState & joint_states);
+
   std::vector<hardware_interface::StateInterface> export_state_interfaces();
   std::vector<hardware_interface::CommandInterface> export_command_interfaces();
 
-private:
+// private:
   SteeringJointHardwareInterface front_left_wheel_steering_joint_;
   SteeringJointHardwareInterface front_right_wheel_steering_joint_;
   SteeringJointHardwareInterface rear_left_wheel_steering_joint_;

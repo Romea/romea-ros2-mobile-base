@@ -1,0 +1,16 @@
+<library path="romea_mobile_base_hardware">
+  <class name="romea_mobile_base_hardware/GenericHardwareSystemInterface2FWS4WD"
+    type="romea::ros2::GenericHardwareSystemInterface2FWS4WD"
+    base_class_type="hardware_interface::SystemInterface">
+    <description>
+      Generic hardware interface for 2FWS4WD robot
+    </description>
+  </class>
+  <class name="romea_mobile_base_hardware/GenericHardwareSystemInterface4WS4WD"
+    type="romea::ros2::GenericHardwareSystemInterface4WS4WD"
+    base_class_type="hardware_interface::SystemInterface">
+    <description>
+      Generic hardware interface for 4WS4WD robot
+    </description>
+  </class>
+</library>

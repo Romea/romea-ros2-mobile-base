@@ -21,6 +21,7 @@
 #include "romea_mobile_base_hardware/hardware_handle.hpp"
 #include "romea_mobile_base_hardware/hardware_info.hpp"
 
+
 namespace romea
 {
 namespace ros2

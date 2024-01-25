@@ -28,7 +28,17 @@ namespace ros2
 //-----------------------------------------------------------------------------
 SteeringJointHardwareInterface::SteeringJointHardwareInterface(
   const hardware_interface::ComponentInfo & joint_info)
-: command_(joint_info, hardware_interface::HW_IF_POSITION),
+: id_(0),
+  command_(joint_info, hardware_interface::HW_IF_POSITION),
+  feedback_(joint_info, hardware_interface::HW_IF_POSITION)
+{
+}
+
+//-----------------------------------------------------------------------------
+SteeringJointHardwareInterface::SteeringJointHardwareInterface(
+  const size_t & joint_id, const hardware_interface::ComponentInfo & joint_info)
+: id_(joint_id),
+  command_(joint_info, hardware_interface::HW_IF_POSITION),
   feedback_(joint_info, hardware_interface::HW_IF_POSITION)
 {
 }
@@ -57,6 +67,50 @@ core::SteeringAngleCommand SteeringJointHardwareInterface::get_command()const
 void SteeringJointHardwareInterface::set_state(const core::SteeringAngleState & state)
 {
   feedback_.set(state);
+}
+
+//-----------------------------------------------------------------------------
+void SteeringJointHardwareInterface::write_command(
+  sensor_msgs::msg::JointState & joint_state_command)const
+{
+  joint_state_command.name[id_] = get_joint_name();
+  set_position(joint_state_command, id_, get_command());
+}
+
+//-----------------------------------------------------------------------------
+void SteeringJointHardwareInterface::read_feedback(
+  const sensor_msgs::msg::JointState & joint_state_feedback)
+{
+  auto id = romea::ros2::get_joint_id(joint_state_feedback, get_joint_name());
+  feedback_.set(get_position(joint_state_feedback, id));
+}
+
+//-----------------------------------------------------------------------------
+void SteeringJointHardwareInterface::try_read_feedback(
+  const sensor_msgs::msg::JointState & joint_state_feedback)
+{
+  auto id = find_joint_id(joint_state_feedback, get_joint_name());
+  if (id.has_value()) {
+    feedback_.set(get_position(joint_state_feedback, id.value()));
+  }
+}
+
+//-----------------------------------------------------------------------------
+const std::string & SteeringJointHardwareInterface::get_command_type() const
+{
+  return command_.get_interface_type();
+}
+
+//-----------------------------------------------------------------------------
+const std::string & SteeringJointHardwareInterface::get_joint_name() const
+{
+  return command_.get_joint_name();
+}
+
+//-----------------------------------------------------------------------------
+const size_t & SteeringJointHardwareInterface::get_joint_id() const
+{
+  return id_;
 }
 
 }  // namespace ros2

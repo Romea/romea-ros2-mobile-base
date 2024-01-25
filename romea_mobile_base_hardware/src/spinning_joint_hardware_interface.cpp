@@ -22,6 +22,7 @@
 #include "romea_mobile_base_hardware/spinning_joint_hardware_interface.hpp"
 #include "romea_mobile_base_hardware/hardware_info.hpp"
 
+
 namespace romea
 {
 namespace ros2
@@ -46,10 +47,23 @@ core::RotationalMotionControlType toRotationalMotionCommandType(const std::strin
 SpinningJointHardwareInterface::SpinningJointHardwareInterface(
   const hardware_interface::ComponentInfo & joint_info,
   const std::string & spinning_joint_command_interface_type)
-: command_(joint_info, spinning_joint_command_interface_type),
+: id_(0),
+  command_(joint_info, spinning_joint_command_interface_type),
   feedback_(joint_info)
 {
 }
+
+//-----------------------------------------------------------------------------
+SpinningJointHardwareInterface::SpinningJointHardwareInterface(
+  const size_t & joint_id,
+  const hardware_interface::ComponentInfo & joint_info,
+  const std::string & spinning_joint_command_interface_type)
+: id_(joint_id),
+  command_(joint_info, spinning_joint_command_interface_type),
+  feedback_(joint_info)
+{
+}
+
 
 //-----------------------------------------------------------------------------
 void SpinningJointHardwareInterface::export_command_interface(
@@ -101,6 +115,62 @@ double SpinningJointHardwareInterface::get_command() const
 void SpinningJointHardwareInterface::set_state(const core::RotationalMotionState & state)
 {
   feedback_.set_state(state);
+}
+
+//-----------------------------------------------------------------------------
+void SpinningJointHardwareInterface::write_command(
+  sensor_msgs::msg::JointState & joint_state_command)const
+{
+  joint_state_command.name[id_] = get_joint_name();
+  if (get_command_type()[0] == 'v') {
+    set_velocity(joint_state_command, id_, get_command());
+  } else {
+    set_effort(joint_state_command, id_, get_command());
+  }
+}
+
+//-----------------------------------------------------------------------------
+void SpinningJointHardwareInterface::read_feedback(
+  const sensor_msgs::msg::JointState & joint_state_feedback)
+{
+  core::RotationalMotionState state;
+  auto id = romea::ros2::get_joint_id(joint_state_feedback, get_joint_name());
+  state.position = get_position(joint_state_feedback, id);
+  state.velocity = get_velocity(joint_state_feedback, id);
+  state.torque = get_effort(joint_state_feedback, id);
+  feedback_.set_state(state);
+}
+
+//-----------------------------------------------------------------------------
+void SpinningJointHardwareInterface::try_read_feedback(
+  const sensor_msgs::msg::JointState & joint_state_feedback)
+{
+  auto id = find_joint_id(joint_state_feedback, get_joint_name());
+  if (id.has_value()) {
+    core::RotationalMotionState state;
+    state.position = get_position(joint_state_feedback, id.value());
+    state.velocity = get_velocity(joint_state_feedback, id.value());
+    state.torque = get_effort(joint_state_feedback, id.value());
+    feedback_.set_state(state);
+  }
+}
+
+//-----------------------------------------------------------------------------
+const std::string & SpinningJointHardwareInterface::get_command_type() const
+{
+  return command_.get_interface_type();
+}
+
+//-----------------------------------------------------------------------------
+const std::string & SpinningJointHardwareInterface::get_joint_name() const
+{
+  return command_.get_joint_name();
+}
+
+//-----------------------------------------------------------------------------
+const size_t & SpinningJointHardwareInterface::get_joint_id() const
+{
+  return id_;
 }
 
 }  // namespace ros2

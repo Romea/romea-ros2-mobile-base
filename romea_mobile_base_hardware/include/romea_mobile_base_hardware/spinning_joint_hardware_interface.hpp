@@ -24,8 +24,9 @@
 // ros
 #include "hardware_interface/hardware_info.hpp"
 
-// local
+// romea
 #include "romea_mobile_base_hardware/hardware_handle.hpp"
+#include "romea_common_utils/joint_states.hpp"
 
 namespace romea
 {
@@ -59,17 +60,43 @@ public:
     const hardware_interface::ComponentInfo & joint_info,
     const std::string & spinning_joint_command_interface_type);
 
+  SpinningJointHardwareInterface(
+    const size_t & joint_id,
+    const hardware_interface::ComponentInfo & joint_info,
+    const std::string & spinning_joint_command_interface_type);
+
   double get_command() const;
   void set_state(const core::RotationalMotionState & state);
+  void set_feedback(const core::RotationalMotionState & state);
+
+  void write_command(sensor_msgs::msg::JointState & joint_state_command) const;
+  void read_feedback(const sensor_msgs::msg::JointState & joint_state_feedback);
+  void try_read_feedback(const sensor_msgs::msg::JointState & joint_state_feedback);
 
   void export_command_interface(
     std::vector<hardware_interface::CommandInterface> & command_interfaces);
-  void export_state_interfaces(std::vector<hardware_interface::StateInterface> & state_interfaces);
+  void export_state_interfaces(
+    std::vector<hardware_interface::StateInterface> & state_interfaces);
+
+  const std::string & get_command_type() const;
+  const std::string & get_joint_name() const;
+  const size_t & get_joint_id() const;
 
 private:
+  size_t id_;
   Command command_;
   Feedback feedback_;
 };
+
+// void write_command(
+//   const core::RotationalMotionCommand & command;
+//   const SpinningJointHardwareInterface & joint,
+//   sensor_msgs::msg::JointState & joint_state_command);
+
+// void read_feedback(
+//   const sensor_msgs::msg::JointState & joint_state_feedback,
+//   const SpinningJointHardwareInterface & joint,
+//   core::RotationalMotionState & state);
 
 }  // namespace ros2
 }  // namespace romea

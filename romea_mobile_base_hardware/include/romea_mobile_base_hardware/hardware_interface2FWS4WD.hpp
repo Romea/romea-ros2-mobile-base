@@ -20,6 +20,9 @@
 #include <string>
 #include <vector>
 
+// ros
+#include "sensor_msgs/msg/joint_state.hpp"
+
 // romea
 #include "romea_core_mobile_base/hardware/HardwareControl2FWS4WD.hpp"
 
@@ -32,9 +35,8 @@ namespace romea
 namespace ros2
 {
 
-class HardwareInterface2FWS4WD
+struct HardwareInterface2FWS4WD
 {
-public:
   enum JointIDs
   {
     FRONT_LEFT_WHEEL_STEERING_JOINT_ID = 0,
@@ -52,10 +54,15 @@ public:
   core::HardwareCommand2FWS4WD get_command()const;
   void set_state(const core::HardwareState2FWS4WD & hardware_state);
 
+  core::HardwareCommand2FWS4WD get_hardware_command() const;
+  sensor_msgs::msg::JointState get_joint_state_command() const;
+
+  void set_feedback(const core::HardwareState2FWS4WD & hardware_state);
+  void set_feedback(const sensor_msgs::msg::JointState & joint_states);
+
   std::vector<hardware_interface::StateInterface> export_state_interfaces();
   std::vector<hardware_interface::CommandInterface> export_command_interfaces();
 
-private:
   SteeringJointHardwareInterface front_left_wheel_steering_joint_;
   SteeringJointHardwareInterface front_right_wheel_steering_joint_;
   SpinningJointHardwareInterface front_left_wheel_spinning_joint_;

@@ -30,8 +30,10 @@ find_package(romea_core_mobile_base REQUIRED)
 find_package(romea_common_utils REQUIRED)
 find_package(romea_mobile_base_utils REQUIRED)
 find_package(hardware_interface REQUIRED)
+find_package(sensor_msgs REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
+  src/generic_hardware_system_interface.cpp
   src/hardware_handle.cpp
   src/hardware_info.cpp
   src/hardware_interface1FAS2FWD.cpp
@@ -51,7 +53,8 @@ add_library(${PROJECT_NAME} SHARED
   src/hardware_interface4WS4WD.cpp
   src/hardware_system_interface.cpp
   src/spinning_joint_hardware_interface.cpp
-  src/steering_joint_hardware_interface.cpp)
+  src/steering_joint_hardware_interface.cpp
+  )
 
 ament_target_dependencies(${PROJECT_NAME}
   rclcpp
@@ -61,13 +64,16 @@ ament_target_dependencies(${PROJECT_NAME}
   romea_core_common
   romea_core_mobile_base
   romea_common_utils
-  romea_mobile_base_utils)
+  romea_mobile_base_utils
+  sensor_msgs)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC ROS_DISTRO=${ROS_DISTRO})
+
+pluginlib_export_plugin_description_file(hardware_interface plugins.xml)
 
 ament_export_dependencies(hardware_interface)
 ament_export_dependencies(rclcpp)
@@ -77,6 +83,7 @@ ament_export_dependencies(romea_core_common)
 ament_export_dependencies(romea_core_mobile_base)
 ament_export_dependencies(romea_common_utils)
 ament_export_dependencies(romea_mobile_base_utils)
+ament_export_dependencies(sensor_msgs)
 
 ament_export_include_directories(include)
 ament_export_libraries(${PROJECT_NAME})

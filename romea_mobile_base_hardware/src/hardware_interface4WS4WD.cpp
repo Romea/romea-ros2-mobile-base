@@ -30,23 +30,31 @@ HardwareInterface4WS4WD::HardwareInterface4WS4WD(
   const hardware_interface::HardwareInfo & hardware_info,
   const std::string & spinning_joint_command_interface_type)
 : front_left_wheel_steering_joint_(
+    FRONT_LEFT_WHEEL_STEERING_JOINT_ID,
     hardware_info.joints[FRONT_LEFT_WHEEL_STEERING_JOINT_ID]),
   front_right_wheel_steering_joint_(
+    FRONT_RIGHT_WHEEL_STEERING_JOINT_ID,
     hardware_info.joints[FRONT_RIGHT_WHEEL_STEERING_JOINT_ID]),
   rear_left_wheel_steering_joint_(
+    REAR_LEFT_WHEEL_STEERING_JOINT_ID,
     hardware_info.joints[REAR_LEFT_WHEEL_STEERING_JOINT_ID]),
   rear_right_wheel_steering_joint_(
+    REAR_RIGHT_WHEEL_STEERING_JOINT_ID,
     hardware_info.joints[REAR_RIGHT_WHEEL_STEERING_JOINT_ID]),
   front_left_wheel_spinning_joint_(
+    FRONT_LEFT_WHEEL_SPINNING_JOINT_ID,
     hardware_info.joints[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID],
     spinning_joint_command_interface_type),
   front_right_wheel_spinning_joint_(
+    FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID,
     hardware_info.joints[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID],
     spinning_joint_command_interface_type),
   rear_left_wheel_spinning_joint_(
+    REAR_LEFT_WHEEL_SPINNING_JOINT_ID,
     hardware_info.joints[REAR_LEFT_WHEEL_SPINNING_JOINT_ID],
     spinning_joint_command_interface_type),
   rear_right_wheel_spinning_joint_(
+    REAR_RIGHT_WHEEL_SPINNING_JOINT_ID,
     hardware_info.joints[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID],
     spinning_joint_command_interface_type)
 {
@@ -103,24 +111,57 @@ core::HardwareCommand4WS4WD HardwareInterface4WS4WD::get_command()const
 //-----------------------------------------------------------------------------
 void HardwareInterface4WS4WD::set_state(const core::HardwareState4WS4WD & hardware_state)
 {
-  front_left_wheel_steering_joint_.
-  set_state(hardware_state.frontLeftWheelSteeringAngle);
-  front_right_wheel_steering_joint_.
-  set_state(hardware_state.frontRightWheelSteeringAngle);
-  rear_left_wheel_steering_joint_.
-  set_state(hardware_state.rearLeftWheelSteeringAngle);
-  rear_right_wheel_steering_joint_.
-  set_state(hardware_state.rearRightWheelSteeringAngle);
+  front_left_wheel_steering_joint_.set_state(hardware_state.frontLeftWheelSteeringAngle);
+  front_right_wheel_steering_joint_.set_state(hardware_state.frontRightWheelSteeringAngle);
+  rear_left_wheel_steering_joint_.set_state(hardware_state.rearLeftWheelSteeringAngle);
+  rear_right_wheel_steering_joint_.set_state(hardware_state.rearRightWheelSteeringAngle);
 
-  front_left_wheel_spinning_joint_.
-  set_state(hardware_state.frontLeftWheelSpinningMotion);
-  front_right_wheel_spinning_joint_.
-  set_state(hardware_state.frontRightWheelSpinningMotion);
-  rear_left_wheel_spinning_joint_.
-  set_state(hardware_state.rearLeftWheelSpinningMotion);
-  rear_right_wheel_spinning_joint_.
-  set_state(hardware_state.rearRightWheelSpinningMotion);
+  front_left_wheel_spinning_joint_.set_state(hardware_state.frontLeftWheelSpinningMotion);
+  front_right_wheel_spinning_joint_.set_state(hardware_state.frontRightWheelSpinningMotion);
+  rear_left_wheel_spinning_joint_.set_state(hardware_state.rearLeftWheelSpinningMotion);
+  rear_right_wheel_spinning_joint_.set_state(hardware_state.rearRightWheelSpinningMotion);
 }
+
+//-----------------------------------------------------------------------------
+core::HardwareCommand4WS4WD HardwareInterface4WS4WD::get_hardware_command() const
+{
+  return get_command();
+}
+
+//-----------------------------------------------------------------------------
+sensor_msgs::msg::JointState HardwareInterface4WS4WD::get_joint_state_command() const
+{
+  auto joint_states = make_joint_state_msg(8);
+  front_left_wheel_steering_joint_.write_command(joint_states);
+  front_right_wheel_steering_joint_.write_command(joint_states);
+  rear_left_wheel_steering_joint_.write_command(joint_states);
+  rear_right_wheel_steering_joint_.write_command(joint_states);
+  front_left_wheel_spinning_joint_.write_command(joint_states);
+  front_right_wheel_spinning_joint_.write_command(joint_states);
+  rear_left_wheel_spinning_joint_.write_command(joint_states);
+  rear_right_wheel_spinning_joint_.write_command(joint_states);
+  return joint_states;
+}
+
+//-----------------------------------------------------------------------------
+void HardwareInterface4WS4WD::set_feedback(const core::HardwareState4WS4WD & hardware_state)
+{
+  set_state(hardware_state);
+}
+
+//-----------------------------------------------------------------------------
+void HardwareInterface4WS4WD::set_feedback(const sensor_msgs::msg::JointState & joint_states)
+{
+  front_left_wheel_steering_joint_.read_feedback(joint_states);
+  front_right_wheel_steering_joint_.read_feedback(joint_states);
+  rear_left_wheel_steering_joint_.read_feedback(joint_states);
+  rear_right_wheel_steering_joint_.read_feedback(joint_states);
+  front_left_wheel_spinning_joint_.read_feedback(joint_states);
+  front_right_wheel_spinning_joint_.read_feedback(joint_states);
+  rear_left_wheel_spinning_joint_.read_feedback(joint_states);
+  rear_right_wheel_spinning_joint_.read_feedback(joint_states);
+}
+
 
 }  // namespace ros2
 }  // namespace romea
