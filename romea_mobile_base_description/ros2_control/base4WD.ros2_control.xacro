@@ -8,16 +8,22 @@
       <xacro:if value="${mode == 'live'}">
         <hardware>
           <plugin>${live_hardware_plugin}</plugin>
+          <param name="wheelbase">${wheelbase}</param>
           <param name="front_wheel_radius">${front_wheel_radius}</param>
           <param name="rear_wheel_radius">${rear_wheel_radius}</param>
+          <param name="front_track">${front_track}</param>
+          <param name="rear_track">${rear_track}</param>
         </hardware>
       </xacro:if>
 
-      <xacro:if value="${mode == 'simulation'}">
+      <xacro:if value="${'simulation' in mode}">
         <hardware>
           <plugin>${simulation_hardware_plugin}</plugin>
+          <param name="wheelbase">${wheelbase}</param>
           <param name="front_wheel_radius">${front_wheel_radius}</param>
           <param name="rear_wheel_radius">${rear_wheel_radius}</param>
+          <param name="front_track">${front_track}</param>
+          <param name="rear_track">${rear_track}</param>
         </hardware>
       </xacro:if>
 

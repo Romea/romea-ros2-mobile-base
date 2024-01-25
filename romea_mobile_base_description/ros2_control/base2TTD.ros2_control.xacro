@@ -15,7 +15,7 @@
         </hardware>
       </xacro:if>
 
-      <xacro:if value="${mode == 'simulation'}">
+      <xacro:if value="${'simulation' in mode}">
         <hardware>
           <plugin>${simulation_hardware_plugin}</plugin>
           <param name="sprocket_wheel_radius">${sprocket_wheel_radius}</param>
