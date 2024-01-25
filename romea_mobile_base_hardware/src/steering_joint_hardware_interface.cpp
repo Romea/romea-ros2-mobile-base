@@ -15,6 +15,7 @@
 
 // std
 #include <vector>
+#include <string>
 
 // local
 #include "romea_mobile_base_hardware/steering_joint_hardware_interface.hpp"

@@ -49,7 +49,6 @@ rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
 GenericSimulationSystemInterface<HardwareInterface>::on_init(
   const hardware_interface::HardwareInfo & hardware_info)
 {
-
   if (hardware_interface::SystemInterface::on_init(hardware_info) != CallbackReturn::SUCCESS) {
     return CallbackReturn::ERROR;
   }
@@ -85,7 +84,8 @@ hardware_interface::return_type GenericSimulationSystemInterface<HardwareInterfa
 
 //-----------------------------------------------------------------------------
 template<typename HardwareInterface>
-hardware_interface::return_type GenericSimulationSystemInterface<HardwareInterface>::load_interface_(
+hardware_interface::return_type
+GenericSimulationSystemInterface<HardwareInterface>::load_interface_(
   const hardware_interface::HardwareInfo & hardware_info)
 {
   try {

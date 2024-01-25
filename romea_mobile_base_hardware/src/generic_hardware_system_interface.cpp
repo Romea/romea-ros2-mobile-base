@@ -49,7 +49,6 @@ rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
 GenericHardwareSystemInterface<HardwareInterface>::on_init(
   const hardware_interface::HardwareInfo & hardware_info)
 {
-
   if (hardware_interface::SystemInterface::on_init(hardware_info) != CallbackReturn::SUCCESS) {
     return CallbackReturn::ERROR;
   }

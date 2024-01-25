@@ -18,6 +18,7 @@
 
 // std
 #include <vector>
+#include <string>
 
 // ros
 #include "hardware_interface/hardware_info.hpp"
