@@ -24,7 +24,8 @@
 // ros
 #include "hardware_interface/system_interface.hpp"
 
-// local
+// romea
+#include "romea_common_utils/ros_versions.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2WD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface4WD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface4WS4WD.hpp"
