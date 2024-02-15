@@ -16,6 +16,7 @@
   <xacro:property name="roller_wheel_radius" value="0.3" />
   <xacro:property name="idler_wheel_radius" value="0.3" />
   <xacro:property name="track_thickness" value="0.1" />
+  <xacro:property name="maximal_wheel_speed" value="1.0" />
 
   <xacro:include
     filename="$(find romea_mobile_base_description)/ros2_control/base2TTD.ros2_control.xacro" />

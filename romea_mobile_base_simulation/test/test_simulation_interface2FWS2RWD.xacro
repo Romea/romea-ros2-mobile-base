@@ -16,6 +16,8 @@
   <xacro:property name="front_hub_carrier_offset" value="0.1" />
   <xacro:property name="rear_track" value="1.0" />
   <xacro:property name="rear_wheel_radius" value="0.3" />
+  <xacro:property name="maximal_wheel_steering_angle" value="0.50" />
+  <xacro:property name="maximal_wheel_speed" value="1.0" />
 
   <xacro:include
     filename="$(find romea_mobile_base_description)/ros2_control/base2FWS2RWD.ros2_control.xacro" />
