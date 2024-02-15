@@ -8,21 +8,32 @@
   <xacro:property name="prefix" value="" />
 
   <!-- Link names -->
-  <xacro:property name="base_link" value="base_link" />
-  <xacro:property name="base_footprint_link" value="base_footprint_link" />
-  <xacro:property name="inertial_link" value="inertial_link_name" />
-  <xacro:property name="front_left_wheel_spinning_link" value="front_left_wheel_spinning_link" />
-  <xacro:property name="front_right_wheel_spinning_link" value="front_right_wheel_spinning_link" />
-  <xacro:property name="rear_left_wheel_spinning_link" value="rear_left_wheel_spinning_link" />
-  <xacro:property name="rear_right_wheel_spinning_link" value="rear_right_wheel_spinning_link" />
+  <xacro:property name="base_link"
+    value="base_link" />
+  <xacro:property name="base_footprint_link"
+    value="base_footprint_link" />
+  <xacro:property name="inertial_link"
+    value="inertial_link_name" />
+  <xacro:property name="front_left_wheel_spinning_link"
+    value="front_left_wheel_spinning_link" />
+  <xacro:property name="front_right_wheel_spinning_link"
+    value="front_right_wheel_spinning_link" />
+  <xacro:property name="rear_left_wheel_spinning_link"
+    value="rear_left_wheel_spinning_link" />
+  <xacro:property name="rear_right_wheel_spinning_link"
+    value="rear_right_wheel_spinning_link" />
 
   <!-- Joint names -->
-  <xacro:property name="base_footprint_joint" value="base_footprint_joint" />
-  <xacro:property name="inertial_joint" value="inertial_joint" />
-  <xacro:property name="front_left_wheel_spinning_joint" value="front_left_wheel_spinning_joint" />
+  <xacro:property name="base_footprint_joint"
+    value="base_footprint_joint" />
+  <xacro:property name="inertial_joint"
+    value="inertial_joint" />
+  <xacro:property name="front_left_wheel_spinning_joint"
+    value="front_left_wheel_spinning_joint" />
   <xacro:property name="front_right_wheel_spinning_joint"
     value="front_right_wheel_spinning_joint_name" />
-  <xacro:property name="rear_left_wheel_spinning_joint" value="rear_left_wheel_spinning_joint_name" />
+  <xacro:property name="rear_left_wheel_spinning_joint"
+    value="rear_left_wheel_spinning_joint_name" />
   <xacro:property name="rear_right_wheel_spinning_joint"
     value="rear_right_wheel_spinning_joint_name" />
 
@@ -64,21 +75,11 @@
   <xacro:property name="chassis_height" value="${min(front_wheel_radius,rear_wheel_radius)}" />
 
   <xacro:chassis>
-
-    <visual>
-      <geometry>
-        <box size="${aabb_length} ${aabb_width} ${aabb_height}" />
-      </geometry>
-      <origin
-        xyz="${aabb_center_x-body_reference_x} ${aabb_center_y}  ${aabb_center_z-chassis_height}"
-        rpy="0 0 0" />
-      <material name="grey">
-        <color rgba="0.6 0.6 0.6 1" />
-      </material>
-    </visual>
-
-    <!-- visual wheel -->
-    <cylinder length="${wheel_width}" radius="${wheel_radius}" />
+    <visual />
+    <visual />
+    <visual />
+    <visual />
+    <visual />
   </xacro:chassis>
 
   <xacro:base_control mode="test" base_name="base" />

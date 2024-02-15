@@ -54,49 +54,52 @@
   <xacro:property name="mass_center_x" value="0.0" />
   <xacro:property name="mass_center_y" value="0.0" />
   <xacro:property name="mass_center_z" value="0.68" />
-
-  <xacro:property name="maximal_axle_steering_angle" value="0.2" />
-  <xacro:property name="maximal_wheel_steering_angle"
-    value="${atan(tan(maximal_axle_steering_angle)/(1-tan(maximal_axle_steering_angle)*front_track/(2*wheelbase)))}" />
-  <xacro:property name="minimal_axle_steering_angle" value="${-maximal_axle_steering_angle}" />
-  <xacro:property name="minimal_wheel_steering_angle" value="${-maximal_wheel_steering_angle} " />
-
-  <xacro:property name="maximal_wheel_speed" value="2.0" />
   <xacro:property name="body_reference_x" value="-0.6" />
 
-  <!-- Wheel Properties -->
-  <xacro:property name="steering_link_mass" value="30" />
-  <xacro:property name="steering_link_y" value="0.05" />
-  <xacro:property name="steering_link_xz" value="0.1" />
 
+  <!-- Wheel Properties -->
+  <xacro:property name="front_wheel_x_offset" value="0.0" />
+  <xacro:property name="rear_wheel_x_offset" value="0.0" />
+  <xacro:property name="front_hub_carrier_offset" value="0.1" />
+  <xacro:property name="rear_hub_carrier_offset" value="0.1" />
   <xacro:property name="front_wheel_radius" value="0.398" />
   <xacro:property name="rear_wheel_radius" value="0.398" />
   <xacro:property name="front_wheel_width" value="0.2" />
   <xacro:property name="rear_wheel_width" value="0.2" />
   <xacro:property name="front_wheel_mass" value="10" />
   <xacro:property name="rear_wheel_mass" value="10" />
-  <xacro:property name="wheel_radius" value="${front_wheel_radius}" />
-  <xacro:property name="wheel_width" value="${front_wheel_width}" />
+  <xacro:property name="maximal_wheel_speed" value="2.0" />
+  <xacro:property name="chassis_height" value="0.398" />
 
-  <!-- Wheel Mounting Positions -->
-  <xacro:property name="front_wheel_y_offset" value="0.1" />
-  <xacro:property name="rear_wheel_y_offset" value="0.1" />
-  <xacro:property name="chassis_height" value="${min(front_wheel_radius,rear_wheel_radius)}" />
+  <!-- Steering Properties -->
+  <xacro:property name="maximal_axle_steering_angle" value="0.2" />
+  <xacro:property name="maximal_wheel_steering_angle"
+    value="${atan(tan(maximal_axle_steering_angle)/(1-tan(maximal_axle_steering_angle)*front_track/(2*wheelbase)))}" />
+  <xacro:property name="minimal_axle_steering_angle"
+    value="${-maximal_axle_steering_angle}" />
+  <xacro:property name="minimal_wheel_steering_angle"
+    value="${-maximal_wheel_steering_angle} " />
+  <xacro:property name="front_axle_steering_link_mass" value="1" />
+  <xacro:property name="front_axle_steering_link_x" value="0.05" />
+  <xacro:property name="front_axle_steering_link_y" value="0.05" />
+  <xacro:property name="front_axle_steering_link_z" value="0.05" />
+  <xacro:property name="front_wheel_steering_link_mass" value="30" />
+  <xacro:property name="front_wheel_steering_link_y" value="${front_hub_carrier_offset}" />
+  <xacro:property name="front_wheel_steering_link_xz" value="0.05" />
+  <xacro:property name="rear_wheel_steering_link_mass" value="30" />
+  <xacro:property name="rear_wheel_steering_link_y" value="${rear_hub_carrier_offset}" />
+  <xacro:property name="rear_wheel_steering_link_xz" value="0.05" />
 
   <xacro:chassis>
-    <!-- visual chassis -->
-    <visual>
-      <origin
-        xyz="${aabb_center_x-body_reference_x} ${aabb_center_y}  ${aabb_center_z-chassis_height}"
-        rpy="0 0 0" />
-      <geometry>
-        <box size="${aabb_length} ${aabb_width} ${aabb_height}" />
-      </geometry>
-    </visual>
-    <!-- visual front steering -->
-    <box size="${steering_link_xz} ${steering_link_y} ${steering_link_xz}" />
-    <!-- visual wheel -->
-    <cylinder length="${wheel_width}" radius="${wheel_radius}" />
+    <visual />
+    <visual />
+    <visual />
+    <visual />
+    <visual />
+    <visual />
+    <visual />
+    <visual />
+    <visual />
   </xacro:chassis>
 
   <xacro:base_control mode="test" base_name="base" />

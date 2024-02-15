@@ -3,9 +3,9 @@
 
   <xacro:arg name="type" default="" />
 
-  <xacro:include filename="$(find romea_mobile_base_description)/urdf/base2FWS4WD.chassis.xacro" />
+  <xacro:include filename="$(find romea_mobile_base_description)/urdf/base4WS4WD.chassis.xacro" />
   <xacro:include
-    filename="$(find romea_mobile_base_description)/ros2_control/base$(arg type).ros2_control.xacro" />
+    filename="$(find romea_mobile_base_description)/ros2_control/base4WS4WD.ros2_control.xacro" />
 
   <xacro:property name="prefix" value="" />
 
@@ -15,6 +15,8 @@
   <xacro:property name="inertial_link" value="inertial_link" />
   <xacro:property name="front_left_wheel_steering_link" value="front_left_wheel_steering_link" />
   <xacro:property name="front_right_wheel_steering_link" value="front_right_wheel_steering_link" />
+  <xacro:property name="rear_left_wheel_steering_link" value="rear_left_wheel_steering_link" />
+  <xacro:property name="rear_right_wheel_steering_link" value="rear_right_wheel_steering_link" />
   <xacro:property name="front_left_wheel_spinning_link" value="front_left_wheel_spinning_link" />
   <xacro:property name="front_right_wheel_spinning_link" value="front_right_wheel_spinning_link" />
   <xacro:property name="rear_left_wheel_spinning_link" value="rear_left_wheel_spinning_link" />
@@ -25,6 +27,8 @@
   <xacro:property name="inertial_joint" value="inertial_joint" />
   <xacro:property name="front_left_wheel_steering_joint" value="front_left_wheel_steering_joint" />
   <xacro:property name="front_right_wheel_steering_joint" value="front_right_wheel_steering_joint" />
+  <xacro:property name="rear_left_wheel_steering_joint" value="rear_left_wheel_steering_joint" />
+  <xacro:property name="rear_right_wheel_steering_joint" value="rear_right_wheel_steering_joint" />
   <xacro:property name="front_left_wheel_spinning_joint" value="front_left_wheel_spinning_joint" />
   <xacro:property name="front_right_wheel_spinning_joint" value="front_right_wheel_spinning_joint" />
   <xacro:property name="rear_left_wheel_spinning_joint" value="rear_left_wheel_spinning_joint" />
@@ -34,18 +38,22 @@
   <xacro:property name="aabb_length" value="2.6" />
   <xacro:property name="aabb_width" value="1.18" />
   <xacro:property name="aabb_height" value="1.5" />
+  <xacro:property name="aabb_center_x" value="0" />
+  <xacro:property name="aabb_center_y" value="0" />
+  <xacro:property name="aabb_center_z" value="1" />
 
   <xacro:property name="wheelbase" value="2.0" />
   <xacro:property name="front_track" value="1.0" />
   <xacro:property name="rear_track" value="1.0" />
   <xacro:property name="track" value="${front_track}" />
-  <xacro:property name="ground_clearance" value="0.45" />
 
   <!--    <xacro:property name="mass_body" value="800." />-->
   <xacro:property name="mass_base" value="800." />
   <xacro:property name="mass_center_x" value="-0.1" />
   <xacro:property name="mass_center_y" value=" 0.0" />
   <xacro:property name="mass_center_z" value=" 0.2" />
+  <xacro:property name="body_reference_x" value="-1.0" />
+  <xacro:property name="ground_clearance" value="0.45" />
 
   <!--    <xacro:property name="body_length" value="2.6" />
     <xacro:property name="body_width" value="1.18" />
@@ -53,7 +61,6 @@
 
   <!--    <xacro:property name="body_offset_x" value="-1.0" />-->
   <!--    <xacro:property name="body_origin_z" value="0.0" />-->
-  <xacro:property name="body_reference_x" value="-1.0" />
 
   <!-- Steering Properties -->
   <xacro:property name="steering_angle_max_in" value="1.04" />
@@ -70,40 +77,40 @@
   <xacro:property name="steering_link_xz" value="0.1" />
 
   <!-- Wheel Properties -->
+  <xacro:property name="front_wheel_x_offset" value="0.0" />
+  <xacro:property name="rear_wheel_x_offset" value="0.0" />
+  <xacro:property name="front_hub_carrier_offset" value="0.1" />
+  <xacro:property name="rear_hub_carrier_offset" value="0.1" />
   <xacro:property name="front_wheel_radius" value="0.32" />
   <xacro:property name="rear_wheel_radius" value="0.32" />
   <xacro:property name="front_wheel_width" value="0.2" />
   <xacro:property name="rear_wheel_width" value="0.2" />
-  <xacro:property name="wheel_radius" value="${front_wheel_radius}" />
-  <xacro:property name="wheel_width" value="${front_wheel_width}" />
-  <xacro:property name="chassis_height" value="${min(front_wheel_radius,rear_wheel_radius)}" />
-
-  <xacro:property name="minimal_wheel_steering_angle" value="-1.04" />
-  <xacro:property name="maximal_wheel_steering_angle" value="1.04" />
-  <xacro:property name="maximal_wheel_speed" value="3.0" />
-
-  <xacro:property name="wheel_mass" value="5" />
   <xacro:property name="front_wheel_mass" value="5" />
   <xacro:property name="rear_wheel_mass" value="5" />
+  <xacro:property name="chassis_height" value="0.32" />
+  <xacro:property name="maximal_wheel_speed" value="3.0" />
 
+  <!-- Steering Properties -->
+  <xacro:property name="minimal_wheel_steering_angle" value="-1.04" />
+  <xacro:property name="maximal_wheel_steering_angle" value="1.04" />
+
+  <xacro:property name="front_wheel_steering_link_mass" value="3" />
+  <xacro:property name="front_wheel_steering_link_y" value="${front_hub_carrier_offset}" />
+  <xacro:property name="front_wheel_steering_link_xz" value="0.05" />
+  <xacro:property name="rear_wheel_steering_link_mass" value="3" />
+  <xacro:property name="rear_wheel_steering_link_y" value="${rear_hub_carrier_offset}" />
+  <xacro:property name="rear_wheel_steering_link_xz" value="0.05" />
 
   <xacro:chassis>
-    <!-- visual chassis -->
-    <visual>
-      <origin xyz="${-body_reference_x} 0 ${ground_clearance+aabb_height/2-chassis_height}"
-        rpy="0 0 0" />
-
-      <geometry>
-        <box size="${aabb_length} ${aabb_width} ${aabb_height}" />
-      </geometry>
-      <material name="grey">
-        <color rgba="0.6 0.6 0.6 1" />
-      </material>
-    </visual>
-    <!-- visual front steering -->
-    <box size="${steering_link_xz_size} ${steering_link_y_size} ${steering_link_xz_size}" />
-    <!-- visual wheel -->
-    <cylinder length="${wheel_width}" radius="${wheel_radius}" />
+    <visual />
+    <visual />
+    <visual />
+    <visual />
+    <visual />
+    <visual />
+    <visual />
+    <visual />
+    <visual />
   </xacro:chassis>
 
 
