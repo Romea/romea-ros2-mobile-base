@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="wheel">
 
-  <xacro:macro name="wheel" params="parent_link wheel_spinning_link wheel_spinning_joint wheel_mass wheel_width wheel_radius left_right *joint_origin *visual_wheel">
+  <xacro:macro name="wheel"
+    params="parent_link wheel_spinning_link wheel_spinning_joint wheel_mass wheel_width wheel_radius left_right *joint_origin *visual_wheel">
 
     <gazebo reference="${prefix}${wheel_spinning_link}">
       <material>Gazebo/Black</material>
@@ -13,18 +14,20 @@
     <xacro:property name="mass" value="${wheel_mass}" />
 
     <xacro:property name="ixx" value="${mass/4.0*(radius*radius+width*width/3.0)}" />
-    <xacro:property name="iyy" value="${wheel_mass}/4.0*(${wheel_radius}*${wheel_radius}+${wheel_width}*${wheel_width}/3.0)}" />
+    <xacro:property name="iyy"
+      value="${wheel_mass}/4.0*(${wheel_radius}*${wheel_radius}+${wheel_width}*${wheel_width}/3.0)}" />
     <xacro:property name="izz" value="${wheel_mass}*${wheel_radius}*${wheel_radius}/2.0" />
 
     <link name="${prefix}${wheel_spinning_link}">
       <inertial>
         <mass value="${wheel_mass}" />
         <origin xyz="0 0 0" rpy="0 0 0" />
-        <inertia  ixx="${mass/4.0*(radius*radius+width*width/3.0)}" ixy="0" ixz="0"
-                  iyy="${mass/4.0*(radius*radius+width*width/3.0)}" iyz="0"
-                  izz="${mass*radius*radius/2.0}" />
+        <inertia ixx="${mass/4.0*(radius*radius+width*width/3.0)}" ixy="0" ixz="0"
+          iyy="${mass/4.0*(radius*radius+width*width/3.0)}" iyz="0"
+          izz="${mass*radius*radius/2.0}" />
       </inertial>
-      <visual>
+      <xacro:insert_block name="visual_wheel" />
+      <!-- <visual>
         <origin xyz="0 0 0" rpy="0 ${left_right * M_PI/2 - M_PI/2} 0" />
         <geometry>
           <xacro:insert_block name="visual_wheel"/>
@@ -32,7 +35,7 @@
         <material name="black">
           <color rgba="0 0 0 1"/>
         </material>
-      </visual>
+      </visual> -->
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
@@ -42,8 +45,8 @@
     </link>
 
     <gazebo reference="${prefix}${wheel_spinning_link}">
-      <mu1 value="0.9"/>
-      <mu2 value="0.9"/>
+      <mu1 value="0.9" />
+      <mu2 value="0.9" />
       <fdir1>0 0 1</fdir1>
       <kp value="1e8" />
       <minDepth>0.005</minDepth>
@@ -51,10 +54,10 @@
 
 
     <joint name="${prefix}${wheel_spinning_joint}" type="continuous">
-      <limit effort="10000000" velocity="${maximal_angular_speed}"/>
-      <parent link="${prefix}${parent_link}"/>
-      <child link="${prefix}${wheel_spinning_link}"/>
-      <xacro:insert_block name="joint_origin"/>
+      <limit effort="10000000" velocity="${maximal_angular_speed}" />
+      <parent link="${prefix}${parent_link}" />
+      <child link="${prefix}${wheel_spinning_link}" />
+      <xacro:insert_block name="joint_origin" />
       <axis xyz="0 0 1" rpy="0 0 0" />
     </joint>
 

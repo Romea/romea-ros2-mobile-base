@@ -1,38 +1,44 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="wheel_steered">
 
-  <xacro:property name="M_PI" value="3.14159"/>
+  <xacro:property name="M_PI" value="3.14159" />
 
   <xacro:include filename="$(find romea_mobile_base_description)/urdf/wheel.xacro" />
 
-  <xacro:macro name="wheel_steered" params="parent_link wheel_steering_link wheel_steering_joint  steering_link_mass steering_link_xz steering_link_y wheel_spinning_link wheel_spinning_joint wheel_origin_y wheel_mass wheel_width wheel_radius left_right *joint_origin *visual_steering *visual_wheel">
+  <xacro:macro name="wheel_steered"
+    params="parent_link wheel_steering_link wheel_steering_joint  steering_link_mass steering_link_xz steering_link_y wheel_spinning_link wheel_spinning_joint wheel_origin_x wheel_origin_y wheel_mass wheel_width wheel_radius left_right *joint_origin *visual_steering *visual_wheel">
 
     <link name="${prefix}${wheel_steering_link}">
-      <visual>
-        <origin xyz="0 0 0" rpy="0 0 ${left_right * M_PI/2 - M_PI/2}"/>
+      <xacro:insert_block name="visual_steering" />
+      <!-- <visual>
+        <origin xyz="0 0 0" rpy="0 0 ${left_right * M_PI/2 - M_PI/2}" />
         <geometry>
-          <xacro:insert_block name="visual_steering"/>
+          <xacro:insert_block name="visual_steering" />
         </geometry>
         <material name="blue">
-          <color rgba="0.2 0.2 0.6 1"/>
+          <color rgba="0.2 0.2 0.6 1" />
         </material>
-      </visual>
+      </visual> -->
       <inertial>
         <mass value="${steering_link_mass}" />
         <origin xyz="0 0 0" />
-        <inertia  ixx="${steering_link_mass/12.0 * (steering_link_y*steering_link_y + steering_link_xz*steering_link_xz)}" ixy="0" ixz="0"
-                  iyy="${steering_link_mass/12.0 * (steering_link_xz*steering_link_xz + steering_link_xz*steering_link_xz)}" iyz="0"
-                  izz="${steering_link_mass/12.0 * (steering_link_y*steering_link_y + steering_link_xz*steering_link_xz)}" />
+        <inertia
+          ixx="${steering_link_mass/12.0 * (steering_link_y*steering_link_y + steering_link_xz*steering_link_xz)}"
+          ixy="0" ixz="0"
+          iyy="${steering_link_mass/12.0 * (steering_link_xz*steering_link_xz + steering_link_xz*steering_link_xz)}"
+          iyz="0"
+          izz="${steering_link_mass/12.0 * (steering_link_y*steering_link_y + steering_link_xz*steering_link_xz)}" />
       </inertial>
     </link>
 
     <joint name="${prefix}${wheel_steering_joint}" type="revolute">
-      <limit lower="${minimal_wheel_steering_angle}" upper="${maximal_wheel_steering_angle}" effort="10000000" velocity="1000000"/>
-      <axis xyz="0 0 1"/>
-      <parent link="${prefix}${parent_link}"/>
-      <child link="${prefix}${wheel_steering_link}"/>
-      <xacro:insert_block name="joint_origin"/>
-      <dynamics damping="100.0" friction="20.0"/>
+      <limit lower="${minimal_wheel_steering_angle}" upper="${maximal_wheel_steering_angle}"
+        effort="10000000" velocity="1000000" />
+      <axis xyz="0 0 1" />
+      <parent link="${prefix}${parent_link}" />
+      <child link="${prefix}${wheel_steering_link}" />
+      <xacro:insert_block name="joint_origin" />
+      <dynamics damping="100.0" friction="20.0" />
     </joint>
 
     <transmission name="${prefix}${wheel_steering_joint}_trans" type="SimpleTransmission">
@@ -46,16 +52,15 @@
     </transmission>
 
     <xacro:wheel parent_link="${wheel_steering_link}"
-                 wheel_spinning_link="${wheel_spinning_link}"
-                 wheel_spinning_joint="${wheel_spinning_joint}"
-                 wheel_mass="${wheel_mass}"
-                 wheel_width="${wheel_width}"
-                 wheel_radius="${wheel_radius}"
-                 left_right="${left_right}">
-      <origin xyz="0 ${wheel_origin_y} 0" rpy="${-M_PI/2} 0 0" />
-      <xacro:insert_block name="visual_wheel"/>
+      wheel_spinning_link="${wheel_spinning_link}"
+      wheel_spinning_joint="${wheel_spinning_joint}"
+      wheel_mass="${wheel_mass}"
+      wheel_width="${wheel_width}"
+      wheel_radius="${wheel_radius}"
+      left_right="${left_right}">
+      <origin xyz="${wheel_origin_x} ${wheel_origin_y} 0" rpy="${-M_PI/2} 0 0" />
+      <xacro:insert_block name="visual_wheel" />
     </xacro:wheel>
   </xacro:macro>
 
 </robot>
-

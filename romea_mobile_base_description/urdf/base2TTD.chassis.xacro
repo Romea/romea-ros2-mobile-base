@@ -4,100 +4,121 @@
   <xacro:include filename="$(find romea_mobile_base_description)/urdf/common.xacro" />
   <xacro:include filename="$(find romea_mobile_base_description)/urdf/wheel.xacro" />
 
-  <xacro:macro name="chassis" params="*visual_chassis *visual_sprocket_wheel *visual_idler_wheel *visual_roller_wheel">
+  <xacro:macro name="chassis"
+    params="*visual_chassis 
+            *visual_left_sprocket_wheel 
+            *visual_right_sprocket_wheel 
+            *visual_left_idler_wheel 
+            *visual_right_idler_wheel 
+            *visual_left_roller_wheel
+            *visual_right_roller_wheel">
 
     <xacro:common>
-      <xacro:insert_block name="visual_chassis"/>
+      <xacro:insert_block name="visual_chassis" />
     </xacro:common>
 
-   <xacro:wheel parent_link="${base_link}"
-                wheel_spinning_link="${left_sprocket_wheel_spinning_link}"
-                wheel_spinning_joint="${left_sprocket_wheel_spinning_joint}"
-                wheel_mass="${sprocket_wheel_mass}"
-                wheel_width="${track_width}"
-                wheel_radius="${sprocket_wheel_radius+track_thickness}"
-                left_right="-1">
+    <xacro:wheel parent_link="${base_link}"
+      wheel_spinning_link="${left_sprocket_wheel_spinning_link}"
+      wheel_spinning_joint="${left_sprocket_wheel_spinning_joint}"
+      wheel_mass="${sprocket_wheel_mass}"
+      wheel_width="${track_width}"
+      wheel_radius="${sprocket_wheel_radius+track_thickness}"
+      left_right="-1">
 
-      <origin xyz="${sprocket_wheel_x-body_reference_x} ${track/2} ${sprocket_wheel_z - chassis_height}" rpy="${-M_PI/2} 0 0" />
-      <xacro:insert_block name="visual_sprocket_wheel"/>
+      <origin
+        xyz="${sprocket_wheel_x-body_reference_x} ${track/2} ${sprocket_wheel_z - chassis_height}"
+        rpy="${-M_PI/2} 0 0" />
+      <xacro:insert_block name="visual_left_sprocket_wheel" />
     </xacro:wheel>
 
     <xacro:wheel parent_link="${base_link}"
-                 wheel_spinning_link="${right_sprocket_wheel_spinning_link}"
-                 wheel_spinning_joint="${right_sprocket_wheel_spinning_joint}"
-                 wheel_mass="${sprocket_wheel_mass}"
-                 wheel_width="${track_width}"
-                 wheel_radius="${sprocket_wheel_radius+track_thickness}"
-                 left_right="1">
-      <origin xyz="${sprocket_wheel_x-body_reference_x} ${-track/2} ${sprocket_wheel_z - chassis_height}" rpy="${-M_PI/2} 0 0" />
-      <xacro:insert_block name="visual_sprocket_wheel"/>
+      wheel_spinning_link="${right_sprocket_wheel_spinning_link}"
+      wheel_spinning_joint="${right_sprocket_wheel_spinning_joint}"
+      wheel_mass="${sprocket_wheel_mass}"
+      wheel_width="${track_width}"
+      wheel_radius="${sprocket_wheel_radius+track_thickness}"
+      left_right="1">
+      <origin
+        xyz="${sprocket_wheel_x-body_reference_x} ${-track/2} ${sprocket_wheel_z - chassis_height}"
+        rpy="${-M_PI/2} 0 0" />
+      <xacro:insert_block name="visual_right_sprocket_wheel" />
     </xacro:wheel>
 
     <xacro:wheel parent_link="${base_link}"
-                 wheel_spinning_link="${left_idler_wheel_spinning_link}"
-                 wheel_spinning_joint="${left_idler_wheel_spinning_joint}"
-                 wheel_mass="${sprocket_wheel_mass}"
-                 wheel_width="${track_width}"
-                 wheel_radius="${idler_wheel_radius+track_thickness}"
-                 left_right="-1">
+      wheel_spinning_link="${left_idler_wheel_spinning_link}"
+      wheel_spinning_joint="${left_idler_wheel_spinning_joint}"
+      wheel_mass="${sprocket_wheel_mass}"
+      wheel_width="${track_width}"
+      wheel_radius="${idler_wheel_radius+track_thickness}"
+      left_right="-1">
 
-       <origin xyz="${idler_wheel_x-body_reference_x} ${track/2} ${idler_wheel_z - chassis_height}" rpy="${-M_PI/2} 0 0" />
-       <xacro:insert_block name="visual_idler_wheel"/>
-     </xacro:wheel>
-
-     <xacro:wheel parent_link="${base_link}"
-                  wheel_spinning_link="${right_idler_wheel_spinning_link}"
-                  wheel_spinning_joint="${right_idler_wheel_spinning_joint}"
-                  wheel_mass="${sprocket_wheel_mass}"
-                  wheel_width="${track_width}"
-                  wheel_radius="${idler_wheel_radius+track_thickness}"
-                  left_right="1">
-       <origin xyz="${idler_wheel_x-body_reference_x} ${-track/2} ${idler_wheel_z - chassis_height}" rpy="${-M_PI/2} 0 0" />
-       <xacro:insert_block name="visual_idler_wheel"/>
-     </xacro:wheel>
-
-     <xacro:wheel parent_link="${base_link}"
-                  wheel_spinning_link="${front_left_roller_wheel_spinning_link}"
-                  wheel_spinning_joint="${front_left_roller_wheel_spinning_joint}"
-                  wheel_mass="${roller_wheel_mass}"
-                  wheel_width="${track_width}"
-                  wheel_radius="${roller_wheel_radius+track_thickness}"
-                  left_right="-1">
-       <origin xyz="${wheelbase/2-body_reference_x} ${track/2} ${roller_wheel_radius - chassis_height}" rpy="${-M_PI/2} 0 0" />
-       <xacro:insert_block name="visual_roller_wheel"/>
-     </xacro:wheel>
-
-     <xacro:wheel parent_link="${base_link}"
-                  wheel_spinning_link="${front_right_roller_wheel_spinning_link}"
-                  wheel_spinning_joint="${front_right_roller_wheel_spinning_joint}"
-                  wheel_mass="${roller_wheel_mass}"
-                  wheel_width="${track_width}"
-                  wheel_radius="${roller_wheel_radius+track_thickness}"
-                  left_right="1">
-       <origin xyz="${wheelbase/2-body_reference_x} ${-track/2} ${idler_wheel_radius - chassis_height}" rpy="${-M_PI/2} 0 0" />
-       <xacro:insert_block name="visual_roller_wheel"/>
-     </xacro:wheel>
-
-    <xacro:wheel parent_link="${base_link}"
-                 wheel_spinning_link="${rear_left_roller_wheel_spinning_link}"
-                 wheel_spinning_joint="${rear_left_roller_wheel_spinning_joint}"
-                 wheel_mass="${roller_wheel_mass}"
-                 wheel_width="${track_width}"
-                 wheel_radius="${roller_wheel_radius+track_thickness}"
-                 left_right="-1">
-      <origin xyz="${-wheelbase/2-body_reference_x} ${track/2} ${roller_wheel_radius - chassis_height}" rpy="${-M_PI/2} 0 0" />
-      <xacro:insert_block name="visual_roller_wheel"/>
+      <origin xyz="${idler_wheel_x-body_reference_x} ${track/2} ${idler_wheel_z - chassis_height}"
+        rpy="${-M_PI/2} 0 0" />
+      <xacro:insert_block name="visual_left_idler_wheel" />
     </xacro:wheel>
 
     <xacro:wheel parent_link="${base_link}"
-                 wheel_spinning_link="${rear_right_roller_wheel_spinning_link}"
-                 wheel_spinning_joint="${rear_right_roller_wheel_spinning_joint}"
-                 wheel_mass="${roller_wheel_mass}"
-                 wheel_width="${track_width}"
-                 wheel_radius="${roller_wheel_radius+track_thickness}"
-                 left_right="1">
-      <origin xyz="${-wheelbase/2-body_reference_x} ${-track/2} ${roller_wheel_radius - chassis_height}" rpy="${-M_PI/2} 0 0" />
-      <xacro:insert_block name="visual_roller_wheel"/>
+      wheel_spinning_link="${right_idler_wheel_spinning_link}"
+      wheel_spinning_joint="${right_idler_wheel_spinning_joint}"
+      wheel_mass="${sprocket_wheel_mass}"
+      wheel_width="${track_width}"
+      wheel_radius="${idler_wheel_radius+track_thickness}"
+      left_right="1">
+      <origin xyz="${idler_wheel_x-body_reference_x} ${-track/2} ${idler_wheel_z - chassis_height}"
+        rpy="${-M_PI/2} 0 0" />
+      <xacro:insert_block name="visual_right_idler_wheel" />
+    </xacro:wheel>
+
+    <xacro:wheel parent_link="${base_link}"
+      wheel_spinning_link="${front_left_roller_wheel_spinning_link}"
+      wheel_spinning_joint="${front_left_roller_wheel_spinning_joint}"
+      wheel_mass="${roller_wheel_mass}"
+      wheel_width="${track_width}"
+      wheel_radius="${roller_wheel_radius+track_thickness}"
+      left_right="-1">
+      <origin
+        xyz="${wheelbase/2-body_reference_x} ${track/2} ${roller_wheel_radius - chassis_height}"
+        rpy="${-M_PI/2} 0 0" />
+      <xacro:insert_block name="visual_left_roller_wheel" />
+    </xacro:wheel>
+
+    <xacro:wheel parent_link="${base_link}"
+      wheel_spinning_link="${front_right_roller_wheel_spinning_link}"
+      wheel_spinning_joint="${front_right_roller_wheel_spinning_joint}"
+      wheel_mass="${roller_wheel_mass}"
+      wheel_width="${track_width}"
+      wheel_radius="${roller_wheel_radius+track_thickness}"
+      left_right="1">
+      <origin
+        xyz="${wheelbase/2-body_reference_x} ${-track/2} ${idler_wheel_radius - chassis_height}"
+        rpy="${-M_PI/2} 0 0" />
+      <xacro:insert_block name="visual_right_roller_wheel" />
+    </xacro:wheel>
+
+    <xacro:wheel parent_link="${base_link}"
+      wheel_spinning_link="${rear_left_roller_wheel_spinning_link}"
+      wheel_spinning_joint="${rear_left_roller_wheel_spinning_joint}"
+      wheel_mass="${roller_wheel_mass}"
+      wheel_width="${track_width}"
+      wheel_radius="${roller_wheel_radius+track_thickness}"
+      left_right="-1">
+      <origin
+        xyz="${-wheelbase/2-body_reference_x} ${track/2} ${roller_wheel_radius - chassis_height}"
+        rpy="${-M_PI/2} 0 0" />
+      <xacro:insert_block name="visual_left_roller_wheel" />
+    </xacro:wheel>
+
+    <xacro:wheel parent_link="${base_link}"
+      wheel_spinning_link="${rear_right_roller_wheel_spinning_link}"
+      wheel_spinning_joint="${rear_right_roller_wheel_spinning_joint}"
+      wheel_mass="${roller_wheel_mass}"
+      wheel_width="${track_width}"
+      wheel_radius="${roller_wheel_radius+track_thickness}"
+      left_right="1">
+      <origin
+        xyz="${-wheelbase/2-body_reference_x} ${-track/2} ${roller_wheel_radius - chassis_height}"
+        rpy="${-M_PI/2} 0 0" />
+      <xacro:insert_block name="visual_right_roller_wheel" />
     </xacro:wheel>
 
   </xacro:macro>
