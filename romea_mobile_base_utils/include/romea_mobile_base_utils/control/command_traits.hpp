@@ -42,6 +42,7 @@ struct CommandTraits<core::OneAxleSteeringCommand>
 {
   using Measure = core::OneAxleSteeringMeasure;
   using MeasureMsg = romea_mobile_base_msgs::msg::OneAxleSteeringMeasureStamped;
+  using CommandLimits = core::OneAxleSteeringCommandLimits;
 };
 
 template<>
@@ -49,6 +50,7 @@ struct CommandTraits<core::TwoAxleSteeringCommand>
 {
   using Measure = core::TwoAxleSteeringMeasure;
   using MeasureMsg = romea_mobile_base_msgs::msg::TwoAxleSteeringMeasureStamped;
+  using CommandLimits = core::TwoAxleSteeringCommandLimits;
 };
 
 template<>
@@ -56,6 +58,7 @@ struct CommandTraits<core::SkidSteeringCommand>
 {
   using Measure = core::SkidSteeringMeasure;
   using MeasureMsg = romea_mobile_base_msgs::msg::SkidSteeringMeasureStamped;
+  using CommandLimits = core::SkidSteeringCommandLimits;
 };
 
 template<>
@@ -63,6 +66,7 @@ struct CommandTraits<core::OmniSteeringCommand>
 {
   using Measure = core::OmniSteeringMeasure;
   using MeasureMsg = romea_mobile_base_msgs::msg::OmniSteeringMeasureStamped;
+  using CommandLimits = core::OmniSteeringCommandLimits;
 };
 
 }  // namespace ros2
