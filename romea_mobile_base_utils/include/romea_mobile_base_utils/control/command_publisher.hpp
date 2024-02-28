@@ -69,10 +69,10 @@ struct CommandPublisher<core::SkidSteeringCommand>
   {
     if (message_type == "geometry_msgs/Twist") {
       using msg = geometry_msgs::msg::Twist;
-      return instance<msg>(node, "cmd_vel");
+      return instance<msg>(node, "~/cmd_vel");
     } else if (message_type == "romea_mobile_base_msgs/SkidSteeringCommand") {
       using msg = romea_mobile_base_msgs::msg::SkidSteeringCommand;
-      return instance<msg>(node, "cmd_skid_steering");
+      return instance<msg>(node, "~/cmd_skid_steering");
     } else {
       throw std::runtime_error(
               "Output message type " + message_type +
@@ -101,10 +101,10 @@ struct CommandPublisher<core::OmniSteeringCommand>
   {
     if (message_type == "geometry_msgs/Twist") {
       using msg = geometry_msgs::msg::Twist;
-      return instance<msg>(node, "cmd_vel");
+      return instance<msg>(node, "~/cmd_vel");
     } else if (message_type == "romea_mobile_base_msgs/OmniSteeringCommand") {
       using msg = romea_mobile_base_msgs::msg::OmniSteeringCommand;
-      return instance<msg>(node, "cmd_omni_steering");
+      return instance<msg>(node, "~/cmd_omni_steering");
     } else {
       throw std::runtime_error(
               "Output message type " + message_type +
@@ -133,13 +133,13 @@ struct CommandPublisher<core::OneAxleSteeringCommand>
   {
     if (message_type == "geometry_msgs/Twist") {
       using msg = geometry_msgs::msg::Twist;
-      return instance<msg>(node, "cmd_vel");
+      return instance<msg>(node, "~/cmd_vel");
     } else if (message_type == "ackermann_msgs/AckermannDrive") {
       using msg = ackermann_msgs::msg::AckermannDrive;
-      return instance<msg>(node, "cmd_steer");
+      return instance<msg>(node, "~/cmd_steer");
     } else if (message_type == "romea_mobile_base_msgs/OneAxleSteeringCommand") {
       using msg = romea_mobile_base_msgs::msg::OneAxleSteeringCommand;
-      return instance<msg>(node, "cmd_one_axle_steering");
+      return instance<msg>(node, "~/cmd_one_axle_steering");
     } else {
       throw std::runtime_error(
               "Output message type " + message_type +
@@ -168,10 +168,10 @@ struct CommandPublisher<core::TwoAxleSteeringCommand>
   {
     if (message_type == "four_wheel_steering_msgs/FourWheelSteering") {
       using msg = four_wheel_steering_msgs::msg::FourWheelSteering;
-      return instance<msg>(node, "cmd_4ws");
+      return instance<msg>(node, "~/cmd_4ws");
     } else if (message_type == "romea_mobile_base_msgs/TwoAxleSteeringCommand") {
       using msg = romea_mobile_base_msgs::msg::TwoAxleSteeringCommand;
-      return instance<msg>(node, "cmd_two_axle_steering");
+      return instance<msg>(node, "~/cmd_two_axle_steering");
     } else {
       throw std::runtime_error(
               "Output message type " + message_type +
