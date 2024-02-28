@@ -3,6 +3,7 @@
 
 from ament_index_python.packages import get_package_share_directory
 import yaml
+import math
 
 
 def robot_full_name(robot_type, robot_model):
@@ -80,13 +81,16 @@ def get_wheelbase(base_description):
             + "cannot get wheelbase"
         )
 
-    # if get_kinematic_type(base_description) != "skid_steering":
-    #     return base_description["geometry"]["axles_distance"]
-    # else:
-    #     raise LookupError(
-    #         "No axles distance description found in base info : "
-    #         + "cannot get wheelbase"
-    #     )
+
+def get_wheelbase_or(base_description, default_value):
+    try:
+        return get_wheelbase(base_description)
+    except LookupError:
+        return default_value
+
+
+def get_inertia(base_description):
+    return base_description["inertia"]
 
 
 def get_track(base_description):
@@ -207,3 +211,80 @@ def get_maximal_angular_speed(base_description):
         raise LookupError(
             "No maximal angular speed computation is implemented for this kind of vehicule : "
         )
+
+
+def get_skid_steering_command_limits(base_description):
+    return {
+        "minimal_longitudinal_speed": -get_maximal_linear_speed(base_description),
+        "maximal_longitudinal_speed": get_maximal_linear_speed(base_description),
+        "maximal_angular_speed": get_maximal_angular_speed(base_description),
+    }
+
+
+def get_one_axle_steering_command_limits(base_description):
+    return {
+        "minimal_longitudinal_speed": -get_maximal_linear_speed(base_description),
+        "maximal_longitudinal_speed": get_maximal_linear_speed(base_description),
+        "maximal_steering_angle": get_maximal_steering_angle(base_description),
+    }
+
+
+def get_two_axle_steering_command_limits(base_description):
+    return {
+        "minimal_longitudinal_speed": -get_maximal_linear_speed(base_description),
+        "maximal_longitudinal_speed": get_maximal_linear_speed(base_description),
+        "maximal_front_steering_angle": get_maximal_steering_angle(base_description),
+        "maximal_rear_steering_angle": get_maximal_steering_angle(base_description),
+    }
+
+
+def get_two_wheel_steering_command_limits(base_description):
+
+    track = get_track(base_description)
+    wheelbase = get_wheelbase(base_description)
+    maximal_wheel_angle = get_maximal_wheel_angle(base_description)
+
+    maximal_steering_angle = math.atan(
+        math.tan(maximal_wheel_angle)
+        / (1 + math.tan(maximal_wheel_angle) * track / (2.0 * wheelbase))
+    )
+
+    return {
+        "minimal_longitudinal_speed": -get_maximal_linear_speed(base_description),
+        "maximal_longitudinal_speed": get_maximal_linear_speed(base_description),
+        "maximal_front_steering_angle": maximal_steering_angle,
+    }
+
+
+def get_four_wheel_steering_command_limits(base_description):
+    return {
+        "minimal_longitudinal_speed": -get_maximal_linear_speed(base_description),
+        "maximal_longitudinal_speed": get_maximal_linear_speed(base_description),
+        "maximal_front_steering_angle": get_maximal_wheel_angle(base_description),
+        "maximal_rear_steering_angle": get_maximal_wheel_angle(base_description),
+    }
+
+
+def get_omni_steering_command_limits(base_description):
+    return {
+        "minimal_longitudinal_speed": -get_maximal_linear_speed(base_description),
+        "maximal_longitudinal_speed": get_maximal_linear_speed(base_description),
+        "maximal_lateral_speed": get_maximal_linear_speed(base_description),
+        "maximal_angular_speed": get_maximal_angular_speed(base_description),
+    }
+
+
+def get_command_limits(base_description):
+    kinematic_type = get_kinematic_type(base_description)
+    if kinematic_type == "skid_steering":
+        return get_skid_steering_command_limits(base_description)
+    elif kinematic_type == "omni_steering":
+        return get_omni_steering_command_limits(base_description)
+    elif kinematic_type == "one_axle_steering":
+        return get_one_axle_steering_command_limits(base_description)
+    elif kinematic_type == "two_axle_steering":
+        return get_two_axle_steering_command_limits(base_description)
+    elif kinematic_type == "two_wheel_steering":
+        return get_two_wheel_steering_command_limits(base_description)
+    else:
+        return get_four_wheel_steering_command_limits(base_description)
