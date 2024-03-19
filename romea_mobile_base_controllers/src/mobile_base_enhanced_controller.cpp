@@ -73,7 +73,7 @@ CallbackReturn MobileBaseEnhancedController<InterfaceType, KinematicType>::on_co
 template<typename InterfaceType, typename KinematicType>
 controller_interface::return_type
 MobileBaseEnhancedController<InterfaceType, KinematicType>::update(
-  const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
+  const rclcpp::Time & time, const rclcpp::Duration & /*period*/)
 {
   this->update_time_ = this->get_node()->get_clock()->now();  // why not time?
   // RCLCPP_INFO_STREAM(get_node()->get_logger(), "update_controller_state_");
@@ -89,27 +89,27 @@ MobileBaseEnhancedController<InterfaceType, KinematicType>::update(
     //    RCLCPP_INFO_STREAM(this->get_node()->get_logger(),"odometry frame measured");
     //    RCLCPP_INFO_STREAM(this->get_node()->get_logger(),"\n"<<odometry_frame_);
 
-    RCLCPP_INFO_STREAM(this->get_node()->get_logger(), " new command ok");
-    RCLCPP_INFO_STREAM(this->get_node()->get_logger(), "\n" << this->current_command_.cmd);
+    // RCLCPP_INFO_STREAM(this->get_node()->get_logger(), " new command ok");
+    // RCLCPP_INFO_STREAM(this->get_node()->get_logger(), "\n" << this->current_command_.cmd);
 
-    RCLCPP_INFO_STREAM(
-      this->get_node()->get_logger(), " angular_speed measure " << this->angular_speed_measure_);
+    // RCLCPP_INFO_STREAM(
+    //   this->get_node()->get_logger(), " angular_speed measure " << this->angular_speed_measure_);
 
     if (isfinite(this->angular_speed_measure_)) {
       this->current_command_.cmd.angularSpeed = this->angular_speed_pid_->compute(
-        to_romea_duration(this->current_command_.stamp),
+        to_romea_duration(time),
         this->current_command_.cmd.angularSpeed,
         this->angular_speed_measure_);
-      RCLCPP_INFO_STREAM(this->get_node()->get_logger(), " new angular speed command");
-      RCLCPP_INFO_STREAM(this->get_node()->get_logger(), "\n" << this->current_command_.cmd);
+      // RCLCPP_INFO_STREAM(this->get_node()->get_logger(), " new angular speed command");
+      // RCLCPP_INFO_STREAM(this->get_node()->get_logger(), "\n" << this->current_command_.cmd);
     } else {
-      RCLCPP_INFO_STREAM(
+      RCLCPP_ERROR_STREAM(
         this->get_node()->get_logger(), " no angular speed provided, check imu input");
     }
 
     this->clamp_current_command_();
-    RCLCPP_INFO_STREAM(this->get_node()->get_logger(), " new clamp command");
-    RCLCPP_INFO_STREAM(this->get_node()->get_logger(), "\n" << this->current_command_.cmd);
+    // RCLCPP_INFO_STREAM(this->get_node()->get_logger(), " new clamp command");
+    // RCLCPP_INFO_STREAM(this->get_node()->get_logger(), "\n" << this->current_command_.cmd);
 
     this->send_current_command_();
 //    RCLCPP_INFO_STREAM(this->get_node()->get_logger(), "cooucou new command");
