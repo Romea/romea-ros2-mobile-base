@@ -4,10 +4,10 @@ This package provides controllers for different kinds of vehicle as :
 - skid steering vehicles:
     - 2 wheel drive vehicle (2WD)   **NOT TESTED**
     - 4 wheel drive vehicle (4WD)
-    - 2 track drive vehicle (2TD, 2THD, 2TTD)    **NOT TESTED**
+    - 2 track drive vehicle (2TD, 2THD, 2TTD)    **2TD AND 2TTD NOT TESTED**
     
 - one axle steering vehicles:
-    - 1 front stering axle + 2 rear wheel drive vehicle (1FAS2RWD)  **NOT TESTED**
+    - 1 front stering axle + 2 rear wheel drive vehicle (1FAS2RWD)  
     - 1 front stering axle + 2 front wheel drive vehicle (1FAS2FWD)  **NOT TESTED**
     - 1 front stering axle + 4 wheel drive vehicle (1FAS4WD)  **NOT YET IMPLEMENTED**
     
@@ -162,3 +162,5 @@ This package provides controllers for different kinds of vehicle as :
 
   Absolute front maximal steering angle
 
+
+# 4 Launch file #
