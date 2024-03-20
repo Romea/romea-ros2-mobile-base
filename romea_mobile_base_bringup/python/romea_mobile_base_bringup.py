@@ -14,7 +14,10 @@
 
 
 from romea_common_bringup import MetaDescription, robot_urdf_prefix, robot_prefix
+
 import importlib
+
+from numpy import radians
 
 
 class MobileBaseMetaDescription:
@@ -38,8 +41,11 @@ class MobileBaseMetaDescription:
     def get_simulation_initial_xyz(self):
         return self.meta_description.get("initial_xyz", "simulation")
 
-    def get_simulation_initial_rpy(self):
+    def get_simulation_initial_rpy_deg(self):
         return self.meta_description.get("initial_rpy", "simulation")
+
+    def get_simulation_initial_rpy_rad(self):
+        return radians(self.get_simulation_initial_rpy_deg()).tolist()
 
     def get_records(self):
         return self.meta_description.get_or("records", None, {})
