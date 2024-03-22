@@ -250,7 +250,7 @@ template class GenericHardwareSystemInterface<HardwareInterface2FWS4WD>;
 // template class GenericHardwareSystemInterface<HardwareInterface1FAS2RWD>;
 // template class GenericHardwareSystemInterface<HardwareInterface1FAS4WD>;
 // template class GenericHardwareSystemInterface<HardwareInterface2TD>;
-// template class GenericHardwareSystemInterface<HardwareInterface2THD>;
+template class GenericHardwareSystemInterface<HardwareInterface2THD>;
 // template class GenericHardwareSystemInterface<HardwareInterface2TTD>;
 
 }  // namespace ros2
@@ -258,8 +258,11 @@ template class GenericHardwareSystemInterface<HardwareInterface2FWS4WD>;
 
 #include "pluginlib/class_list_macros.hpp"
 PLUGINLIB_EXPORT_CLASS(
+  romea::ros2::GenericHardwareSystemInterface4WS4WD,
+  hardware_interface::SystemInterface)
+PLUGINLIB_EXPORT_CLASS(
   romea::ros2::GenericHardwareSystemInterface2FWS4WD,
   hardware_interface::SystemInterface)
 PLUGINLIB_EXPORT_CLASS(
-  romea::ros2::GenericHardwareSystemInterface4WS4WD,
+  romea::ros2::GenericHardwareSystemInterface2THD,
   hardware_interface::SystemInterface)

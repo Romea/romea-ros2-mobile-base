@@ -140,8 +140,8 @@ using GenericHardwareSystemInterface4WS4WD =
   GenericHardwareSystemInterface<HardwareInterface4WS4WD>;
 // using GenericHardwareSystemInterface2TD =
 //   GenericHardwareSystemInterface<HardwareInterface2TD>;
-// using GenericHardwareSystemInterface2THD =
-//   GenericHardwareSystemInterface<HardwareInterface2THD>;
+using GenericHardwareSystemInterface2THD =
+  GenericHardwareSystemInterface<HardwareInterface2THD>;
 // using GenericHardwareSystemInterface2TTD =
 //   GenericHardwareSystemInterface<HardwareInterface2TTD>;
 

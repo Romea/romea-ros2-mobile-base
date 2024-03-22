@@ -51,7 +51,6 @@ public:
 
 
   core::HardwareCommand2TD get_command()const;
-
   void set_state(const core::HardwareState2TD & hardware_state);
 
   void set_state(
@@ -60,6 +59,12 @@ public:
     const core::RotationalMotionState & front_right_idler_wheel_spinning_motion,
     const core::RotationalMotionState & rear_left_idler_wheel_spinning_motion,
     const core::RotationalMotionState & rear_right_idler_wheel_spinning_motion);
+
+  core::HardwareCommand2TD get_hardware_command() const;
+  sensor_msgs::msg::JointState get_joint_state_command() const;
+
+  void set_feedback(const core::HardwareState2TD & hardware_state);
+  void set_feedback(const sensor_msgs::msg::JointState & joint_states);
 
   std::vector<hardware_interface::StateInterface> export_state_interfaces();
   std::vector<hardware_interface::CommandInterface> export_command_interfaces();
