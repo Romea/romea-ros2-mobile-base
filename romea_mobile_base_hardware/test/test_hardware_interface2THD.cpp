@@ -99,7 +99,7 @@ TEST_F(TestHarwareInterface2THD, DISABLED_checkCommandInterfaceTypeWhenEffortCon
   check_interface_name(command_interfaces[1], "robot_joint2/effort");
 }
 
-TEST_F(TestHarwareInterface2THD, checkSetCurrentState)
+TEST_F(TestHarwareInterface2THD, checkSetFeedback)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
 
@@ -140,6 +140,29 @@ TEST_F(TestHarwareInterface2THD, checkSetCurrentState)
   }
 }
 
+
+TEST_F(TestHarwareInterface2THD, checkSetFeedbackUsingJointStates)
+{
+  MakeInterface(hardware_interface::HW_IF_VELOCITY);
+
+  auto feedback = romea::ros2::make_joint_state_msg(8);
+  feedback.name[0] = "robot_joint1";
+  feedback.name[1] = "robot_joint2";
+  feedback.position[0] = 1.0;
+  feedback.velocity[0] = 2.0;
+  feedback.effort[0] = 3.0;
+  feedback.position[1] = 4.0;
+  feedback.velocity[1] = 5.0;
+  feedback.effort[1] = 6.0;
+
+  interface->set_feedback(feedback);
+
+  auto state_interfaces = interface->export_state_interfaces();
+  for (size_t i = 0; i < 6; ++i) {
+    EXPECT_DOUBLE_EQ(state_interfaces[i].get_value(), i + 1.0);
+  }
+}
+
 TEST_F(TestHarwareInterface2THD, checkGetCurrentCommand)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
@@ -149,10 +172,27 @@ TEST_F(TestHarwareInterface2THD, checkGetCurrentCommand)
     command_interfaces[i].set_value(i + 1.0);
   }
 
-  romea::core::HardwareCommand2TD current_command = interface->get_command();
+  auto command = interface->get_hardware_command();
 
-  EXPECT_DOUBLE_EQ(current_command.leftSprocketWheelSpinningSetPoint, 1.0);
-  EXPECT_DOUBLE_EQ(current_command.rightSprocketWheelSpinningSetPoint, 2.0);
+  EXPECT_DOUBLE_EQ(command.leftSprocketWheelSpinningSetPoint, 1.0);
+  EXPECT_DOUBLE_EQ(command.rightSprocketWheelSpinningSetPoint, 2.0);
+}
+
+TEST_F(TestHarwareInterface2THD, checkGetCommandUsingJointState)
+{
+  MakeInterface(hardware_interface::HW_IF_VELOCITY);
+
+  auto command_interfaces = interface->export_command_interfaces();
+  for (size_t i = 0; i < 2; ++i) {
+    command_interfaces[i].set_value(i + 1.0);
+  }
+
+  auto command = interface->get_joint_state_command();
+  EXPECT_STREQ(command.name[0].c_str(), "robot_joint1");
+  EXPECT_STREQ(command.name[1].c_str(), "robot_joint2");
+
+  EXPECT_DOUBLE_EQ(command.velocity[0], 1.0);
+  EXPECT_DOUBLE_EQ(command.velocity[1], 2.0);
 }
 
 //-----------------------------------------------------------------------------
