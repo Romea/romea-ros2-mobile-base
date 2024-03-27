@@ -106,15 +106,43 @@ void SpinningJointHardwareInterface::Feedback::set_state(const core::RotationalM
 }
 
 //-----------------------------------------------------------------------------
+core::RotationalMotionState SpinningJointHardwareInterface::Feedback::get_state()const
+{
+  core::RotationalMotionState state;
+  state.position = position.get();
+  state.velocity = velocity.get();
+  state.torque = torque.get();
+  return state;
+}
+
+//-----------------------------------------------------------------------------
 double SpinningJointHardwareInterface::get_command() const
 {
   return command_.get();
 }
 
 //-----------------------------------------------------------------------------
+void SpinningJointHardwareInterface::set_command(const double & command)
+{
+  command_.set(command);
+}
+
+//-----------------------------------------------------------------------------
 void SpinningJointHardwareInterface::set_state(const core::RotationalMotionState & state)
 {
   feedback_.set_state(state);
+}
+
+//-----------------------------------------------------------------------------
+void SpinningJointHardwareInterface::set_feedback(const core::RotationalMotionState & state)
+{
+  set_state(state);
+}
+
+//-----------------------------------------------------------------------------
+core::RotationalMotionState SpinningJointHardwareInterface::get_feedback()const
+{
+  return feedback_.get_state();
 }
 
 //-----------------------------------------------------------------------------

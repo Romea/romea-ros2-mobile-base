@@ -33,19 +33,36 @@ namespace ros2
 class SimulationInterface2THD
 {
 public:
+  enum JointIDs
+  {
+    LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID = 0,
+    RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID = 1,
+    FRONT_LEFT_IDLER_WHEEL_SPINNING_JOINT_ID = 2,
+    FRONT_RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID = 3,
+    REAR_LEFT_IDLER_WHEEL_SPINNING_JOINT_ID = 4,
+    REAR_RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID = 5
+  };
+
   SimulationInterface2THD(
     const hardware_interface::HardwareInfo & hardware_info,
     const std::string & command_interface_type);
 
+  core::SimulationCommand2THD get_hardware_command();
+  sensor_msgs::msg::JointState get_joint_state_command();
 
-  core::SimulationCommand2THD get_command()const;
-  void set_state(const core::SimulationState2THD & simulation_state);
+  void set_feedback(const core::SimulationState2THD & simulation_state);
+  void set_feedback(const sensor_msgs::msg::JointState & joint_states);
 
   std::vector<hardware_interface::StateInterface> export_state_interfaces();
   std::vector<hardware_interface::CommandInterface> export_command_interfaces();
 
 private:
-  HardwareInterface2THD hardware_interface_;
+  SpinningJointHardwareInterface left_sprocket_wheel_spinning_joint_;
+  SpinningJointHardwareInterface right_sprocket_wheel_spinning_joint_;
+  SpinningJointHardwareInterface front_left_idler_wheel_spinning_joint_;
+  SpinningJointHardwareInterface front_right_idler_wheel_spinning_joint_;
+  SpinningJointHardwareInterface rear_left_idler_wheel_spinning_joint_;
+  SpinningJointHardwareInterface rear_right_idler_wheel_spinning_joint_;
 
   const double idler_wheel_radius_;
   const double sprocket_wheel_radius_;

@@ -161,7 +161,7 @@ hardware_interface::return_type GazeboSystemInterface<GazeboInterface, Simulatio
   const rclcpp::Duration & period)
 #endif
 {
-  simulation_interface_->set_state(gazebo_interface_->get_state());
+  simulation_interface_->set_feedback(gazebo_interface_->get_state());
   return hardware_interface::return_type::OK;
 }
 
@@ -175,7 +175,7 @@ hardware_interface::return_type GazeboSystemInterface<GazeboInterface, Simulatio
   const rclcpp::Duration & period)
 #endif
 {
-  gazebo_interface_->set_command(simulation_interface_->get_command());
+  gazebo_interface_->set_command(simulation_interface_->get_hardware_command());
   return hardware_interface::return_type::OK;
 }
 

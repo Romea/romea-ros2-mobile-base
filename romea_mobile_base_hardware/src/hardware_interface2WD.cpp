@@ -30,9 +30,11 @@ HardwareInterface2WD::HardwareInterface2WD(
   const hardware_interface::HardwareInfo & hardware_info,
   const std::string & command_interface_type)
 : left_wheel_spinning_joint_(
+    LEFT_WHEEL_SPINNING_JOINT_ID,
     hardware_info.joints[LEFT_WHEEL_SPINNING_JOINT_ID],
     command_interface_type),
   right_wheel_spinning_joint_(
+    RIGHT_WHEEL_SPINNING_JOINT_ID,
     hardware_info.joints[RIGHT_WHEEL_SPINNING_JOINT_ID],
     command_interface_type)
 {
@@ -69,12 +71,40 @@ core::HardwareCommand2WD HardwareInterface2WD::get_command()const
   // *INDENT-ON*
 }
 
+//-----------------------------------------------------------------------------
+core::HardwareCommand2WD HardwareInterface2WD::get_hardware_command() const
+{
+  return get_command();
+}
+
+//-----------------------------------------------------------------------------
+sensor_msgs::msg::JointState HardwareInterface2WD::get_joint_state_command() const
+{
+  auto joint_states = make_joint_state_msg(2);
+  left_wheel_spinning_joint_.write_command(joint_states);
+  right_wheel_spinning_joint_.write_command(joint_states);
+  return joint_states;
+}
+
 
 //-----------------------------------------------------------------------------
 void HardwareInterface2WD::set_state(const core::HardwareState2WD & hardware_state)
 {
   left_wheel_spinning_joint_.set_state(hardware_state.leftWheelSpinningMotion);
   right_wheel_spinning_joint_.set_state(hardware_state.rightWheelSpinningMotion);
+}
+
+//-----------------------------------------------------------------------------
+void HardwareInterface2WD::set_feedback(const core::HardwareState2WD & hardware_state)
+{
+  set_state(hardware_state);
+}
+
+//-----------------------------------------------------------------------------
+void HardwareInterface2WD::set_feedback(const sensor_msgs::msg::JointState & joint_states)
+{
+  left_wheel_spinning_joint_.read_feedback(joint_states);
+  right_wheel_spinning_joint_.read_feedback(joint_states);
 }
 
 }  // namespace ros2

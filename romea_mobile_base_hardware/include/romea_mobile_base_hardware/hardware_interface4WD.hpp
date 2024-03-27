@@ -49,6 +49,12 @@ public:
   core::HardwareCommand4WD get_command() const;
   void set_state(const core::HardwareState4WD & hardware_state);
 
+  core::HardwareCommand4WD get_hardware_command() const;
+  sensor_msgs::msg::JointState get_joint_state_command() const;
+
+  void set_feedback(const core::HardwareState4WD & hardware_state);
+  void set_feedback(const sensor_msgs::msg::JointState & joint_states);
+
   std::vector<hardware_interface::StateInterface> export_state_interfaces();
   std::vector<hardware_interface::CommandInterface> export_command_interfaces();
 

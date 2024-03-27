@@ -42,18 +42,42 @@
       </joint>
 
       <joint name="${prefix}${front_left_wheel_steering_joint}">
+        <xacro:if value="${'simulation' in mode}">
+          <command_interface name="position">
+            <param name="min">${-maximal_wheel_steering_angle}</param>
+            <param name="max">${maximal_wheel_steering_angle}</param>
+          </command_interface>
+        </xacro:if>
         <state_interface name="position" />
       </joint>
 
       <joint name="${prefix}${front_right_wheel_steering_joint}">
+        <xacro:if value="${'simulation' in mode}">
+          <command_interface name="position">
+            <param name="min">${-maximal_wheel_steering_angle}</param>
+            <param name="max">${maximal_wheel_steering_angle}</param>
+          </command_interface>
+        </xacro:if>
         <state_interface name="position" />
       </joint>
 
       <joint name="${prefix}${rear_left_wheel_steering_joint}">
+        <xacro:if value="${'simulation' in mode}">
+          <command_interface name="position">
+            <param name="min">${-maximal_wheel_steering_angle}</param>
+            <param name="max">${maximal_wheel_steering_angle}</param>
+          </command_interface>
+        </xacro:if>
         <state_interface name="position" />
       </joint>
 
       <joint name="${prefix}${rear_right_wheel_steering_joint}">
+        <xacro:if value="${'simulation' in mode}">
+          <command_interface name="position">
+            <param name="min">${-maximal_wheel_steering_angle}</param>
+            <param name="max">${maximal_wheel_steering_angle}</param>
+          </command_interface>
+        </xacro:if>
         <state_interface name="position" />
       </joint>
 

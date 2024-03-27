@@ -46,7 +46,7 @@
       </joint>
 
       <joint name="${prefix}${left_idler_wheel_spinning_joint}">
-        <xacro:if value="${mode == 'simulation'}">
+        <xacro:if value="${'simulation' in mode}">
           <command_interface name="velocity">
             <param name="min">${-maximal_wheel_speed/(idler_wheel_radius+track_thickness)}</param>
             <param name="max">${maximal_wheel_speed/(idler_wheel_radius+track_thickness)}</param>
@@ -58,7 +58,7 @@
       </joint>
 
       <joint name="${prefix}${right_idler_wheel_spinning_joint}">
-        <xacro:if value="${mode == 'simulation'}">
+        <xacro:if value="${'simulation' in mode}">
           <command_interface name="velocity">
             <param name="min">${-maximal_wheel_speed/(idler_wheel_radius+track_thickness)}</param>
             <param name="max">${maximal_wheel_speed/(idler_wheel_radius+track_thickness)}</param>
@@ -70,7 +70,7 @@
       </joint>
 
       <joint name="${prefix}${front_left_roller_wheel_spinning_joint}">
-        <xacro:if value="${mode == 'simulation'}">
+        <xacro:if value="${'simulation' in mode}">
           <command_interface name="velocity">
             <param name="min">${-maximal_wheel_speed/(roller_wheel_radius+track_thickness)}</param>
             <param name="max">${maximal_wheel_speed/(roller_wheel_radius+track_thickness)}</param>
@@ -82,7 +82,7 @@
       </joint>
 
       <joint name="${prefix}${front_right_roller_wheel_spinning_joint}">
-        <xacro:if value="${mode == 'simulation'}">
+        <xacro:if value="${'simulation' in mode}">
           <command_interface name="velocity">
             <param name="min">${-maximal_wheel_speed/(roller_wheel_radius+track_thickness)}</param>
             <param name="max">${maximal_wheel_speed/(roller_wheel_radius+track_thickness)}</param>
@@ -94,7 +94,7 @@
       </joint>
 
       <joint name="${prefix}${rear_left_roller_wheel_spinning_joint}">
-        <xacro:if value="${mode == 'simulation'}">
+        <xacro:if value="${'simulation' in mode}">
           <command_interface name="velocity">
             <param name="min">${-maximal_wheel_speed/(roller_wheel_radius+track_thickness)}</param>
             <param name="max">${maximal_wheel_speed/(roller_wheel_radius+track_thickness)}</param>
@@ -106,7 +106,7 @@
       </joint>
 
       <joint name="${prefix}${rear_right_roller_wheel_spinning_joint}">
-        <xacro:if value="${mode == 'simulation'}">
+        <xacro:if value="${'simulation' in mode}">
           <command_interface name="velocity">
             <param name="min">${-maximal_wheel_speed/(roller_wheel_radius+track_thickness)}</param>
             <param name="max">${maximal_wheel_speed/(roller_wheel_radius+track_thickness)}</param>

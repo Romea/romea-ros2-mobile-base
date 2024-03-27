@@ -44,8 +44,8 @@ protected:
 
   void SetUp() override
   {
-    std::string xacro_file = std::string(TEST_DIR) + "/test_simulation_interface1FAS2FWD.xacro";
-    std::string urdf_file = "/tmp/test_simulation_interface1FAS2FWD.urdf";
+    std::string xacro_file = std::string(TEST_DIR) + "/test_simulation_interface1FAS4WD.xacro";
+    std::string urdf_file = "/tmp/test_simulation_interface1FAS4WD.urdf";
     std::string cmd = "xacro " + xacro_file + " > " + urdf_file;
     std::system(cmd.c_str());
 

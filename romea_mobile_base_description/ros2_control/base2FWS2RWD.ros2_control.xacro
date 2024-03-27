@@ -46,12 +46,24 @@
       </joint>
 
       <joint name="${prefix}${front_left_wheel_spinning_joint}">
+        <xacro:if value="${'simulation' in mode}">
+          <command_interface name="velocity">
+            <param name="min">${-maximal_wheel_speed/front_wheel_radius}</param>
+            <param name="max">${maximal_wheel_speed/front_wheel_radius}</param>
+          </command_interface>
+        </xacro:if>
         <state_interface name="position" />
         <state_interface name="velocity" />
         <state_interface name="effort" />
       </joint>
 
       <joint name="${prefix}${front_right_wheel_spinning_joint}">
+        <xacro:if value="${'simulation' in mode}">
+          <command_interface name="velocity">
+            <param name="min">${-maximal_wheel_speed/front_wheel_radius}</param>
+            <param name="max">${maximal_wheel_speed/front_wheel_radius}</param>
+          </command_interface>
+        </xacro:if>
         <state_interface name="position" />
         <state_interface name="velocity" />
         <state_interface name="effort" />

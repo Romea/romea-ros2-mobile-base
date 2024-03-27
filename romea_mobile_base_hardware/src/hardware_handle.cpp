@@ -54,6 +54,12 @@ double HardwareCommandInterface::get() const
 }
 
 //-----------------------------------------------------------------------------
+void HardwareCommandInterface::set(const double & command)
+{
+  command_ = command;
+}
+
+//-----------------------------------------------------------------------------
 void HardwareCommandInterface::export_interface(
   std::vector<hardware_interface::CommandInterface> & hardware_interfaces)
 {
@@ -94,6 +100,12 @@ HardwareStateInterface::HardwareStateInterface(
 {
 }
 
+
+//-----------------------------------------------------------------------------
+double HardwareStateInterface::get() const
+{
+  return state_;
+}
 
 //-----------------------------------------------------------------------------
 void HardwareStateInterface::set(const double & state)

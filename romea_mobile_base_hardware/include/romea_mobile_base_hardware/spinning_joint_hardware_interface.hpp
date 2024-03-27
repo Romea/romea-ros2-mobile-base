@@ -51,6 +51,8 @@ public:
 
     void set_state(const core::RotationalMotionState & state);
 
+    core::RotationalMotionState get_state()const;
+
     void export_state_interfaces(
       std::vector<hardware_interface::StateInterface> & state_interfaces);
   };
@@ -66,8 +68,11 @@ public:
     const std::string & spinning_joint_command_interface_type);
 
   double get_command() const;
+  void set_command(const double & command);
+
   void set_state(const core::RotationalMotionState & state);
   void set_feedback(const core::RotationalMotionState & state);
+  core::RotationalMotionState get_feedback()const;
 
   void write_command(sensor_msgs::msg::JointState & joint_state_command) const;
   void read_feedback(const sensor_msgs::msg::JointState & joint_state_feedback);

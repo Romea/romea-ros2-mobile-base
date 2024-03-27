@@ -54,6 +54,8 @@ public:
 
   const std::string & get_joint_name() const;
 
+  void set(const double & command);
+
   double get() const;
 
 private:
@@ -82,6 +84,8 @@ public:
   const std::string & get_joint_name() const;
 
   void set(const double & state);
+
+  double get() const;
 
 private:
   double state_;

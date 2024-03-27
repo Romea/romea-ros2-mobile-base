@@ -30,15 +30,19 @@ HardwareInterface4WD::HardwareInterface4WD(
   const hardware_interface::HardwareInfo & hardware_info,
   const std::string & command_interface_type)
 : front_left_wheel_spinning_joint_(
+    FRONT_LEFT_WHEEL_SPINNING_JOINT_ID,
     hardware_info.joints[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID],
     command_interface_type),
   front_right_wheel_spinning_joint_(
+    FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID,
     hardware_info.joints[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID],
     command_interface_type),
   rear_left_wheel_spinning_joint_(
+    REAR_LEFT_WHEEL_SPINNING_JOINT_ID,
     hardware_info.joints[REAR_LEFT_WHEEL_SPINNING_JOINT_ID],
     command_interface_type),
   rear_right_wheel_spinning_joint_(
+    REAR_RIGHT_WHEEL_SPINNING_JOINT_ID,
     hardware_info.joints[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID],
     command_interface_type)
 {
@@ -78,6 +82,23 @@ core::HardwareCommand4WD HardwareInterface4WD::get_command()const
 }
 
 //-----------------------------------------------------------------------------
+core::HardwareCommand4WD HardwareInterface4WD::get_hardware_command() const
+{
+  return get_command();
+}
+
+//-----------------------------------------------------------------------------
+sensor_msgs::msg::JointState HardwareInterface4WD::get_joint_state_command() const
+{
+  auto joint_states = make_joint_state_msg(4);
+  front_left_wheel_spinning_joint_.write_command(joint_states);
+  front_right_wheel_spinning_joint_.write_command(joint_states);
+  rear_left_wheel_spinning_joint_.write_command(joint_states);
+  rear_right_wheel_spinning_joint_.write_command(joint_states);
+  return joint_states;
+}
+
+//-----------------------------------------------------------------------------
 void HardwareInterface4WD::set_state(const core::HardwareState4WD & hardware_state)
 {
   front_left_wheel_spinning_joint_.
@@ -90,6 +111,22 @@ void HardwareInterface4WD::set_state(const core::HardwareState4WD & hardware_sta
   rear_right_wheel_spinning_joint_.
   set_state(hardware_state.rearRightWheelSpinningMotion);
 }
+
+//-----------------------------------------------------------------------------
+void HardwareInterface4WD::set_feedback(const core::HardwareState4WD & hardware_state)
+{
+  set_state(hardware_state);
+}
+
+//-----------------------------------------------------------------------------
+void HardwareInterface4WD::set_feedback(const sensor_msgs::msg::JointState & joint_states)
+{
+  front_left_wheel_spinning_joint_.read_feedback(joint_states);
+  front_right_wheel_spinning_joint_.read_feedback(joint_states);
+  rear_left_wheel_spinning_joint_.read_feedback(joint_states);
+  rear_right_wheel_spinning_joint_.read_feedback(joint_states);
+}
+
 
 }  // namespace ros2
 }  // namespace romea

@@ -65,9 +65,27 @@ core::SteeringAngleCommand SteeringJointHardwareInterface::get_command()const
 }
 
 //-----------------------------------------------------------------------------
+void SteeringJointHardwareInterface::set_command(const core::SteeringAngleCommand & command)
+{
+  command_.set(command);
+}
+
+//-----------------------------------------------------------------------------
 void SteeringJointHardwareInterface::set_state(const core::SteeringAngleState & state)
 {
   feedback_.set(state);
+}
+
+//-----------------------------------------------------------------------------
+void SteeringJointHardwareInterface::set_feedback(const core::SteeringAngleState & state)
+{
+  set_state(state);
+}
+
+//-----------------------------------------------------------------------------
+core::SteeringAngleState SteeringJointHardwareInterface::get_feedback()const
+{
+  return feedback_.get();
 }
 
 //-----------------------------------------------------------------------------

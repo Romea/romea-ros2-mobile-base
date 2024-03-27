@@ -21,10 +21,14 @@
   <xacro:property name="rear_track" value="1.2" />
   <xacro:property name="rear_wheel_radius" value="0.6" />
   <xacro:property name="rear_hub_carrier_offset" value="0.1" />
+  <xacro:property name="maximal_axle_steering_angle" value="0.5" />
+  <xacro:property name="maximal_wheel_steering_angle" value="1.0" />
+  <xacro:property name="maximal_wheel_speed" value="1.0" />
+
 
   <xacro:include
-    filename="$(find romea_mobile_base_description)/ros2_control/2AS_4WD.ros2_control.xacro" />
-  <xacro:base_control mode="test" base_name="base" />
+    filename="$(find romea_mobile_base_description)/ros2_control/base2AS4WD.ros2_control.xacro" />
+  <xacro:base_control mode="simulation" base_name="base" />
 
 
 </robot>

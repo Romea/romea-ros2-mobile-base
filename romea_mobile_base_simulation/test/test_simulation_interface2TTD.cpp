@@ -71,7 +71,7 @@ TEST_F(TestSimulationInterface2TTD, checkGetCommand)
   auto command_interfaces = interface->export_command_interfaces();
   command_interfaces[0].set_value(command.leftSprocketWheelSpinningSetPoint);
   command_interfaces[1].set_value(command.rightSprocketWheelSpinningSetPoint);
-  auto simulation_command = interface->get_command();
+  auto simulation_command = interface->get_hardware_command();
 
   EXPECT_NEAR(
     simulation_command.leftSprocketWheelSpinningSetPoint,
@@ -87,6 +87,36 @@ TEST_F(TestSimulationInterface2TTD, checkGetCommand)
   EXPECT_NEAR(simulation_command.rearRightRollerWheelSpinningSetPoint, 3.625, 0.001);
 }
 
+
+TEST_F(TestSimulationInterface2TTD, checkGetCommandUsingJointState)
+{
+  romea::core::HardwareCommand2TD command = {0.611111, 1.6111};
+
+  auto command_interfaces = interface->export_command_interfaces();
+  command_interfaces[0].set_value(command.leftSprocketWheelSpinningSetPoint);
+  command_interfaces[1].set_value(command.rightSprocketWheelSpinningSetPoint);
+  auto simulation_command = interface->get_joint_state_command();
+
+  EXPECT_STREQ(simulation_command.name[0].c_str(), "robot_joint1");
+  EXPECT_STREQ(simulation_command.name[1].c_str(), "robot_joint2");
+  EXPECT_STREQ(simulation_command.name[2].c_str(), "robot_joint3");
+  EXPECT_STREQ(simulation_command.name[3].c_str(), "robot_joint4");
+  EXPECT_STREQ(simulation_command.name[4].c_str(), "robot_joint5");
+  EXPECT_STREQ(simulation_command.name[5].c_str(), "robot_joint6");
+  EXPECT_STREQ(simulation_command.name[6].c_str(), "robot_joint7");
+  EXPECT_STREQ(simulation_command.name[7].c_str(), "robot_joint8");
+
+  EXPECT_NEAR(simulation_command.velocity[0], command.leftSprocketWheelSpinningSetPoint, 0.001);
+  EXPECT_NEAR(simulation_command.velocity[1], command.rightSprocketWheelSpinningSetPoint, 0.001);
+  EXPECT_NEAR(simulation_command.velocity[2], 1.375, 0.001);
+  EXPECT_NEAR(simulation_command.velocity[3], 3.625, 0.001);
+  EXPECT_NEAR(simulation_command.velocity[4], 1.375, 0.001);
+  EXPECT_NEAR(simulation_command.velocity[5], 3.625, 0.001);
+  EXPECT_NEAR(simulation_command.velocity[6], 1.375, 0.001);
+  EXPECT_NEAR(simulation_command.velocity[7], 3.625, 0.001);
+}
+
+
 TEST_F(TestSimulationInterface2TTD, checkGetState)
 {
   romea::core::HardwareCommand2TD command = {0.611111, 1.6111};
@@ -94,7 +124,7 @@ TEST_F(TestSimulationInterface2TTD, checkGetState)
   auto command_interfaces = interface->export_command_interfaces();
   command_interfaces[0].set_value(command.leftSprocketWheelSpinningSetPoint);
   command_interfaces[1].set_value(command.rightSprocketWheelSpinningSetPoint);
-  auto simulation_command = interface->get_command();
+  auto simulation_command = interface->get_hardware_command();
 
   romea::core::SimulationState2TTD simulation_state;
   simulation_state.leftSprocketWheelSpinningMotion.velocity =
@@ -113,7 +143,7 @@ TEST_F(TestSimulationInterface2TTD, checkGetState)
     simulation_command.rearLeftRollerWheelSpinningSetPoint;
   simulation_state.rearRightRollerWheelSpinningMotion.velocity =
     simulation_command.rearRightRollerWheelSpinningSetPoint;
-  interface->set_state(simulation_state);
+  interface->set_feedback(simulation_state);
 
   auto state_interfaces = interface->export_state_interfaces();
   EXPECT_NEAR(
@@ -149,6 +179,28 @@ TEST_F(TestSimulationInterface2TTD, checkGetState)
     simulation_command.rearRightRollerWheelSpinningSetPoint,
     0.001);
 }
+
+TEST_F(TestSimulationInterface2TTD, checkGetStateUsingJointState)
+{
+  romea::core::HardwareCommand2TD command = {0.611111, 1.6111};
+
+  auto command_interfaces = interface->export_command_interfaces();
+  command_interfaces[0].set_value(command.leftSprocketWheelSpinningSetPoint);
+  command_interfaces[1].set_value(command.rightSprocketWheelSpinningSetPoint);
+  auto simulation_command = interface->get_joint_state_command();
+  interface->set_feedback(simulation_command);
+
+  auto state_interfaces = interface->export_state_interfaces();
+  EXPECT_NEAR(state_interfaces[1].get_value(), simulation_command.velocity[0], 0.001);
+  EXPECT_NEAR(state_interfaces[4].get_value(), simulation_command.velocity[1], 0.001);
+  EXPECT_NEAR(state_interfaces[7].get_value(), simulation_command.velocity[2], 0.001);
+  EXPECT_NEAR(state_interfaces[10].get_value(), simulation_command.velocity[3], 0.001);
+  EXPECT_NEAR(state_interfaces[13].get_value(), simulation_command.velocity[4], 0.001);
+  EXPECT_NEAR(state_interfaces[16].get_value(), simulation_command.velocity[5], 0.001);
+  EXPECT_NEAR(state_interfaces[19].get_value(), simulation_command.velocity[6], 0.001);
+  EXPECT_NEAR(state_interfaces[22].get_value(), simulation_command.velocity[7], 0.001);
+}
+
 
 //-----------------------------------------------------------------------------
 int main(int argc, char ** argv)

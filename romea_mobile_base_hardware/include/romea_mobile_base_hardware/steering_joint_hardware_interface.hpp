@@ -47,7 +47,12 @@ public:
   );
 
   core::SteeringAngleCommand get_command() const;
+  void set_command(const core::SteeringAngleCommand & command);
+
+
   void set_state(const core::SteeringAngleState & state);
+  void set_feedback(const core::SteeringAngleState & state);
+  core::SteeringAngleState get_feedback()const;
 
   void write_command(sensor_msgs::msg::JointState & joint_state_command) const;
   void read_feedback(const sensor_msgs::msg::JointState & joint_state_feedback);
