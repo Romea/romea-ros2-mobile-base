@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 // std
 #include <fstream>
 #include <memory>
@@ -25,11 +26,12 @@
 #include "rclcpp/node.hpp"
 #include "hardware_interface/component_parser.hpp"
 
+
 // romea
 #include "../test/test_helper.h"
-#include "romea_mobile_base_simulation/simulation_interface2FWS2RWD.hpp"
+#include "romea_mobile_base_simulation/simulation_interface2TD.hpp"
 
-class TestSimulationInterface2FWS2RWD : public ::testing::Test
+class TestSimulationInterface2TD : public ::testing::Test
 {
 protected:
   static void SetUpTestCase()
@@ -44,8 +46,8 @@ protected:
 
   void SetUp() override
   {
-    std::string xacro_file = std::string(TEST_DIR) + "/test_simulation_interface2FWS2RWD.xacro";
-    std::string urdf_file = "/tmp/test_simulation_interface2FWS2RWD.urdf";
+    std::string xacro_file = std::string(TEST_DIR) + "/test_simulation_interface2TD.xacro";
+    std::string urdf_file = "/tmp/test_simulation_interface2TD.urdf";
     std::string cmd = "xacro " + xacro_file + " > " + urdf_file;
     std::system(cmd.c_str());
 
@@ -55,132 +57,110 @@ protected:
     //    std::cout << buffer.str() <<std::endl;
 
     info = hardware_interface::parse_control_resources_from_urdf(buffer.str());
-    interface = std::make_unique<romea::ros2::SimulationInterface2FWS2RWD>(info[0], "velocity");
+    interface = std::make_unique<romea::ros2::SimulationInterface2TD>(info[0], "velocity");
   }
 
-  std::unique_ptr<romea::ros2::SimulationInterface2FWS2RWD> interface;
+  std::unique_ptr<romea::ros2::SimulationInterface2TD> interface;
   std::vector<hardware_interface::HardwareInfo> info;
 };
 
 
-TEST_F(TestSimulationInterface2FWS2RWD, checkSetCommand)
+TEST_F(TestSimulationInterface2TD, checkGetCommand)
 {
-  romea::core::HardwareCommand2FWS2RWD command = {-0.392757, -0.675853, 4.16796, 2.4987};
+  romea::core::HardwareCommand2TD command = {0.611111, 1.6111};
 
   auto command_interfaces = interface->export_command_interfaces();
-  command_interfaces[0].set_value(command.frontLeftWheelSteeringAngle);
-  command_interfaces[1].set_value(command.frontRightWheelSteeringAngle);
-  command_interfaces[2].set_value(command.rearLeftWheelSpinningSetPoint);
-  command_interfaces[3].set_value(command.rearRightWheelSpinningSetPoint);
+  command_interfaces[0].set_value(command.leftSprocketWheelSpinningSetPoint);
+  command_interfaces[1].set_value(command.rightSprocketWheelSpinningSetPoint);
   auto simulation_command = interface->get_hardware_command();
 
-  EXPECT_NEAR(simulation_command.frontLeftWheelSteeringAngle, -0.392757, 0.001);
-  EXPECT_NEAR(simulation_command.frontRightWheelSteeringAngle, -0.675853, 0.001);
-  EXPECT_NEAR(simulation_command.frontLeftWheelSpinningSetPoint, 2.94577, 0.001);
-  EXPECT_NEAR(simulation_command.frontRightWheelSpinningSetPoint, 1.65554, 0.001);
-  EXPECT_NEAR(simulation_command.rearLeftWheelSpinningSetPoint, 4.16796, 0.001);
-  EXPECT_NEAR(simulation_command.rearRightWheelSpinningSetPoint, 2.4987, 0.001);
+  EXPECT_NEAR(
+    simulation_command.leftSprocketWheelSpinningSetPoint,
+    command.leftSprocketWheelSpinningSetPoint,
+    0.001);
+  EXPECT_NEAR(
+    simulation_command.rightSprocketWheelSpinningSetPoint,
+    command.rightSprocketWheelSpinningSetPoint,
+    0.001);
+  EXPECT_NEAR(simulation_command.leftIdlerWheelSpinningSetPoint, 1.375, 0.001);
+  EXPECT_NEAR(simulation_command.rightIdlerWheelSpinningSetPoint, 3.625, 0.001);
 }
 
-TEST_F(TestSimulationInterface2FWS2RWD, checkGetCommandUsingJointState)
+TEST_F(TestSimulationInterface2TD, checkGetCommandUsingJointState)
 {
-  romea::core::HardwareCommand2FWS2RWD command = {-0.392757, -0.675853, 4.16796, 2.4987};
+  romea::core::HardwareCommand2TD command = {0.611111, 1.6111};
 
   auto command_interfaces = interface->export_command_interfaces();
-  command_interfaces[0].set_value(command.frontLeftWheelSteeringAngle);
-  command_interfaces[1].set_value(command.frontRightWheelSteeringAngle);
-  command_interfaces[2].set_value(command.rearLeftWheelSpinningSetPoint);
-  command_interfaces[3].set_value(command.rearRightWheelSpinningSetPoint);
+  command_interfaces[0].set_value(command.leftSprocketWheelSpinningSetPoint);
+  command_interfaces[1].set_value(command.rightSprocketWheelSpinningSetPoint);
   auto simulation_command = interface->get_joint_state_command();
 
   EXPECT_STREQ(simulation_command.name[0].c_str(), "robot_joint1");
   EXPECT_STREQ(simulation_command.name[1].c_str(), "robot_joint2");
   EXPECT_STREQ(simulation_command.name[2].c_str(), "robot_joint3");
   EXPECT_STREQ(simulation_command.name[3].c_str(), "robot_joint4");
-  EXPECT_STREQ(simulation_command.name[4].c_str(), "robot_joint5");
-  EXPECT_STREQ(simulation_command.name[5].c_str(), "robot_joint6");
 
-  EXPECT_NEAR(simulation_command.position[0], -0.392757, 0.001);
-  EXPECT_NEAR(simulation_command.position[1], -0.675853, 0.001);
-  EXPECT_NEAR(simulation_command.velocity[2], 2.94577, 0.001);
-  EXPECT_NEAR(simulation_command.velocity[3], 1.65554, 0.001);
-  EXPECT_NEAR(simulation_command.velocity[4], 4.16796, 0.001);
-  EXPECT_NEAR(simulation_command.velocity[5], 2.4987, 0.001);
+  EXPECT_NEAR(simulation_command.velocity[0], command.leftSprocketWheelSpinningSetPoint, 0.001);
+  EXPECT_NEAR(simulation_command.velocity[1], command.rightSprocketWheelSpinningSetPoint, 0.001);
+  EXPECT_NEAR(simulation_command.velocity[2], 1.375, 0.001);
+  EXPECT_NEAR(simulation_command.velocity[3], 3.625, 0.001);
 }
 
 
-TEST_F(TestSimulationInterface2FWS2RWD, checkGetState)
+TEST_F(TestSimulationInterface2TD, checkGetState)
 {
-  romea::core::HardwareCommand2FWS2RWD command = {-0.392757, -0.675853, 4.16796, 2.4987};
+  romea::core::HardwareCommand2TD command = {0.611111, 1.6111};
+
   auto command_interfaces = interface->export_command_interfaces();
-  command_interfaces[0].set_value(command.frontLeftWheelSteeringAngle);
-  command_interfaces[1].set_value(command.frontRightWheelSteeringAngle);
-  command_interfaces[2].set_value(command.rearLeftWheelSpinningSetPoint);
-  command_interfaces[3].set_value(command.rearRightWheelSpinningSetPoint);
+  command_interfaces[0].set_value(command.leftSprocketWheelSpinningSetPoint);
+  command_interfaces[1].set_value(command.rightSprocketWheelSpinningSetPoint);
+  auto simulation_command = interface->get_hardware_command();
 
-  romea::core::SimulationCommand2FWSxxx simulation_command = interface->get_hardware_command();
-
-  romea::core::SimulationState2FWSxxx simulation_state;
-  simulation_state.frontLeftWheelSteeringAngle =
-    simulation_command.frontLeftWheelSteeringAngle;
-  simulation_state.frontRightWheelSteeringAngle =
-    simulation_command.frontRightWheelSteeringAngle;
-  simulation_state.frontLeftWheelSpinningMotion.velocity =
-    simulation_command.frontLeftWheelSpinningSetPoint;
-  simulation_state.frontRightWheelSpinningMotion.velocity =
-    simulation_command.frontRightWheelSpinningSetPoint;
-  simulation_state.rearLeftWheelSpinningMotion.velocity =
-    simulation_command.rearLeftWheelSpinningSetPoint;
-  simulation_state.rearRightWheelSpinningMotion.velocity =
-    simulation_command.rearRightWheelSpinningSetPoint;
+  romea::core::SimulationState2TD simulation_state;
+  simulation_state.leftSprocketWheelSpinningMotion.velocity =
+    simulation_command.leftSprocketWheelSpinningSetPoint;
+  simulation_state.rightSprocketWheelSpinningMotion.velocity =
+    simulation_command.rightSprocketWheelSpinningSetPoint;
+  simulation_state.leftIdlerWheelSpinningMotion.velocity =
+    simulation_command.leftIdlerWheelSpinningSetPoint;
+  simulation_state.rightIdlerWheelSpinningMotion.velocity =
+    simulation_command.rightIdlerWheelSpinningSetPoint;
   interface->set_feedback(simulation_state);
 
   auto state_interfaces = interface->export_state_interfaces();
   EXPECT_NEAR(
-    state_interfaces[0].get_value(),
-    command.frontLeftWheelSteeringAngle,
-    0.001);
-  EXPECT_NEAR(
     state_interfaces[1].get_value(),
-    command.frontRightWheelSteeringAngle,
+    simulation_command.leftSprocketWheelSpinningSetPoint,
     0.001);
   EXPECT_NEAR(
-    state_interfaces[3].get_value(),
-    command.rearLeftWheelSpinningSetPoint,
+    state_interfaces[4].get_value(),
+    simulation_command.rightSprocketWheelSpinningSetPoint,
     0.001);
   EXPECT_NEAR(
-    state_interfaces[6].get_value(),
-    command.rearRightWheelSpinningSetPoint,
+    state_interfaces[7].get_value(),
+    simulation_command.leftIdlerWheelSpinningSetPoint,
     0.001);
   EXPECT_NEAR(
-    state_interfaces[9].get_value(),
-    simulation_command.frontLeftWheelSpinningSetPoint,
-    0.001);
-  EXPECT_NEAR(
-    state_interfaces[12].get_value(),
-    simulation_command.frontRightWheelSpinningSetPoint,
+    state_interfaces[10].get_value(),
+    simulation_command.rightIdlerWheelSpinningSetPoint,
     0.001);
 }
 
-TEST_F(TestSimulationInterface2FWS2RWD, checkGetStateUsingJointState)
+TEST_F(TestSimulationInterface2TD, checkGetStateUsingJointState)
 {
-  romea::core::HardwareCommand2FWS2RWD command = {-0.392757, -0.675853, 4.16796, 2.4987};
+  romea::core::HardwareCommand2TD command = {0.611111, 1.6111};
 
   auto command_interfaces = interface->export_command_interfaces();
-  command_interfaces[0].set_value(command.frontLeftWheelSteeringAngle);
-  command_interfaces[1].set_value(command.frontRightWheelSteeringAngle);
-  command_interfaces[2].set_value(command.rearLeftWheelSpinningSetPoint);
-  command_interfaces[3].set_value(command.rearRightWheelSpinningSetPoint);
+  command_interfaces[0].set_value(command.leftSprocketWheelSpinningSetPoint);
+  command_interfaces[1].set_value(command.rightSprocketWheelSpinningSetPoint);
   auto simulation_command = interface->get_joint_state_command();
   interface->set_feedback(simulation_command);
 
   auto state_interfaces = interface->export_state_interfaces();
-  EXPECT_NEAR(state_interfaces[0].get_value(), simulation_command.position[0], 0.001);
-  EXPECT_NEAR(state_interfaces[1].get_value(), simulation_command.position[1], 0.001);
-  EXPECT_NEAR(state_interfaces[3].get_value(), simulation_command.velocity[4], 0.001);
-  EXPECT_NEAR(state_interfaces[6].get_value(), simulation_command.velocity[5], 0.001);
-  EXPECT_NEAR(state_interfaces[9].get_value(), simulation_command.velocity[2], 0.001);
-  EXPECT_NEAR(state_interfaces[12].get_value(), simulation_command.velocity[3], 0.001);
+  EXPECT_NEAR(state_interfaces[1].get_value(), simulation_command.velocity[0], 0.001);
+  EXPECT_NEAR(state_interfaces[4].get_value(), simulation_command.velocity[1], 0.001);
+  EXPECT_NEAR(state_interfaces[7].get_value(), simulation_command.velocity[2], 0.001);
+  EXPECT_NEAR(state_interfaces[10].get_value(), simulation_command.velocity[3], 0.001);
 }
 
 
