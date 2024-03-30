@@ -70,9 +70,11 @@ protected:
     make_publisher(message_type);
 
     if (message_type == "four_wheel_steering_msgs/FourWheelSteering") {
-      make_listener<four_wheel_steering_msgs::msg::FourWheelSteering>("cmd_4ws");
+      make_listener<four_wheel_steering_msgs::msg::FourWheelSteering>(
+        "test_command_publisher/cmd_4ws");
     } else if (message_type == "romea_mobile_base_msgs/TwoAxleSteeringCommand") {
-      make_listener<romea_mobile_base_msgs::msg::TwoAxleSteeringCommand>("cmd_two_axle_steering");
+      make_listener<romea_mobile_base_msgs::msg::TwoAxleSteeringCommand>(
+        "test_command_publisher/cmd_two_axle_steering");
     }
   }
 

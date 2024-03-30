@@ -69,9 +69,10 @@ protected:
   {
     make_publisher(message_type);
     if (message_type == "geometry_msgs/Twist") {
-      make_listener<geometry_msgs::msg::Twist>("cmd_vel");
+      make_listener<geometry_msgs::msg::Twist>("test_command_publisher/cmd_vel");
     } else if (message_type == "romea_mobile_base_msgs/OmniSteeringCommand") {
-      make_listener<romea_mobile_base_msgs::msg::OmniSteeringCommand>("cmd_omni_steering");
+      make_listener<romea_mobile_base_msgs::msg::OmniSteeringCommand>(
+        "test_command_publisher/cmd_omni_steering");
     }
   }
 

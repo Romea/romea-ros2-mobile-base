@@ -69,11 +69,12 @@ protected:
   {
     make_publisher(message_type);
     if (message_type == "geometry_msgs/Twist") {
-      make_listener<geometry_msgs::msg::Twist>("cmd_vel");
+      make_listener<geometry_msgs::msg::Twist>("test_command_publisher/cmd_vel");
     } else if (message_type == "ackermann_msgs/AckermannDrive") {
-      make_listener<ackermann_msgs::msg::AckermannDrive>("cmd_steer");
+      make_listener<ackermann_msgs::msg::AckermannDrive>("test_command_publisher/cmd_steer");
     } else if (message_type == "romea_mobile_base_msgs/OneAxleSteeringCommand") {
-      make_listener<romea_mobile_base_msgs::msg::OneAxleSteeringCommand>("cmd_one_axle_steering");
+      make_listener<romea_mobile_base_msgs::msg::OneAxleSteeringCommand>(
+        "test_command_publisher/cmd_one_axle_steering");
     }
   }
 
