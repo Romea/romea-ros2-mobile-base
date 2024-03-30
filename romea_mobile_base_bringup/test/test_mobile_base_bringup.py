@@ -47,8 +47,9 @@ def test_get_simulation_initial_xyz(meta_description):
 def test_get_simulation_initial_rpy_deg(meta_description):
     assert meta_description.get_simulation_initial_rpy_deg() == [4.0, 5.0, 6.0]
 
+
 def test_get_simulation_initial_rpy_rad(meta_description):
-    assert  meta_description.get_simulation_initial_rpy_rad() == radians([4.0, 5.0, 6.0]).tolist()
+    assert meta_description.get_simulation_initial_rpy_rad() == radians([4.0, 5.0, 6.0]).tolist()
 
 
 def test_get_records(meta_description):
