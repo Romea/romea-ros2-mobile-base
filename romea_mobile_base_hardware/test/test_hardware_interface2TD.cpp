@@ -194,7 +194,7 @@ TEST_F(TestHarwareInterface2TD, checkGetCommandUsingJointState)
   }
 
   auto command = interface->get_joint_state_command();
-  EXPECT_EQ(command.name.size(), 2);
+  EXPECT_EQ(command.name.size(), 2u);
   EXPECT_STREQ(command.name[0].c_str(), "robot_joint1");
   EXPECT_STREQ(command.name[1].c_str(), "robot_joint2");
 

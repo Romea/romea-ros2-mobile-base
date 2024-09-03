@@ -76,6 +76,9 @@ TEST_F(TestHarwareInterface2FWS2RWD, checkJointNames)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
   auto state_interfaces = interface->export_state_interfaces();
+  for (size_t n = 0; n < state_interfaces.size(); ++n) {
+    std::cout << n << " " << state_interfaces[n].get_full_name().c_str() << std::endl;
+  }
   check_interface_name(state_interfaces[0], "robot_joint1/position");
   check_interface_name(state_interfaces[1], "robot_joint2/position");
   check_interface_name(state_interfaces[2], "robot_joint3/position");
@@ -215,6 +218,7 @@ TEST_F(TestHarwareInterface2FWS2RWD, checkGetCommandUsingJointState)
   }
 
   auto command = interface->get_joint_state_command();
+  EXPECT_EQ(command.name.size(), 4u);
   EXPECT_STREQ(command.name[0].c_str(), "robot_joint1");
   EXPECT_STREQ(command.name[1].c_str(), "robot_joint2");
   EXPECT_STREQ(command.name[2].c_str(), "robot_joint3");

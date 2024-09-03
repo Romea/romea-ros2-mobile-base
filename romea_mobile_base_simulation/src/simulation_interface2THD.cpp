@@ -55,8 +55,8 @@ SimulationInterface2THD::SimulationInterface2THD(
     REAR_RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID,
     hardware_info.joints[REAR_RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID],
     command_interface_type),
-  sprocket_wheel_radius_(get_sprocket_wheel_radius(hardware_info)),
   idler_wheel_radius_(get_idler_wheel_radius(hardware_info)),
+  sprocket_wheel_radius_(get_sprocket_wheel_radius(hardware_info)),
   track_thickness_(get_track_thickness(hardware_info))
 {
 }
