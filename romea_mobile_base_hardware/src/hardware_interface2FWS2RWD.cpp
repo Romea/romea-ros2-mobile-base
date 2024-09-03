@@ -49,7 +49,7 @@ HardwareInterface2FWS2RWD::HardwareInterface2FWS2RWD(
   front_left_wheel_spinning_joint_feedback_(
     HardwareInfo2FWSxxx::get_front_left_wheel_spinning_joint_info(hardware_info)),
   front_right_wheel_spinning_joint_feedback_(
-    HardwareInfo2FWSxxx::get_rear_right_wheel_spinning_joint_info(hardware_info)),
+    HardwareInfo2FWSxxx::get_front_right_wheel_spinning_joint_info(hardware_info)),
   wheelbase_(get_wheelbase(hardware_info)),
   front_track_(get_front_track(hardware_info)),
   front_hub_carrier_offset_(get_front_hub_carrier_offset(hardware_info)),
