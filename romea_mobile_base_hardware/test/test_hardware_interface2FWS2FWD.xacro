@@ -12,9 +12,20 @@
   <xacro:property name="maximal_wheel_speed" value="1.0" />
   <xacro:property name="front_wheel_radius" value="0.2" />
 
+  <xacro:property name="live_hardware_plugin" value="foo" />
+  <xacro:property name="wheelbase" value="1.4" />
+  <xacro:property name="front_track" value="1.2" />
+  <xacro:property name="front_wheel_radius" value="0.4" />
+  <xacro:property name="front_hub_carrier_offset" value="0.1" />
+  <xacro:property name="rear_track" value="1.4" />
+  <xacro:property name="rear_wheel_radius" value="0.6" />
+  <xacro:property name="rear_hub_carrier_offset" value="0.15" />
+  <xacro:property name="maximal_wheel_steering_angle" value="0.50" />
+  <xacro:property name="maximal_wheel_speed" value="1.0" />
+
 
   <xacro:include
     filename="$(find romea_mobile_base_description)/ros2_control/base2FWS2FWD.ros2_control.xacro" />
-  <xacro:base_control mode="test" base_name="base" />
+  <xacro:base_control mode="live" base_name="base" />
 
 </robot>

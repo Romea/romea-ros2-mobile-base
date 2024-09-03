@@ -13,6 +13,10 @@
 // limitations under the License.
 
 
+// ros
+#include "hardware_interface/types/hardware_interface_type_values.hpp"
+
+// local
 #include "romea_mobile_base_gazebo/steering_joint_gazebo_interface.hpp"
 
 namespace romea

@@ -13,18 +13,15 @@
 // limitations under the License.
 
 
-#ifndef ROMEA_MOBILE_BASE_HARDWARE__STEERING_JOINT_HARDWARE_INTERFACE_HPP_
-#define ROMEA_MOBILE_BASE_HARDWARE__STEERING_JOINT_HARDWARE_INTERFACE_HPP_
+#ifndef ROMEA_MOBILE_BASE_UTILS__ROS2_CONTROL__HARDWARE__STEERING_JOINT_HARDWARE_INTERFACE_HPP_
+#define ROMEA_MOBILE_BASE_UTILS__ROS2_CONTROL__HARDWARE__STEERING_JOINT_HARDWARE_INTERFACE_HPP_
 
 // std
 #include <vector>
 #include <string>
 
-// ros
-#include "hardware_interface/hardware_info.hpp"
-
 // romea
-#include "romea_mobile_base_hardware/hardware_handle.hpp"
+#include "romea_mobile_base_utils/ros2_control/hardware/hardware_handle.hpp"
 #include "romea_common_utils/joint_states.hpp"
 
 namespace romea
@@ -49,8 +46,6 @@ public:
   core::SteeringAngleCommand get_command() const;
   void set_command(const core::SteeringAngleCommand & command);
 
-
-  void set_state(const core::SteeringAngleState & state);
   void set_feedback(const core::SteeringAngleState & state);
   core::SteeringAngleState get_feedback()const;
 
@@ -76,4 +71,4 @@ private:
 }  // namespace ros2
 }  // namespace romea
 
-#endif  // ROMEA_MOBILE_BASE_HARDWARE__STEERING_JOINT_HARDWARE_INTERFACE_HPP_
+#endif  // ROMEA_MOBILE_BASE_UTILS__ROS2_CONTROL__HARDWARE__STEERING_JOINT_HARDWARE_INTERFACE_HPP_

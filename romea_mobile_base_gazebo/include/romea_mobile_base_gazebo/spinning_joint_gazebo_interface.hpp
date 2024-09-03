@@ -20,7 +20,10 @@
 #include <string>
 
 // romea
-#include "romea_mobile_base_hardware/spinning_joint_hardware_interface.hpp"
+#include "romea_core_mobile_base/hardware/HardwareControlCommon.hpp"
+
+// ros
+#include "hardware_interface/hardware_info.hpp"
 
 // gazebo
 #include "gazebo/physics/Joint.hh"

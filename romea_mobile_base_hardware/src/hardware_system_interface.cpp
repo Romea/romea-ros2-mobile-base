@@ -221,7 +221,7 @@ export_command_interfaces()
   return hardware_interface_->export_command_interfaces();
 }
 
-template class HardwareSystemInterface<HardwareInterface2WD>;
+// template class HardwareSystemInterface<HardwareInterface2WD>;
 template class HardwareSystemInterface<HardwareInterface4WD>;
 template class HardwareSystemInterface<HardwareInterface4WS4WD>;
 template class HardwareSystemInterface<HardwareInterface2FWS4WD>;

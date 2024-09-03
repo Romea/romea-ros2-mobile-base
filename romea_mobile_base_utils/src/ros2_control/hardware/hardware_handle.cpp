@@ -18,8 +18,9 @@
 #include <string>
 
 // local
-#include "romea_mobile_base_hardware/hardware_handle.hpp"
-#include "romea_mobile_base_hardware/hardware_info.hpp"
+#include "romea_mobile_base_utils/ros2_control/info/joint_info.hpp"
+#include "romea_mobile_base_utils/ros2_control/info/interface_info.hpp"
+#include "romea_mobile_base_utils/ros2_control/hardware/hardware_handle.hpp"
 
 
 namespace romea

@@ -22,9 +22,7 @@
 
 // romea
 #include "romea_core_mobile_base/hardware/HardwareControl2TD.hpp"
-
-// std
-#include "romea_mobile_base_hardware/spinning_joint_hardware_interface.hpp"
+#include "romea_mobile_base_utils/ros2_control/hardware/spinning_joint_hardware_interface.hpp"
 
 namespace romea
 {
@@ -38,44 +36,39 @@ public:
   {
     LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID = 0,
     RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID = 1,
-    LEFT_IDLER_WHEEL_SPINNING_JOINT_ID = 2,
-    RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID = 3,
-    FRONT_LEFT_ROLLER_WHEEL_SPINNING_JOINT_ID = 4,
-    FRONT_RIGHT_ROLLER_WHEEL_SPINNING_JOINT_ID = 5,
-    REAR_LEFT_ROLLER_WHEEL_SPINNING_JOINT_ID = 6,
-    REAR_RIGHT_ROLLER_WHEEL_SPINNING_JOINT_ID = 7
   };
 
   HardwareInterface2TTD(
     const hardware_interface::HardwareInfo & hardware_info,
     const std::string & command_interface_type);
 
+  core::HardwareCommand2TD get_hardware_command() const;
+  sensor_msgs::msg::JointState get_joint_state_command() const;
 
-  core::HardwareCommand2TD get_command()const;
-
-  void set_state(const core::HardwareState2TD & hardware_state);
-
-  void set_state(
-    const core::HardwareState2TD & hardware_state,
-    const core::RotationalMotionState & left_idler_wheel_spinning_motion,
-    const core::RotationalMotionState & right_idler_wheel_spinning_motion,
-    const core::RotationalMotionState & front_left_roller_wheel_spinning_motion,
-    const core::RotationalMotionState & front_right_roller_wheel_spinning_motion,
-    const core::RotationalMotionState & rear_left_roller_wheel_spinning_motion,
-    const core::RotationalMotionState & rear_right_roller_wheel_spinning_motion);
+  void set_feedback(const core::HardwareState2TD & hardware_state);
+  void set_feedback(const sensor_msgs::msg::JointState & joint_states);
 
   std::vector<hardware_interface::StateInterface> export_state_interfaces();
   std::vector<hardware_interface::CommandInterface> export_command_interfaces();
 
 private:
+  void complete_feedback_(const core::HardwareState2TD & hardware_state);
+
+private:
   SpinningJointHardwareInterface left_sprocket_wheel_spinning_joint_;
   SpinningJointHardwareInterface right_sprocket_wheel_spinning_joint_;
+
   SpinningJointHardwareInterface::Feedback left_idler_wheel_spinning_joint_feedback_;
   SpinningJointHardwareInterface::Feedback right_idler_wheel_spinning_joint_feedback_;
   SpinningJointHardwareInterface::Feedback front_left_roller_wheel_spinning_joint_feedback_;
   SpinningJointHardwareInterface::Feedback front_right_roller_wheel_spinning_joint_feedback_;
   SpinningJointHardwareInterface::Feedback rear_left_roller_wheel_spinning_joint_feedback_;
   SpinningJointHardwareInterface::Feedback rear_right_roller_wheel_spinning_joint_feedback_;
+
+  const double idler_wheel_radius_;
+  const double roller_wheel_radius_;
+  const double sprocket_wheel_radius_;
+  const double track_thickness_;
 };
 
 }  // namespace ros2

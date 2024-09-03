@@ -47,7 +47,7 @@ GazeboInterface2WD::GazeboInterface2WD(
 core::SimulationState2WD GazeboInterface2WD::get_state() const
 {
   return {left_wheel_spinning_joint_.get_state(),
-    right_wheel_spinning_joint_.get_state()};
+      right_wheel_spinning_joint_.get_state()};
 }
 
 //-----------------------------------------------------------------------------

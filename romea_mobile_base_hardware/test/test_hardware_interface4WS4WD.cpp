@@ -217,6 +217,7 @@ TEST_F(TestHarwareInterface4WS4WD, checkGetCommandUsingJointState)
   }
 
   auto command = interface->get_joint_state_command();
+  EXPECT_EQ(command.name.size(), 8);
   EXPECT_STREQ(command.name[0].c_str(), "robot_joint1");
   EXPECT_STREQ(command.name[1].c_str(), "robot_joint2");
   EXPECT_STREQ(command.name[2].c_str(), "robot_joint3");

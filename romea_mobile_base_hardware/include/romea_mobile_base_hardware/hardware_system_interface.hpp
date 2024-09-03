@@ -25,7 +25,7 @@
 #include "hardware_interface/system_interface.hpp"
 
 // local
-#include "romea_mobile_base_hardware/hardware_interface2WD.hpp"
+// #include "romea_mobile_base_hardware/hardware_interface2WD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface4WD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface4WS4WD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2FWS4WD.hpp"
@@ -101,7 +101,7 @@ using HardwareSystemInterface2AS2RWD = HardwareSystemInterface<HardwareInterface
 using HardwareSystemInterface2FWS2FWD = HardwareSystemInterface<HardwareInterface2FWS2FWD>;
 using HardwareSystemInterface2FWS2RWD = HardwareSystemInterface<HardwareInterface2FWS2RWD>;
 using HardwareSystemInterface2FWS4WD = HardwareSystemInterface<HardwareInterface2FWS4WD>;
-using HardwareSystemInterface2WD = HardwareSystemInterface<HardwareInterface2WD>;
+// using HardwareSystemInterface2WD = HardwareSystemInterface<HardwareInterface2WD>;
 using HardwareSystemInterface4WD = HardwareSystemInterface<HardwareInterface4WD>;
 using HardwareSystemInterface4WS4WD = HardwareSystemInterface<HardwareInterface4WS4WD>;
 using HardwareSystemInterface2TD = HardwareSystemInterface<HardwareInterface2TD>;

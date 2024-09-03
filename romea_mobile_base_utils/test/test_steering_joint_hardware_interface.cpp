@@ -28,7 +28,7 @@
 // romea
 #include "../test/test_helper.h"
 #include "../test/test_utils.hpp"
-#include "romea_mobile_base_hardware/steering_joint_hardware_interface.hpp"
+#include "romea_mobile_base_utils/ros2_control/hardware/steering_joint_hardware_interface.hpp"
 
 class TestSteeringJointHardwateInterface : public ::testing::Test
 {

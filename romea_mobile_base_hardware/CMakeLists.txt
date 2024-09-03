@@ -34,8 +34,6 @@ find_package(sensor_msgs REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
   src/generic_hardware_system_interface.cpp
-  src/hardware_handle.cpp
-  src/hardware_info.cpp
   src/hardware_interface1FAS2FWD.cpp
   src/hardware_interface1FAS2RWD.cpp
   src/hardware_interface1FAS4WD.cpp
@@ -45,15 +43,13 @@ add_library(${PROJECT_NAME} SHARED
   src/hardware_interface2FWS2FWD.cpp
   src/hardware_interface2FWS2RWD.cpp
   src/hardware_interface2FWS4WD.cpp
-  src/hardware_interface2WD.cpp
+  # src/hardware_interface2WD.cpp
   src/hardware_interface2TD.cpp
   src/hardware_interface2THD.cpp
   src/hardware_interface2TTD.cpp
   src/hardware_interface4WD.cpp
   src/hardware_interface4WS4WD.cpp
-  src/hardware_system_interface.cpp
-  src/spinning_joint_hardware_interface.cpp
-  src/steering_joint_hardware_interface.cpp)
+  src/hardware_system_interface.cpp)
 
 ament_target_dependencies(${PROJECT_NAME}
   rclcpp

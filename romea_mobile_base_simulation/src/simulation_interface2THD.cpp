@@ -17,9 +17,9 @@
 #include <string>
 #include <vector>
 
-// local
+// romea
+#include "romea_mobile_base_utils/ros2_control/info/hardware_info2THD.hpp"
 #include "romea_mobile_base_simulation/simulation_interface2THD.hpp"
-#include "romea_mobile_base_hardware/hardware_info.hpp"
 
 
 namespace romea
@@ -55,9 +55,9 @@ SimulationInterface2THD::SimulationInterface2THD(
     REAR_RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID,
     hardware_info.joints[REAR_RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID],
     command_interface_type),
-  idler_wheel_radius_(get_parameter<double>(hardware_info, "idler_wheel_radius")),
-  sprocket_wheel_radius_(get_parameter<double>(hardware_info, "sprocket_wheel_radius")),
-  track_thickness_(get_parameter<double>(hardware_info, "track_thickness"))
+  sprocket_wheel_radius_(get_sprocket_wheel_radius(hardware_info)),
+  idler_wheel_radius_(get_idler_wheel_radius(hardware_info)),
+  track_thickness_(get_track_thickness(hardware_info))
 {
 }
 

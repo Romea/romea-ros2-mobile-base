@@ -119,7 +119,7 @@ TEST_F(TestHarwareInterface4WD, checkSetFeedback)
   current_state.rearRightWheelSpinningMotion.velocity = 11.0;
   current_state.rearRightWheelSpinningMotion.torque = 12.0;
 
-  interface->set_state(current_state);
+  interface->set_feedback(current_state);
 
   auto state_interfaces = interface->export_state_interfaces();
   for (size_t i = 0; i < 12; ++i) {
@@ -167,7 +167,7 @@ TEST_F(TestHarwareInterface4WD, checkGetCommand)
     command_interfaces[i].set_value(i + 1.0);
   }
 
-  romea::core::HardwareCommand4WD current_command = interface->get_command();
+  romea::core::HardwareCommand4WD current_command = interface->get_hardware_command();
 
   EXPECT_DOUBLE_EQ(current_command.frontLeftWheelSpinningSetPoint, 1.0);
   EXPECT_DOUBLE_EQ(current_command.frontRightWheelSpinningSetPoint, 2.0);
@@ -185,6 +185,7 @@ TEST_F(TestHarwareInterface4WD, checkGetCommandUsingJointState)
   }
 
   auto command = interface->get_joint_state_command();
+  EXPECT_EQ(command.name.size(), 4);
   EXPECT_STREQ(command.name[0].c_str(), "robot_joint1");
   EXPECT_STREQ(command.name[1].c_str(), "robot_joint2");
   EXPECT_STREQ(command.name[2].c_str(), "robot_joint3");

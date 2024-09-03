@@ -10,9 +10,11 @@
           <plugin>${live_hardware_plugin}</plugin>
           <param name="wheelbase">${wheelbase}</param>
           <param name="front_track">${front_track}</param>
-          <param name="rear_track">${rear_track}</param>
           <param name="front_wheel_radius">${front_wheel_radius}</param>
+          <param name="front_hub_carrier_offset">${front_hub_carrier_offset}</param>
+          <param name="rear_track">${rear_track}</param>
           <param name="rear_wheel_radius">${rear_wheel_radius}</param>
+          <param name="rear_hub_carrier_offset">${rear_hub_carrier_offset}</param>
         </hardware>
       </xacro:if>
 
@@ -21,7 +23,12 @@
           <plugin>${simulation_hardware_plugin}</plugin>
           <param name="wheelbase">${wheelbase}</param>
           <param name="front_track">${front_track}</param>
+          <param name="front_wheel_radius">${front_wheel_radius}</param>
+          <param name="front_hub_carrier_offset">${front_hub_carrier_offset}</param>
           <param name="rear_track">${rear_track}</param>
+          <param name="rear_wheel_radius">${rear_wheel_radius}</param>
+          <param name="rear_hub_carrier_offset">${rear_hub_carrier_offset}</param>
+
         </hardware>
       </xacro:if>
 

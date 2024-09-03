@@ -16,6 +16,9 @@
 // string
 #include <string>
 
+// ros
+#include "hardware_interface/types/hardware_interface_type_values.hpp"
+
 // local
 #include "romea_mobile_base_gazebo/spinning_joint_gazebo_interface.hpp"
 

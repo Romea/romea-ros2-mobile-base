@@ -19,9 +19,7 @@
 #include <sstream>
 
 // local
-#include "romea_mobile_base_hardware/spinning_joint_hardware_interface.hpp"
-#include "romea_mobile_base_hardware/hardware_info.hpp"
-
+#include "romea_mobile_base_utils/ros2_control/hardware/spinning_joint_hardware_interface.hpp"
 
 namespace romea
 {
@@ -98,7 +96,7 @@ void SpinningJointHardwareInterface::Feedback::export_state_interfaces(
 }
 
 //-----------------------------------------------------------------------------
-void SpinningJointHardwareInterface::Feedback::set_state(const core::RotationalMotionState & state)
+void SpinningJointHardwareInterface::Feedback::set(const core::RotationalMotionState & state)
 {
   position.set(state.position);
   velocity.set(state.velocity);
@@ -106,7 +104,7 @@ void SpinningJointHardwareInterface::Feedback::set_state(const core::RotationalM
 }
 
 //-----------------------------------------------------------------------------
-core::RotationalMotionState SpinningJointHardwareInterface::Feedback::get_state()const
+core::RotationalMotionState SpinningJointHardwareInterface::Feedback::get()const
 {
   core::RotationalMotionState state;
   state.position = position.get();
@@ -127,22 +125,23 @@ void SpinningJointHardwareInterface::set_command(const double & command)
   command_.set(command);
 }
 
-//-----------------------------------------------------------------------------
-void SpinningJointHardwareInterface::set_state(const core::RotationalMotionState & state)
-{
-  feedback_.set_state(state);
-}
+// //-----------------------------------------------------------------------------
+// void SpinningJointHardwareInterface::set_state(const core::RotationalMotionState & state)
+// {
+//   feedback_.set_state(state);
+// }
 
 //-----------------------------------------------------------------------------
 void SpinningJointHardwareInterface::set_feedback(const core::RotationalMotionState & state)
 {
-  set_state(state);
+  feedback_.set(state);
+  // set_state(state);
 }
 
 //-----------------------------------------------------------------------------
 core::RotationalMotionState SpinningJointHardwareInterface::get_feedback()const
 {
-  return feedback_.get_state();
+  return feedback_.get();
 }
 
 //-----------------------------------------------------------------------------
@@ -166,7 +165,7 @@ void SpinningJointHardwareInterface::read_feedback(
   state.position = get_position(joint_state_feedback, id);
   state.velocity = get_velocity(joint_state_feedback, id);
   state.torque = get_effort(joint_state_feedback, id);
-  feedback_.set_state(state);
+  feedback_.set(state);
 }
 
 //-----------------------------------------------------------------------------
@@ -179,7 +178,7 @@ void SpinningJointHardwareInterface::try_read_feedback(
     state.position = get_position(joint_state_feedback, id.value());
     state.velocity = get_velocity(joint_state_feedback, id.value());
     state.torque = get_effort(joint_state_feedback, id.value());
-    feedback_.set_state(state);
+    feedback_.set(state);
   }
 }
 

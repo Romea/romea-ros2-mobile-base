@@ -22,9 +22,7 @@
 
 // romea
 #include "romea_core_mobile_base/hardware/HardwareControl2WD.hpp"
-
-// local
-#include "spinning_joint_hardware_interface.hpp"
+#include "romea_mobile_base_utils/ros2_control/hardware/spinning_joint_hardware_interface.hpp"
 
 namespace romea
 {

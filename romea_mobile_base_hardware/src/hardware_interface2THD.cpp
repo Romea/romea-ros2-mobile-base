@@ -17,10 +17,10 @@
 #include <string>
 #include <vector>
 
-// local
+// romea
+#include "romea_core_mobile_base/simulation/SimulationControl2THD.hpp"
+#include "romea_mobile_base_utils/ros2_control/info/hardware_info2THD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2THD.hpp"
-#include "romea_mobile_base_hardware/hardware_info.hpp"
-
 
 namespace romea
 {
@@ -33,23 +33,25 @@ HardwareInterface2THD::HardwareInterface2THD(
   const std::string & command_interface_type)
 : left_sprocket_wheel_spinning_joint_(
     LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID,
-    hardware_info.joints[LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID],
+    HardwareInfo2THD::get_left_sprocket_wheel_spinning_joint_info(hardware_info),
     command_interface_type),
   right_sprocket_wheel_spinning_joint_(
     RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID,
-    hardware_info.joints[RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID],
+    HardwareInfo2THD::get_right_sprocket_wheel_spinning_joint_info(hardware_info),
     command_interface_type),
   front_left_idler_wheel_spinning_joint_feedback_(
-    hardware_info.joints[FRONT_LEFT_IDLER_WHEEL_SPINNING_JOINT_ID]),
+    HardwareInfo2THD::get_front_left_idler_wheel_spinning_joint_info(hardware_info)),
   front_right_idler_wheel_spinning_joint_feedback_(
-    hardware_info.joints[FRONT_RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID]),
+    HardwareInfo2THD::get_front_right_idler_wheel_spinning_joint_info(hardware_info)),
   rear_left_idler_wheel_spinning_joint_feedback_(
-    hardware_info.joints[REAR_LEFT_IDLER_WHEEL_SPINNING_JOINT_ID]),
+    HardwareInfo2THD::get_rear_left_idler_wheel_spinning_joint_info(hardware_info)),
   rear_right_idler_wheel_spinning_joint_feedback_(
-    hardware_info.joints[REAR_RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID])
+    HardwareInfo2THD::get_rear_right_idler_wheel_spinning_joint_info(hardware_info)),
+  sprocket_wheel_radius_(get_sprocket_wheel_radius(hardware_info)),
+  idler_wheel_radius_(get_idler_wheel_radius(hardware_info)),
+  track_thickness_(get_track_thickness(hardware_info))
 {
 }
-
 
 //-----------------------------------------------------------------------------
 std::vector<hardware_interface::StateInterface>
@@ -76,18 +78,14 @@ HardwareInterface2THD::export_command_interfaces()
 }
 
 //-----------------------------------------------------------------------------
-core::HardwareCommand2TD HardwareInterface2THD::get_command()const
+core::HardwareCommand2TD HardwareInterface2THD::get_hardware_command() const
 {
   // *INDENT-OFF*
   return {left_sprocket_wheel_spinning_joint_.get_command(),
       right_sprocket_wheel_spinning_joint_.get_command()};
   // *INDENT-ON*
-}
 
-//-----------------------------------------------------------------------------
-core::HardwareCommand2TD HardwareInterface2THD::get_hardware_command() const
-{
-  return get_command();
+  // return get_command();
 }
 
 //-----------------------------------------------------------------------------
@@ -100,38 +98,13 @@ sensor_msgs::msg::JointState HardwareInterface2THD::get_joint_state_command() co
 }
 
 //-----------------------------------------------------------------------------
-void HardwareInterface2THD::set_state(const core::HardwareState2TD & hardware_state)
-{
-  left_sprocket_wheel_spinning_joint_.
-  set_state(hardware_state.leftSprocketWheelSpinningMotion);
-  right_sprocket_wheel_spinning_joint_.
-  set_state(hardware_state.rightSprocketWheelSpinningMotion);
-}
-
-//-----------------------------------------------------------------------------
-void HardwareInterface2THD::set_state(
-  const core::HardwareState2TD & hardware_state,
-  const core::RotationalMotionState & front_left_idler_wheel_spinning_motion,
-  const core::RotationalMotionState & front_right_idler_wheel_spinning_motion,
-  const core::RotationalMotionState & rear_left_idler_wheel_spinning_motion,
-  const core::RotationalMotionState & rear_right_idler_wheel_spinning_motion)
-{
-  set_state(hardware_state);
-
-  front_left_idler_wheel_spinning_joint_feedback_.
-  set_state(front_left_idler_wheel_spinning_motion);
-  front_right_idler_wheel_spinning_joint_feedback_.
-  set_state(front_right_idler_wheel_spinning_motion);
-  rear_left_idler_wheel_spinning_joint_feedback_.
-  set_state(rear_left_idler_wheel_spinning_motion);
-  rear_right_idler_wheel_spinning_joint_feedback_.
-  set_state(rear_right_idler_wheel_spinning_motion);
-}
-
-//-----------------------------------------------------------------------------
 void HardwareInterface2THD::set_feedback(const core::HardwareState2TD & hardware_state)
 {
-  set_state(hardware_state);
+  left_sprocket_wheel_spinning_joint_.set_feedback(
+    hardware_state.leftSprocketWheelSpinningMotion);
+  right_sprocket_wheel_spinning_joint_.set_feedback(
+    hardware_state.rightSprocketWheelSpinningMotion);
+  // complete_feedback_(hardware_state);
 }
 
 //-----------------------------------------------------------------------------
@@ -139,6 +112,32 @@ void HardwareInterface2THD::set_feedback(const sensor_msgs::msg::JointState & jo
 {
   left_sprocket_wheel_spinning_joint_.read_feedback(joint_states);
   right_sprocket_wheel_spinning_joint_.read_feedback(joint_states);
+
+  // core::HardwareState2TD hardware_state = {
+  //   left_sprocket_wheel_spinning_joint_.get_feedback(),
+  //   right_sprocket_wheel_spinning_joint_.get_feedback(),
+  // };
+
+  // complete_feedback_(hardware_state);
+}
+
+//-----------------------------------------------------------------------------
+void HardwareInterface2THD::complete_feedback_(const core::HardwareState2TD & hardware_state)
+{
+  core::SimulationState2THD simulation_state = toSimulationState2THD(
+    sprocket_wheel_radius_,
+    idler_wheel_radius_,
+    track_thickness_,
+    hardware_state);
+
+  front_left_idler_wheel_spinning_joint_feedback_.set(
+    simulation_state.frontLeftIdlerWheelSpinningMotion);
+  front_right_idler_wheel_spinning_joint_feedback_.set(
+    simulation_state.frontRightIdlerWheelSpinningMotion);
+  rear_left_idler_wheel_spinning_joint_feedback_.set(
+    simulation_state.rearLeftIdlerWheelSpinningMotion);
+  rear_right_idler_wheel_spinning_joint_feedback_.set(
+    simulation_state.rearRightIdlerWheelSpinningMotion);
 }
 
 }  // namespace ros2

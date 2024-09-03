@@ -17,11 +17,9 @@
 #include <string>
 
 // romea
+#include "romea_mobile_base_utils/ros2_control/info/hardware_info1FASxxx.hpp"
 #include "romea_mobile_base_simulation/simulation_interface1FAS2FWD.hpp"
-
-// local
 #include "romea_mobile_base_gazebo/gazebo_interface1FASxxx.hpp"
-
 
 namespace romea
 {
@@ -34,22 +32,22 @@ GazeboInterface1FASxxx::GazeboInterface1FASxxx(
   const hardware_interface::HardwareInfo & hardware_info,
   const std::string & command_interface_type)
 : front_axle_steering_joint_(parent_model,
-    hardware_info.joints[HardwareInterface1FAS2FWD::FRONT_AXLE_STEERING_JOINT_ID]),
+    HardwareInfo1FASxxx::get_front_axle_steering_joint_info(hardware_info)),
   front_left_wheel_steering_joint_(parent_model,
-    hardware_info.joints[HardwareInterface1FAS2FWD::FRONT_LEFT_WHEEL_STEERING_JOINT_ID]),
+    HardwareInfo1FASxxx::get_front_left_wheel_steering_joint_info(hardware_info)),
   front_right_wheel_steering_joint_(parent_model,
-    hardware_info.joints[HardwareInterface1FAS2FWD::FRONT_RIGHT_WHEEL_STEERING_JOINT_ID]),
+    HardwareInfo1FASxxx::get_front_right_wheel_steering_joint_info(hardware_info)),
   front_left_wheel_spinning_joint_(parent_model,
-    hardware_info.joints[HardwareInterface1FAS2FWD::FRONT_LEFT_WHEEL_SPINNING_JOINT_ID],
+    HardwareInfo1FASxxx::get_front_left_wheel_spinning_joint_info(hardware_info),
     command_interface_type),
   front_right_wheel_spinning_joint_(parent_model,
-    hardware_info.joints[HardwareInterface1FAS2FWD::FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID],
+    HardwareInfo1FASxxx::get_front_right_wheel_spinning_joint_info(hardware_info),
     command_interface_type),
   rear_left_wheel_spinning_joint_(parent_model,
-    hardware_info.joints[HardwareInterface1FAS2FWD::REAR_LEFT_WHEEL_SPINNING_JOINT_ID],
+    HardwareInfo1FASxxx::get_rear_left_wheel_spinning_joint_info(hardware_info),
     command_interface_type),
   rear_right_wheel_spinning_joint_(parent_model,
-    hardware_info.joints[HardwareInterface1FAS2FWD::REAR_RIGHT_WHEEL_SPINNING_JOINT_ID],
+    HardwareInfo1FASxxx::get_rear_right_wheel_spinning_joint_info(hardware_info),
     command_interface_type)
 {
 }
@@ -58,12 +56,12 @@ GazeboInterface1FASxxx::GazeboInterface1FASxxx(
 core::SimulationState1FASxxx GazeboInterface1FASxxx::get_state() const
 {
   return {front_axle_steering_joint_.get_state(),
-    front_left_wheel_steering_joint_.get_state(),
-    front_right_wheel_steering_joint_.get_state(),
-    front_left_wheel_spinning_joint_.get_state(),
-    front_right_wheel_spinning_joint_.get_state(),
-    rear_left_wheel_spinning_joint_.get_state(),
-    rear_right_wheel_spinning_joint_.get_state()};
+      front_left_wheel_steering_joint_.get_state(),
+      front_right_wheel_steering_joint_.get_state(),
+      front_left_wheel_spinning_joint_.get_state(),
+      front_right_wheel_spinning_joint_.get_state(),
+      rear_left_wheel_spinning_joint_.get_state(),
+      rear_right_wheel_spinning_joint_.get_state()};
 }
 
 //-----------------------------------------------------------------------------

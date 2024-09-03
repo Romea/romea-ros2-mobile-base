@@ -9,12 +9,19 @@
   <xacro:property name="front_right_wheel_steering_joint" value="joint5" />
   <xacro:property name="front_left_wheel_spinning_joint" value="joint6" />
   <xacro:property name="front_right_wheel_spinning_joint" value="joint7" />
-  <xacro:property name="rear_wheel_radius" value="0.2" />
-  <xacro:property name="maximal_axle_steering_angle" value="0.5" />
+
+  <xacro:property name="live_hardware_plugin" value="foo" />
+  <xacro:property name="wheelbase" value="1.3" />
+  <xacro:property name="front_track" value="0.8" />
+  <xacro:property name="front_wheel_radius" value="0.3" />
+  <xacro:property name="front_hub_carrier_offset" value="0.08" />
+  <xacro:property name="rear_wheel_radius" value="0.7" />
+  <xacro:property name="maximal_axle_steering_angle" value="0.50" />
+  <xacro:property name="maximal_wheel_steering_angle" value="1.00" />
   <xacro:property name="maximal_wheel_speed" value="1.0" />
 
   <xacro:include
     filename="$(find romea_mobile_base_description)/ros2_control/base1FAS2RWD.ros2_control.xacro" />
-  <xacro:base_control mode="test" base_name="base" />
+  <xacro:base_control mode="live" base_name="base" />
 
 </robot>

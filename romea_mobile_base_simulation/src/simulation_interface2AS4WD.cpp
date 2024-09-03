@@ -18,9 +18,7 @@
 #include <vector>
 
 // romea
-#include "romea_mobile_base_hardware/hardware_info.hpp"
-
-// local
+#include "romea_mobile_base_utils/ros2_control/info/hardware_info2ASxxx.hpp"
 #include "romea_mobile_base_simulation/simulation_interface2AS4WD.hpp"
 
 namespace romea
@@ -66,9 +64,9 @@ SimulationInterface2AS4WD::SimulationInterface2AS4WD(
   rear_right_wheel_steering_joint_(
     REAR_RIGHT_WHEEL_STEERING_JOINT_ID,
     hardware_info.joints[REAR_RIGHT_WHEEL_STEERING_JOINT_ID]),
-  wheelbase_(get_parameter<double>(hardware_info, "wheelbase")),
-  front_track_(get_parameter<double>(hardware_info, "front_track")),
-  rear_track_(get_parameter<double>(hardware_info, "rear_track"))
+  wheelbase_(get_wheelbase(hardware_info)),
+  front_track_(get_front_track(hardware_info)),
+  rear_track_(get_rear_track(hardware_info))
 {
 }
 

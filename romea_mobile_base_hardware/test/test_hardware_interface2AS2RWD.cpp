@@ -108,7 +108,48 @@ TEST_F(TestHarwareInterface2AS2RWD, DISABLED_checkCommandInterfaceTypeWhenEffort
 }
 
 
-TEST_F(TestHarwareInterface2AS2RWD, checkSetCurrentState)
+// TEST_F(TestHarwareInterface2AS2RWD, checkSetCurrentState)
+// {
+//   MakeInterface(hardware_interface::HW_IF_VELOCITY);
+
+//   romea::core::HardwareState2AS2RWD current_state;
+//   current_state.frontAxleSteeringAngle = 1.0;
+//   current_state.rearAxleSteeringAngle = 2.0;
+//   current_state.rearLeftWheelSpinningMotion.position = 3.0;
+//   current_state.rearLeftWheelSpinningMotion.velocity = 4.0;
+//   current_state.rearLeftWheelSpinningMotion.torque = 5.0;
+//   current_state.rearRightWheelSpinningMotion.position = 6.0;
+//   current_state.rearRightWheelSpinningMotion.velocity = 7.0;
+//   current_state.rearRightWheelSpinningMotion.torque = 8.0;
+//   romea::core::SteeringAngleState front_left_wheel_steering_angle = 9.;
+//   romea::core::SteeringAngleState front_right_wheel_steering_angle = 10.;
+//   romea::core::SteeringAngleState rear_left_wheel_steering_angle = 11.;
+//   romea::core::SteeringAngleState rear_right_wheel_steering_angle = 12.;
+//   romea::core::RotationalMotionState front_left_wheel_spin_motion;
+//   front_left_wheel_spin_motion.position = 13.0;
+//   front_left_wheel_spin_motion.velocity = 14.0;
+//   front_left_wheel_spin_motion.torque = 15.0;
+//   romea::core::RotationalMotionState front_right_wheel_spin_motion;
+//   front_right_wheel_spin_motion.position = 16.0;
+//   front_right_wheel_spin_motion.velocity = 17.0;
+//   front_right_wheel_spin_motion.torque = 18.0;
+
+//   interface->set_state(
+//     current_state,
+//     front_left_wheel_steering_angle,
+//     front_right_wheel_steering_angle,
+//     rear_left_wheel_steering_angle,
+//     rear_right_wheel_steering_angle,
+//     front_left_wheel_spin_motion,
+//     front_right_wheel_spin_motion);
+
+//   auto state_interfaces = interface->export_state_interfaces();
+//   for (size_t i = 0; i < 18; ++i) {
+//     EXPECT_DOUBLE_EQ(state_interfaces[i].get_value(), i + 1.0);
+//   }
+// }
+
+TEST_F(TestHarwareInterface2AS2RWD, checkSetFeedback)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
 
@@ -121,35 +162,47 @@ TEST_F(TestHarwareInterface2AS2RWD, checkSetCurrentState)
   current_state.rearRightWheelSpinningMotion.position = 6.0;
   current_state.rearRightWheelSpinningMotion.velocity = 7.0;
   current_state.rearRightWheelSpinningMotion.torque = 8.0;
-  romea::core::SteeringAngleState front_left_wheel_steering_angle = 9.;
-  romea::core::SteeringAngleState front_right_wheel_steering_angle = 10.;
-  romea::core::SteeringAngleState rear_left_wheel_steering_angle = 11.;
-  romea::core::SteeringAngleState rear_right_wheel_steering_angle = 12.;
-  romea::core::RotationalMotionState front_left_wheel_spin_motion;
-  front_left_wheel_spin_motion.position = 13.0;
-  front_left_wheel_spin_motion.velocity = 14.0;
-  front_left_wheel_spin_motion.torque = 15.0;
-  romea::core::RotationalMotionState front_right_wheel_spin_motion;
-  front_right_wheel_spin_motion.position = 16.0;
-  front_right_wheel_spin_motion.velocity = 17.0;
-  front_right_wheel_spin_motion.torque = 18.0;
 
-  interface->set_state(
-    current_state,
-    front_left_wheel_steering_angle,
-    front_right_wheel_steering_angle,
-    rear_left_wheel_steering_angle,
-    rear_right_wheel_steering_angle,
-    front_left_wheel_spin_motion,
-    front_right_wheel_spin_motion);
+  interface->set_feedback(current_state);
 
   auto state_interfaces = interface->export_state_interfaces();
-  for (size_t i = 0; i < 18; ++i) {
+  for (size_t i = 0; i < 8; ++i) {
     EXPECT_DOUBLE_EQ(state_interfaces[i].get_value(), i + 1.0);
   }
 }
 
-TEST_F(TestHarwareInterface2AS2RWD, checkGetCurrentCommand)
+TEST_F(TestHarwareInterface2AS2RWD, checkSetFeedbackUsingJointStates)
+{
+  MakeInterface(hardware_interface::HW_IF_VELOCITY);
+
+  auto feedback = romea::ros2::make_joint_state_msg(4);
+  feedback.name[0] = "robot_joint1";
+  feedback.name[1] = "robot_joint2";
+  feedback.name[2] = "robot_joint3";
+  feedback.name[3] = "robot_joint4";
+  feedback.position[0] = 1.0;
+  feedback.velocity[0] = 0.0;
+  feedback.effort[0] = 0.0;
+  feedback.position[1] = 2.0;
+  feedback.velocity[1] = 0.0;
+  feedback.effort[1] = 0.0;
+  feedback.position[2] = 3.0;
+  feedback.velocity[2] = 4.0;
+  feedback.effort[2] = 5.0;
+  feedback.position[3] = 6.0;
+  feedback.velocity[3] = 7.0;
+  feedback.effort[3] = 8.0;
+
+  interface->set_feedback(feedback);
+
+  auto state_interfaces = interface->export_state_interfaces();
+  for (size_t i = 0; i < 8; ++i) {
+    EXPECT_DOUBLE_EQ(state_interfaces[i].get_value(), i + 1.0);
+  }
+}
+
+
+TEST_F(TestHarwareInterface2AS2RWD, checkGetCommand)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
 
@@ -158,13 +211,36 @@ TEST_F(TestHarwareInterface2AS2RWD, checkGetCurrentCommand)
     command_interfaces[i].set_value(i + 1.0);
   }
 
-  romea::core::HardwareCommand2AS2RWD current_command = interface->get_command();
+  romea::core::HardwareCommand2AS2RWD current_command = interface->get_hardware_command();
 
   EXPECT_DOUBLE_EQ(current_command.frontAxleSteeringAngle, 1.0);
   EXPECT_DOUBLE_EQ(current_command.rearAxleSteeringAngle, 2.0);
   EXPECT_DOUBLE_EQ(current_command.rearLeftWheelSpinningSetPoint, 3.0);
   EXPECT_DOUBLE_EQ(current_command.rearRightWheelSpinningSetPoint, 4.0);
 }
+
+TEST_F(TestHarwareInterface2AS2RWD, checkGetCommandUsingJointState)
+{
+  MakeInterface(hardware_interface::HW_IF_VELOCITY);
+
+  auto command_interfaces = interface->export_command_interfaces();
+  for (size_t i = 0; i < 4; ++i) {
+    command_interfaces[i].set_value(i + 1.0);
+  }
+
+  auto command = interface->get_joint_state_command();
+  EXPECT_EQ(command.name.size(), 4);
+  EXPECT_STREQ(command.name[0].c_str(), "robot_joint1");
+  EXPECT_STREQ(command.name[1].c_str(), "robot_joint2");
+  EXPECT_STREQ(command.name[2].c_str(), "robot_joint3");
+  EXPECT_STREQ(command.name[3].c_str(), "robot_joint4");
+
+  EXPECT_DOUBLE_EQ(command.position[0], 1.0);
+  EXPECT_DOUBLE_EQ(command.position[1], 2.0);
+  EXPECT_DOUBLE_EQ(command.velocity[2], 3.0);
+  EXPECT_DOUBLE_EQ(command.velocity[3], 4.0);
+}
+
 
 //-----------------------------------------------------------------------------
 int main(int argc, char ** argv)

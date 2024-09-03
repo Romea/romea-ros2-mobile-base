@@ -20,15 +20,10 @@
 #include <string>
 #include <vector>
 
-// ros
-#include "sensor_msgs/msg/joint_state.hpp"
-
 // romea
 #include "romea_core_mobile_base/hardware/HardwareControl2FWS4WD.hpp"
-
-// local
-#include "romea_mobile_base_hardware/spinning_joint_hardware_interface.hpp"
-#include "romea_mobile_base_hardware/steering_joint_hardware_interface.hpp"
+#include "romea_mobile_base_utils/ros2_control/hardware/spinning_joint_hardware_interface.hpp"
+#include "romea_mobile_base_utils/ros2_control/hardware/steering_joint_hardware_interface.hpp"
 
 namespace romea
 {
@@ -50,9 +45,6 @@ struct HardwareInterface2FWS4WD
   HardwareInterface2FWS4WD(
     const hardware_interface::HardwareInfo & hardware_info,
     const std::string & wheel_spinning_joint_command_interface_type);
-
-  core::HardwareCommand2FWS4WD get_command()const;
-  void set_state(const core::HardwareState2FWS4WD & hardware_state);
 
   core::HardwareCommand2FWS4WD get_hardware_command() const;
   sensor_msgs::msg::JointState get_joint_state_command() const;

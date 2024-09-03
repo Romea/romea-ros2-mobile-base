@@ -28,7 +28,7 @@
 // romea
 #include "../test/test_helper.h"
 #include "../test/test_utils.hpp"
-#include "romea_mobile_base_hardware/spinning_joint_hardware_interface.hpp"
+#include "romea_mobile_base_utils/ros2_control/hardware/spinning_joint_hardware_interface.hpp"
 
 class TestSpinningJointHardwateInterface : public ::testing::Test
 {

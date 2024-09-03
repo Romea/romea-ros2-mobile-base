@@ -17,10 +17,9 @@
 #include <string>
 #include <vector>
 
-// romea
-#include "romea_mobile_base_hardware/hardware_info.hpp"
 
-// local
+// romea
+#include "romea_mobile_base_utils/ros2_control/info/hardware_info1FASxxx.hpp"
 #include "romea_mobile_base_simulation/simulation_interface1FAS2RWD.hpp"
 
 namespace romea
@@ -57,11 +56,11 @@ SimulationInterface1FAS2RWD::SimulationInterface1FAS2RWD(
     FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID,
     hardware_info.joints[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID],
     spinning_joint_command_interface_type),
-  wheelbase_(get_parameter<double>(hardware_info, "wheelbase")),
-  front_track_(get_parameter<double>(hardware_info, "front_track")),
-  front_wheel_radius_(get_parameter<double>(hardware_info, "front_wheel_radius")),
-  front_hub_carrier_offset_(get_parameter<double>(hardware_info, "front_hub_carrier_offset")),
-  rear_wheel_radius_(get_parameter<double>(hardware_info, "rear_wheel_radius"))
+  wheelbase_(get_wheelbase(hardware_info)),
+  front_track_(get_front_track(hardware_info)),
+  front_wheel_radius_(get_front_wheel_radius(hardware_info)),
+  front_hub_carrier_offset_(get_front_hub_carrier_offset(hardware_info)),
+  rear_wheel_radius_(get_rear_wheel_radius(hardware_info))
 {
 }
 

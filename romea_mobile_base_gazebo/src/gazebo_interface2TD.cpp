@@ -18,8 +18,7 @@
 
 // romea
 #include "romea_mobile_base_hardware/hardware_interface2TD.hpp"
-
-// local
+#include "romea_mobile_base_utils/ros2_control/info/hardware_info2TD.hpp"
 #include "romea_mobile_base_gazebo/gazebo_interface2TD.hpp"
 
 namespace romea
@@ -33,16 +32,16 @@ GazeboInterface2TD::GazeboInterface2TD(
   const hardware_interface::HardwareInfo & hardware_info,
   const std::string & command_interface_type)
 : left_sprocket_wheel_spinning_joint_(parent_model,
-    hardware_info.joints[HardwareInterface2TD::LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID],
+    HardwareInfo2TD::get_left_sprocket_wheel_spinning_joint_info(hardware_info),
     command_interface_type),
   right_sprocket_wheel_spinning_joint_(parent_model,
-    hardware_info.joints[HardwareInterface2TD::RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID],
+    HardwareInfo2TD::get_right_sprocket_wheel_spinning_joint_info(hardware_info),
     command_interface_type),
   left_idler_wheel_spinning_joint_(parent_model,
-    hardware_info.joints[HardwareInterface2TD::LEFT_IDLER_WHEEL_SPINNING_JOINT_ID],
+    HardwareInfo2TD::get_left_idler_wheel_spinning_joint_info(hardware_info),
     command_interface_type),
   right_idler_wheel_spinning_joint_(parent_model,
-    hardware_info.joints[HardwareInterface2TD::RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID],
+    HardwareInfo2TD::get_right_idler_wheel_spinning_joint_info(hardware_info),
     command_interface_type)
 {
 }
@@ -51,9 +50,9 @@ GazeboInterface2TD::GazeboInterface2TD(
 core::SimulationState2TD GazeboInterface2TD::get_state() const
 {
   return {left_sprocket_wheel_spinning_joint_.get_state(),
-    right_sprocket_wheel_spinning_joint_.get_state(),
-    left_idler_wheel_spinning_joint_.get_state(),
-    right_idler_wheel_spinning_joint_.get_state()};
+      right_sprocket_wheel_spinning_joint_.get_state(),
+      left_idler_wheel_spinning_joint_.get_state(),
+      right_idler_wheel_spinning_joint_.get_state()};
 }
 
 //-----------------------------------------------------------------------------

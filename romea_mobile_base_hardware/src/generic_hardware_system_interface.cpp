@@ -238,20 +238,20 @@ GenericHardwareSystemInterface<HardwareInterface>::export_command_interfaces()
 }
 
 // template class GenericHardwareSystemInterface<HardwareInterface2WD>;
-// template class GenericHardwareSystemInterface<HardwareInterface4WD>;
+template class GenericHardwareSystemInterface<HardwareInterface4WD>;
 template class GenericHardwareSystemInterface<HardwareInterface4WS4WD>;
 template class GenericHardwareSystemInterface<HardwareInterface2FWS4WD>;
-// template class GenericHardwareSystemInterface<HardwareInterface2FWS2RWD>;
-// template class GenericHardwareSystemInterface<HardwareInterface2FWS2FWD>;
-// template class GenericHardwareSystemInterface<HardwareInterface2AS4WD>;
-// template class GenericHardwareSystemInterface<HardwareInterface2AS2FWD>;
-// template class GenericHardwareSystemInterface<HardwareInterface2AS2RWD>;
-// template class GenericHardwareSystemInterface<HardwareInterface1FAS2FWD>;
-// template class GenericHardwareSystemInterface<HardwareInterface1FAS2RWD>;
-// template class GenericHardwareSystemInterface<HardwareInterface1FAS4WD>;
-// template class GenericHardwareSystemInterface<HardwareInterface2TD>;
+template class GenericHardwareSystemInterface<HardwareInterface2FWS2RWD>;
+template class GenericHardwareSystemInterface<HardwareInterface2FWS2FWD>;
+template class GenericHardwareSystemInterface<HardwareInterface2AS4WD>;
+template class GenericHardwareSystemInterface<HardwareInterface2AS2FWD>;
+template class GenericHardwareSystemInterface<HardwareInterface2AS2RWD>;
+template class GenericHardwareSystemInterface<HardwareInterface1FAS2FWD>;
+template class GenericHardwareSystemInterface<HardwareInterface1FAS2RWD>;
+template class GenericHardwareSystemInterface<HardwareInterface1FAS4WD>;
+template class GenericHardwareSystemInterface<HardwareInterface2TD>;
 template class GenericHardwareSystemInterface<HardwareInterface2THD>;
-// template class GenericHardwareSystemInterface<HardwareInterface2TTD>;
+template class GenericHardwareSystemInterface<HardwareInterface2TTD>;
 
 }  // namespace ros2
 }  // namespace romea

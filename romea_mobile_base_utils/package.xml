@@ -21,6 +21,7 @@
   <depend>ackermann_msgs</depend>
   <depend>romea_cmd_mux_msgs</depend>
   <depend>romea_cmd_mux_utils</depend>
+  <depend>hardware_interface</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

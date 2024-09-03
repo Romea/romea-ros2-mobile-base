@@ -28,12 +28,27 @@ find_package(romea_common_utils REQUIRED)
 find_package(romea_mobile_base_msgs REQUIRED)
 find_package(romea_cmd_mux_msgs REQUIRED)
 find_package(romea_cmd_mux_utils REQUIRED)
+find_package(hardware_interface REQUIRED)
 
 
 add_library(${PROJECT_NAME} SHARED
     src/control/command_interface.cpp
     src/conversions/command_conversions.cpp
-    src/conversions/kinematic_conversions.cpp)
+    src/conversions/kinematic_conversions.cpp
+    src/ros2_control/info/hardware_info_common.cpp
+    src/ros2_control/info/hardware_info1FASxxx.cpp
+    src/ros2_control/info/hardware_info2ASxxx.cpp
+    src/ros2_control/info/hardware_info2FWSxxx.cpp
+    src/ros2_control/info/hardware_info2TD.cpp
+    src/ros2_control/info/hardware_info2THD.cpp
+    src/ros2_control/info/hardware_info2TTD.cpp
+    src/ros2_control/info/hardware_info4WD.cpp
+    src/ros2_control/info/hardware_info4WS4WD.cpp
+    src/ros2_control/info/interface_info.cpp
+    src/ros2_control/info/joint_info.cpp
+    src/ros2_control/hardware/hardware_handle.cpp
+    src/ros2_control/hardware/spinning_joint_hardware_interface.cpp
+    src/ros2_control/hardware/steering_joint_hardware_interface.cpp)
 
 ament_target_dependencies(${PROJECT_NAME}
     rclcpp
@@ -45,7 +60,8 @@ ament_target_dependencies(${PROJECT_NAME}
     four_wheel_steering_msgs
     ackermann_msgs
     romea_cmd_mux_msgs
-    romea_cmd_mux_utils)
+    romea_cmd_mux_utils
+    hardware_interface)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -63,6 +79,7 @@ ament_export_dependencies(ackermann_msgs)
 ament_export_dependencies(romea_mobile_base_msgs)
 ament_export_dependencies(romea_cmd_mux_msgs)
 ament_export_dependencies(romea_cmd_mux_utils)
+ament_export_dependencies(hardware_interface)
 
 ament_export_include_directories(include)
 ament_export_libraries(${PROJECT_NAME})

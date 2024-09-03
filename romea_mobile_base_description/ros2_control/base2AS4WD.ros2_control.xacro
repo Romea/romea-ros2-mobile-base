@@ -22,6 +22,8 @@
           <param name="wheelbase">${wheelbase}</param>
           <param name="front_track">${front_track}</param>
           <param name="rear_track">${rear_track}</param>
+          <param name="front_wheel_radius">${front_wheel_radius}</param>
+          <param name="rear_wheel_radius">${rear_wheel_radius}</param>
         </hardware>
       </xacro:if>
 

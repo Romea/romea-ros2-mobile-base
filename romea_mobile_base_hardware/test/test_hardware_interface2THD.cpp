@@ -99,6 +99,47 @@ TEST_F(TestHarwareInterface2THD, DISABLED_checkCommandInterfaceTypeWhenEffortCon
   check_interface_name(command_interfaces[1], "robot_joint2/effort");
 }
 
+// TEST_F(TestHarwareInterface2THD, checkSetFeedback)
+// {
+//   MakeInterface(hardware_interface::HW_IF_VELOCITY);
+
+//   romea::core::HardwareState2TD current_state;
+//   current_state.leftSprocketWheelSpinningMotion.position = 1.0;
+//   current_state.leftSprocketWheelSpinningMotion.velocity = 2.0;
+//   current_state.leftSprocketWheelSpinningMotion.torque = 3.0;
+//   current_state.rightSprocketWheelSpinningMotion.position = 4.0;
+//   current_state.rightSprocketWheelSpinningMotion.velocity = 5.0;
+//   current_state.rightSprocketWheelSpinningMotion.torque = 6.0;
+//   romea::core::RotationalMotionState frontLeftIdlerWheelSpinningMotion;
+//   frontLeftIdlerWheelSpinningMotion.position = 7.0;
+//   frontLeftIdlerWheelSpinningMotion.velocity = 8.0;
+//   frontLeftIdlerWheelSpinningMotion.torque = 9.0;
+//   romea::core::RotationalMotionState frontRightIdlerWheelSpinningMotion;
+//   frontRightIdlerWheelSpinningMotion.position = 10.0;
+//   frontRightIdlerWheelSpinningMotion.velocity = 11.0;
+//   frontRightIdlerWheelSpinningMotion.torque = 12.0;
+//   romea::core::RotationalMotionState rearLeftIdlerWheelSpinningMotion;
+//   rearLeftIdlerWheelSpinningMotion.position = 13.0;
+//   rearLeftIdlerWheelSpinningMotion.velocity = 14.0;
+//   rearLeftIdlerWheelSpinningMotion.torque = 15.0;
+//   romea::core::RotationalMotionState rearRightIdlerWheelSpinningMotion;
+//   rearRightIdlerWheelSpinningMotion.position = 16.0;
+//   rearRightIdlerWheelSpinningMotion.velocity = 17.0;
+//   rearRightIdlerWheelSpinningMotion.torque = 18.0;
+
+//   interface->set_state(
+//     current_state,
+//     frontLeftIdlerWheelSpinningMotion,
+//     frontRightIdlerWheelSpinningMotion,
+//     rearLeftIdlerWheelSpinningMotion,
+//     rearRightIdlerWheelSpinningMotion);
+
+//   auto state_interfaces = interface->export_state_interfaces();
+//   for (size_t i = 0; i < 12; ++i) {
+//     EXPECT_DOUBLE_EQ(state_interfaces[i].get_value(), i + 1.0);
+//   }
+// }
+
 TEST_F(TestHarwareInterface2THD, checkSetFeedback)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
@@ -110,32 +151,11 @@ TEST_F(TestHarwareInterface2THD, checkSetFeedback)
   current_state.rightSprocketWheelSpinningMotion.position = 4.0;
   current_state.rightSprocketWheelSpinningMotion.velocity = 5.0;
   current_state.rightSprocketWheelSpinningMotion.torque = 6.0;
-  romea::core::RotationalMotionState frontLeftIdlerWheelSpinningMotion;
-  frontLeftIdlerWheelSpinningMotion.position = 7.0;
-  frontLeftIdlerWheelSpinningMotion.velocity = 8.0;
-  frontLeftIdlerWheelSpinningMotion.torque = 9.0;
-  romea::core::RotationalMotionState frontRightIdlerWheelSpinningMotion;
-  frontRightIdlerWheelSpinningMotion.position = 10.0;
-  frontRightIdlerWheelSpinningMotion.velocity = 11.0;
-  frontRightIdlerWheelSpinningMotion.torque = 12.0;
-  romea::core::RotationalMotionState rearLeftIdlerWheelSpinningMotion;
-  rearLeftIdlerWheelSpinningMotion.position = 13.0;
-  rearLeftIdlerWheelSpinningMotion.velocity = 14.0;
-  rearLeftIdlerWheelSpinningMotion.torque = 15.0;
-  romea::core::RotationalMotionState rearRightIdlerWheelSpinningMotion;
-  rearRightIdlerWheelSpinningMotion.position = 16.0;
-  rearRightIdlerWheelSpinningMotion.velocity = 17.0;
-  rearRightIdlerWheelSpinningMotion.torque = 18.0;
 
-  interface->set_state(
-    current_state,
-    frontLeftIdlerWheelSpinningMotion,
-    frontRightIdlerWheelSpinningMotion,
-    rearLeftIdlerWheelSpinningMotion,
-    rearRightIdlerWheelSpinningMotion);
+  interface->set_feedback(current_state);
 
   auto state_interfaces = interface->export_state_interfaces();
-  for (size_t i = 0; i < 12; ++i) {
+  for (size_t i = 0; i < 6; ++i) {
     EXPECT_DOUBLE_EQ(state_interfaces[i].get_value(), i + 1.0);
   }
 }
@@ -145,7 +165,7 @@ TEST_F(TestHarwareInterface2THD, checkSetFeedbackUsingJointStates)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
 
-  auto feedback = romea::ros2::make_joint_state_msg(8);
+  auto feedback = romea::ros2::make_joint_state_msg(2);
   feedback.name[0] = "robot_joint1";
   feedback.name[1] = "robot_joint2";
   feedback.position[0] = 1.0;
@@ -163,7 +183,7 @@ TEST_F(TestHarwareInterface2THD, checkSetFeedbackUsingJointStates)
   }
 }
 
-TEST_F(TestHarwareInterface2THD, checkGetCurrentCommand)
+TEST_F(TestHarwareInterface2THD, checkGetCommand)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
 
@@ -188,6 +208,7 @@ TEST_F(TestHarwareInterface2THD, checkGetCommandUsingJointState)
   }
 
   auto command = interface->get_joint_state_command();
+  EXPECT_EQ(command.name.size(), 2);
   EXPECT_STREQ(command.name[0].c_str(), "robot_joint1");
   EXPECT_STREQ(command.name[1].c_str(), "robot_joint2");
 

@@ -18,9 +18,7 @@
 
 // romea
 #include "romea_mobile_base_hardware/hardware_interface2THD.hpp"
-
-
-// local
+#include "romea_mobile_base_utils/ros2_control/info/hardware_info2THD.hpp"
 #include "romea_mobile_base_gazebo/gazebo_interface2THD.hpp"
 
 namespace romea
@@ -34,22 +32,22 @@ GazeboInterface2THD::GazeboInterface2THD(
   const hardware_interface::HardwareInfo & hardware_info,
   const std::string & command_interface_type)
 : left_sprocket_wheel_spinning_joint_(parent_model,
-    hardware_info.joints[HardwareInterface2THD::LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID],
+    HardwareInfo2THD::get_left_sprocket_wheel_spinning_joint_info(hardware_info),
     command_interface_type),
   right_sprocket_wheel_spinning_joint_(parent_model,
-    hardware_info.joints[HardwareInterface2THD::RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID],
+    HardwareInfo2THD::get_right_sprocket_wheel_spinning_joint_info(hardware_info),
     command_interface_type),
   front_left_idler_wheel_spinning_joint_(parent_model,
-    hardware_info.joints[HardwareInterface2THD::FRONT_LEFT_IDLER_WHEEL_SPINNING_JOINT_ID],
+    HardwareInfo2THD::get_front_left_idler_wheel_spinning_joint_info(hardware_info),
     command_interface_type),
   front_right_idler_wheel_spinning_joint_(parent_model,
-    hardware_info.joints[HardwareInterface2THD::FRONT_RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID],
+    HardwareInfo2THD::get_front_right_idler_wheel_spinning_joint_info(hardware_info),
     command_interface_type),
   rear_left_idler_wheel_spinning_joint_(parent_model,
-    hardware_info.joints[HardwareInterface2THD::REAR_LEFT_IDLER_WHEEL_SPINNING_JOINT_ID],
+    HardwareInfo2THD::get_rear_left_idler_wheel_spinning_joint_info(hardware_info),
     command_interface_type),
   rear_right_idler_wheel_spinning_joint_(parent_model,
-    hardware_info.joints[HardwareInterface2THD::REAR_RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID],
+    HardwareInfo2THD::get_rear_right_idler_wheel_spinning_joint_info(hardware_info),
     command_interface_type)
 {
 }
@@ -58,11 +56,11 @@ GazeboInterface2THD::GazeboInterface2THD(
 core::SimulationState2THD GazeboInterface2THD::get_state() const
 {
   return {left_sprocket_wheel_spinning_joint_.get_state(),
-    right_sprocket_wheel_spinning_joint_.get_state(),
-    front_left_idler_wheel_spinning_joint_.get_state(),
-    front_right_idler_wheel_spinning_joint_.get_state(),
-    rear_left_idler_wheel_spinning_joint_.get_state(),
-    rear_right_idler_wheel_spinning_joint_.get_state()};
+      right_sprocket_wheel_spinning_joint_.get_state(),
+      front_left_idler_wheel_spinning_joint_.get_state(),
+      front_right_idler_wheel_spinning_joint_.get_state(),
+      rear_left_idler_wheel_spinning_joint_.get_state(),
+      rear_right_idler_wheel_spinning_joint_.get_state()};
 }
 
 //-----------------------------------------------------------------------------

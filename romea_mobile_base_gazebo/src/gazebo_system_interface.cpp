@@ -188,7 +188,7 @@ template class GazeboSystemInterface<GazeboInterface2FWSxxx, SimulationInterface
 template class GazeboSystemInterface<GazeboInterface2TD, SimulationInterface2TD>;
 template class GazeboSystemInterface<GazeboInterface2THD, SimulationInterface2THD>;
 template class GazeboSystemInterface<GazeboInterface2TTD, SimulationInterface2TTD>;
-template class GazeboSystemInterface<GazeboInterface2WD, SimulationInterface2WD>;
+// template class GazeboSystemInterface<GazeboInterface2WD, SimulationInterface2WD>;
 template class GazeboSystemInterface<GazeboInterface4WD, SimulationInterface4WD>;
 template class GazeboSystemInterface<GazeboInterface4WS4WD, SimulationInterface4WS4WD>;
 

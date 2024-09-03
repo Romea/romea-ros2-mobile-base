@@ -13,19 +13,17 @@
 // limitations under the License.
 
 
-#ifndef ROMEA_MOBILE_BASE_HARDWARE__SPINNING_JOINT_HARDWARE_INTERFACE_HPP_
-#define ROMEA_MOBILE_BASE_HARDWARE__SPINNING_JOINT_HARDWARE_INTERFACE_HPP_
+#ifndef ROMEA_MOBILE_BASE_UTILS__ROS2_CONTROL__HARDWARE__SPINNING_JOINT_HARDWARE_INTERFACE_HPP_
+#define ROMEA_MOBILE_BASE_UTILS__ROS2_CONTROL__HARDWARE__SPINNING_JOINT_HARDWARE_INTERFACE_HPP_
 
 
 // std
 #include <string>
 #include <vector>
 
-// ros
-#include "hardware_interface/hardware_info.hpp"
 
 // romea
-#include "romea_mobile_base_hardware/hardware_handle.hpp"
+#include "romea_mobile_base_utils/ros2_control/hardware/hardware_handle.hpp"
 #include "romea_common_utils/joint_states.hpp"
 
 namespace romea
@@ -49,9 +47,9 @@ public:
     HardwareStateInterface velocity;
     HardwareStateInterface torque;
 
-    void set_state(const core::RotationalMotionState & state);
+    void set(const core::RotationalMotionState & state);
 
-    core::RotationalMotionState get_state()const;
+    core::RotationalMotionState get()const;
 
     void export_state_interfaces(
       std::vector<hardware_interface::StateInterface> & state_interfaces);
@@ -70,7 +68,6 @@ public:
   double get_command() const;
   void set_command(const double & command);
 
-  void set_state(const core::RotationalMotionState & state);
   void set_feedback(const core::RotationalMotionState & state);
   core::RotationalMotionState get_feedback()const;
 
@@ -106,4 +103,4 @@ private:
 }  // namespace ros2
 }  // namespace romea
 
-#endif  // ROMEA_MOBILE_BASE_HARDWARE__SPINNING_JOINT_HARDWARE_INTERFACE_HPP_
+#endif  // ROMEA_MOBILE_BASE_UTILS__ROS2_CONTROL__HARDWARE__SPINNING_JOINT_HARDWARE_INTERFACE_HPP_

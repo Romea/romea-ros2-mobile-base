@@ -43,7 +43,7 @@ add_library(${PROJECT_NAME} SHARED
   src/gazebo_interface2TD.cpp
   src/gazebo_interface2THD.cpp
   src/gazebo_interface2TTD.cpp
-  src/gazebo_interface2WD.cpp
+  # src/gazebo_interface2WD.cpp
   src/gazebo_interface4WD.cpp
   src/gazebo_interface4WS4WD.cpp
   src/gazebo_system_interface.cpp)

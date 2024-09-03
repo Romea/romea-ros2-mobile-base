@@ -18,8 +18,7 @@
 #include <string>
 
 // local
-#include "romea_mobile_base_hardware/steering_joint_hardware_interface.hpp"
-#include "romea_mobile_base_hardware/hardware_info.hpp"
+#include "romea_mobile_base_utils/ros2_control/hardware/steering_joint_hardware_interface.hpp"
 
 namespace romea
 {
@@ -70,16 +69,17 @@ void SteeringJointHardwareInterface::set_command(const core::SteeringAngleComman
   command_.set(command);
 }
 
-//-----------------------------------------------------------------------------
-void SteeringJointHardwareInterface::set_state(const core::SteeringAngleState & state)
-{
-  feedback_.set(state);
-}
+// //-----------------------------------------------------------------------------
+// void SteeringJointHardwareInterface::set_state(const core::SteeringAngleState & state)
+// {
+//   feedback_.set(state);
+// }
 
 //-----------------------------------------------------------------------------
 void SteeringJointHardwareInterface::set_feedback(const core::SteeringAngleState & state)
 {
-  set_state(state);
+  feedback_.set(state);
+  // set_state(state);
 }
 
 //-----------------------------------------------------------------------------

@@ -22,11 +22,8 @@
 
 // romea
 #include "romea_core_mobile_base/hardware/HardwareControl4WS4WD.hpp"
-
-// local
-#include "romea_mobile_base_hardware/spinning_joint_hardware_interface.hpp"
-#include "romea_mobile_base_hardware/steering_joint_hardware_interface.hpp"
-
+#include "romea_mobile_base_utils/ros2_control/hardware/spinning_joint_hardware_interface.hpp"
+#include "romea_mobile_base_utils/ros2_control/hardware/steering_joint_hardware_interface.hpp"
 
 namespace romea
 {
@@ -52,8 +49,8 @@ struct HardwareInterface4WS4WD
     const hardware_interface::HardwareInfo & hardware_info,
     const std::string & spinning_joint_command_interface_type);
 
-  core::HardwareCommand4WS4WD get_command()const;
-  void set_state(const core::HardwareState4WS4WD & hardware_state);
+  // core::HardwareCommand4WS4WD get_command()const;
+  // void set_state(const core::HardwareState4WS4WD & hardware_state);
 
   core::HardwareCommand4WS4WD get_hardware_command() const;
   sensor_msgs::msg::JointState get_joint_state_command() const;

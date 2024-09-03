@@ -30,23 +30,23 @@
 // romea
 #include "../test/test_helper.h"
 #include "test_utils.hpp"
-#include "romea_mobile_base_gazebo/gazebo_interface2THD.hpp"
+#include "romea_mobile_base_gazebo/gazebo_interface2TTD.hpp"
 
-class TestGazeboInterface2ThD : public gazebo::ServerFixture {};
+class TestGazeboInterface2TTD : public gazebo::ServerFixture {};
 
 
-TEST_F(TestGazeboInterface2ThD, testSetGet)
+TEST_F(TestGazeboInterface2TTD, testSetGet)
 {
   Load("/usr/share/gazebo-11/worlds/empty.world");
-  std::string urdf_description = make_urdf_description("2THD");
-  std::string sdf_description = make_sdf_description("2THD");
+  std::string urdf_description = make_urdf_description("2TTD");
+  std::string sdf_description = make_sdf_description("2TTD");
   SpawnSDF(sdf_description);
 
   auto hardware_info = hardware_interface::parse_control_resources_from_urdf(urdf_description);
-  romea::ros2::GazeboInterface2THD gazebo_interface(GetModel("robot"), hardware_info[0],
+  romea::ros2::GazeboInterface2TTD gazebo_interface(GetModel("robot"), hardware_info[0],
     "velocity");
 
-  romea::core::SimulationCommand2THD command = {-1.0, 1.0, -2.0, 2.0, 3.0, -3.0};
+  romea::core::SimulationCommand2TTD command = {-1.0, 1.0, -2.0, 2.0, 3.0, -3.0, 4.0, -4.0};
   gazebo_interface.set_command(command);
   auto state = gazebo_interface.get_state();
 
@@ -58,21 +58,31 @@ TEST_F(TestGazeboInterface2ThD, testSetGet)
     command.rightSprocketWheelSpinningSetPoint,
     state.rightSprocketWheelSpinningMotion.velocity,
     0.1);
+
   EXPECT_NEAR(
-    command.frontLeftIdlerWheelSpinningSetPoint,
-    state.frontLeftIdlerWheelSpinningMotion.velocity,
+    command.leftIdlerWheelSpinningSetPoint,
+    state.leftIdlerWheelSpinningMotion.velocity,
     0.1);
   EXPECT_NEAR(
-    command.frontRightIdlerWheelSpinningSetPoint,
-    state.frontRightIdlerWheelSpinningMotion.velocity,
+    command.rightIdlerWheelSpinningSetPoint,
+    state.rightIdlerWheelSpinningMotion.velocity,
+    0.1);
+
+  EXPECT_NEAR(
+    command.frontLeftRollerWheelSpinningSetPoint,
+    state.frontLeftRollerWheelSpinningMotion.velocity,
     0.1);
   EXPECT_NEAR(
-    command.rearLeftIdlerWheelSpinningSetPoint,
-    state.rearLeftIdlerWheelSpinningMotion.velocity,
+    command.frontRightRollerWheelSpinningSetPoint,
+    state.frontRightRollerWheelSpinningMotion.velocity,
     0.1);
   EXPECT_NEAR(
-    command.rearRightIdlerWheelSpinningSetPoint,
-    state.rearRightIdlerWheelSpinningMotion.velocity,
+    command.rearLeftRollerWheelSpinningSetPoint,
+    state.rearLeftRollerWheelSpinningMotion.velocity,
+    0.1);
+  EXPECT_NEAR(
+    command.rearRightRollerWheelSpinningSetPoint,
+    state.rearRightRollerWheelSpinningMotion.velocity,
     0.1);
 }
 

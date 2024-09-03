@@ -18,9 +18,7 @@
 #include <vector>
 
 // romea
-#include "romea_mobile_base_hardware/hardware_info.hpp"
-
-// local
+#include "romea_mobile_base_utils/ros2_control/info/hardware_info2FWSxxx.hpp"
 #include "romea_mobile_base_simulation/simulation_interface2FWS2FWD.hpp"
 
 namespace romea
@@ -54,13 +52,13 @@ SimulationInterface2FWS2FWD::SimulationInterface2FWS2FWD(
     REAR_RIGHT_WHEEL_SPINNING_JOINT_ID,
     hardware_info.joints[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID],
     spinning_joint_command_interface_type),
-  wheelbase_(get_parameter<double>(hardware_info, "wheelbase")),
-  front_track_(get_parameter<double>(hardware_info, "front_track")),
-  rear_track_(get_parameter<double>(hardware_info, "rear_track")),
-  front_wheel_radius_(get_parameter<double>(hardware_info, "front_wheel_radius")),
-  rear_wheel_radius_(get_parameter<double>(hardware_info, "rear_wheel_radius")),
-  front_hub_carrier_offset_(get_parameter<double>(hardware_info, "front_hub_carrier_offset")),
-  rear_hub_carrier_offset_(get_parameter<double>(hardware_info, "rear_hub_carrier_offset"))
+  wheelbase_(get_wheelbase(hardware_info)),
+  front_track_(get_front_track(hardware_info)),
+  front_wheel_radius_(get_front_wheel_radius(hardware_info)),
+  front_hub_carrier_offset_(get_front_hub_carrier_offset(hardware_info)),
+  rear_track_(get_rear_track(hardware_info)),
+  rear_wheel_radius_(get_rear_wheel_radius(hardware_info)),
+  rear_hub_carrier_offset_(get_rear_hub_carrier_offset(hardware_info))
 {
 }
 
