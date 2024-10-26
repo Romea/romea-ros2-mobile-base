@@ -44,14 +44,23 @@
       </collision>
     </link>
 
-    <gazebo reference="${prefix}${wheel_spinning_link}">
-      <mu1 value="0.9" />
-      <mu2 value="0.9" />
-      <fdir1>0 0 1</fdir1>
-      <kp value="1e8" />
-      <minDepth>0.005</minDepth>
-    </gazebo>
+    <!-- <gazebo reference="${prefix}${wheel_spinning_link}"> -->
+    <!--   <mu1 value="0.9" /> -->
+    <!--   <mu2 value="0.9" /> -->
+    <!--   <kp value="1e8" /> -->
+    <!--   <minDepth>0.01</minDepth> -->
+    <!-- </gazebo> -->
 
+    <gazebo reference="${prefix}${wheel_spinning_link}">
+      <collision>
+        <surface>
+          <contact>
+            <!-- bitmask: stems(4), weeds(3), crops(2), elements(1), ground(0) -->
+            <collide_bitmask>0x17</collide_bitmask>
+          </contact>
+        </surface>
+      </collision>
+    </gazebo>
 
     <joint name="${prefix}${wheel_spinning_joint}" type="continuous">
       <limit effort="10000000" velocity="${maximal_angular_speed}" />

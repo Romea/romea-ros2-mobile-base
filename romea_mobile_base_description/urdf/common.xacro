@@ -8,9 +8,6 @@
 
     <link name="${prefix}${base_footprint_link}"/>
 
-    <!-- <gazebo reference="${prefix}${base_link}">
-      <material>Gazebo/Grey</material>
-    </gazebo> -->
 
     <!-- Base link is the center of the robot -->
     <link name="${prefix}${base_link}">
@@ -47,6 +44,17 @@
       <parent link="${prefix}${base_link}" />
       <child link="${prefix}${inertial_link}" />
     </joint>
+
+    <gazebo reference="${prefix}${base_link}">
+      <collision>
+        <surface>
+          <contact>
+            <!-- bitmask: stems(4), weeds(3), crops(2), elements(1), ground(0) -->
+            <collide_bitmask>0x17</collide_bitmask>
+          </contact>
+        </surface>
+      </collision>
+    </gazebo>
 
   </xacro:macro>
 
