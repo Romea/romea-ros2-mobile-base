@@ -50,7 +50,7 @@
         <surface>
           <contact>
             <!-- bitmask: stems(4), weeds(3), crops(2), elements(1), ground(0) -->
-            <collide_bitmask>0x17</collide_bitmask>
+            <collide_bitmask>0x07</collide_bitmask>
           </contact>
         </surface>
       </collision>
