@@ -159,7 +159,7 @@ def main(args=None):
         action='store_true')
     parser.add_argument(
         '--controller-manager-timeout',
-        help='Time to wait for the controller manager', required=False, default=10, type=int)
+        help='Time to wait for the controller manager', required=False, default=100, type=int)
 
     command_line_args = rclpy.utilities.remove_ros_args(args=sys.argv)[1:]
     args = parser.parse_args(command_line_args)
@@ -190,6 +190,12 @@ def main(args=None):
                                            controller_manager_timeout):
             node.get_logger().error('Controller manager not available')
             return 1
+
+        print(controller_manager_name,"***********************************")
+        if "base" in controller_manager_name:
+            time.sleep(3)
+        else:
+            time.sleep(6)
 
         if is_controller_loaded(node, controller_manager_name, prefixed_controller_name):
             node.get_logger().warn('Controller already loaded, skipping load_controller')
