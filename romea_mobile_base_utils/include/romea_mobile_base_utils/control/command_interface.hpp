@@ -55,6 +55,8 @@ public:
     std::shared_ptr<Node> node,
     const Configuration & configuration);
 
+  ~CommandInterface();
+
   void send_null_command();
 
   void send_command(const CommandType & command);
@@ -93,6 +95,7 @@ private:
 private:
   std::shared_ptr<CmdPublisher> cmd_pub_;
   CmdMuxInterface cmd_mux_client_;
+  rclcpp::Logger logger_;
 
   std::atomic<bool> is_started_;
   std::atomic<bool> is_emergency_stop_activated_;
@@ -117,6 +120,7 @@ CommandInterface<CommandType>::CommandInterface(
   const Configuration & configuration)
 : cmd_pub_(nullptr),
   cmd_mux_client_(node),
+  logger_(node->get_logger()),
   is_started_(false),
   is_emergency_stop_activated_(false),
   clock_(node->get_clock()),

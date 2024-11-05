@@ -30,12 +30,27 @@ namespace ros2
 
 //-----------------------------------------------------------------------------
 template<typename CommandType>
+CommandInterface<CommandType>::~CommandInterface()
+{
+  try {
+    cmd_mux_client_.unsubscribe(cmd_pub_->get_topic_name());
+  } catch (const std::exception & e) {
+    RCLCPP_ERROR_STREAM(logger_, e.what());
+  }
+}
+
+//-----------------------------------------------------------------------------
+template<typename CommandType>
 void CommandInterface<CommandType>::subscribe_to_cmd_mux(
   const int & priority,
   const double & timeout)
 {
   if (priority != -1) {
-    cmd_mux_client_.subscribe(cmd_pub_->get_topic_name(), priority, timeout);
+    try {
+      cmd_mux_client_.subscribe(cmd_pub_->get_topic_name(), priority, timeout);
+    } catch (const std::exception & e) {
+      RCLCPP_ERROR_STREAM(logger_, e.what());
+    }
   }
 }
 
@@ -162,7 +177,7 @@ void CommandInterface<CommandType>::timer_callback_()
     bool timeout = clock_->now() > last_command_date_ + timeout_duration_;
     if (timeout && timeout_callback_) {
       cmd_pub_->deactivate();
-      RCLCPP_INFO_STREAM(rclcpp::get_logger("command_interface"), "Publisher timeout");
+      RCLCPP_INFO_STREAM(logger_, "Publisher timeout");
       timeout_callback_();
     }
 
