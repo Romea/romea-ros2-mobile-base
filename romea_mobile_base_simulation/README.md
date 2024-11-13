@@ -1,37 +1,33 @@
-# 1 Overview #
+# romea_mobile_base_simulation
 
-This package provides controllers for different kinds of vehicle as :
-- skid steering vehicles:
-    - 2 wheel drive vehicle (2WD)
+The **romea_mobile_base_simulation** library enables seamless interaction between ROS2  controllers developped in **romea_mobile_base_controllers** library and simulation environnement, handling variations in actuator configurations and types depending on the specific robot (see table below). In the ROMEA ecosystem, the aim is to give users the impression of controlling the real robot, even when working within a simulation. To achieve this, each robot type is associated with a controller that translates user commands from the control space into appropriate actions for the "real" robot joints and retrieves joint states to estimate odometry. 
 
-    - 4 wheel drive vehicle (4WD)
+This library, **romea_mobile_base_simulation**, provides a set of classes permettant d'ecchange:
 
-      <img src="../wiki_files/Campero_Rubber.jpg" alt="Jaguar" style="zoom: 25%;" />  
-      
-      ​                             *Jaguar*
-    
-- omni steering vehicles:
-    - 4 wheel mecanum drive vehicle (4WMD)
-    
-- one axle steering vehicles:
-    - 1 front stering axle + 2 rear wheel drive vehicle (1FWS2RWD)
-    - 1 front stering axle + 2 front wheel drive vehicle (1FWS2FWD)
-    
-- two axle steering vehicles:
-    - 2 stering axles + 4 rear wheel drive vehicle (2AS4WD)
-    
-        <img src="../wiki_files/Robufast.jpg" style="zoom: 60%;" />
-       
-       ​                           *Robufast*
-    
-- two wheel steering vehicles
-    - 2 front wheel steering + 4 wheel drive vehicle (2FWS4WD)
-    - 2 front wheel steering + 2 front wheel drive vehicle (2FWS2FWD)
-    - 2 front wheel steering + 2 rear wheel drive vehicle (2FWS2RWD)
-    
-- four wheel steering vehicles
-    - 4 wheel steering + 4 wheel drive vehicle (4WS4WD) 
+1. Calculate the commands to apply to simulated joints based on the commands required for the real joints.
+2. Estimate the real joint states based on the simulated joint states returned by the simulator.
+
+The library is designed to simplify the development of interfaces with simulators, as shown in packages like **romea_mobile_base_gazebo** and **romea_mobile_base_gazebo_classic**.
 
 
-# 2 Ros Api #
+
+| Real Robot | Actuators hold by controller                                 | Simulated Robot | Actuators hold by simulator                                  |
+| ---------- | ------------------------------------------------------------ | --------------- | ------------------------------------------------------------ |
+| 2WD        | left_wheel_spinning_joint <br>right_wheel_spinning_joint     | 2WD             | left_wheel_spinning joint <br/>right_wheel_spinning_joint    |
+| 4WD        | front_left_wheel_spinning_joint <br/>front_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint <br/>rear_right_wheel_spinning_joint | 4WD             | front_left_wheel_spinning joint <br/>front_right_wheel_spinning_joint <br/>rear_left_wheel_spinning joint <br/>rear_right_wheel_spinning_joint |
+| 1FAS2FWD   | front_axle_steering_joint <br/>front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint | 1FAS4WD         | front_axle_steering_joint <br/>front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint |
+| 1FAS2RWD   | front_axle_steering_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint | 1FAS4WD         | front_axle_steering_joint <br/>front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint |
+| 1FAS4WD    | front_axle_steering_joint <br/>front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint | 1FAS4WD         | front_axle_steering_joint <br/>front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint |
+| 2AS2FWD    | front_axle_steering_joint <br/>rear_axle_steering_joint <br/>front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint | 2AS4WD          | front_axle_steering_joint <br/>rear_axle_steering_joint <br/>front_right_wheel_steering_joint <br/>front_left_wheel_steering_joint <br/>rear_right_wheel_steering_joint <br/>rear_left_wheel_steering_joint</br> front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint |
+| 2AS2RWD    | front_axle_steering_joint <br/>rear_axle_steering_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint | 2AS4WD          | front_axle_steering_joint <br/>rear_axle_steering_joint <br/>front_right_wheel_steering_joint <br/>front_left_wheel_steering_joint <br/>rear_right_wheel_steering_joint <br/>rear_left_wheel_steering_joint</br> front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint |
+| 2AS4WD     | front_axle_steering_joint <br/>rear_axle_steering_joint <br/>front_right_wheel_steering_joint <br/>front_left_wheel_steering_joint <br/>rear_right_wheel_steering_joint <br/>rear_left_wheel_steering_joint</br> front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint | 2AS4WD          | front_axle_steering_joint <br/>rear_axle_steering_joint <br/>front_right_wheel_steering_joint <br/>front_left_wheel_steering_joint <br/>rear_right_wheel_steering_joint <br/>rear_left_wheel_steering_joint</br> front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint |
+| 2FWS2FWD   | front_right_wheel_steering_joint <br/>front_left_wheel_steering_joint <br/>front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint | 2FWS4WD         | front_right_wheel_steering_joint <br/>front_left_wheel_steering_joint <br/>front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint |
+| 2FWS2RWD   | front_right_wheel_steering_joint <br/>front_left_wheel_steering_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint | 2FWS4WD         | front_right_wheel_steering_joint <br/>front_left_wheel_steering_joint <br/>front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint |
+| 2FWS4WD    | front_right_wheel_steering_joint <br/>front_left_wheel_steering_joint <br/>front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint | 2FWS4WD         | front_right_wheel_steering_joint <br/>front_left_wheel_steering_joint <br/>front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint |
+| 2TD        | left_sprocket_wheel_spinning_joint</br> right_sprocket_wheel_spinning_joint</br> | 2TD             | left_sprocket_wheel_spinning_joint</br> right_sprocket_wheel_spinning_joint</br> left_idler_wheel_spinning_joint</br> right_idler_wheel_spinning_joint</br> |
+| 2TD        | left_sprocket_wheel_spinning_joint</br> right_sprocket_wheel_spinning_joint</br> | 2THD            | left_sprocket_wheel_spinning_joint</br> right_sprocket_wheel_spinning_joint</br> front_left_idler_wheel_spinning_joint</br> front_right_idler_wheel_spinning_joint</br> rear_left_idler_wheel_spinning_joint</br> rear_right_idler_wheel_spinning_joint</br> |
+| 2TD        | left_sprocket_wheel_spinning_joint</br> right_sprocket_wheel_spinning_joint</br> | 2TTD            | left_sprocket_wheel_spinning_joint</br> right_sprocket_wheel_spinning_joint</br> left_idler_wheel_spinning_joint</br> right_idler_wheel_spinning_joint</br> front_left_roller_wheel_spinning_joint</br> front_right_roller_wheel_spinning_joint</br> rear_left_roller_wheel_spinning_joint</br> rear_right_roller_wheel_spinning_joint</br> |
+
+
+#  #
 

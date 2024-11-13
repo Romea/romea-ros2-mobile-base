@@ -1,8 +1,10 @@
-# 1 Overview #
+# romea_mobile_base_description
+
+## 1) Overview ##
 
 This package contains the description of gps sensors used in romea projects
 
-# 2 Package organization #
+## 2) Package organization ##
 
 This package is organized into subdirectories as follows:
 
