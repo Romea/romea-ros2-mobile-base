@@ -13,11 +13,11 @@
 // limitations under the License.
 
 
-// romea
+// std
 #include <cmath>
-#include <romea_core_common/math/EulerAngles.hpp>
 
-// local
+// romea
+#include "romea_core_common/math/EulerAngles.hpp"
 #include "romea_mobile_base_controllers/dead_reckoning.hpp"
 
 namespace romea
