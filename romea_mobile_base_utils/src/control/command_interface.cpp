@@ -32,11 +32,11 @@ namespace ros2
 template<typename CommandType>
 CommandInterface<CommandType>::~CommandInterface()
 {
-  try {
-    cmd_mux_client_.unsubscribe(cmd_pub_->get_topic_name());
-  } catch (const std::exception & e) {
-    RCLCPP_ERROR_STREAM(logger_, e.what());
-  }
+  // try {
+  //   cmd_mux_client_.unsubscribe(cmd_pub_->get_topic_name());
+  // } catch (const std::exception & e) {
+  //   RCLCPP_ERROR_STREAM(logger_, e.what());
+  // }
 }
 
 //-----------------------------------------------------------------------------
@@ -51,6 +51,18 @@ void CommandInterface<CommandType>::subscribe_to_cmd_mux(
     } catch (const std::exception & e) {
       RCLCPP_ERROR_STREAM(logger_, e.what());
     }
+  }
+}
+
+//-----------------------------------------------------------------------------
+template<typename CommandType>
+void CommandInterface<CommandType>::unsubscribe_to_cmd_mux()
+{
+  std::cout << "coucou unsubscribe" << std::endl;
+  try {
+    cmd_mux_client_.unsubscribe(cmd_pub_->get_topic_name());
+  } catch (const std::exception & e) {
+    RCLCPP_ERROR_STREAM(logger_, e.what());
   }
 }
 

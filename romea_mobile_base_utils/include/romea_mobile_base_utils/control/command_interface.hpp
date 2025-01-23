@@ -77,6 +77,12 @@ public:
 
   bool is_emergency_stop_activated();
 
+  void subscribe_to_cmd_mux(
+    const int & priority,
+    const double & timetout);
+
+  void unsubscribe_to_cmd_mux();
+
 private:
   void timer_callback_();
 
@@ -88,9 +94,9 @@ private:
   template<typename Node>
   void create_publisher_(std::shared_ptr<Node> node, const std::string & output_message_type);
 
-  void subscribe_to_cmd_mux(
-    const int & priority,
-    const double & timetout);
+  // void subscribe_to_cmd_mux(
+  //   const int & priority,
+  //   const double & timetout);
 
 private:
   std::shared_ptr<CmdPublisher> cmd_pub_;
