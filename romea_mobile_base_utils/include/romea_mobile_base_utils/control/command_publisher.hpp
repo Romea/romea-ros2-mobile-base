@@ -76,7 +76,7 @@ struct CommandPublisher<core::SkidSteeringCommand>
     } else {
       throw std::runtime_error(
               "Output message type " + message_type +
-              "is unsupported by skid steering command publisher");
+              " is unsupported by skid steering command publisher");
     }
   }
 };
@@ -108,7 +108,7 @@ struct CommandPublisher<core::OmniSteeringCommand>
     } else {
       throw std::runtime_error(
               "Output message type " + message_type +
-              "is unsupported by omni steering command publisher");
+              " is unsupported by omni steering command publisher");
     }
   }
 };
@@ -143,7 +143,7 @@ struct CommandPublisher<core::OneAxleSteeringCommand>
     } else {
       throw std::runtime_error(
               "Output message type " + message_type +
-              "is unsupported by one axle steering command publisher");
+              " is unsupported by one axle steering command publisher");
     }
   }
 };
@@ -175,7 +175,7 @@ struct CommandPublisher<core::TwoAxleSteeringCommand>
     } else {
       throw std::runtime_error(
               "Output message type " + message_type +
-              "is unsupported by two axle steering command publisher");
+              " is unsupported by two axle steering command publisher");
     }
   }
 };
