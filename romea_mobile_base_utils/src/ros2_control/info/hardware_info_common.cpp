@@ -12,35 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <algorithm>
 #include <limits>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
 // romea
-#include "romea_core_common/lexical/LexicalCast.hpp"
 #include "romea_mobile_base_utils/ros2_control/info/hardware_info_common.hpp"
 
-
-namespace
+namespace romea::ros2
 {
 
-// //-----------------------------------------------------------------------------
-// bool has_parameter(
-//   const hardware_interface::HardwareInfo & hardware_info,
-//   const std::string & parameter_name)
-// {
-//   return hardware_info.hardware_parameters.find(parameter_name) !=
-//          hardware_info.hardware_parameters.end();
-// }
+//-----------------------------------------------------------------------------
+bool has_parameter(
+  const hardware_interface::HardwareInfo & hardware_info, const std::string & parameter_name)
+{
+  return hardware_info.hardware_parameters.find(parameter_name) !=
+         hardware_info.hardware_parameters.end();
+}
 
 //-----------------------------------------------------------------------------
 const std::string & get_parameter(
-  const hardware_interface::HardwareInfo & hardware_info,
-  const std::string & parameter_name)
+  const hardware_interface::HardwareInfo & hardware_info, const std::string & parameter_name)
 {
   auto it = hardware_info.hardware_parameters.find(parameter_name);
   if (it == hardware_info.hardware_parameters.end()) {
@@ -54,56 +50,13 @@ const std::string & get_parameter(
   }
 }
 
-
 //-----------------------------------------------------------------------------
-template<typename T>
-T get_parameter(
-  const hardware_interface::HardwareInfo & hardware_info,
-  const std::string & parameter_name)
-{
-  std::string parameter = get_parameter(hardware_info, parameter_name);
-
-  if constexpr (std::is_same_v<T, std::string>) {
-    return parameter;
-  } else {
-    return romea::core::lexical_cast<T>(parameter);
-  }
-}
-
-// //-----------------------------------------------------------------------------
-// template<typename T>
-// T get_parameter_or(
-//   const hardware_interface::HardwareInfo & hardware_info,
-//   const std::string & parameter_name,
-//   const T & default_value)
-// {
-//   if (has_parameter(hardware_info, parameter_name)) {
-//     return get_parameter<T>(hardware_info, parameter_name);
-//   } else {
-//     return default_value;
-//   }
-// }
-
-}  // namespace
-
-namespace romea
-{
-namespace ros2
-{
-
-//-----------------------------------------------------------------------------
-const hardware_interface::ComponentInfo &
-get_joint_info(
-  const hardware_interface::HardwareInfo & hardware_info,
-  const std::string & joint_name)
+const hardware_interface::ComponentInfo & get_joint_info(
+  const hardware_interface::HardwareInfo & hardware_info, const std::string & joint_name)
 {
   const auto & joint = std::find_if(
-    hardware_info.joints.begin(),
-    hardware_info.joints.end(),
-    [&joint_name](const auto & joint)
-    {
-      return joint.name == joint_name &&
-      joint.type == "joint";
+    hardware_info.joints.begin(), hardware_info.joints.end(), [&joint_name](const auto & joint) {
+      return joint.name == joint_name && joint.type == "joint";
     });
 
   if (joint == hardware_info.joints.cend()) {
@@ -115,7 +68,6 @@ get_joint_info(
 
   return *joint;
 }
-
 
 //-----------------------------------------------------------------------------
 double get_wheelbase(const hardware_interface::HardwareInfo & hardware_info)
@@ -165,7 +117,6 @@ double get_idler_wheel_radius(const hardware_interface::HardwareInfo & hardware_
   return get_parameter<double>(hardware_info, "idler_wheel_radius");
 }
 
-
 //-----------------------------------------------------------------------------
 double get_roller_wheel_radius(const hardware_interface::HardwareInfo & hardware_info)
 {
@@ -184,5 +135,4 @@ double get_track_thickness(const hardware_interface::HardwareInfo & hardware_inf
   return get_parameter<double>(hardware_info, "track_thickness");
 }
 
-}  // namespace ros2
-}  // namespace romea
+}  // namespace romea::ros2

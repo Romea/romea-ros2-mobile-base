@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_UTILS__ROS2_CONTROL__INFO__HARDWARE_INFO_COMMON_HPP_
 #define ROMEA_MOBILE_BASE_UTILS__ROS2_CONTROL__INFO__HARDWARE_INFO_COMMON_HPP_
 
@@ -20,19 +19,41 @@
 #include <string>
 
 // ros
-#include "hardware_interface/hardware_info.hpp"
+#include <hardware_interface/hardware_info.hpp>
+#include <romea_core_common/lexical/LexicalCast.hpp>
 
-
-namespace romea
-{
-namespace ros2
+namespace romea::ros2
 {
 
-const hardware_interface::ComponentInfo &
-get_joint_info(
+bool has_parameter(
+  const hardware_interface::HardwareInfo & hardware_info, const std::string & parameter_name);
+
+const std::string & get_parameter(
+  const hardware_interface::HardwareInfo & hardware_info, const std::string & parameter_name);
+
+template<typename T>
+T get_parameter(
+  const hardware_interface::HardwareInfo & hardware_info, const std::string & parameter_name)
+{
+  std::string parameter = get_parameter(hardware_info, parameter_name);
+  return romea::core::lexical_cast<T>(parameter);
+}
+
+template<typename T>
+T get_parameter_or(
   const hardware_interface::HardwareInfo & hardware_info,
-  const std::string & joint_name);
+  const std::string & parameter_name,
+  const T & default_value)
+{
+  try {
+    return get_parameter<T>(hardware_info, parameter_name);
+  } catch (const std::runtime_error &) {
+    return default_value;
+  }
+}
 
+const hardware_interface::ComponentInfo & get_joint_info(
+  const hardware_interface::HardwareInfo & hardware_info, const std::string & joint_name);
 
 double get_wheelbase(const hardware_interface::HardwareInfo & hardware_info);
 
@@ -56,8 +77,6 @@ double get_sprocket_wheel_radius(const hardware_interface::HardwareInfo & hardwa
 
 double get_track_thickness(const hardware_interface::HardwareInfo & hardware_info);
 
-
-}  // namespace ros2
-}  // namespace romea
+}  // namespace romea::ros2
 
 #endif  // ROMEA_MOBILE_BASE_UTILS__ROS2_CONTROL__INFO__HARDWARE_INFO_COMMON_HPP_
