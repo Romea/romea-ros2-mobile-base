@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:macro name="base_control" params="mode base_name">
+  <xacro:macro name="base_control" params="mode base_name has_hardware_options:=0">
 
     <ros2_control name="${prefix}${base_name}" type="system">
 
@@ -15,6 +15,10 @@
           <param name="rear_track">${rear_track}</param>
           <param name="rear_wheel_radius">${rear_wheel_radius}</param>
           <param name="rear_hub_carrier_offset">${rear_hub_carrier_offset}</param>
+
+          <xacro:if value="${has_hardware_options}">
+            <xacro:insert_block name="hardware_options"/>
+          </xacro:if>
         </hardware>
       </xacro:if>
 
