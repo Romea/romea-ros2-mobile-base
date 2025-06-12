@@ -24,12 +24,12 @@ import subprocess
 def urdf():
 
     exe = (
-        get_package_prefix("romea_mobile_base_bringup")
-        + "/lib/romea_mobile_base_bringup/urdf_description.py"
+        get_package_prefix("romea_mobile_base_meta_bringup")
+        + "/lib/romea_mobile_base_meta_bringup/urdf_description.py"
     )
 
     meta_description_file_path = os.path.join(
-        os.getcwd(), "test_mobile_base_bringup.yaml"
+        os.getcwd(), "test_mobile_base_meta_bringup.yaml"
     )
 
     return ET.fromstring(

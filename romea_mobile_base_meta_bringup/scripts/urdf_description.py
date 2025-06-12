@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from romea_mobile_base_bringup import urdf_description
+from romea_mobile_base_meta_bringup import urdf_description
 import sys
 
 if __name__ == "__main__":

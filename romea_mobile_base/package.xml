@@ -11,8 +11,9 @@
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <exec_depend>romea_mobile_base_bringup</exec_depend>
+  <exec_depend>romea_mobile_base_meta_bringup</exec_depend>
   <exec_depend>romea_mobile_base_controllers</exec_depend>
+  <exec_depend>romea_mobile_base_teleop</exec_depend>
   <exec_depend>romea_mobile_base_description</exec_depend>
   <exec_depend condition="$ROS_DISTRO &lt;= iron">romea_mobile_base_gazebo_classic</exec_depend>
   <exec_depend>romea_mobile_base_hardware</exec_depend>

@@ -13,7 +13,8 @@
 # limitations under the License.
 
 
-from romea_common_bringup import MetaDescription, robot_urdf_prefix, robot_prefix
+from romea_common_meta_bringup import MetaDescription, robot_urdf_prefix, robot_prefix
+import romea_mobile_base_description
 
 import importlib
 
@@ -56,6 +57,12 @@ class MobileBaseMetaDescription:
 
 def load_meta_description(meta_description_file_path):
     return MobileBaseMetaDescription(meta_description_file_path)
+
+
+def get_mobile_base_description(meta_description):
+    return romea_mobile_base_description.get_mobile_base_description(
+        meta_description.get_type(), meta_description.get_model()
+    )
 
 
 def urdf_description(robot_name, mode, meta_description_file_path):

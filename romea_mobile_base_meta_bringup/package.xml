@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>romea_mobile_base_bringup</name>
+  <name>romea_mobile_base_meta_bringup</name>
   <version>0.0.0</version>
   <description>Package containing mobile base launch files.</description>
 
@@ -14,7 +14,7 @@
   <depend>launch</depend>
   <depend>launch_ros</depend>
   <depend>ament_index_python</depend>
-  <depend>romea_common_bringup</depend>
+  <depend>romea_common_meta_bringup</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

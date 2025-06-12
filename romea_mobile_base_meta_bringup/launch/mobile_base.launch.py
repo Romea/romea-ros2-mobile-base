@@ -26,7 +26,7 @@ from launch_ros.substitutions import ExecutableInPackage
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from ament_index_python.packages import get_package_share_directory
 
-from romea_mobile_base_bringup import MobileBaseMetaDescription
+from romea_mobile_base_meta_bringup import MobileBaseMetaDescription
 
 
 def get_robot_namespace(context):
@@ -99,7 +99,7 @@ def generate_launch_description():
 
     urdf_description = Command(
         [
-            ExecutableInPackage("urdf_description.py", "romea_mobile_base_bringup"),
+            ExecutableInPackage("urdf_description.py", "romea_mobile_base_meta_bringup"),
             " mode:",
             LaunchConfiguration("mode"),
             " robot_namespace:",
