@@ -97,9 +97,12 @@ MobileBaseEnhancedController<InterfaceType, KinematicType>::update(
 
     if (isfinite(this->angular_speed_measure_)) {
       this->current_command_.cmd.angularSpeed = this->angular_speed_pid_->compute(
-        to_romea_duration(time),
-        this->current_command_.cmd.angularSpeed,
-        this->angular_speed_measure_);
+          {
+            to_romea_duration(time),
+            this->current_command_.cmd.angularSpeed,
+            this->angular_speed_measure_
+          }
+      );
       // RCLCPP_INFO_STREAM(this->get_node()->get_logger(), " new angular speed command");
       // RCLCPP_INFO_STREAM(this->get_node()->get_logger(), "\n" << this->current_command_.cmd);
     } else {
