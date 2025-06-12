@@ -1,0 +1,5 @@
+axes:
+  up_down_implement: page_up_down
+buttons:
+  down_implement: key_q
+  up_implement: key_s

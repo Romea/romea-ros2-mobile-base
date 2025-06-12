@@ -1,0 +1,7 @@
+# ros2 run romea_teleop_drivers implement_teleop_node --ros-args --params-file test/implement_remappings.yaml -r joystick/joy:=/robot/pynput/joy -r command:=/robot/implement/position_controller/commands
+/**:
+  ros__parameters:
+    joystick_mapping:
+      buttons:
+        down_implement: 4
+        up_implement: 5

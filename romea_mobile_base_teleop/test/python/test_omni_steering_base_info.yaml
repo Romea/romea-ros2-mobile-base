@@ -1,0 +1,11 @@
+type: 4WMD
+geometry:
+  axles_distance: 1.0
+  front_axle:
+    wheels_distance: 2.0
+  rear_axle:
+    wheels_distance: 2.0
+
+wheels_speed_control:
+    command:
+      maximal_speed: 4.0

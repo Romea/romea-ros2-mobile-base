@@ -1,0 +1,6 @@
+axes:
+  linear_speed: up_down
+  steering_angle: left_right
+buttons:
+  slow_mode: key_w
+  turbo_mode: key_x

@@ -1,0 +1,8 @@
+axes:
+  front_steering_angle: Horizontal_Left_Stick
+  rear_steering_angle: Horizontal_Right_Stick
+  forward_speed: LT
+  backward_speed: RT
+buttons:
+  slow_mode: LB
+  turbo_mode: RB

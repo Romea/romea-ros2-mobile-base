@@ -1,0 +1,24 @@
+/**:
+  ros__parameters:
+    joystick_mapping:
+      axes:
+        linear_speed: 0
+        lateral_speed: 1
+        angular_speed: 2
+      buttons:
+        slow_mode: 0
+        turbo_mode: 1
+
+    cmd_output:
+      message_type: romea_mobile_base_msgs/OmniSteeringCommand
+#      message_priority: 100 # [0 255] if not declared no subscription to cmd_mux is done
+    cmd_range:
+      maximal_linear_speed:
+        slow_mode: 1.0
+        turbo_mode: 2.0
+      maximal_lateral_speed:
+        slow_mode: 3.0
+        turbo_mode: 4.0
+      maximal_angular_speed:
+        slow_mode: 5.0
+        turbo_mode: 6.0

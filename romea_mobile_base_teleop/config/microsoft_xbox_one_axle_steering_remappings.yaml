@@ -1,0 +1,6 @@
+axes:
+  linear_speed: Vertical_Left_Stick
+  steering_angle: Horizontal_Right_Stick
+buttons:
+  slow_mode: LB
+  turbo_mode: RB

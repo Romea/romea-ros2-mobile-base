@@ -1,0 +1,11 @@
+find_package(ament_cmake_pytest REQUIRED)
+configure_file(test_skid_steering_base_info.yaml  test_skid_steering_base_info.yaml)
+configure_file(test_omni_steering_base_info.yaml  test_omni_steering_base_info.yaml)
+configure_file(test_one_axle_steering_base_info.yaml  test_one_axle_steering_base_info.yaml)
+configure_file(test_two_axle_steering_base_info.yaml  test_two_axle_steering_base_info.yaml)
+configure_file(test_skid_steering_teleop_config.yaml  test_skid_steering_teleop_config.yaml)
+configure_file(test_omni_steering_teleop_config.yaml  test_omni_steering_teleop_config.yaml)
+configure_file(test_one_axle_steering_teleop_config.yaml  test_one_axle_steering_teleop_config.yaml)
+configure_file(test_two_axle_steering_teleop_config.yaml  test_two_axle_steering_teleop_config.yaml)
+
+ament_add_pytest_test(test_python_module test_python_module.py)

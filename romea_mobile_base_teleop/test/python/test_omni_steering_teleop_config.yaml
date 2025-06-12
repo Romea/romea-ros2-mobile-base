@@ -1,0 +1,10 @@
+cmd_output:
+  message_type: romea_mobile_base_msgs/OmniSteeringCommand
+  message_priority: 100
+cmd_range:
+  maximal_linear_speed:
+    slow_mode: 1.0
+  maximal_lateral_speed:
+    slow_mode: 0.5
+  maximal_angular_speed:
+    slow_mode: 1.57
