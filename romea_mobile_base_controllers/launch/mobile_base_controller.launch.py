@@ -16,20 +16,20 @@ def launch_setup(context, *args, **kwargs):
         context
     )
 
-    base_description_yaml_filename = LaunchConfiguration(
-        "base_description_yaml_filename"
+    base_configuration_file_path = LaunchConfiguration(
+        "base_configuration_file_path"
     ).perform(context)
 
-    base_controller_yaml_filename = LaunchConfiguration(
-        "base_controller_yaml_filename"
+    base_controller_configuration_file_path = LaunchConfiguration(
+        "base_controller_configuration_file_path"
     ).perform(context)
 
     controller_yaml_filename = "/tmp/"+joints_prefix+"_base_controller.yaml"
 
-    with open(base_description_yaml_filename, "r") as f:
+    with open(base_configuration_file_path, "r") as f:
         base_info = yaml.load(f, Loader=yaml.FullLoader)
 
-    with open(base_controller_yaml_filename, "r") as f:
+    with open(base_controller_configuration_file_path, "r") as f:
         base_controller_root = yaml.load(f, Loader=yaml.FullLoader)
         base_controller_node = base_controller_root["/**"]
         base_controller_ros_params = base_controller_node["ros__parameters"]
@@ -40,10 +40,8 @@ def launch_setup(context, *args, **kwargs):
         yaml.dump(base_controller_root, f)
 
     mobile_base_controller = Node(
-        package="romea_mobile_base_controllers",
-        # package="controller_manager",
-        # executable="spawner",
-        executable="spawner.py",
+        package="controller_manager",
+        executable="spawner",
         exec_name="mobile_base_controller_spawner",
         arguments=[
             controller_name,
@@ -72,18 +70,13 @@ def launch_setup(context, *args, **kwargs):
 
 def generate_launch_description():
 
-    declared_arguments = []
-
-    declared_arguments.append(DeclareLaunchArgument("controller_manager_name"))
-
-    declared_arguments.append(DeclareLaunchArgument("controller_name"))
-
-    declared_arguments.append(DeclareLaunchArgument("base_description_yaml_filename"))
-
-    declared_arguments.append(DeclareLaunchArgument("base_controller_yaml_filename"))
-
-    declared_arguments.append(DeclareLaunchArgument("joints_prefix", default_value=""))
-
     return LaunchDescription(
-        declared_arguments + [OpaqueFunction(function=launch_setup)]
+        [
+            DeclareLaunchArgument("controller_manager_name", default_value="controller_manager"),
+            DeclareLaunchArgument("controller_name"),
+            DeclareLaunchArgument("base_configuration_file_path"),
+            DeclareLaunchArgument("base_controller_configuration_file_path"),
+            DeclareLaunchArgument("joints_prefix", default_value=""),
+            OpaqueFunction(function=launch_setup)
+        ]
     )
