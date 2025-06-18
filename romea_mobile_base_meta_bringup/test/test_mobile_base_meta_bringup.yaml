@@ -1,8 +1,16 @@
 name: "base"
+launch:
+  - include:
+      file: "$(find-pkg-share romea_mobile_base_meta_bringup)/profile/adap2e.launch.py"
+      arg:
+        - name: "joystick_topic"
+          value: "/adap2e/joystic/joy"
+        - name: "joystick_configuration_file_path"
+          value: "$(find-pkg-share romea_joystick_utils)/config/microsoft_xbox.yaml"
 configuration:
-  type: adap2e
-  model: fat
-#controller  ???
+  manufacturer: inrae
+  model: adap2e
+  version: fat
 records:
   joint_states: true
   controller/odom: true

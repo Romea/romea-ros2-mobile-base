@@ -12,72 +12,86 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-from romea_common_meta_bringup import MetaDescription, robot_urdf_prefix, robot_prefix
-import romea_mobile_base_description
-
 import importlib
+from romea_common_meta_bringup import SensorMetaDescription, LaunchFileGenerator, robot_prefix
 
-from numpy import radians
 
-
-class MobileBaseMetaDescription:
-    def __init__(self, meta_description_file_path):
-        self.meta_description = MetaDescription(
-            "mobile_base", meta_description_file_path
-        )
-
-    def get_name(self):
-        return self.meta_description.get("name")
-
-    def get_namespace(self):
-        return self.meta_description.get_or("namespace", None)
-
-    def get_type(self):
-        return self.meta_description.get("type", "configuration")
-
-    def get_model(self):
-        return self.meta_description.get_or("model", "configuration")
+class MobileBaseMetaDescription(SensorMetaDescription):
+    def __init__(self, meta_description_file_path, robot_name=None):
+        super().__init__("mobile_base", meta_description_file_path, robot_name)
 
     def get_simulation_initial_xyz(self):
-        return self.meta_description.get("initial_xyz", "simulation")
+        return self._get("initial_xyz", "simulation")
 
-    def get_simulation_initial_rpy_deg(self):
-        return self.meta_description.get("initial_rpy", "simulation")
-
-    def get_simulation_initial_rpy_rad(self):
-        return radians(self.get_simulation_initial_rpy_deg()).tolist()
-
-    def get_records(self):
-        return self.meta_description.get_or("records", None, {})
-
-    def get_bridge(self):
-        return self.meta_description.get_or("bridge", None, {})
+    def get_simulation_initial_rpy(self):
+        return self._get("initial_rpy", "simulation")
 
 
-def load_meta_description(meta_description_file_path):
-    return MobileBaseMetaDescription(meta_description_file_path)
+def load_meta_description(meta_description_file_path, robot_name=None):
+    return MobileBaseMetaDescription(meta_description_file_path, robot_name)
 
 
-def get_mobile_base_description(meta_description):
-    return romea_mobile_base_description.get_mobile_base_description(
-        meta_description.get_type(), meta_description.get_model()
+# def get_sensor_specifications(meta_description):
+#     return romea_imu_description.get_imu_specifications(
+#         meta_description.get_manufacturer(), meta_description.get_model()
+#     )
+
+
+# def get_sensor_geometry(meta_description):
+#     return romea_imu_description.get_imu_geometry(
+#         meta_description.get_manufacturer(), meta_description.get_model()
+#     )
+
+
+# def get_complete_sensor_configuration(meta_description):
+#     return romea_imu_description.get_imu_complete_configuration(
+#         meta_description.get_name(), meta_description.get_configuration()
+#     )
+
+
+# def generate_configuration_file(meta_description, extended):
+#     configuration = get_complete_sensor_configuration(meta_description)
+#     units = romea_imu_description.get_imu_specification_units()
+#     return romea_common_description.generate_configuration_file(
+#        configuration, units, extended)
+
+
+def generate_launch_file(meta_description):
+
+    launch_arguments = [
+        {"name": "mode", "default": "live"},
+        {"name": "joystick_topic"},
+        {"name": "joystick_configuration_file_path"},
+    ]
+
+    namespaces = [meta_description.get_robot_name(), meta_description.get_name()]
+
+    configuration = {
+        "frame_id": meta_description.get_link(),
+        "tf_prefix": meta_description.get_urdf_prefix(),
+        "model": meta_description.get_model(),
+        "version": meta_description.get_version()
+    }
+
+    return LaunchFileGenerator("mobile_base").generate(
+        meta_description.get_launch_file(), launch_arguments, namespaces, configuration
     )
 
 
-def urdf_description(robot_name, mode, meta_description_file_path):
-
-    meta_description = MobileBaseMetaDescription(meta_description_file_path)
+def generate_urdf_description(mode, meta_description):
 
     base_name = meta_description.get_name()
-    base_type = meta_description.get_type()
-    base_model = meta_description.get_model()
+    base_type = meta_description.get_model()
+    base_model = meta_description.get_version()
     base_bringup = importlib.import_module(base_type + "_bringup")
-
-    urdf_prefix = robot_urdf_prefix(robot_name)
-    ros_prefix = robot_prefix(robot_name)
+    urdf_prefix = meta_description.get_urdf_prefix()
+    ros_prefix = robot_prefix(meta_description.get_robot_name())
 
     if not base_model:
-        return base_bringup.urdf_description(urdf_prefix, mode, base_name, ros_prefix)
+        return base_bringup.generate_urdf_description(
+            urdf_prefix, mode, base_name, ros_prefix
+        )
     else:
-        return base_bringup.urdf_description(urdf_prefix, mode, base_name, base_model, ros_prefix)
+        return base_bringup.generate_urdf_description(
+            urdf_prefix, mode, base_name, base_model, ros_prefix
+        )

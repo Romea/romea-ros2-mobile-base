@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from romea_mobile_base_meta_bringup import urdf_description
+from romea_mobile_base_meta_bringup import MobileBaseMetaDescription, generate_urdf_description
 import sys
 
 if __name__ == "__main__":
@@ -29,4 +29,5 @@ if __name__ == "__main__":
     mode = parameters["mode"]
     robot_namespace = parameters["robot_namespace"]
     meta_description_file_path = parameters["meta_description_file_path"]
-    print(urdf_description(robot_namespace, mode, meta_description_file_path))
+    meta_description = MobileBaseMetaDescription(meta_description_file_path, robot_namespace)
+    print(generate_urdf_description(mode, meta_description))

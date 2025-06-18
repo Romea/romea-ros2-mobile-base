@@ -32,29 +32,33 @@ def test_get_name(meta_description):
     assert meta_description.get_name() == "base"
 
 
-# def test_get_type(meta_description):
-#     assert meta_description.get_type() == "adap2e"
+def test_get_launch_file(meta_description):
+    assert meta_description.get_launch_file() is not None
 
 
-# def test_get_model(meta_description):
-#     assert meta_description.get_model() == "fat"
+def test_get_manufacturer(meta_description):
+    assert meta_description.get_manufacturer() == "inrae"
 
 
-# def test_get_simulation_initial_xyz(meta_description):
-#     assert meta_description.get_simulation_initial_xyz() == [1.0, 2.0, 3.0]
+def test_get_model(meta_description):
+    assert meta_description.get_model() == "adap2e"
 
 
-# def test_get_simulation_initial_rpy_deg(meta_description):
-#     assert meta_description.get_simulation_initial_rpy_deg() == [4.0, 5.0, 6.0]
+def test_get_version(meta_description):
+    assert meta_description.get_version() == "fat"
 
 
-# def test_get_simulation_initial_rpy_rad(meta_description):
-#     assert meta_description.get_simulation_initial_rpy_rad() == radians([4.0, 5.0, 6.0]).tolist()
+def test_get_simulation_initial_xyz(meta_description):
+    assert meta_description.get_simulation_initial_xyz() == [1.0, 2.0, 3.0]
 
 
-# def test_get_records(meta_description):
-#     records = meta_description.get_records()
-#     assert records["joint_states"] is True
-#     assert records["controller/odom"] is True
-#     assert records["controller/odometry"] is True
-#     assert records["controller/kinematic"] is True
+def test_get_simulation_initial_rpy(meta_description):
+    assert meta_description.get_simulation_initial_rpy() == [4.0, 5.0, 6.0]
+
+
+def test_get_records(meta_description):
+    records = meta_description.get_records()
+    assert records["joint_states"] is True
+    assert records["controller/odom"] is True
+    assert records["controller/odometry"] is True
+    assert records["controller/kinematic"] is True

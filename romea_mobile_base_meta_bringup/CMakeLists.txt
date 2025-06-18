@@ -9,14 +9,15 @@ endif()
 find_package(ament_cmake REQUIRED)
 
 install(
-  DIRECTORY launch
+  DIRECTORY launch profile
   DESTINATION share/${PROJECT_NAME}
 )
 
 ament_python_install_module(python/romea_mobile_base_meta_bringup.py)
 
 install(PROGRAMS
-  scripts/urdf_description.py
+  scripts/generate_launch_file.py
+  scripts/generate_urdf_description.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

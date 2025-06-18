@@ -55,14 +55,11 @@ def launch_setup(context, *args, **kwargs):
 
 def generate_launch_description():
 
-    declared_arguments = []
-
-    declared_arguments.append(DeclareLaunchArgument("mobile_base_configuration_file_path"))
-
-    declared_arguments.append(DeclareLaunchArgument("joystick_configuration_file_path"))
-
-    declared_arguments.append(DeclareLaunchArgument("teleop_configuration_file_path"))
-
-    declared_arguments.append(DeclareLaunchArgument("joystick_topic"))
+    declared_arguments = [
+        DeclareLaunchArgument("mobile_base_configuration_file_path"),
+        DeclareLaunchArgument("joystick_configuration_file_path"),
+        DeclareLaunchArgument("teleop_configuration_file_path"),
+        DeclareLaunchArgument("joystick_topic")
+    ]
 
     return LaunchDescription(declared_arguments + [OpaqueFunction(function=launch_setup)])

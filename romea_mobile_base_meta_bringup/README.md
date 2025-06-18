@@ -1,13 +1,13 @@
-# romea_mobile_base_bringup
+# romea_mobile_base_meta_bringup
 
 ## 1) Overview ##
 
-The romea_mobile_base_bringup package provides  : 
+The romea_mobile_base_meta_bringup package provides  : 
 
  - **Launch files** able to launch ros2 mobile base drivers according a meta-description file provided by user (see next section for mobile base meta-description file overview). It is possible to launch robot via command line : 
 
     ```console
-    ros2 launch romea_mobile_base_bringup robot.launch.py robot_namespace:=robot mode:=simulation meta_description_file_path:=/path_to_file/meta_description_file.yaml
+    ros2 launch romea_mobile_base_meta_bringup robot.launch.py robot_namespace:=robot mode:=simulation meta_description_file_path:=/path_to_file/meta_description_file.yaml
     ```
 
    where :
@@ -23,7 +23,7 @@ The romea_mobile_base_bringup package provides  :
  - A **ROS2 python executable** able to create mobile base URDF description via command line according a given meta-description file  :
 
   ```console
-  ros2 run romea_mobile_base_bringup urdf_description.py robot_namespace:robot  mode:simulation meta_description_file_path:/path_to_file/meta_description_file.yaml > base.urdf`
+  ros2 run romea_mobile_base_meta_bringup urdf_description.py robot_namespace:robot  mode:simulation meta_description_file_path:/path_to_file/meta_description_file.yaml > base.urdf`
   ```
 
    where :
