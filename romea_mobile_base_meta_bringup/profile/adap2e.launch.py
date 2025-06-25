@@ -29,6 +29,7 @@ def launch_setup(context, *args, **kwargs):
     mode = LaunchConfiguration("mode").perform(context)
     tf_prefix = LaunchConfiguration("tf_prefix").perform(context)
     robot_version = LaunchConfiguration("version").perform(context)
+    base_name = LaunchConfiguration("name").perform(context)
 
     joystick_topic = LaunchConfiguration("joystick_topic").perform(context)
     joystick_configuration_file_path = LaunchConfiguration(
@@ -47,6 +48,7 @@ def launch_setup(context, *args, **kwargs):
                 "mode": mode,
                 "tf_prefix": tf_prefix,
                 "robot_model": robot_version,
+                "base_name": base_name,
             }.items(),
         )
     )

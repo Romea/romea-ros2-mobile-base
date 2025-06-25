@@ -70,7 +70,8 @@ def generate_launch_file(meta_description):
         "frame_id": meta_description.get_link(),
         "tf_prefix": meta_description.get_urdf_prefix(),
         "model": meta_description.get_model(),
-        "version": meta_description.get_version()
+        "version": meta_description.get_version(),
+        "name": meta_description.get_name() 
     }
 
     return LaunchFileGenerator("mobile_base").generate(
