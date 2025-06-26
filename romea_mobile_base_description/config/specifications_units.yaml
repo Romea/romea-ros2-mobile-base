@@ -1,0 +1,11 @@
+minimal_longitudinal_speed: m/s
+maximal_longitudinal_speed: m/s
+maximal_lateral_speed: m/s
+maximal_angular_speed: rad/s
+maximal_steering_angle: rad
+maximal_front_steering_angle: rad
+maximal_rear_steering_angle: rad
+mass: kg
+center: m
+wheelbase: m
+track: m

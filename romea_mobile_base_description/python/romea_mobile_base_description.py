@@ -6,36 +6,45 @@ import yaml
 import math
 
 
-def robot_full_name(robot_type, robot_model):
-    if robot_model != "":
-        return robot_type + "_" + robot_model
-    else:
-        return robot_type
+# def robot_full_name(robot_type, robot_model):
+#     if robot_model != "":
+#         return robot_type + "_" + robot_model
+#     else:
+#         return robot_type
 
 
-def get_mobile_base_description_file_path(robot_type, robot_model):
-    robot_name = robot_full_name(robot_type, robot_model)
-    return (
-        get_package_share_directory(robot_type + "_description")
-        + "/config/"
-        + robot_name
-        + ".yaml"
-    )
+# def get_mobile_base_description_file_path(robot_type, robot_model):
+#     robot_name = robot_full_name(robot_type, robot_model)
+#     return (
+#         get_package_share_directory(robot_type + "_description")
+#         + "/config/"
+#         + robot_name
+#         + ".yaml"
+#     )
 
 
-def get_mobile_base_description(robot_type, robot_model):
-    with open(get_mobile_base_description_file_path(robot_type, robot_model)) as f:
-        return yaml.safe_load(f)
+# def get_mobile_base_description(robot_type, robot_model):
+#     with open(get_mobile_base_description_file_path(robot_type, robot_model)) as f:
+#         return yaml.safe_load(f)
 
 
-def get_default_teleop_configuration_file_path(robot_type):
-    return (
-        get_package_share_directory(robot_type + "_description") + "/config/teleop.yaml"
-    )
+# def get_default_teleop_configuration_file_path(robot_type):
+#     return (
+#         get_package_share_directory(robot_type + "_description") + "/config/teleop.yaml"
+#     )
 
 
-def get_default_teleop_configuration(robot_type):
-    with open(get_mobile_base_description_file_path(robot_type)) as f:
+# def get_default_teleop_configuration(robot_type):
+#     with open(get_mobile_base_description_file_path(robot_type)) as f:
+#         return yaml.safe_load(f)
+
+def get_specification_units_file_path():
+    pkg_path = get_package_share_directory('romea_mobile_base_description')
+    return f'{pkg_path}/config/specifications_units.yaml'
+
+
+def get_specification_units():
+    with open(get_specification_units_file_path()) as f:
         return yaml.safe_load(f)
 
 
