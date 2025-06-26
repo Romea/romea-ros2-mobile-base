@@ -22,8 +22,10 @@ from launch_ros.descriptions import ComposableNode
 
 def launch_setup(context, *args, **kwargs):
 
+    mode = LaunchConfiguration("mode").perform(context)
     container = LaunchConfiguration("container").perform(context)
     restamping = LaunchConfiguration("restamping").perform(context)
+    robot_namespace = LaunchConfiguration("robot_namespace").perform(context)
 
     common_arguments = {
         "package": "romea_localisation_odo_plugin",
@@ -32,11 +34,13 @@ def launch_setup(context, *args, **kwargs):
             {
                 "restamping": bool(restamping),
                 "controller_topic": "kinematic",
+                "use_sim_time": "live" not in mode,
             }
         ],
         "remappings": [
             ("vehicle_controller/odom", "controller/odom"),
-            ("vehicle_controller/kinematic", "controller/kinematic")
+            ("vehicle_controller/kinematic", "controller/kinematic"),
+            ("twist", f"/{robot_namespace}/localisation/twist"),
         ]
     }
 

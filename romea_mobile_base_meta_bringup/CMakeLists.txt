@@ -17,6 +17,7 @@ ament_python_install_module(python/romea_mobile_base_meta_bringup.py)
 
 install(PROGRAMS
   scripts/generate_launch_file.py
+  scripts/generate_configuration_file.py
   scripts/generate_urdf_description.py
   DESTINATION lib/${PROJECT_NAME}
 )

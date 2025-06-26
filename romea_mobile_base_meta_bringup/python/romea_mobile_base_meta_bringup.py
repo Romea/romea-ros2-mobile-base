@@ -49,11 +49,15 @@ def load_meta_description(meta_description_file_path, robot_name=None):
 #     )
 
 
-# def generate_configuration_file(meta_description, extended):
-#     configuration = get_complete_sensor_configuration(meta_description)
-#     units = romea_imu_description.get_imu_specification_units()
-#     return romea_common_description.generate_configuration_file(
-#        configuration, units, extended)
+def generate_configuration_file(meta_description, extended):
+    base_type = meta_description.get_model()
+    base_model = meta_description.get_version()
+    base_bringup = importlib.import_module(base_type + "_bringup")
+
+    if not base_model:
+        return base_bringup.generate_configuration_file(extended)
+    else:
+        return base_bringup.generate_configuration_file(base_model, extended)
 
 
 def generate_launch_file(meta_description):
@@ -95,4 +99,22 @@ def generate_urdf_description(mode, meta_description):
     else:
         return base_bringup.generate_urdf_description(
             urdf_prefix, mode, base_name, base_model, ros_prefix
+        )
+
+
+def generate_ros2_control_description(mode, meta_description):
+
+    base_name = meta_description.get_name()
+    base_type = meta_description.get_model()
+    base_model = meta_description.get_version()
+    base_bringup = importlib.import_module(base_type + "_bringup")
+    urdf_prefix = meta_description.get_urdf_prefix()
+
+    if not base_model:
+        return base_bringup.generate_ros2_control_description(
+            urdf_prefix, mode, base_name
+        )
+    else:
+        return base_bringup.generate_ros2_control_description(
+            urdf_prefix, mode, base_name, base_model
         )
