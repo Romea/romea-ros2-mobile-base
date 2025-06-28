@@ -26,6 +26,9 @@ class MobileBaseMetaDescription(SensorMetaDescription):
     def get_simulation_initial_rpy(self):
         return self._get("initial_rpy", "simulation")
 
+    def get_bringup_package(self):
+        return importlib.import_module(self.get_model() + "_bringup")
+
 
 def load_meta_description(meta_description_file_path, robot_name=None):
     return MobileBaseMetaDescription(meta_description_file_path, robot_name)
@@ -43,16 +46,18 @@ def load_meta_description(meta_description_file_path, robot_name=None):
 #     )
 
 
-# def get_complete_sensor_configuration(meta_description):
-#     return romea_imu_description.get_imu_complete_configuration(
-#         meta_description.get_name(), meta_description.get_configuration()
-#     )
+def get_configuration(meta_description):
+    base_model = meta_description.get_version()
+    base_bringup = meta_description.get_bringup_package()
+    if not base_model:
+        return base_bringup.get_configuration()
+    else:
+        return base_bringup.get_configuration(base_model)
 
 
 def generate_configuration_file(meta_description, extended):
-    base_type = meta_description.get_model()
     base_model = meta_description.get_version()
-    base_bringup = importlib.import_module(base_type + "_bringup")
+    base_bringup = meta_description.get_bringup_package()
 
     if not base_model:
         return base_bringup.generate_configuration_file(extended)
@@ -70,13 +75,10 @@ def generate_launch_file(meta_description):
 
     namespaces = [meta_description.get_robot_name(), meta_description.get_name()]
 
-    configuration = {
-        "frame_id": meta_description.get_link(),
-        "tf_prefix": meta_description.get_urdf_prefix(),
-        "model": meta_description.get_model(),
-        "version": meta_description.get_version(),
-        "name": meta_description.get_name() 
-    }
+    configuration = get_configuration(meta_description)
+    configuration["tf_prefix"] = meta_description.get_urdf_prefix()
+    configuration["frame_id"] = meta_description.get_link()
+    configuration["name"] = meta_description.get_name()
 
     return LaunchFileGenerator("mobile_base").generate(
         meta_description.get_launch_file(), launch_arguments, namespaces, configuration
@@ -86,9 +88,8 @@ def generate_launch_file(meta_description):
 def generate_urdf_description(mode, meta_description):
 
     base_name = meta_description.get_name()
-    base_type = meta_description.get_model()
     base_model = meta_description.get_version()
-    base_bringup = importlib.import_module(base_type + "_bringup")
+    base_bringup = meta_description.get_bringup_package()
     urdf_prefix = meta_description.get_urdf_prefix()
     ros_prefix = robot_prefix(meta_description.get_robot_name())
 
@@ -105,9 +106,8 @@ def generate_urdf_description(mode, meta_description):
 def generate_ros2_control_description(mode, meta_description):
 
     base_name = meta_description.get_name()
-    base_type = meta_description.get_model()
     base_model = meta_description.get_version()
-    base_bringup = importlib.import_module(base_type + "_bringup")
+    base_bringup = meta_description.get_bringup_package()
     urdf_prefix = meta_description.get_urdf_prefix()
 
     if not base_model:
