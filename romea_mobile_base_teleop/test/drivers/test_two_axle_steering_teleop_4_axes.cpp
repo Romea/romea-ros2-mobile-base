@@ -27,7 +27,7 @@
 // local
 #include "../drivers/test_helper.h"
 #include "testable_teleop.hpp"
-#include "romea_teleop_drivers/two_axle_steering_teleop.hpp"
+#include "romea_mobile_base_teleop/two_axle_steering_teleop.hpp"
 
 using TestableTwoAxleSteeringTeleop = TestableTeleop<romea::ros2::TwoAxleSteeringTeleop>;
 using TwoAxleSteeringCommandListener =

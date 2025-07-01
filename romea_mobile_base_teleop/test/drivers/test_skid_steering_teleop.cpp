@@ -27,7 +27,7 @@
 // local
 #include "../drivers/test_helper.h"
 #include "testable_teleop.hpp"
-#include "romea_teleop_drivers/skid_steering_teleop.hpp"
+#include "romea_mobile_base_teleop/skid_steering_teleop.hpp"
 
 
 using TestableSkidSteeringTeleop = TestableTeleop<romea::ros2::SkidSteeringTeleop>;

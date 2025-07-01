@@ -22,7 +22,7 @@
 #include "romea_common_utils/params/node_parameters.hpp"
 
 // local
-#include "romea_teleop_drivers/command_parameters.hpp"
+#include "romea_mobile_base_teleop/command_parameters.hpp"
 
 namespace
 {

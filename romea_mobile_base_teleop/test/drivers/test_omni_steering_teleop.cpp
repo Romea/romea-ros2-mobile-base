@@ -29,7 +29,7 @@
 // local
 #include "../drivers/test_helper.h"
 #include "testable_teleop.hpp"
-#include "romea_teleop_drivers/omni_steering_teleop.hpp"
+#include "romea_mobile_base_teleop/omni_steering_teleop.hpp"
 
 using TestableOmniSteeringTeleop = TestableTeleop<romea::ros2::OmniSteeringTeleop>;
 using OmniSteeringCommandListener = romea::ros2::DataListenerBase<romea::core::OmniSteeringCommand>;
