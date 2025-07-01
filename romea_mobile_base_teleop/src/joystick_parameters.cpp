@@ -19,7 +19,7 @@
 #include "romea_common_utils/params/node_parameters.hpp"
 
 // local
-#include "romea_teleop_drivers/joystick_parameters.hpp"
+#include "romea_mobile_base_teleop/joystick_parameters.hpp"
 
 namespace
 {

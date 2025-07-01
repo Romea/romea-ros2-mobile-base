@@ -13,29 +13,29 @@
 // limitations under the License.
 
 
-#ifndef ROMEA_TELEOP_DRIVERS__TWO_AXLE_STEERING_TELEOP_HPP_
-#define ROMEA_TELEOP_DRIVERS__TWO_AXLE_STEERING_TELEOP_HPP_
+#ifndef ROMEA_MOBILE_BASE_TELEOP__ONE_AXLE_STEERING_TELEOP_HPP_
+#define ROMEA_MOBILE_BASE_TELEOP__ONE_AXLE_STEERING_TELEOP_HPP_
 
 // std
 #include <map>
 #include <string>
 
 // romea
-#include "romea_teleop_drivers/teleop_base.hpp"
+#include "romea_mobile_base_teleop/teleop_base.hpp"
 
 namespace romea
 {
 namespace ros2
 {
 
-class TwoAxleSteeringTeleop : public TeleopBase<core::TwoAxleSteeringCommand>
+class OneAxleSteeringTeleop : public TeleopBase<core::OneAxleSteeringCommand>
 {
 public:
-  ROMEA_TELEOP_DRIVERS_PUBLIC
-  explicit TwoAxleSteeringTeleop(const rclcpp::NodeOptions & options);
+  ROMEA_MOBILE_BASE_TELEOP_PUBLIC
+  explicit OneAxleSteeringTeleop(const rclcpp::NodeOptions & options);
 
-  ROMEA_TELEOP_DRIVERS_PUBLIC
-  virtual ~TwoAxleSteeringTeleop() = default;
+  ROMEA_MOBILE_BASE_TELEOP_PUBLIC
+  virtual ~OneAxleSteeringTeleop() = default;
 
 private:
   void declare_joystick_axes_mapping_() override;
@@ -50,26 +50,19 @@ private:
 
   void get_command_ranges_() override;
 
-  void joystick_callback_(const Joystick & joy)override;
-
   double compute_linear_speed_(const double & maximal_linear_speed) const;
 
-  double compute_front_steering_angle_() const;
+  double compute_steering_angle_() const;
 
-  double compute_rear_steering_angle_() const;
-
-  void init_axes_control_modes_();
+  void joystick_callback_(const Joystick & joy)override;
 
 private:
   MaximalSpeeds maximal_linear_speeds_;
-  double maximal_front_steering_angle_;
-  double maximal_rear_steering_angle_;
-  bool two_axes_linear_speed_control_;
-  bool two_axes_steering_angle_control_;
+  double maximal_steering_angle_;
   bool sent_disable_msg_;
 };
 
 }  // namespace ros2
 }  // namespace romea
 
-#endif  // ROMEA_TELEOP_DRIVERS__TWO_AXLE_STEERING_TELEOP_HPP_
+#endif  // ROMEA_MOBILE_BASE_TELEOP__ONE_AXLE_STEERING_TELEOP_HPP_

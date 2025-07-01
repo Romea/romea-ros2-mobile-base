@@ -41,6 +41,7 @@ if(${ROS_DISTRO} STRLESS_EQUAL "iron")
   find_package(gazebo_ros REQUIRED)
   find_package(gazebo_ros2_control REQUIRED)
   find_package(hardware_interface REQUIRED)
+  find_package(sdformat9 REQUIRED)
 
   add_library(${PLUGINS_LIB_NAME} SHARED
     src/spinning_joint_gazebo_interface.cpp
@@ -68,7 +69,8 @@ if(${ROS_DISTRO} STRLESS_EQUAL "iron")
     gazebo_ros
     gazebo_ros2_control
     hardware_interface
-    rclcpp_lifecycle)
+    rclcpp_lifecycle
+    sdformat9)
 
   target_include_directories(${PLUGINS_LIB_NAME} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -87,6 +89,7 @@ if(${ROS_DISTRO} STRLESS_EQUAL "iron")
   ament_export_dependencies(gazebo_ros)
   ament_export_dependencies(gazebo_ros2_control)
   ament_export_dependencies(hardware_interface)
+  ament_export_dependencies(sdformat9)
 
   ament_export_include_directories(include)
   ament_export_libraries(${PLUGINS_LIB_NAME})

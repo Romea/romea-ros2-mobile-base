@@ -24,7 +24,7 @@
 #include "romea_core_mobile_base/kinematic/axle_steering/TwoAxleSteeringCommand.hpp"
 
 // local
-#include "romea_teleop_drivers/teleop_base.hpp"
+#include "romea_mobile_base_teleop/teleop_base.hpp"
 
 namespace romea
 {

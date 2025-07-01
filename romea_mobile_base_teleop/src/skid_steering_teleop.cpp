@@ -17,7 +17,7 @@
 #include <string>
 
 // local
-#include "romea_teleop_drivers/skid_steering_teleop.hpp"
+#include "romea_mobile_base_teleop/skid_steering_teleop.hpp"
 
 namespace romea
 {

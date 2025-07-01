@@ -13,29 +13,29 @@
 // limitations under the License.
 
 
-#ifndef ROMEA_TELEOP_DRIVERS__OMNI_STEERING_TELEOP_HPP_
-#define ROMEA_TELEOP_DRIVERS__OMNI_STEERING_TELEOP_HPP_
+#ifndef ROMEA_MOBILE_BASE_TELEOP__TWO_AXLE_STEERING_TELEOP_HPP_
+#define ROMEA_MOBILE_BASE_TELEOP__TWO_AXLE_STEERING_TELEOP_HPP_
 
 // std
 #include <map>
 #include <string>
 
 // romea
-#include "romea_teleop_drivers/teleop_base.hpp"
+#include "romea_mobile_base_teleop/teleop_base.hpp"
 
 namespace romea
 {
 namespace ros2
 {
 
-class OmniSteeringTeleop : public TeleopBase<core::OmniSteeringCommand>
+class TwoAxleSteeringTeleop : public TeleopBase<core::TwoAxleSteeringCommand>
 {
 public:
-  ROMEA_TELEOP_DRIVERS_PUBLIC
-  explicit OmniSteeringTeleop(const rclcpp::NodeOptions & options);
+  ROMEA_MOBILE_BASE_TELEOP_PUBLIC
+  explicit TwoAxleSteeringTeleop(const rclcpp::NodeOptions & options);
 
-  ROMEA_TELEOP_DRIVERS_PUBLIC
-  virtual ~OmniSteeringTeleop() = default;
+  ROMEA_MOBILE_BASE_TELEOP_PUBLIC
+  virtual ~TwoAxleSteeringTeleop() = default;
 
 private:
   void declare_joystick_axes_mapping_() override;
@@ -50,22 +50,26 @@ private:
 
   void get_command_ranges_() override;
 
+  void joystick_callback_(const Joystick & joy)override;
+
   double compute_linear_speed_(const double & maximal_linear_speed) const;
 
-  double compute_lateral_speed_(const double & maximal_lateral_speed) const;
+  double compute_front_steering_angle_() const;
 
-  double compute_angular_speed_(const double & maximal_angular_speed) const;
+  double compute_rear_steering_angle_() const;
 
-  void joystick_callback_(const Joystick & joy)override;
+  void init_axes_control_modes_();
 
 private:
   MaximalSpeeds maximal_linear_speeds_;
-  MaximalSpeeds maximal_lateral_speeds_;
-  MaximalSpeeds maximal_angular_speeds_;
+  double maximal_front_steering_angle_;
+  double maximal_rear_steering_angle_;
+  bool two_axes_linear_speed_control_;
+  bool two_axes_steering_angle_control_;
   bool sent_disable_msg_;
 };
 
 }  // namespace ros2
 }  // namespace romea
 
-#endif  // ROMEA_TELEOP_DRIVERS__OMNI_STEERING_TELEOP_HPP_
+#endif  // ROMEA_MOBILE_BASE_TELEOP__TWO_AXLE_STEERING_TELEOP_HPP_

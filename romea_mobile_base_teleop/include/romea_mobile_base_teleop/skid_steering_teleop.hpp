@@ -13,15 +13,15 @@
 // limitations under the License.
 
 
-#ifndef ROMEA_TELEOP_DRIVERS__SKID_STEERING_TELEOP_HPP_
-#define ROMEA_TELEOP_DRIVERS__SKID_STEERING_TELEOP_HPP_
+#ifndef ROMEA_MOBILE_BASE_TELEOP__SKID_STEERING_TELEOP_HPP_
+#define ROMEA_MOBILE_BASE_TELEOP__SKID_STEERING_TELEOP_HPP_
 
 // std
 #include <map>
 #include <string>
 
 // romea
-#include "romea_teleop_drivers/teleop_base.hpp"
+#include "romea_mobile_base_teleop/teleop_base.hpp"
 
 namespace romea
 {
@@ -31,10 +31,10 @@ namespace ros2
 class SkidSteeringTeleop : public TeleopBase<core::SkidSteeringCommand>
 {
 public:
-  ROMEA_TELEOP_DRIVERS_PUBLIC
+  ROMEA_MOBILE_BASE_TELEOP_PUBLIC
   explicit SkidSteeringTeleop(const rclcpp::NodeOptions & options);
 
-  ROMEA_TELEOP_DRIVERS_PUBLIC
+  ROMEA_MOBILE_BASE_TELEOP_PUBLIC
   virtual ~SkidSteeringTeleop() = default;
 
 private:
@@ -65,4 +65,4 @@ private:
 }  // namespace ros2
 }  // namespace romea
 
-#endif  // ROMEA_TELEOP_DRIVERS__SKID_STEERING_TELEOP_HPP_
+#endif  // ROMEA_MOBILE_BASE_TELEOP__SKID_STEERING_TELEOP_HPP_

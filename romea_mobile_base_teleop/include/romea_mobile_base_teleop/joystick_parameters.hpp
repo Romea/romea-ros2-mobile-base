@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef ROMEA_TELEOP_DRIVERS__JOYSTICK_PARAMETERS_HPP_
-#define ROMEA_TELEOP_DRIVERS__JOYSTICK_PARAMETERS_HPP_
+#ifndef ROMEA_MOBILE_BASE_TELEOP__JOYSTICK_PARAMETERS_HPP_
+#define ROMEA_MOBILE_BASE_TELEOP__JOYSTICK_PARAMETERS_HPP_
 
 // std
 #include <string>
@@ -82,4 +82,4 @@ int get_up_implement_button_mapping(std::shared_ptr<rclcpp::Node> node);
 }  // namespace ros2
 }  // namespace romea
 
-#endif  // ROMEA_TELEOP_DRIVERS__JOYSTICK_PARAMETERS_HPP_
+#endif  // ROMEA_MOBILE_BASE_TELEOP__JOYSTICK_PARAMETERS_HPP_

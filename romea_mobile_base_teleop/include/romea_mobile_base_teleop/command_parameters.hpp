@@ -13,8 +13,8 @@
 // limitations under the License.
 
 
-#ifndef ROMEA_TELEOP_DRIVERS__COMMAND_PARAMETERS_HPP_
-#define ROMEA_TELEOP_DRIVERS__COMMAND_PARAMETERS_HPP_
+#ifndef ROMEA_MOBILE_BASE_TELEOP__COMMAND_PARAMETERS_HPP_
+#define ROMEA_MOBILE_BASE_TELEOP__COMMAND_PARAMETERS_HPP_
 
 
 // std
@@ -73,4 +73,4 @@ int get_command_output_message_priority(std::shared_ptr<rclcpp::Node> node);
 }  // namespace ros2
 }  // namespace romea
 
-#endif  // ROMEA_TELEOP_DRIVERS__COMMAND_PARAMETERS_HPP_
+#endif  // ROMEA_MOBILE_BASE_TELEOP__COMMAND_PARAMETERS_HPP_

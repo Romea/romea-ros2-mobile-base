@@ -18,7 +18,7 @@
 #include <iostream>
 
 // local
-#include "romea_teleop_drivers/two_axle_steering_teleop.hpp"
+#include "romea_mobile_base_teleop/two_axle_steering_teleop.hpp"
 
 namespace romea
 {

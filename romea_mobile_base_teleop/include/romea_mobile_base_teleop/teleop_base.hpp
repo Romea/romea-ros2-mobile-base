@@ -13,8 +13,8 @@
 // limitations under the License.
 
 
-#ifndef ROMEA_TELEOP_DRIVERS__TELEOP_BASE_HPP_
-#define ROMEA_TELEOP_DRIVERS__TELEOP_BASE_HPP_
+#ifndef ROMEA_MOBILE_BASE_TELEOP__TELEOP_BASE_HPP_
+#define ROMEA_MOBILE_BASE_TELEOP__TELEOP_BASE_HPP_
 
 
 // std
@@ -32,9 +32,9 @@
 #include "romea_joystick_utils/joystick.hpp"
 
 // local
-#include "romea_teleop_drivers/command_parameters.hpp"
-#include "romea_teleop_drivers/joystick_parameters.hpp"
-#include "romea_teleop_drivers/visibility_control.h"
+#include "romea_mobile_base_teleop/command_parameters.hpp"
+#include "romea_mobile_base_teleop/joystick_parameters.hpp"
+#include "romea_mobile_base_teleop/visibility_control.h"
 
 
 namespace romea
@@ -49,13 +49,13 @@ public:
   using CmdPublisher = PublisherBase<CommandType>;
 
 public:
-  ROMEA_TELEOP_DRIVERS_PUBLIC
+  ROMEA_MOBILE_BASE_TELEOP_PUBLIC
   explicit TeleopBase(const rclcpp::NodeOptions & options);
 
-  ROMEA_TELEOP_DRIVERS_PUBLIC
+  ROMEA_MOBILE_BASE_TELEOP_PUBLIC
   virtual ~TeleopBase();
 
-  ROMEA_TELEOP_DRIVERS_PUBLIC
+  ROMEA_MOBILE_BASE_TELEOP_PUBLIC
   rclcpp::node_interfaces::NodeBaseInterface::SharedPtr
   get_node_base_interface() const;
 
@@ -91,4 +91,4 @@ protected:
 }  // namespace ros2
 }  // namespace romea
 
-#endif  // ROMEA_TELEOP_DRIVERS__TELEOP_BASE_HPP_
+#endif  // ROMEA_MOBILE_BASE_TELEOP__TELEOP_BASE_HPP_

@@ -20,7 +20,7 @@
 #include <string>
 
 // local
-#include "romea_teleop_drivers/implement_teleop.hpp"
+#include "romea_mobile_base_teleop/implement_teleop.hpp"
 
 namespace romea
 {
