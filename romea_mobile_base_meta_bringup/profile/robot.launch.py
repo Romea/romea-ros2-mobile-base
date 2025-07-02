@@ -28,6 +28,7 @@ def launch_setup(context, *args, **kwargs):
 
     mode = LaunchConfiguration("mode").perform(context)
     tf_prefix = LaunchConfiguration("tf_prefix").perform(context)
+    robot_model = LaunchConfiguration("model").perform(context)
     robot_version = LaunchConfiguration("version").perform(context)
     base_name = LaunchConfiguration("name").perform(context)
 
@@ -41,8 +42,8 @@ def launch_setup(context, *args, **kwargs):
     launch.add_action(
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
-                get_package_share_directory("adap2e_bringup")
-                + "/launch/adap2e_base.launch.py"
+                get_package_share_directory(f"{robot_model}_bringup")
+                + f"/launch/{robot_model}_base.launch.py"
             ),
             launch_arguments={
                 "mode": mode,
@@ -56,8 +57,8 @@ def launch_setup(context, *args, **kwargs):
     launch.add_action(
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
-                get_package_share_directory("adap2e_bringup")
-                + "/launch/adap2e_teleop.launch.py"
+                get_package_share_directory(f"{robot_model}_bringup")
+                + f"/launch/{robot_model}_teleop.launch.py"
             ),
             launch_arguments={
                 "mode": mode,
