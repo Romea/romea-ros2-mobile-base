@@ -84,6 +84,8 @@ def get_wheelbase(base_description):
 
     if "axles_distance" in base_description["geometry"]:
         return base_description["geometry"]["axles_distance"]
+    elif "fake_wheelbase" in base_description["geometry"]:
+        return base_description["geometry"]["fake_wheelbase"]
     else:
         raise LookupError(
             "No axles distance description found in base info : "
@@ -297,3 +299,14 @@ def get_command_limits(base_description):
         return get_two_wheel_steering_command_limits(base_description)
     else:
         return get_four_wheel_steering_command_limits(base_description)
+
+
+def get_complete_configuration(base_description):
+    return {
+        "type": get_type(base_description),
+        "command_type": get_command_type(base_description),
+        "command_limits": get_command_limits(base_description),
+        "inertia": get_inertia(base_description),
+        "wheelbase": get_wheelbase(base_description),
+        "track": get_track(base_description),
+    }
