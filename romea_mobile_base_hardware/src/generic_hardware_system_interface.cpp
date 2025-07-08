@@ -179,13 +179,9 @@ GenericHardwareSystemInterface<HardwareInterface>::on_error(
 
 //-----------------------------------------------------------------------------
 template<typename HardwareInterface>
-#if ROS_DISTRO == ROS_GALACTIC
-hardware_interface::return_type GenericHardwareSystemInterface<HardwareInterface>::read()
-#else
 hardware_interface::return_type GenericHardwareSystemInterface<HardwareInterface>::read(
   const rclcpp::Time & time,
   const rclcpp::Duration & period)
-#endif
 {
   rclcpp::spin_some(node_);
   std::lock_guard<std::mutex> guard(mutex_);
@@ -197,13 +193,9 @@ hardware_interface::return_type GenericHardwareSystemInterface<HardwareInterface
 
 //-----------------------------------------------------------------------------
 template<typename HardwareInterface>
-#if ROS_DISTRO == ROS_GALACTIC
-hardware_interface::return_type GenericHardwareSystemInterface<HardwareInterface>::write()
-#else
 hardware_interface::return_type GenericHardwareSystemInterface<HardwareInterface>::write(
   const rclcpp::Time & time,
   const rclcpp::Duration & period)
-#endif
 {
   command_ = hardware_interface_->get_joint_state_command();
   joint_state_pub_->publish(command_);

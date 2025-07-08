@@ -84,11 +84,6 @@ protected:
   virtual hardware_interface::return_type load_info_(
     const hardware_interface::HardwareInfo & hardware_info);
 
-#if ROS_DISTRO == ROS_GALACTIC
-  virtual hardware_interface::return_type read();
-
-  virtual hardware_interface::return_type write();
-#else
   virtual hardware_interface::return_type read(
     const rclcpp::Time & time,
     const rclcpp::Duration & period);
@@ -96,7 +91,6 @@ protected:
   virtual hardware_interface::return_type write(
     const rclcpp::Time & time,
     const rclcpp::Duration & period);
-#endif
 
   void feedback_callback_(sensor_msgs::msg::JointState::ConstSharedPtr msg);
 

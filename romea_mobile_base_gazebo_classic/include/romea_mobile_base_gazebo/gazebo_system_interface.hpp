@@ -81,11 +81,6 @@ public:
 
   std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
 
-#if ROS_DISTRO == ROS_GALACTIC
-  virtual hardware_interface::return_type read();
-
-  virtual hardware_interface::return_type write();
-#else
   virtual hardware_interface::return_type read(
     const rclcpp::Time & time,
     const rclcpp::Duration & period);
@@ -93,7 +88,6 @@ public:
   virtual hardware_interface::return_type write(
     const rclcpp::Time & time,
     const rclcpp::Duration & period);
-#endif
 
 private:
   bool check_physics_engine_configuration_();

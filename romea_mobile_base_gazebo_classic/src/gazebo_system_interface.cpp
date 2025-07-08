@@ -153,13 +153,9 @@ bool GazeboSystemInterface<GazeboInterface, SimulationInterface>::init_hardware_
 
 //-----------------------------------------------------------------------------
 template<typename GazeboInterface, typename SimulationInterface>
-#if ROS_DISTRO == ROS_GALACTIC
-hardware_interface::return_type GazeboSystemInterface<GazeboInterface, SimulationInterface>::read()
-#else
 hardware_interface::return_type GazeboSystemInterface<GazeboInterface, SimulationInterface>::read(
   const rclcpp::Time & time,
   const rclcpp::Duration & period)
-#endif
 {
   simulation_interface_->set_feedback(gazebo_interface_->get_state());
   return hardware_interface::return_type::OK;

@@ -22,12 +22,7 @@
 #include "romea_mobile_base_utils/conversions/kinematic_conversions.hpp"
 
 // ros
-#if ROD_DISTRO == ROS_GALACTIC
 #include "tf2_geometry_msgs/tf2_geometry_msgs.h"
-#else
-#include "tf2_geometry_msgs/tf2_geometry_msgs.hpp"
-#endif
-
 
 // local
 #include "romea_mobile_base_controllers/dead_reckoning_publisher.hpp"

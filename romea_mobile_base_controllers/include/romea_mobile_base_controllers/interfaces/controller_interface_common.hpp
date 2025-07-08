@@ -32,11 +32,7 @@ namespace romea
 namespace ros2
 {
 
-#if ROS_DISTRO == ROS_GALACTIC
-using HardwareInterfaceNode = rclcpp::Node;
-#else
 using HardwareInterfaceNode = rclcpp_lifecycle::LifecycleNode;
-#endif
 
 std::string hardware_position_interface_name(const std::string joint_name);
 

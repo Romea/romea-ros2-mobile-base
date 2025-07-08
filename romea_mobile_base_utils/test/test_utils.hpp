@@ -30,11 +30,7 @@ void check_interface_name(
   const Interface & interface,
   const std::string & expected_name)
 {
-#if ROS_DISTRO == ROS_GALACTIC
-  EXPECT_STREQ(interface.get_full_name().c_str(), expected_name.c_str());
-#else
   EXPECT_STREQ(interface.get_name().c_str(), expected_name.c_str());
-#endif
 }
 
 hardware_interface::InterfaceInfo make_interface_info(

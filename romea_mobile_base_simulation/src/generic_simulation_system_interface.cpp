@@ -180,13 +180,9 @@ GenericSimulationSystemInterface<HardwareInterface>::on_error(
 
 //-----------------------------------------------------------------------------
 template<typename HardwareInterface>
-#if ROS_DISTRO == ROS_GALACTIC
-hardware_interface::return_type GenericSimulationSystemInterface<HardwareInterface>::read()
-#else
 hardware_interface::return_type GenericSimulationSystemInterface<HardwareInterface>::read(
   const rclcpp::Time & /*time*/,
   const rclcpp::Duration & /*period*/)
-#endif
 {
   rclcpp::spin_some(node_);
   std::lock_guard<std::mutex> guard(mutex_);
@@ -199,13 +195,9 @@ hardware_interface::return_type GenericSimulationSystemInterface<HardwareInterfa
 
 //-----------------------------------------------------------------------------
 template<typename HardwareInterface>
-#if ROS_DISTRO == ROS_GALACTIC
-hardware_interface::return_type GenericSimulationSystemInterface<HardwareInterface>::write()
-#else
 hardware_interface::return_type GenericSimulationSystemInterface<HardwareInterface>::write(
   const rclcpp::Time & /*time*/,
   const rclcpp::Duration & /*period*/)
-#endif
 {
   command_ = hardware_interface_->get_joint_state_command();
   // command_.header.frame_id = ""
