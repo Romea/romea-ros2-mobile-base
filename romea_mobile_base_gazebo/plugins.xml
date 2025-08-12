@@ -1,0 +1,75 @@
+<library path="romea_mobile_base_gazebo">
+
+  <class
+    name="romea_mobile_base_gazebo/GazeboSystemInterface4WD"
+    type="romea::ros2::GazeboSystemInterface4WD"
+    base_class_type="gz_ros2_control::GazeboSimSystemInterface">
+    <description>
+      GazeboSystemInterface for 4WD Vehicle
+    </description>
+  </class>
+
+  <class
+    name="romea_mobile_base_gazebo/GazeboSystemInterface4WS4WD"
+    type="romea::ros2::GazeboSystemInterface4WS4WD"
+    base_class_type="gz_ros2_control::GazeboSimSystemInterface">
+    <description>
+      GazeboSystemInterface for 4WS4WD Vehicle
+    </description>
+  </class>
+
+  <class
+    name="romea_mobile_base_gazebo/GazeboSystemInterface1FAS2RWD"
+    type="romea::ros2::GazeboSystemInterface1FAS2RWD"
+    base_class_type="gz_ros2_control::GazeboSimSystemInterface">
+    <description>
+      GazeboSystemInterface for 1FAS2RWD Vehicle
+    </description>
+  </class>
+
+  <class
+    name="romea_mobile_base_gazebo/GazeboSystemInterface2AS4WD"
+    type="romea::ros2::GazeboSystemInterface2AS4WD"
+    base_class_type="gz_ros2_control::GazeboSimSystemInterface">
+    <description>
+      GazeboSystemInterface for 2AS4WD Vehicle
+    </description>
+  </class>
+
+  <class
+    name="romea_mobile_base_gazebo/GazeboSystemInterface2FWS4WD"
+    type="romea::ros2::GazeboSystemInterface2FWS4WD"
+    base_class_type="gz_ros2_control::GazeboSimSystemInterface">
+    <description>
+      GazeboSystemInterface for 2FWS4WD Vehicle
+    </description>
+  </class>
+
+  <class
+    name="romea_mobile_base_gazebo/GazeboSystemInterface2FWS2RWD"
+    type="romea::ros2::GazeboSystemInterface2FWS2RWD"
+    base_class_type="gz_ros2_control::GazeboSimSystemInterface">
+    <description>
+      GazeboSystemInterface for 2FWS2RWD Vehicle
+    </description>
+  </class>
+
+  <class
+    name="romea_mobile_base_gazebo/GazeboSystemInterface2THD"
+    type="romea::ros2::GazeboSystemInterface2THD"
+    base_class_type="gz_ros2_control::GazeboSimSystemInterface">
+    <description>
+      GazeboSystemInterface for 2TDH Vehicle
+    </description>
+  </class>
+
+  <class
+    name="romea_mobile_base_gazebo/GazeboSimSystem"
+    type="romea::ros2::GazeboSimSystem"
+    base_class_type="gz_ros2_control::GazeboSimSystemInterface">
+    <description>
+      ros2_control hardware component to be loaded by the gazebo plugin.
+    </description>
+  </class>
+
+</library>
