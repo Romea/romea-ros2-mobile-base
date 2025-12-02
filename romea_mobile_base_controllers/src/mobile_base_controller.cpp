@@ -232,7 +232,7 @@ controller_interface::return_type MobileBaseController<InterfaceType, KinematicT
 
   auto current_command = command_buffer_.consume();
   // std::cout << " update " << update_time_.seconds() << " " << period.seconds() << std::endl;
-  if (current_command.has_value() && current_command.isValid()) {
+  if (current_command.has_value()) {
     current_command_ = *current_command;
     //    RCLCPP_INFO_STREAM(get_node()->get_logger(),"odometry frame measured");
     //    RCLCPP_INFO_STREAM(get_node()->get_logger(),"\n"<<odometry_frame_);
