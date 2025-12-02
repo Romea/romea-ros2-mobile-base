@@ -189,18 +189,14 @@ make_command_publisher(
 {
   if constexpr (std::is_same_v<CommandType, core::SkidSteeringCommand>) {
     return CommandPublisher<core::SkidSteeringCommand>::instance(node, message_type);
-  }
-
-  if constexpr (std::is_same_v<CommandType, core::OmniSteeringCommand>) {
+  } else if constexpr (std::is_same_v<CommandType, core::OmniSteeringCommand>) {
     return CommandPublisher<core::OmniSteeringCommand>::instance(node, message_type);
-  }
-
-  if constexpr (std::is_same_v<CommandType, core::OneAxleSteeringCommand>) {
+  } else if constexpr (std::is_same_v<CommandType, core::OneAxleSteeringCommand>) {
     return CommandPublisher<core::OneAxleSteeringCommand>::instance(node, message_type);
-  }
-
-  if constexpr (std::is_same_v<CommandType, core::TwoAxleSteeringCommand>) {
+  } else if constexpr (std::is_same_v<CommandType, core::TwoAxleSteeringCommand>) {
     return CommandPublisher<core::TwoAxleSteeringCommand>::instance(node, message_type);
+  } else {
+    static_assert(std::is_same_v<CommandType, void>, "Unsupported CommandType.");
   }
 }
 

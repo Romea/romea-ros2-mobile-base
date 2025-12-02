@@ -4,4 +4,5 @@ include:
 
 
 variables:
-  PKGS_TO_BUILD_TEST: "romea_mobile_base_bringup romea_mobile_base_description romea_mobile_base_controllers romea_mobile_base_hardware romea_mobile_base_utils"
+  PKGS_TO_BUILD_TEST: "romea_mobile_base_description romea_mobile_base_utils romea_mobile_base_controllers romea_mobile_base_hardware romea_mobile_base_simulation romea_mobile_base_gazebo_classic"
+  ROS_DISTRO_TO_TEST: "humble"
