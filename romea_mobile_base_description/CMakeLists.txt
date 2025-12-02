@@ -13,6 +13,7 @@ ament_python_install_module(python/romea_mobile_base_description.py)
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   list(APPEND AMENT_LINT_AUTO_EXCLUDE ament_cmake_copyright)
+  list(APPEND AMENT_LINT_AUTO_EXCLUDE ament_cmake_cflake8)
   ament_lint_auto_find_test_dependencies()
 
   find_package(ament_cmake_pytest REQUIRED)
