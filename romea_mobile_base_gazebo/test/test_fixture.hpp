@@ -180,4 +180,4 @@ public:
 };
 
 
-#endif // TEST_FIXTURE_HPP_
+#endif  // TEST_FIXTURE_HPP_

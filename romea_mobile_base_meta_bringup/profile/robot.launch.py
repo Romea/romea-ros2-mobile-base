@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from ament_index_python.packages import get_package_share_directory
 
 from launch import LaunchDescription
 from launch.actions import (
@@ -19,17 +20,16 @@ from launch.actions import (
     IncludeLaunchDescription,
     OpaqueFunction,
 )
-from launch.substitutions import LaunchConfiguration
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from ament_index_python.packages import get_package_share_directory
+from launch.substitutions import LaunchConfiguration
 
 
 def launch_setup(context, *args, **kwargs):
 
     mode = LaunchConfiguration("mode").perform(context)
-    tf_prefix = LaunchConfiguration("tf_prefix").perform(context)
     robot_model = LaunchConfiguration("model").perform(context)
     robot_version = LaunchConfiguration("version").perform(context)
+    robot_namespace = LaunchConfiguration("robot_namespace").perform(context)
     base_name = LaunchConfiguration("name").perform(context)
 
     joystick_topic = LaunchConfiguration("joystick_topic").perform(context)
@@ -47,8 +47,8 @@ def launch_setup(context, *args, **kwargs):
             ),
             launch_arguments={
                 "mode": mode,
-                "tf_prefix": tf_prefix,
                 "robot_model": robot_version,
+                "robot_namespace": robot_namespace,
                 "base_name": base_name,
             }.items(),
         )

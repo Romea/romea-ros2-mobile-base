@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 # Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,22 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import sys
 
-from romea_mobile_base_meta_bringup.meta_description import (
-    generate_launch_file, MobileBaseMetaDescription
-)
+from launch.substitutions import LaunchConfiguration
 
-if __name__ == "__main__":
+import romea_common_meta_bringup.ros_launch as common
 
-    argv = sys.argv
 
-    parameters = {}
-    for argument in argv[1:]:
-        name, value = argument.split(":")
-        parameters[name] = value
+def declare_base_name(default_value=None):
+    return common.declare_argument(
+        {
+            "name": "base_name",
+            "description": "Name of the mobile base",
+        },
+        default_value
+    )
 
-    robot_namespace = parameters["robot_namespace"]
-    meta_description_file_path = parameters["meta_description_file_path"]
-    meta_description = MobileBaseMetaDescription(meta_description_file_path, robot_namespace)
-    print(generate_launch_file(meta_description))
+
+def get_base_name(context):
+    return LaunchConfiguration("base_name").perform(context)

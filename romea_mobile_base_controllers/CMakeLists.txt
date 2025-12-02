@@ -31,6 +31,8 @@ find_package(controller_interface REQUIRED)
 find_package(realtime_tools REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(pal_statistics REQUIRED)
+
 
 add_library(${PROJECT_NAME} SHARED
   src/interfaces/controller_interface1FAS2FWD.cpp
@@ -60,7 +62,8 @@ ament_target_dependencies(${PROJECT_NAME}
   realtime_tools
   controller_interface
   tf2_geometry_msgs
-  sensor_msgs)
+  sensor_msgs
+  pal_statistics)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>

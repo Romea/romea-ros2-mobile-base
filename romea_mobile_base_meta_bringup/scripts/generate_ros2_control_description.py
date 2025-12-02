@@ -14,8 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from romea_mobile_base_meta_bringup import MobileBaseMetaDescription, generate_urdf_description
 import sys
+
+from romea_common_meta_bringup import complete_mode
+from romea_mobile_base_meta_bringup.meta_description import (
+    generate_urdf_description,
+    MobileBaseMetaDescription,
+)
 
 if __name__ == "__main__":
 
@@ -26,7 +31,7 @@ if __name__ == "__main__":
         name, value = argument.split(":")
         parameters[name] = value
 
-    mode = parameters["mode"]
+    mode = complete_mode(parameters["mode"])
     robot_namespace = parameters["robot_namespace"]
     meta_description_file_path = parameters["meta_description_file_path"]
     meta_description = MobileBaseMetaDescription(meta_description_file_path, robot_namespace)

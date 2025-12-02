@@ -1,42 +1,11 @@
 #!/usr/bin/env python3
 
 
-from ament_index_python.packages import get_package_share_directory
-import yaml
 import math
 
+from ament_index_python.packages import get_package_share_directory
+import yaml
 
-# def robot_full_name(robot_type, robot_model):
-#     if robot_model != "":
-#         return robot_type + "_" + robot_model
-#     else:
-#         return robot_type
-
-
-# def get_mobile_base_description_file_path(robot_type, robot_model):
-#     robot_name = robot_full_name(robot_type, robot_model)
-#     return (
-#         get_package_share_directory(robot_type + "_description")
-#         + "/config/"
-#         + robot_name
-#         + ".yaml"
-#     )
-
-
-# def get_mobile_base_description(robot_type, robot_model):
-#     with open(get_mobile_base_description_file_path(robot_type, robot_model)) as f:
-#         return yaml.safe_load(f)
-
-
-# def get_default_teleop_configuration_file_path(robot_type):
-#     return (
-#         get_package_share_directory(robot_type + "_description") + "/config/teleop.yaml"
-#     )
-
-
-# def get_default_teleop_configuration(robot_type):
-#     with open(get_mobile_base_description_file_path(robot_type)) as f:
-#         return yaml.safe_load(f)
 
 def get_specification_units_file_path():
     pkg_path = get_package_share_directory('romea_mobile_base_description')
@@ -53,18 +22,18 @@ def get_type(base_description):
 
 
 def get_kinematic_type(base_description):
-    type = get_type(base_description)
-    if type == "2WD" or type == "4WD" or "2T" in type:
+    vehicle_type = get_type(base_description)
+    if vehicle_type == "2WD" or vehicle_type == "4WD" or "2T" in vehicle_type:
         return "skid_steering"
-    elif "1FAS" in type:
+    elif "1FAS" in vehicle_type:
         return "one_axle_steering"
-    elif "2AS" in type:
+    elif "2AS" in vehicle_type:
         return "two_axle_steering"
-    elif "2FWS" in type:
+    elif "2FWS" in vehicle_type:
         return "two_wheel_steering"
-    elif type == "4WS4WD":
+    elif vehicle_type == "4WS4WD":
         return "four_wheel_steering"
-    elif type == "4WMD":
+    elif vehicle_type == "4WMD":
         return "omni_steering"
     else:
         raise LookupError("Robot type found in base info is not available")

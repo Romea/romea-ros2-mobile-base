@@ -29,7 +29,7 @@ find_package(romea_mobile_base_msgs REQUIRED)
 find_package(romea_cmd_mux_msgs REQUIRED)
 find_package(romea_cmd_mux_utils REQUIRED)
 find_package(hardware_interface REQUIRED)
-
+find_package(pal_statistics REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
     src/control/command_interface.cpp
@@ -61,7 +61,8 @@ ament_target_dependencies(${PROJECT_NAME}
     ackermann_msgs
     romea_cmd_mux_msgs
     romea_cmd_mux_utils
-    hardware_interface)
+    hardware_interface
+    pal_statistics)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>

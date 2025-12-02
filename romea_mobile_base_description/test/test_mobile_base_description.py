@@ -13,57 +13,58 @@
 # limitations under the License.
 
 import pytest
-import yaml
 
 from romea_mobile_base_description import (
-    get_kinematic_type,
     get_command_type,
-    get_wheelbase,
-    get_track,
-    get_maximal_linear_speed,
-    get_maximal_wheel_angle,
-    get_maximal_steering_angle,
+    get_kinematic_type,
     get_maximal_angular_speed,
+    get_maximal_linear_speed,
+    get_maximal_steering_angle,
+    get_maximal_wheel_angle,
+    get_track,
+    get_wheelbase,
 )
 
+import yaml
 
-def get_configuration_(type):
-    with open("test/test_mobile_base_parameters_" + type + ".yaml") as f:
+
+def get_configuration_(vehicle_type):
+    with open("test/test_mobile_base_parameters_" + vehicle_type + ".yaml") as f:
         return yaml.safe_load(f)
 
 
-def get_kinematic_type_(type):
-    configuration = get_configuration_(type)
+def get_kinematic_type_(vehicle_type):
+    configuration = get_configuration_(vehicle_type)
     return get_kinematic_type(configuration)
 
 
-def get_command_type_(type):
-    configuration = get_configuration_(type)
+def get_command_type_(vehicle_type):
+    configuration = get_configuration_(vehicle_type)
     return get_command_type(configuration)
 
 
-def get_wheelbase_(type):
-    configuration = get_configuration_(type)
+def get_wheelbase_(vehicle_type):
+    configuration = get_configuration_(vehicle_type)
     return get_wheelbase(configuration)
 
 
-def get_track_(type):
-    configuration = get_configuration_(type)
+def get_track_(vehicle_type):
+    configuration = get_configuration_(vehicle_type)
     return get_track(configuration)
 
 
-def get_maximal_linear_speed_(type):
-    configuration = get_configuration_(type)
+def get_maximal_linear_speed_(vehicle_type):
+    configuration = get_configuration_(vehicle_type)
     return get_maximal_linear_speed(configuration)
 
 
-def get_maximal_wheel_angle_(type):
-    configuration = get_configuration_(type)
+def get_maximal_wheel_angle_(vehicle_type):
+    configuration = get_configuration_(vehicle_type)
     return get_maximal_wheel_angle(configuration)
 
 
-def get_maximal_steering_angle_(type):
-    configuration = get_configuration_(type)
+def get_maximal_steering_angle_(vehicle_type):
+    configuration = get_configuration_(vehicle_type)
     return get_maximal_steering_angle(configuration)
 
 

@@ -13,7 +13,8 @@ install(
   DESTINATION share/${PROJECT_NAME}
 )
 
-ament_python_install_module(python/romea_mobile_base_meta_bringup.py)
+# ament_python_install_module(python/romea_mobile_base_meta_bringup.py)
+ament_python_install_package(romea_mobile_base_meta_bringup)
 
 install(PROGRAMS
   scripts/generate_launch_file.py

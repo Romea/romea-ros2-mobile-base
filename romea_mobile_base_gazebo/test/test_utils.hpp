@@ -26,7 +26,7 @@
 #include "../test/test_helper.h"
 
 // tinyxml2
-#include "tinyxml2.h"
+#include "tinyxml2.h"  // NOLINT
 
 
 std::string interface_name(const std::string & vehicle_type)

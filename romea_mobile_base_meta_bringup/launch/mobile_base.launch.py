@@ -16,19 +16,24 @@
 from launch import LaunchDescription
 
 from launch.actions import (
-    IncludeLaunchDescription,
     DeclareLaunchArgument,
+    IncludeLaunchDescription,
     OpaqueFunction,
 )
 
 from launch.launch_description_sources import AnyLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 
+from romea_joystick_meta_bringup.meta_description import (
+    generate_launch_file as generate_joystick_launch_file,
+)
+from romea_joystick_meta_bringup.meta_description import JoystickMetaDescription
 from romea_joystick_utils import get_joystick_configuration_file_path
-from romea_joystick_meta_bringup import JoystickMetaDescription
-from romea_joystick_meta_bringup import generate_launch_file as generate_joystick_launch_file
-from romea_mobile_base_meta_bringup import MobileBaseMetaDescription
-from romea_mobile_base_meta_bringup import generate_launch_file as generate_mobile_base_launch_file
+
+from romea_mobile_base_meta_bringup.meta_description import (
+    generate_launch_file as generate_mobile_base_launch_file,
+)
+from romea_mobile_base_meta_bringup.meta_description import MobileBaseMetaDescription
 
 
 def get_mode(context):

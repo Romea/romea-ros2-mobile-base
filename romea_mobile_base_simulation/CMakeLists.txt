@@ -31,7 +31,7 @@ find_package(romea_core_mobile_base REQUIRED)
 find_package(romea_common_utils REQUIRED)
 find_package(romea_mobile_base_utils REQUIRED)
 find_package(romea_mobile_base_hardware REQUIRED)
-find_package(hardware_interface REQUIRED)
+find_package(pal_statistics REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
   src/generic_simulation_system_interface.cpp
@@ -55,7 +55,8 @@ ament_target_dependencies(${PROJECT_NAME}
   romea_common_utils
   romea_mobile_base_utils
   romea_mobile_base_hardware
-  hardware_interface)
+  hardware_interface
+  pal_statistics)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>

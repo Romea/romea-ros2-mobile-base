@@ -20,6 +20,7 @@
   <depend>romea_mobile_base_hardware</depend>
   <depend>romea_mobile_base_simulation</depend>
   <depend>hardware_interface</depend>
+  <depend>pal_statistics</depend>
   <depend condition="$ROS_DISTRO &gt;= iron">gz_sim_vendor</depend>
   <!-- <depend condition="$ROS_DISTRO &gt;= iron">gz_plugin</depend> -->
 

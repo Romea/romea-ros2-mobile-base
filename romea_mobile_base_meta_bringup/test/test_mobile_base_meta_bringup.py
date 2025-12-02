@@ -15,9 +15,9 @@
 
 # from numpy import radians
 import os
-import pytest
 
-from romea_mobile_base_meta_bringup import MobileBaseMetaDescription
+import pytest
+from romea_mobile_base_meta_bringup.meta_description import MobileBaseMetaDescription
 
 
 @pytest.fixture(scope="module")

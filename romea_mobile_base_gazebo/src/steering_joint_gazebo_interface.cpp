@@ -42,8 +42,8 @@ SteeringJointGazeboInterface::SteeringJointGazeboInterface(
 //-----------------------------------------------------------------------------
 void SteeringJointGazeboInterface::set_command(const double & command)
 {
-  double velocity_command = 1.0 * (command - position_);
-  // std::cout << " command " << command <<" position "<< position_ 
+  double velocity_command = 100.0 * (command - position_);
+  //  std::cout << " command " << command <<" position "<< position_
   //   <<" velocity_command " << velocity_command*180/3.14 << std::endl;
   set_command_<gz::sim::components::JointVelocityCmd>(velocity_command);
   // previous_command_ = command;

@@ -31,6 +31,7 @@ find_package(romea_common_utils REQUIRED)
 find_package(romea_mobile_base_utils REQUIRED)
 find_package(hardware_interface REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(pal_statistics REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
   src/generic_hardware_system_interface.cpp
@@ -60,7 +61,8 @@ ament_target_dependencies(${PROJECT_NAME}
   romea_core_mobile_base
   romea_common_utils
   romea_mobile_base_utils
-  sensor_msgs)
+  sensor_msgs
+  pal_statistics)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>

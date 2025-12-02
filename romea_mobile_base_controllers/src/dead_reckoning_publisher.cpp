@@ -22,7 +22,7 @@
 #include "romea_mobile_base_utils/conversions/kinematic_conversions.hpp"
 
 // ros
-#include "tf2_geometry_msgs/tf2_geometry_msgs.h"
+#include "tf2_geometry_msgs/tf2_geometry_msgs.hpp"
 
 // local
 #include "romea_mobile_base_controllers/dead_reckoning_publisher.hpp"

@@ -46,6 +46,8 @@ public:
 
   virtual ~MobileBaseEnhancedController() = default;
 
+  CallbackReturn on_init() override;
+
   controller_interface::return_type update(
     const rclcpp::Time & time,
     const rclcpp::Duration & period) override;
@@ -55,7 +57,11 @@ public:
 protected:
   void init_imu_subscriber_();
 
+  void declare_angular_speed_pid_();
+
   void init_angular_speed_pid_();
+
+  void declare_angular_speed_filter_();
 
   void init_angular_speed_filter_();
 

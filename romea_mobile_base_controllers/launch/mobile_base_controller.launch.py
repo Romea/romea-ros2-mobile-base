@@ -24,7 +24,7 @@ def launch_setup(context, *args, **kwargs):
         "base_controller_configuration_file_path"
     ).perform(context)
 
-    controller_yaml_filename = "/tmp/"+joints_prefix+"_base_controller.yaml"
+    controller_yaml_filename = "/tmp/"+joints_prefix+"base_controller.yaml"
 
     with open(base_configuration_file_path, "r") as f:
         base_info = yaml.load(f, Loader=yaml.FullLoader)
@@ -49,8 +49,10 @@ def launch_setup(context, *args, **kwargs):
             controller_yaml_filename,
             "--controller-manager",
             controller_manager_name,
+            # "--namespace",
+            # "/adap2e/base"
         ],
-        # output="screen",
+        output="screen",
     )
 
     joint_state_broadcaster = Node(

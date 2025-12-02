@@ -107,14 +107,14 @@ public:
   CallbackReturn on_shutdown(const rclcpp_lifecycle::State & previous_state) override;
 
 protected:
-  //  void declare_joints_names_();
-  //  void declare_mobile_base_info_();
-  //  void declare_command_limits_();
-  //  void declare_publish_period_();
-  //  void declare_command_timeout_();
-  //  void declare_base_frame_id_();
-  //  void declare_odom_frame_id_();
-  //  void declare_enable_odom_tf_();
+  void declare_joints_names_();
+  void declare_mobile_base_info_();
+  void declare_command_limits_();
+  void declare_publish_period_();
+  void declare_command_timeout_();
+  void declare_base_frame_id_();
+  void declare_odom_frame_id_();
+  void declare_enable_odom_tf_();
 
   void load_joints_names_();
   MobileBaseInfo load_mobile_base_info_();

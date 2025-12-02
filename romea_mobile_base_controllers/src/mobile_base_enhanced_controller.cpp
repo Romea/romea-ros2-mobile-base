@@ -45,6 +45,31 @@ MobileBaseEnhancedController<InterfaceType, KinematicType>::MobileBaseEnhancedCo
 
 //-----------------------------------------------------------------------------
 template<typename InterfaceType, typename KinematicType>
+CallbackReturn MobileBaseEnhancedController<InterfaceType, KinematicType>::on_init()
+{
+//  std::cout << " on init" << std::endl;
+  try {
+    this->declare_command_limits_();
+    this->declare_publish_period_();
+    this->declare_command_timeout_();
+    this->declare_base_frame_id_();
+    this->declare_odom_frame_id_();
+    this->declare_enable_odom_tf_();
+    this->declare_mobile_base_info_();
+    this->declare_joints_names_();
+    this->declare_angular_speed_pid_();
+    this->declare_angular_speed_filter_();
+    // std::cout << " on init OK" << std::endl;
+    return CallbackReturn::SUCCESS;
+  } catch (std::runtime_error & e) {
+    RCLCPP_ERROR_STREAM(this->get_node()->get_logger(), e.what());
+    return CallbackReturn::ERROR;
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+template<typename InterfaceType, typename KinematicType>
 CallbackReturn MobileBaseEnhancedController<InterfaceType, KinematicType>::on_configure(
   const rclcpp_lifecycle::State & /*previous_state*/)
 {
@@ -139,10 +164,24 @@ void MobileBaseEnhancedController<InterfaceType, KinematicType>::init_imu_subscr
 
 //-----------------------------------------------------------------------------
 template<typename InterfaceType, typename KinematicType>
+void MobileBaseEnhancedController<InterfaceType, KinematicType>::declare_angular_speed_pid_()
+{
+  declare_pid_parameters(this->get_node(), ANGULAR_SPEED_PID_PARAM_NAME);
+}
+
+//-----------------------------------------------------------------------------
+template<typename InterfaceType, typename KinematicType>
 void MobileBaseEnhancedController<InterfaceType, KinematicType>::init_angular_speed_pid_()
 {
   this->angular_speed_pid_ = std::make_unique<AngularSpeedPID>(
     get_pid_parameters(this->get_node(), ANGULAR_SPEED_PID_PARAM_NAME));
+}
+
+//-----------------------------------------------------------------------------
+template<typename InterfaceType, typename KinematicType>
+void MobileBaseEnhancedController<InterfaceType, KinematicType>::declare_angular_speed_filter_()
+{
+  declare_parameter<double>(this->get_node(), ANGULAR_SPEED_FILTER_ALPHA_PARAM_NAME);
 }
 
 //-----------------------------------------------------------------------------

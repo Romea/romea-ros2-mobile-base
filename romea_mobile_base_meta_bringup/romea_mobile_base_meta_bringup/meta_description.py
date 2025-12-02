@@ -13,7 +13,10 @@
 # limitations under the License.
 
 import importlib
-from romea_common_meta_bringup import SensorMetaDescription, LaunchFileGenerator, robot_prefix
+
+from romea_common_meta_bringup.meta_description import SensorMetaDescription
+from romea_common_meta_bringup.ros_launch import LaunchFileGenerator
+from romea_common_meta_bringup.utils import robot_prefix
 
 
 class MobileBaseMetaDescription(SensorMetaDescription):

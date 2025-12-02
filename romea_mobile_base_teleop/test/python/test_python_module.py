@@ -12,19 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-import yaml
-from romea_mobile_base_teleop import cmd_range_clamp, get_teleop_complete_configuration
 from romea_joystick_utils import get_joystick_configuration
+from romea_mobile_base_teleop import cmd_range_clamp, get_teleop_complete_configuration
+import yaml
 
 
-def get_mobile_base_configuration_(type):
-    with open("test_" + type + "_base_info.yaml") as f:
+def get_mobile_base_configuration_(kinematic_type):
+    with open("test_" + kinematic_type + "_base_info.yaml") as f:
         return yaml.safe_load(f)
 
 
-def get_teleop_configuration_(type):
-    with open("test_" + type + "_teleop_config.yaml") as f:
+def get_teleop_configuration_(kinematic_type):
+    with open("test_" + kinematic_type + "_teleop_config.yaml") as f:
         return yaml.safe_load(f)
 
 

@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 # Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,22 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import sys
+from launch.substitutions import LaunchConfiguration
+import romea_common_meta_bringup as common
 
-from romea_mobile_base_meta_bringup.meta_description import (
-    generate_launch_file, MobileBaseMetaDescription
-)
 
-if __name__ == "__main__":
+def declare_teleop_configuration_file_path(default_value=None):
+    return common.declare_argument(
+        {
+            "name": "teleop_configuration_file_path",
+            "description": "Path to the teleop configuration file.",
+        },
+        default_value
+    )
 
-    argv = sys.argv
 
-    parameters = {}
-    for argument in argv[1:]:
-        name, value = argument.split(":")
-        parameters[name] = value
-
-    robot_namespace = parameters["robot_namespace"]
-    meta_description_file_path = parameters["meta_description_file_path"]
-    meta_description = MobileBaseMetaDescription(meta_description_file_path, robot_namespace)
-    print(generate_launch_file(meta_description))
+def get_teleop_configuration_file_path(context):
+    return LaunchConfiguration("teleop_configuration_file_path").perform(context)

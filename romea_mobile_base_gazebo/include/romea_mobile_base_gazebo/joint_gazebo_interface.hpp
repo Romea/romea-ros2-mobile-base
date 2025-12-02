@@ -115,4 +115,4 @@ protected:
 }  // namespace ros2
 }  // namespace romea
 
-#endif  // ROMEA_MOBILE_BASE_GAZEBO__SPINNING_JOINT_GAZEBO_INTERFACE_HPP_
+#endif  // ROMEA_MOBILE_BASE_GAZEBO__JOINT_GAZEBO_INTERFACE_HPP_

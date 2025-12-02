@@ -45,7 +45,6 @@ bool GazeboSystemInterface<GazeboInterface, SimulationInterface>::initSim(
   sim::EntityComponentManager & ecm,
   unsigned int /*update_rate*/)
 {
-  std::cout << " plugin 0" <<std::endl;
   nh_ = model_nh;
   return init_gazebo_interfaces_(ecm, enable_joints, hardware_info) &&
     init_hardware_interfaces_(hardware_info);
@@ -149,20 +148,17 @@ hardware_interface::return_type GazeboSystemInterface<GazeboInterface, Simulatio
   const rclcpp::Time & /*time*/,
   const rclcpp::Duration & /*period*/)
 {
-  // std::cout << " read" << std::endl;
-  // simulation_interface_->set_feedback(gazebo_interface_->get_state());
+  simulation_interface_->set_feedback(gazebo_interface_->get_state());
   return hardware_interface::return_type::OK;
 }
 
 //-----------------------------------------------------------------------------
 template<typename GazeboInterface, typename SimulationInterface>
 hardware_interface::return_type GazeboSystemInterface<GazeboInterface, SimulationInterface>::write(
-  const rclcpp::Time & time,
+  const rclcpp::Time & /*time*/,
   const rclcpp::Duration & /*period*/)
 {
-  // std::cout << " write" << std::endl;
-  // std::cout << time.seconds() <<" "<< time.nanoseconds()<< std::endl;
-  // gazebo_interface_->set_command(simulation_interface_->get_hardware_command());
+  gazebo_interface_->set_command(simulation_interface_->get_hardware_command());
   return hardware_interface::return_type::OK;
 }
 

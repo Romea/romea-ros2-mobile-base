@@ -38,6 +38,7 @@ if(${ROS_DISTRO} STRGREATER_EQUAL "jazzy")
   find_package(romea_mobile_base_hardware REQUIRED)
   find_package(romea_mobile_base_simulation REQUIRED)
   find_package(hardware_interface REQUIRED)
+  find_package(pal_statistics REQUIRED)
   find_package(gz_ros2_control REQUIRED)
   find_package(gz_sim_vendor REQUIRED)
   find_package(gz-sim REQUIRED)
@@ -56,8 +57,7 @@ if(${ROS_DISTRO} STRGREATER_EQUAL "jazzy")
     src/gazebo_interface2WD.cpp
     src/gazebo_interface4WD.cpp
     src/gazebo_interface4WS4WD.cpp
-    src/gazebo_system_interface.cpp
-    src/gz_system.cpp)
+    src/gazebo_system_interface.cpp)
 
   ament_target_dependencies(${PLUGINS_LIB_NAME}
     rclcpp
@@ -69,10 +69,11 @@ if(${ROS_DISTRO} STRGREATER_EQUAL "jazzy")
     romea_mobile_base_simulation
     gz_ros2_control
     hardware_interface
+    pal_statistics
     rclcpp_lifecycle)
 
-   target_link_libraries(${PLUGINS_LIB_NAME}
-     gz-sim::gz-sim
+  target_link_libraries(${PLUGINS_LIB_NAME}
+    gz-sim::gz-sim
     #  gz-plugin::register
   )
 
@@ -89,9 +90,9 @@ if(${ROS_DISTRO} STRGREATER_EQUAL "jazzy")
   ament_export_dependencies(romea_common_utils)
   ament_export_dependencies(romea_mobile_base_utils)
   ament_export_dependencies(romea_mobile_base_hardware)
-  ament_export_dependencies(gz_ros2_control)  
+  ament_export_dependencies(gz_ros2_control)
   ament_export_dependencies(hardware_interface)
-  
+
   ament_export_include_directories(include)
   ament_export_libraries(${PLUGINS_LIB_NAME})
   ament_export_targets(export_${PLUGINS_LIB_NAME})
