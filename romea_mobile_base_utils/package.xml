@@ -23,6 +23,8 @@
   <depend>romea_cmd_mux_utils</depend>
   <depend>hardware_interface</depend>
   <depend>pal_statistics</depend>
+  <depend>urdf</depend>
+  <depend>sdformat</depend>
   
   
   <test_depend>ament_lint_auto</test_depend>
