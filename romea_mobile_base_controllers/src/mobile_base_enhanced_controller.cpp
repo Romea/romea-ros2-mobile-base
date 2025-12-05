@@ -33,7 +33,7 @@ namespace ros2
 {
 
 //-----------------------------------------------------------------------------
-template <typename InterfaceType, typename KinematicType>
+template<typename InterfaceType, typename KinematicType>
 MobileBaseEnhancedController<InterfaceType, KinematicType>::MobileBaseEnhancedController()
 : MobileBaseController<InterfaceType, KinematicType>::MobileBaseController(),
     imu_sub_(nullptr),
@@ -44,7 +44,7 @@ MobileBaseEnhancedController<InterfaceType, KinematicType>::MobileBaseEnhancedCo
 }
 
 //-----------------------------------------------------------------------------
-template <typename InterfaceType, typename KinematicType>
+template<typename InterfaceType, typename KinematicType>
 CallbackReturn MobileBaseEnhancedController<InterfaceType, KinematicType>::on_init()
 {
 //  std::cout << " on init" << std::endl;
@@ -69,7 +69,7 @@ CallbackReturn MobileBaseEnhancedController<InterfaceType, KinematicType>::on_in
 
 
 //-----------------------------------------------------------------------------
-template <typename InterfaceType, typename KinematicType>
+template<typename InterfaceType, typename KinematicType>
 CallbackReturn MobileBaseEnhancedController<InterfaceType, KinematicType>::on_configure(
   const rclcpp_lifecycle::State & /*previous_state*/)
 {
@@ -95,7 +95,7 @@ CallbackReturn MobileBaseEnhancedController<InterfaceType, KinematicType>::on_co
 }
 
 //-----------------------------------------------------------------------------
-template <typename InterfaceType, typename KinematicType>
+template<typename InterfaceType, typename KinematicType>
 controller_interface::return_type
 MobileBaseEnhancedController<InterfaceType, KinematicType>::update(
   const rclcpp::Time & time, const rclcpp::Duration & /*period*/)
@@ -151,7 +151,7 @@ MobileBaseEnhancedController<InterfaceType, KinematicType>::update(
 }
 
 //-----------------------------------------------------------------------------
-template <typename InterfaceType, typename KinematicType>
+template<typename InterfaceType, typename KinematicType>
 void MobileBaseEnhancedController<InterfaceType, KinematicType>::init_imu_subscriber_()
 {
   auto callback = std::bind(
@@ -163,14 +163,14 @@ void MobileBaseEnhancedController<InterfaceType, KinematicType>::init_imu_subscr
 }
 
 //-----------------------------------------------------------------------------
-template <typename InterfaceType, typename KinematicType>
+template<typename InterfaceType, typename KinematicType>
 void MobileBaseEnhancedController<InterfaceType, KinematicType>::declare_angular_speed_pid_()
 {
   declare_pid_parameters(this->get_node(), ANGULAR_SPEED_PID_PARAM_NAME);
 }
 
 //-----------------------------------------------------------------------------
-template <typename InterfaceType, typename KinematicType>
+template<typename InterfaceType, typename KinematicType>
 void MobileBaseEnhancedController<InterfaceType, KinematicType>::init_angular_speed_pid_()
 {
   this->angular_speed_pid_ = std::make_unique<AngularSpeedPID>(
@@ -178,14 +178,14 @@ void MobileBaseEnhancedController<InterfaceType, KinematicType>::init_angular_sp
 }
 
 //-----------------------------------------------------------------------------
-template <typename InterfaceType, typename KinematicType>
+template<typename InterfaceType, typename KinematicType>
 void MobileBaseEnhancedController<InterfaceType, KinematicType>::declare_angular_speed_filter_()
 {
   declare_parameter<double>(this->get_node(), ANGULAR_SPEED_FILTER_ALPHA_PARAM_NAME);
 }
 
 //-----------------------------------------------------------------------------
-template <typename InterfaceType, typename KinematicType>
+template<typename InterfaceType, typename KinematicType>
 void MobileBaseEnhancedController<InterfaceType, KinematicType>::init_angular_speed_filter_()
 {
   this->angular_speed_filter_ = std::make_unique<AngularSpeedFilter>(
@@ -193,7 +193,7 @@ void MobileBaseEnhancedController<InterfaceType, KinematicType>::init_angular_sp
 }
 
 //-----------------------------------------------------------------------------
-template <typename InterfaceType, typename KinematicType>
+template<typename InterfaceType, typename KinematicType>
 void MobileBaseEnhancedController<InterfaceType, KinematicType>::imu_callback_(
   ImuMsg::ConstSharedPtr msg)
 {
