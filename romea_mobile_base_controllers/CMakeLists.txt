@@ -104,7 +104,7 @@ install(
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
-  set(ament_cmake_flake8_CONFIG_FILE "${CMAKE_SOURCE_DIR}/.flake8")
+  set(ament_cmake_flake8_CONFIG_FILE "${CMAKE_SOURCE_DIR}/../.flake8")
   set(AMENT_LINT_AUTO_EXCLUDE
     ament_cmake_copyright
     ament_cmake_flake8
