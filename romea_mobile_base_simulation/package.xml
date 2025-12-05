@@ -23,8 +23,7 @@
   <depend>romea_mobile_base_utils</depend>
   <depend>romea_mobile_base_hardware</depend>
   <depend>pal_statistics</depend>
-  <exec_depend condition="$ROS_DISTRO == 'jazzy'">sdformat_14</exec_depend>
-  <exec_depend condition="$ROS_DISTRO == 'humble'">sdformat_12</exec_depend>
+  <exec_depend condition="$ROS_DISTRO == 'jazzy'">sdformat_vendor</exec_depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
