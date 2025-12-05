@@ -51,7 +51,7 @@ namespace romea
 namespace ros2
 {
 
-template<typename OdometryFrameType, typename KinematicType>
+template <typename OdometryFrameType, typename KinematicType>
 MobileBaseController<OdometryFrameType, KinematicType>::MobileBaseController()
 : ControllerInterface(),
   controller_interface_(nullptr),
@@ -75,7 +75,7 @@ MobileBaseController<OdometryFrameType, KinematicType>::MobileBaseController()
 }
 
 //-----------------------------------------------------------------------------
-template<typename InterfaceType, typename KinematicType>
+template <typename InterfaceType, typename KinematicType>
 CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_init()
 {
 //  std::cout << " on init" << std::endl;
@@ -98,7 +98,7 @@ CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_init()
 
 
 //-----------------------------------------------------------------------------
-template<typename InterfaceType, typename KinematicType>
+template <typename InterfaceType, typename KinematicType>
 controller_interface::InterfaceConfiguration
 MobileBaseController<InterfaceType, KinematicType>::command_interface_configuration() const
 {
@@ -112,7 +112,7 @@ MobileBaseController<InterfaceType, KinematicType>::command_interface_configurat
 }
 
 //-----------------------------------------------------------------------------
-template<typename InterfaceType, typename KinematicType>
+template <typename InterfaceType, typename KinematicType>
 controller_interface::InterfaceConfiguration
 MobileBaseController<InterfaceType, KinematicType>::state_interface_configuration() const
 {
@@ -127,7 +127,7 @@ MobileBaseController<InterfaceType, KinematicType>::state_interface_configuratio
 }
 
 //-----------------------------------------------------------------------------
-template<typename InterfaceType, typename KinematicType>
+template <typename InterfaceType, typename KinematicType>
 CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_configure(
   const rclcpp_lifecycle::State & /*previous_state*/)
 {
@@ -150,7 +150,7 @@ CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_configure(
 }
 
 //-----------------------------------------------------------------------------
-template<typename InterfaceType, typename KinematicType>
+template <typename InterfaceType, typename KinematicType>
 CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_activate(
   const rclcpp_lifecycle::State &)
 {
@@ -178,7 +178,7 @@ CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_activate(
 }
 
 //-----------------------------------------------------------------------------
-template<typename InterfaceType, typename KinematicType>
+template <typename InterfaceType, typename KinematicType>
 CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_deactivate(
   const rclcpp_lifecycle::State &)
 {
@@ -190,7 +190,7 @@ CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_deactivate
 }
 
 //-----------------------------------------------------------------------------
-template<typename InterfaceType, typename KinematicType>
+template <typename InterfaceType, typename KinematicType>
 CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_cleanup(
   const rclcpp_lifecycle::State &)
 {
@@ -201,7 +201,7 @@ CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_cleanup(
 }
 
 //-----------------------------------------------------------------------------
-template<typename InterfaceType, typename KinematicType>
+template <typename InterfaceType, typename KinematicType>
 CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_error(
   const rclcpp_lifecycle::State &)
 {
@@ -210,7 +210,7 @@ CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_error(
 }
 
 //-----------------------------------------------------------------------------
-template<typename InterfaceType, typename KinematicType>
+template <typename InterfaceType, typename KinematicType>
 CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_shutdown(
   const rclcpp_lifecycle::State &)
 {
@@ -219,7 +219,7 @@ CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_shutdown(
 
 
 //-----------------------------------------------------------------------------
-template<typename InterfaceType, typename KinematicType>
+template <typename InterfaceType, typename KinematicType>
 controller_interface::return_type MobileBaseController<InterfaceType, KinematicType>::update(
   const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
 {
@@ -256,7 +256,7 @@ controller_interface::return_type MobileBaseController<InterfaceType, KinematicT
 }
 
 //-----------------------------------------------------------------------------
-template<typename OdometryFrameType, typename KinematicType>
+template <typename OdometryFrameType, typename KinematicType>
 bool MobileBaseController<OdometryFrameType, KinematicType>::timeout_()
 {
   // RCLCPP_INFO_STREAM(
@@ -270,7 +270,7 @@ bool MobileBaseController<OdometryFrameType, KinematicType>::timeout_()
 }
 
 //-----------------------------------------------------------------------------
-template<typename OdometryFrameType, typename KinematicType>
+template <typename OdometryFrameType, typename KinematicType>
 void MobileBaseController<OdometryFrameType, KinematicType>::publish_controller_state_()
 {
   if (last_state_publish_time_ + publish_period_ < update_time_) {
@@ -282,7 +282,7 @@ void MobileBaseController<OdometryFrameType, KinematicType>::publish_controller_
 }
 
 //-----------------------------------------------------------------------------
-template<typename OdometryFrameType, typename KinematicType>
+template <typename OdometryFrameType, typename KinematicType>
 void MobileBaseController<OdometryFrameType, KinematicType>::update_controller_state_()
 {
   controller_interface_->read(state_interfaces_, odometry_frame_);
@@ -299,7 +299,7 @@ void MobileBaseController<OdometryFrameType, KinematicType>::update_controller_s
 }
 
 //-----------------------------------------------------------------------------
-template<typename OdometryFrameType, typename KinematicType>
+template <typename OdometryFrameType, typename KinematicType>
 void MobileBaseController<OdometryFrameType, KinematicType>::clamp_current_command_()
 {
   current_command_.cmd = clamp(
@@ -321,7 +321,7 @@ void MobileBaseController<OdometryFrameType, KinematicType>::clamp_current_comma
 }
 
 //-----------------------------------------------------------------------------
-template<typename OdometryFrameType, typename KinematicType>
+template <typename OdometryFrameType, typename KinematicType>
 void MobileBaseController<OdometryFrameType, KinematicType>::send_current_command_()
 {
   forwardKinematic(kinematic_parameters_, current_command_.cmd, odometry_frame_);
@@ -333,7 +333,7 @@ void MobileBaseController<OdometryFrameType, KinematicType>::send_current_comman
 
 
 //-----------------------------------------------------------------------------
-template<typename OdometryFrameType, typename KinematicType>
+template <typename OdometryFrameType, typename KinematicType>
 void MobileBaseController<OdometryFrameType, KinematicType>::send_null_command()
 {
   controller_interface_->write(OdometryFrame(), command_interfaces_);
@@ -341,7 +341,7 @@ void MobileBaseController<OdometryFrameType, KinematicType>::send_null_command()
 
 
 //-----------------------------------------------------------------------------
-template<typename OdometryFrameType, typename KinematicType>
+template <typename OdometryFrameType, typename KinematicType>
 void MobileBaseController<OdometryFrameType, KinematicType>::command_callback_(
   typename CommandMsg::ConstSharedPtr cmd_msg)
 {
@@ -368,7 +368,7 @@ void MobileBaseController<OdometryFrameType, KinematicType>::command_callback_(
 }
 
 //-----------------------------------------------------------------------------
-template<typename OdometryFrameType, typename KinematicType>
+template <typename OdometryFrameType, typename KinematicType>
 void MobileBaseController<OdometryFrameType, KinematicType>::reset_()
 {
   command_sub_.reset();
@@ -387,7 +387,7 @@ void MobileBaseController<InterfaceType, KinematicType>::declare_joints_names_()
 }
 
 //-----------------------------------------------------------------------------
-template<typename InterfaceType, typename KinematicType>
+template <typename InterfaceType, typename KinematicType>
 void MobileBaseController<InterfaceType, KinematicType>::load_joints_names_()
 {
   std::string prefix = get_parameter_or<std::string>(get_node(), JOINTS_PREFIX_PARAM_NAME, "");
@@ -408,7 +408,7 @@ void MobileBaseController<InterfaceType, KinematicType>::declare_mobile_base_inf
 }
 
 //-----------------------------------------------------------------------------
-template<typename InterfaceType, typename KinematicType>
+template <typename InterfaceType, typename KinematicType>
 typename MobileBaseController<InterfaceType, KinematicType>::MobileBaseInfo
 MobileBaseController<InterfaceType, KinematicType>::load_mobile_base_info_()
 {
@@ -423,7 +423,7 @@ void MobileBaseController<InterfaceType, KinematicType>::declare_base_frame_id_(
 }
 
 //-----------------------------------------------------------------------------
-template<typename InterfaceType, typename KinematicType>
+template <typename InterfaceType, typename KinematicType>
 std::string MobileBaseController<InterfaceType, KinematicType>::load_base_frame_id_()
 {
   auto base_frame_id = get_parameter_or<std::string>(
@@ -441,7 +441,7 @@ void MobileBaseController<InterfaceType, KinematicType>::declare_odom_frame_id_(
 }
 
 //-----------------------------------------------------------------------------
-template<typename InterfaceType, typename KinematicType>
+template <typename InterfaceType, typename KinematicType>
 std::string MobileBaseController<InterfaceType, KinematicType>::load_odom_frame_id_()
 {
   auto odom_frame_id = get_parameter_or<std::string>(
@@ -459,7 +459,7 @@ void MobileBaseController<InterfaceType, KinematicType>::declare_enable_odom_tf_
 }
 
 //-----------------------------------------------------------------------------
-template<typename InterfaceType, typename KinematicType>
+template <typename InterfaceType, typename KinematicType>
 bool MobileBaseController<InterfaceType, KinematicType>::load_enable_odom_tf_()
 {
   bool enable_odom_tf = get_parameter_or<bool>(get_node(), ENABLE_ODOM_TF_PARAM_NAME, false);
@@ -478,7 +478,7 @@ declare_parameter_with_default<double>(
 }
 
 //-----------------------------------------------------------------------------
-template<typename InterfaceType, typename KinematicType>
+template <typename InterfaceType, typename KinematicType>
 void MobileBaseController<InterfaceType, KinematicType>::load_publish_period_()
 {
   double publish_rate = get_parameter<double>(get_node(), PUBLISH_RATE_PARAM_NAME);
@@ -499,7 +499,7 @@ void MobileBaseController<InterfaceType, KinematicType>::declare_command_timeout
 }
 
 //-----------------------------------------------------------------------------
-template<typename OdometryFrameType, typename KinematicType>
+template <typename OdometryFrameType, typename KinematicType>
 void MobileBaseController<OdometryFrameType, KinematicType>::load_command_timeout_()
 {
   double command_timeout = get_parameter<double>(get_node(), TIMEOUT_PARAM_NAME);
@@ -520,7 +520,7 @@ void MobileBaseController<OdometryFrameType, KinematicType>::declare_command_lim
 }
 
 //-----------------------------------------------------------------------------
-template<typename OdometryFrameType, typename KinematicType>
+template <typename OdometryFrameType, typename KinematicType>
 void MobileBaseController<OdometryFrameType, KinematicType>::load_command_limits_()
 {
   std::cout <<" node name " <<get_node()->get_name() << std::endl;
@@ -529,7 +529,7 @@ void MobileBaseController<OdometryFrameType, KinematicType>::load_command_limits
 }
 
 //-----------------------------------------------------------------------------
-template<typename InterfaceType, typename KinematicType>
+template <typename InterfaceType, typename KinematicType>
 void MobileBaseController<InterfaceType, KinematicType>::init_interface_()
 {
 //  std::cout << "init_interface_ " << std::endl;
@@ -539,7 +539,7 @@ void MobileBaseController<InterfaceType, KinematicType>::init_interface_()
 }
 
 //-----------------------------------------------------------------------------
-template<typename InterfaceType, typename KinematicType>
+template <typename InterfaceType, typename KinematicType>
 void MobileBaseController<InterfaceType, KinematicType>::init_cmd_subscriber_()
 {
   std::string cmd_topic = "controller/";
@@ -558,7 +558,7 @@ void MobileBaseController<InterfaceType, KinematicType>::init_cmd_subscriber_()
 }
 
 //-----------------------------------------------------------------------------
-template<typename OdometryFrameType, typename KinematicType>
+template <typename OdometryFrameType, typename KinematicType>
 void MobileBaseController<OdometryFrameType, KinematicType>::init_publishers_()
 {
   std::string base_frame_id = load_base_frame_id_();
