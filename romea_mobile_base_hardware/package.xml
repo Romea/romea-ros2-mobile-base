@@ -21,7 +21,8 @@
   <depend>romea_mobile_base_utils</depend>
   <depend>sensor_msgs</depend>
   <depend>pal_statistics</depend>
-  
+  <depend>sdformat_urdf</depend>
+
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
