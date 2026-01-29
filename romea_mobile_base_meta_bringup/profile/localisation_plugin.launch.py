@@ -26,14 +26,15 @@ def launch_setup(context, *args, **kwargs):
     container = LaunchConfiguration("container").perform(context)
     restamping = LaunchConfiguration("restamping").perform(context)
     robot_namespace = LaunchConfiguration("robot_namespace").perform(context)
+    controller_topic = LaunchConfiguration("controller_topic").perform(context)
 
     common_arguments = {
         "package": "romea_localisation_odo_plugin",
         "name": "localisation_plugin",
         "parameters": [
             {
-                "restamping": bool(restamping),
-                "controller_topic": "kinematic",
+                "restamping": restamping =="true",
+                "controller_topic": controller_topic,
                 "use_sim_time": "live" not in mode,
             }
         ],
@@ -67,6 +68,7 @@ def generate_launch_description():
     return LaunchDescription(
         [
             DeclareLaunchArgument("restamping", default_value="false"),
+            DeclareLaunchArgument("controller_topic", default_value="odom"),
             DeclareLaunchArgument("container", default_value=""),
             OpaqueFunction(function=launch_setup)
         ]
