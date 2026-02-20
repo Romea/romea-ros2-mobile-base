@@ -16,6 +16,13 @@
 from launch.substitutions import LaunchConfiguration
 
 import romea_common_meta_bringup.ros_launch as common
+from romea_mobile_base_meta_bringup.meta_description import load_meta_description
+
+
+def get_meta_description(context):
+    robot_namespace = common.get_robot_namespace(context)
+    meta_description_file_path = common.get_meta_description_file_path(context)
+    return load_meta_description(meta_description_file_path, robot_namespace)
 
 
 def declare_base_name(default_value=None):

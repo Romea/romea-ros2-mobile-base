@@ -18,7 +18,7 @@ import sys
 
 from romea_common_meta_bringup import complete_mode
 from romea_mobile_base_meta_bringup.meta_description import (
-    generate_urdf_description,
+    generate_xml_urdf_description_str,
     MobileBaseMetaDescription,
 )
 
@@ -35,4 +35,4 @@ if __name__ == "__main__":
     robot_namespace = parameters["robot_namespace"]
     meta_description_file_path = parameters["meta_description_file_path"]
     meta_description = MobileBaseMetaDescription(meta_description_file_path, robot_namespace)
-    print(generate_urdf_description(mode, meta_description))
+    print(generate_xml_urdf_description_str(mode, meta_description))

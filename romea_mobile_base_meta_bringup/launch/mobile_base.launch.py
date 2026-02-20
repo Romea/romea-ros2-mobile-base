@@ -24,25 +24,17 @@ from launch.actions import (
 from launch.launch_description_sources import AnyLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 
-from romea_joystick_meta_bringup.meta_description import (
-    generate_launch_file as generate_joystick_launch_file,
-)
+import romea_common_meta_bringup.ros_launch as common
+# from romea_joystick_meta_bringup.meta_description import (
+#     generate_yaml_launch_file_str as generate_joystick_launch_file,
+# )
 from romea_joystick_meta_bringup.meta_description import JoystickMetaDescription
 from romea_joystick_utils import get_joystick_configuration_file_path
 
 from romea_mobile_base_meta_bringup.meta_description import (
-    generate_launch_file as generate_mobile_base_launch_file,
+    generate_yaml_launch_file_str as generate_mobile_base_launch_file,
 )
 from romea_mobile_base_meta_bringup.meta_description import MobileBaseMetaDescription
-
-
-def get_mode(context):
-    mode = LaunchConfiguration("mode").perform(context)
-    return "simulation_gazebo_classic" if mode == "simulation" else mode
-
-
-def get_robot_namespace(context):
-    return LaunchConfiguration("robot_namespace").perform(context)
 
 
 def get_mobile_base_meta_description(context):
@@ -50,7 +42,10 @@ def get_mobile_base_meta_description(context):
         "mobile_base_meta_description_file_path"
     ).perform(context)
 
-    return MobileBaseMetaDescription(meta_description_file_path, get_robot_namespace(context))
+    return MobileBaseMetaDescription(
+        meta_description_file_path,
+        common.get_robot_namespace(context)
+    )
 
 
 def get_joystick_meta_description(context):
@@ -58,29 +53,32 @@ def get_joystick_meta_description(context):
         "joystick_meta_description_file_path"
     ).perform(context)
 
-    return JoystickMetaDescription(meta_description_file_path, get_robot_namespace(context))
+    return JoystickMetaDescription(
+        meta_description_file_path,
+        common.get_robot_namespace(context)
+    )
 
 
 def launch_setup(context, *args, **kwargs):
-    mode = get_mode(context)
+    mode = common.get_mode(context)
 
     actions = []
 
     joystick_meta_description = get_joystick_meta_description(context)
-    joystick_launch_filename = (
-        f"/tmp/{joystick_meta_description.get_filename_prefix()}driver.launch.yaml"
-    )
-    with open(joystick_launch_filename, "w") as f:
-        f.write(generate_joystick_launch_file(joystick_meta_description))
+    # joystick_launch_filename = (
+    #     f"/tmp/{joystick_meta_description.get_filename_prefix()}driver.launch.yaml"
+    # )
+    # with open(joystick_launch_filename, "w") as f:
+    #     f.write(generate_joystick_launch_file(joystick_meta_description))
 
-    actions.append(
-        IncludeLaunchDescription(
-            AnyLaunchDescriptionSource(joystick_launch_filename),
-            launch_arguments={
-                "mode": mode,
-            }.items(),
-        )
-    )
+    # actions.append(
+    #     IncludeLaunchDescription(
+    #         AnyLaunchDescriptionSource(joystick_launch_filename),
+    #         launch_arguments={
+    #             "mode": mode,
+    #         }.items(),
+    #     )
+    # )
 
     mobile_base_meta_description = get_mobile_base_meta_description(context)
     mobile_base_launch_filename = (
@@ -109,10 +107,10 @@ def generate_launch_description():
 
     return LaunchDescription(
         [
+            common.declare_mode("live"),
+            common.declare_robot_namespace(""),
             DeclareLaunchArgument("mobile_base_meta_description_file_path"),
             DeclareLaunchArgument("joystick_meta_description_file_path"),
-            DeclareLaunchArgument("robot_namespace", default_value=""),
-            DeclareLaunchArgument("mode", default_value="live"),
             OpaqueFunction(function=launch_setup),
         ]
     )

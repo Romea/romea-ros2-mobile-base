@@ -17,7 +17,7 @@
 import sys
 
 from romea_mobile_base_meta_bringup.meta_description import (
-    generate_launch_file, MobileBaseMetaDescription
+    generate_yaml_launch_file_str, MobileBaseMetaDescription
 )
 
 if __name__ == "__main__":
@@ -32,4 +32,4 @@ if __name__ == "__main__":
     robot_namespace = parameters["robot_namespace"]
     meta_description_file_path = parameters["meta_description_file_path"]
     meta_description = MobileBaseMetaDescription(meta_description_file_path, robot_namespace)
-    print(generate_launch_file(meta_description))
+    print(generate_yaml_launch_file_str(meta_description))

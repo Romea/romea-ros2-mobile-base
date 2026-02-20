@@ -33,7 +33,7 @@ def launch_setup(context, *args, **kwargs):
         "name": "localisation_plugin",
         "parameters": [
             {
-                "restamping": restamping =="true",
+                "restamping": restamping == "true",
                 "controller_topic": controller_topic,
                 "use_sim_time": "live" not in mode,
             }

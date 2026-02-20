@@ -58,7 +58,7 @@ def get_configuration(meta_description):
         return base_bringup.get_configuration(base_model)
 
 
-def generate_configuration_file(meta_description, extended):
+def generate_yaml_configuration_str(meta_description, extended):
     base_model = meta_description.get_version()
     base_bringup = meta_description.get_bringup_package()
 
@@ -68,7 +68,7 @@ def generate_configuration_file(meta_description, extended):
         return base_bringup.generate_configuration_file(base_model, extended)
 
 
-def generate_launch_file(meta_description):
+def generate_yaml_launch_file_str(meta_description):
 
     launch_arguments = [
         {"name": "mode", "default": "live"},
@@ -88,7 +88,7 @@ def generate_launch_file(meta_description):
     )
 
 
-def generate_urdf_description(mode, meta_description):
+def generate_xml_urdf_description_str(mode, meta_description):
 
     base_name = meta_description.get_name()
     base_model = meta_description.get_version()
@@ -106,7 +106,7 @@ def generate_urdf_description(mode, meta_description):
         )
 
 
-def generate_ros2_control_description(mode, meta_description):
+def generate_xml_ros2_control_description_str(mode, meta_description):
 
     base_name = meta_description.get_name()
     base_model = meta_description.get_version()

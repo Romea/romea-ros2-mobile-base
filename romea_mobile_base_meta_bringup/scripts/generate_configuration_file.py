@@ -17,7 +17,7 @@
 import sys
 
 from romea_mobile_base_meta_bringup.meta_description import (
-    generate_configuration_file,
+    generate_yaml_configuration_str,
     MobileBaseMetaDescription,
 )
 
@@ -33,4 +33,4 @@ if __name__ == "__main__":
     extended = parameters.get("extended", "false") == "true"
     meta_description_file_path = parameters["meta_description_file_path"]
     meta_description = MobileBaseMetaDescription(meta_description_file_path)
-    print(generate_configuration_file(meta_description, extended))
+    print(generate_yaml_configuration_str(meta_description, extended))
