@@ -58,7 +58,7 @@ def get_configuration(meta_description):
         return base_bringup.get_configuration(base_model)
 
 
-def generate_yaml_configuration_str(meta_description, extended):
+def generate_yaml_configuration_file_str(meta_description, extended):
     base_model = meta_description.get_version()
     base_bringup = meta_description.get_bringup_package()
 
