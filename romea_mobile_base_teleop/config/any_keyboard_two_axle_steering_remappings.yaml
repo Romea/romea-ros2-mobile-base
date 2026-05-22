@@ -4,5 +4,5 @@ axes:
   front_steering_angle: left_right
   rear_steering_angle: left_right
 buttons:
-  slow_mode: key_w
-  turbo_mode: key_x
+  slow_mode: key_c
+  turbo_mode: key_v
