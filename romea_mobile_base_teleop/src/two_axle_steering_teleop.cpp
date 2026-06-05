@@ -1,4 +1,5 @@
-// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Copyright 2022 INRAE, French National Research Institute for Agriculture,
+// Food and Environment
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,9 +14,9 @@
 // limitations under the License
 
 // std
+#include <iostream>
 #include <map>
 #include <string>
-#include <iostream>
 
 // local
 #include "romea_mobile_base_teleop/two_axle_steering_teleop.hpp"
@@ -93,22 +94,20 @@ std::map<std::string, int> TwoAxleSteeringTeleop::get_joystick_buttons_mapping_(
 {
   return {
     {"slow_mode", get_slow_mode_button_mapping(node_)},
-    {"turbo_mode", get_turbo_mode_button_mapping(node_)}
-  };
+    {"turbo_mode", get_turbo_mode_button_mapping(node_)}};
 }
 
 //-----------------------------------------------------------------------------
 void TwoAxleSteeringTeleop::init_axes_control_modes_()
 {
   auto axes_mapping = get_joystick_axes_mapping_();
-  two_axes_linear_speed_control_ =
-    axes_mapping["forwad_speed"] != axes_mapping["backward_speed"];
+  two_axes_linear_speed_control_ = axes_mapping["forwad_speed"] != axes_mapping["backward_speed"];
   two_axes_steering_angle_control_ =
     axes_mapping["front_steering_angle"] != axes_mapping["rear_steering_angle"];
 }
 
 //-----------------------------------------------------------------------------
-double TwoAxleSteeringTeleop::compute_linear_speed_(const double & maximal_linear_speed)const
+double TwoAxleSteeringTeleop::compute_linear_speed_(const double & maximal_linear_speed) const
 {
   if (two_axes_steering_angle_control_) {
     return (joy_->getAxeValue("forward_speed") - joy_->getAxeValue("backward_speed")) *

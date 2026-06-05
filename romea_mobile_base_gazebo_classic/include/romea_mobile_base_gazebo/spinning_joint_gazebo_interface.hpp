@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_GAZEBO__SPINNING_JOINT_GAZEBO_INTERFACE_HPP_
 #define ROMEA_MOBILE_BASE_GAZEBO__SPINNING_JOINT_GAZEBO_INTERFACE_HPP_
 
@@ -29,7 +28,6 @@
 #include "gazebo/physics/Joint.hh"
 #include "gazebo/physics/Model.hh"
 
-
 namespace romea
 {
 namespace ros2
@@ -44,7 +42,7 @@ public:
     const std::string & command_interface_type);
 
   void set_command(const double & command);
-  core::RotationalMotionState get_state()const;
+  core::RotationalMotionState get_state() const;
 
 private:
   core::RotationalMotionControlType control_type;

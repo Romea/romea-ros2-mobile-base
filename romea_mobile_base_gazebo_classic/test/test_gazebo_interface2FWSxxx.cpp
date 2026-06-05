@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <string>
 
@@ -23,16 +22,17 @@
 #include "gazebo/test/ServerFixture.hh"
 
 // ros
-#include "rclcpp/node.hpp"
 #include "hardware_interface/component_parser.hpp"
+#include "rclcpp/node.hpp"
 
 // romea
 #include "../test/test_helper.h"
-#include "test_utils.hpp"
 #include "romea_mobile_base_gazebo/gazebo_interface2FWSxxx.hpp"
+#include "test_utils.hpp"
 
-class TestGazeboInterface2FWSxxx : public gazebo::ServerFixture {};
-
+class TestGazeboInterface2FWSxxx : public gazebo::ServerFixture
+{
+};
 
 TEST_F(TestGazeboInterface2FWSxxx, testSetGet2FWS2RWD)
 {
@@ -42,37 +42,23 @@ TEST_F(TestGazeboInterface2FWSxxx, testSetGet2FWS2RWD)
   SpawnSDF(sdf_description);
 
   auto hardware_info = hardware_interface::parse_control_resources_from_urdf(urdf_description);
-  romea::ros2::GazeboInterface2FWSxxx gazebo_interface(GetModel("robot"), hardware_info[0],
-    "velocity");
+  romea::ros2::GazeboInterface2FWSxxx gazebo_interface(
+    GetModel("robot"), hardware_info[0], "velocity");
 
   romea::core::SimulationCommand2FWSxxx command = {1.0, -1.0, 2.0, -2.0, 3.0, -3.0};
   gazebo_interface.set_command(command);
   auto state = gazebo_interface.get_state();
 
+  EXPECT_NEAR(command.frontLeftWheelSteeringAngle, state.frontLeftWheelSteeringAngle, 0.1);
+  EXPECT_NEAR(command.frontRightWheelSteeringAngle, state.frontRightWheelSteeringAngle, 0.1);
   EXPECT_NEAR(
-    command.frontLeftWheelSteeringAngle,
-    state.frontLeftWheelSteeringAngle,
-    0.1);
+    command.frontLeftWheelSpinningSetPoint, state.frontLeftWheelSpinningMotion.velocity, 0.1);
   EXPECT_NEAR(
-    command.frontRightWheelSteeringAngle,
-    state.frontRightWheelSteeringAngle,
-    0.1);
+    command.frontRightWheelSpinningSetPoint, state.frontRightWheelSpinningMotion.velocity, 0.1);
   EXPECT_NEAR(
-    command.frontLeftWheelSpinningSetPoint,
-    state.frontLeftWheelSpinningMotion.velocity,
-    0.1);
+    command.rearLeftWheelSpinningSetPoint, state.rearLeftWheelSpinningMotion.velocity, 0.1);
   EXPECT_NEAR(
-    command.frontRightWheelSpinningSetPoint,
-    state.frontRightWheelSpinningMotion.velocity,
-    0.1);
-  EXPECT_NEAR(
-    command.rearLeftWheelSpinningSetPoint,
-    state.rearLeftWheelSpinningMotion.velocity,
-    0.1);
-  EXPECT_NEAR(
-    command.rearRightWheelSpinningSetPoint,
-    state.rearRightWheelSpinningMotion.velocity,
-    0.1);
+    command.rearRightWheelSpinningSetPoint, state.rearRightWheelSpinningMotion.velocity, 0.1);
 }
 
 TEST_F(TestGazeboInterface2FWSxxx, testSetGet2FWS2FWD)
@@ -83,37 +69,23 @@ TEST_F(TestGazeboInterface2FWSxxx, testSetGet2FWS2FWD)
   SpawnSDF(sdf_description);
 
   auto hardware_info = hardware_interface::parse_control_resources_from_urdf(urdf_description);
-  romea::ros2::GazeboInterface2FWSxxx gazebo_interface(GetModel("robot"), hardware_info[0],
-    "velocity");
+  romea::ros2::GazeboInterface2FWSxxx gazebo_interface(
+    GetModel("robot"), hardware_info[0], "velocity");
 
   romea::core::SimulationCommand2FWSxxx command = {1.0, -1.0, 2.0, -2.0, 3.0, -3.0};
   gazebo_interface.set_command(command);
   auto state = gazebo_interface.get_state();
 
+  EXPECT_NEAR(command.frontLeftWheelSteeringAngle, state.frontLeftWheelSteeringAngle, 0.1);
+  EXPECT_NEAR(command.frontRightWheelSteeringAngle, state.frontRightWheelSteeringAngle, 0.1);
   EXPECT_NEAR(
-    command.frontLeftWheelSteeringAngle,
-    state.frontLeftWheelSteeringAngle,
-    0.1);
+    command.frontLeftWheelSpinningSetPoint, state.frontLeftWheelSpinningMotion.velocity, 0.1);
   EXPECT_NEAR(
-    command.frontRightWheelSteeringAngle,
-    state.frontRightWheelSteeringAngle,
-    0.1);
+    command.frontRightWheelSpinningSetPoint, state.frontRightWheelSpinningMotion.velocity, 0.1);
   EXPECT_NEAR(
-    command.frontLeftWheelSpinningSetPoint,
-    state.frontLeftWheelSpinningMotion.velocity,
-    0.1);
+    command.rearLeftWheelSpinningSetPoint, state.rearLeftWheelSpinningMotion.velocity, 0.1);
   EXPECT_NEAR(
-    command.frontRightWheelSpinningSetPoint,
-    state.frontRightWheelSpinningMotion.velocity,
-    0.1);
-  EXPECT_NEAR(
-    command.rearLeftWheelSpinningSetPoint,
-    state.rearLeftWheelSpinningMotion.velocity,
-    0.1);
-  EXPECT_NEAR(
-    command.rearRightWheelSpinningSetPoint,
-    state.rearRightWheelSpinningMotion.velocity,
-    0.1);
+    command.rearRightWheelSpinningSetPoint, state.rearRightWheelSpinningMotion.velocity, 0.1);
 }
 
 TEST_F(TestGazeboInterface2FWSxxx, testSetGet2FWS4WD)
@@ -124,37 +96,23 @@ TEST_F(TestGazeboInterface2FWSxxx, testSetGet2FWS4WD)
   SpawnSDF(sdf_description);
 
   auto hardware_info = hardware_interface::parse_control_resources_from_urdf(urdf_description);
-  romea::ros2::GazeboInterface2FWSxxx gazebo_interface(GetModel("robot"), hardware_info[0],
-    "velocity");
+  romea::ros2::GazeboInterface2FWSxxx gazebo_interface(
+    GetModel("robot"), hardware_info[0], "velocity");
 
   romea::core::SimulationCommand2FWSxxx command = {1.0, -1.0, 2.0, -2.0, 3.0, -3.0};
   gazebo_interface.set_command(command);
   auto state = gazebo_interface.get_state();
 
+  EXPECT_NEAR(command.frontLeftWheelSteeringAngle, state.frontLeftWheelSteeringAngle, 0.1);
+  EXPECT_NEAR(command.frontRightWheelSteeringAngle, state.frontRightWheelSteeringAngle, 0.1);
   EXPECT_NEAR(
-    command.frontLeftWheelSteeringAngle,
-    state.frontLeftWheelSteeringAngle,
-    0.1);
+    command.frontLeftWheelSpinningSetPoint, state.frontLeftWheelSpinningMotion.velocity, 0.1);
   EXPECT_NEAR(
-    command.frontRightWheelSteeringAngle,
-    state.frontRightWheelSteeringAngle,
-    0.1);
+    command.frontRightWheelSpinningSetPoint, state.frontRightWheelSpinningMotion.velocity, 0.1);
   EXPECT_NEAR(
-    command.frontLeftWheelSpinningSetPoint,
-    state.frontLeftWheelSpinningMotion.velocity,
-    0.1);
+    command.rearLeftWheelSpinningSetPoint, state.rearLeftWheelSpinningMotion.velocity, 0.1);
   EXPECT_NEAR(
-    command.frontRightWheelSpinningSetPoint,
-    state.frontRightWheelSpinningMotion.velocity,
-    0.1);
-  EXPECT_NEAR(
-    command.rearLeftWheelSpinningSetPoint,
-    state.rearLeftWheelSpinningMotion.velocity,
-    0.1);
-  EXPECT_NEAR(
-    command.rearRightWheelSpinningSetPoint,
-    state.rearRightWheelSpinningMotion.velocity,
-    0.1);
+    command.rearRightWheelSpinningSetPoint, state.rearRightWheelSpinningMotion.velocity, 0.1);
 }
 
 //-----------------------------------------------------------------------------

@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_UTILS__PARAMS__MOBILE_BASE_PARAMETERS_HPP_
 #define ROMEA_MOBILE_BASE_UTILS__PARAMS__MOBILE_BASE_PARAMETERS_HPP_
 
@@ -32,17 +31,13 @@
 #include "mobile_base_parameters4WD.hpp"
 #include "mobile_base_parameters4WS4WD.hpp"
 
-
 namespace romea
 {
 namespace ros2
 {
 
-
 template<typename MobileBaseInfo, typename Node>
-void declare_mobile_base_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+void declare_mobile_base_info(std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
   if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo1FAS2FWD>) {
     declare_mobile_base_info_1FAS2FWD(node, parameters_ns);
@@ -67,11 +62,8 @@ void declare_mobile_base_info(
   }
 }
 
-
 template<typename MobileBaseInfo, typename Node>
-MobileBaseInfo get_mobile_base_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+MobileBaseInfo get_mobile_base_info(std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
   if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo1FAS2FWD>) {
     return get_mobile_base_info_1FAS2FWD(node, parameters_ns);

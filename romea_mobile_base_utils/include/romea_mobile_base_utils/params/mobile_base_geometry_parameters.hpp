@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_UTILS__PARAMS__MOBILE_BASE_GEOMETRY_PARAMETERS_HPP_
 #define ROMEA_MOBILE_BASE_UTILS__PARAMS__MOBILE_BASE_GEOMETRY_PARAMETERS_HPP_
 
 // std
-#include <optional>
 #include <limits>
 #include <memory>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -27,9 +26,8 @@
 #include "rclcpp/node.hpp"
 
 // romea
-#include "romea_core_mobile_base/info/MobileBaseGeometry.hpp"
 #include "romea_common_utils/params/node_parameters.hpp"
-
+#include "romea_core_mobile_base/info/MobileBaseGeometry.hpp"
 
 namespace romea
 {
@@ -37,23 +35,18 @@ namespace ros2
 {
 
 template<typename Node>
-void declare_track_wheel_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+void declare_track_wheel_info(std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
   declare_parameter<double>(node, parameters_ns, "radius");
   declare_parameter<double>(node, parameters_ns, "x");
   declare_parameter_with_default<double>(
-    node, parameters_ns, "z",
-    std::numeric_limits<double>::quiet_NaN());
+    node, parameters_ns, "z", std::numeric_limits<double>::quiet_NaN());
 
   std::cout << " declare wheel info  " << parameters_ns << std::endl;
 }
 
 template<typename Node>
-void try_declare_track_wheel_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+void try_declare_track_wheel_info(std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
   try {
     declare_track_wheel_info(node, parameters_ns);
@@ -62,20 +55,16 @@ void try_declare_track_wheel_info(
   }
 }
 
-
 template<typename Node>
 void declare_track_sprocket_wheel_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+  std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
   std::cout << "declare sprocket wheel info " << std::endl;
   declare_track_wheel_info(node, full_param_name(parameters_ns, "sprocket_wheel"));
 }
 
 template<typename Node>
-void declare_track_idler_wheels_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+void declare_track_idler_wheels_info(std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
   std::cout << "declare idler wheels info " << parameters_ns << std::endl;
   try_declare_track_wheel_info(node, full_param_name(parameters_ns, "idler_wheel"));
@@ -84,48 +73,41 @@ void declare_track_idler_wheels_info(
 }
 
 template<typename Node>
-void declare_track_roller_wheels_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+void declare_track_roller_wheels_info(std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
   auto full_ns = full_param_name(parameters_ns, "roller_wheels");
   declare_parameter<double>(node, full_ns, "radius");
   declare_vector_parameter<double>(node, full_ns, "x");
   declare_parameter_with_default<double>(
-    node, full_ns, "z",
-    std::numeric_limits<double>::quiet_NaN());
+    node, full_ns, "z", std::numeric_limits<double>::quiet_NaN());
   std::cout << "declare roller wheels info " << std::endl;
 }
 
 template<typename Node>
-core::TrackWheel get_track_wheel_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+core::TrackWheel get_track_wheel_info(std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
   auto radius = get_parameter<double>(node, parameters_ns, "radius");
   auto x = get_parameter<double>(node, parameters_ns, "x");
   auto z = get_parameter<double>(node, parameters_ns, "z");
   z = std::isfinite(z) ? z : radius;
-  std::cout << " " << parameters_ns << " radius " << radius << " x " << x <<
-    " z " << z << std::endl;
+  std::cout << " " << parameters_ns << " radius " << radius << " x " << x << " z " << z
+            << std::endl;
   return {radius, x, z};
 }
 
 template<typename Node>
 core::TrackWheel get_track_sprocket_wheel_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+  std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
-  std::cout << "get sprocket wheel info " <<
-    full_param_name(parameters_ns, "sprocket_wheel") << std::endl;
+  std::cout << "get sprocket wheel info " << full_param_name(parameters_ns, "sprocket_wheel")
+            << std::endl;
 
   return get_track_wheel_info(node, full_param_name(parameters_ns, "sprocket_wheel"));
 }
 
 template<typename Node>
 std::optional<core::TrackWheel> try_get_track_wheel_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+  std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
   try {
     return get_track_wheel_info(node, parameters_ns);
@@ -135,24 +117,21 @@ std::optional<core::TrackWheel> try_get_track_wheel_info(
   }
 }
 
-
 template<typename Node>
 std::vector<core::TrackWheel> get_track_idler_wheels_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+  std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
   std::cout << "get track idler wheels info" << parameters_ns << std::endl;
-  auto idler_wheel = try_get_track_wheel_info(
-    node, full_param_name(parameters_ns, "idler_wheel"));
+  auto idler_wheel = try_get_track_wheel_info(node, full_param_name(parameters_ns, "idler_wheel"));
 
   if (idler_wheel) {
     return {*idler_wheel};
   }
 
-  auto front_idler_wheel = try_get_track_wheel_info(
-    node, full_param_name(parameters_ns, "front_idler_wheel"));
-  auto rear_idler_wheel = try_get_track_wheel_info(
-    node, full_param_name(parameters_ns, "rear_idler_wheel"));
+  auto front_idler_wheel =
+    try_get_track_wheel_info(node, full_param_name(parameters_ns, "front_idler_wheel"));
+  auto rear_idler_wheel =
+    try_get_track_wheel_info(node, full_param_name(parameters_ns, "rear_idler_wheel"));
 
   if (front_idler_wheel && rear_idler_wheel) {
     return {*front_idler_wheel, *rear_idler_wheel};
@@ -165,8 +144,7 @@ std::vector<core::TrackWheel> get_track_idler_wheels_info(
 
 template<typename Node>
 std::vector<core::TrackWheel> get_track_roller_wheels_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+  std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
   auto full_ns = full_param_name(parameters_ns, "roller_wheels");
   std::cout << "get track rollers info " << std::endl;
@@ -184,11 +162,8 @@ std::vector<core::TrackWheel> get_track_roller_wheels_info(
   return roller_wheels;
 }
 
-
 template<typename Node>
-void declare_wheel_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+void declare_wheel_info(std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
   declare_parameter<double>(node, parameters_ns, "radius");
   declare_parameter<double>(node, parameters_ns, "width");
@@ -196,19 +171,16 @@ void declare_wheel_info(
 }
 
 template<typename Node>
-core::Wheel get_wheel_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+core::Wheel get_wheel_info(std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
-  return {get_parameter<double>(node, parameters_ns, "radius"),
+  return {
+    get_parameter<double>(node, parameters_ns, "radius"),
     get_parameter<double>(node, parameters_ns, "width"),
     get_parameter<double>(node, parameters_ns, "hub_carrier_offset")};
 }
 
 template<typename Node>
-void declare_continuous_track_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+void declare_continuous_track_info(std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
   std::cout << "declare_continuous_track_info" << std::endl;
 
@@ -221,11 +193,11 @@ void declare_continuous_track_info(
 
 template<typename Node>
 core::ContinuousTrack get_continuous_track_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+  std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
   std::cout << "get_continuous_track_info" << std::endl;
-  return {get_parameter<double>(node, parameters_ns, "width"),
+  return {
+    get_parameter<double>(node, parameters_ns, "width"),
     get_parameter<double>(node, parameters_ns, "thickness"),
     get_track_sprocket_wheel_info(node, parameters_ns),
     get_track_idler_wheels_info(node, parameters_ns),
@@ -233,9 +205,7 @@ core::ContinuousTrack get_continuous_track_info(
 }
 
 template<typename Node>
-void declare_wheeled_axle_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+void declare_wheeled_axle_info(std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
   declare_parameter<double>(node, parameters_ns, "wheels_distance");
   declare_wheel_info(node, full_param_name(parameters_ns, "wheels"));
@@ -243,17 +213,16 @@ void declare_wheeled_axle_info(
 
 template<typename Node>
 core::WheeledAxle get_wheeled_axle_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+  std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
-  return {get_parameter<double>(node, parameters_ns, "wheels_distance"),
+  return {
+    get_parameter<double>(node, parameters_ns, "wheels_distance"),
     get_wheel_info(node, full_param_name(parameters_ns, "wheels"))};
 }
 
 template<typename Node>
 void declare_continuous_tracked_axle_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+  std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
   std::cout << "declare_continuous_tracked_axle_info" << std::endl;
 
@@ -263,18 +232,16 @@ void declare_continuous_tracked_axle_info(
 
 template<typename Node>
 core::ContinuousTrackedAxle get_continuous_tracked_axle_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+  std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
   std::cout << "get_continuous_tracked_axle_info" << std::endl;
-  return {get_parameter<double>(node, parameters_ns, "tracks_distance"),
+  return {
+    get_parameter<double>(node, parameters_ns, "tracks_distance"),
     get_continuous_track_info(node, full_param_name(parameters_ns, "tracks"))};
 }
 
 template<typename Node>
-void declare_two_wheeled_axles_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+void declare_two_wheeled_axles_info(std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
   declare_parameter<double>(node, parameters_ns, "axles_distance");
   declare_wheeled_axle_info(node, full_param_name(parameters_ns, "front_axle"));
@@ -283,14 +250,13 @@ void declare_two_wheeled_axles_info(
 
 template<typename Node>
 core::TwoWheeledAxles get_two_wheeled_axles_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+  std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
-  return {get_parameter<double>(node, parameters_ns, "axles_distance"),
+  return {
+    get_parameter<double>(node, parameters_ns, "axles_distance"),
     get_wheeled_axle_info(node, full_param_name(parameters_ns, "front_axle")),
     get_wheeled_axle_info(node, full_param_name(parameters_ns, "rear_axle"))};
 }
-
 
 }  // namespace ros2
 }  // namespace romea

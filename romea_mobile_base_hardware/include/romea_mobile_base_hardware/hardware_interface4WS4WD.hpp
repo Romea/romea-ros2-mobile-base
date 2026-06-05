@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_INTERFACE4WS4WD_HPP_
 #define ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_INTERFACE4WS4WD_HPP_
 
@@ -32,7 +31,7 @@ namespace ros2
 
 struct HardwareInterface4WS4WD
 {
-// public:
+  // public:
   enum JointIDs
   {
     FRONT_LEFT_WHEEL_STEERING_JOINT_ID = 0,
@@ -61,7 +60,7 @@ struct HardwareInterface4WS4WD
   std::vector<hardware_interface::StateInterface> export_state_interfaces();
   std::vector<hardware_interface::CommandInterface> export_command_interfaces();
 
-// private:
+  // private:
   SteeringJointHardwareInterface front_left_wheel_steering_joint_;
   SteeringJointHardwareInterface front_right_wheel_steering_joint_;
   SteeringJointHardwareInterface rear_left_wheel_steering_joint_;

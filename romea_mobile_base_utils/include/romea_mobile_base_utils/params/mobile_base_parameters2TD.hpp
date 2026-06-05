@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_UTILS__PARAMS__MOBILE_BASE_PARAMETERS2TD_HPP_
 #define ROMEA_MOBILE_BASE_UTILS__PARAMS__MOBILE_BASE_PARAMETERS2TD_HPP_
 
 // std
-#include <string>
 #include <memory>
+#include <string>
 
 // ros
 #include "rclcpp/node.hpp"
@@ -35,15 +34,11 @@ namespace ros2
 {
 
 template<typename Node>
-void declare_mobile_base_info_2TD(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+void declare_mobile_base_info_2TD(std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
   std::cout << " declare_mobile_base_info_2TD " << std::endl;
-  declare_continuous_tracked_axle_info(
-    node, full_param_name(parameters_ns, "geometry"));
-  declare_wheel_speed_control_info(
-    node, full_param_name(parameters_ns, "tracks_speed_control"));
+  declare_continuous_tracked_axle_info(node, full_param_name(parameters_ns, "geometry"));
+  declare_wheel_speed_control_info(node, full_param_name(parameters_ns, "tracks_speed_control"));
   declare_inertia_info(node, full_param_name(parameters_ns, "inertia"));
   declare_eigen_vector_parameter<Eigen::Vector3d>(node, parameters_ns, "control_point");
 }
@@ -51,15 +46,13 @@ void declare_mobile_base_info_2TD(
 //-----------------------------------------------------------------------------
 template<typename Node>
 core::MobileBaseInfo2TD get_mobile_base_info_2TD(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+  std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
   std::cout << " get_mobile_base_info_2TD " << std::endl;
 
-  return {get_continuous_tracked_axle_info(
-      node, full_param_name(parameters_ns, "geometry")),
-    get_wheel_speed_control_info(
-      node, full_param_name(parameters_ns, "tracks_speed_control")),
+  return {
+    get_continuous_tracked_axle_info(node, full_param_name(parameters_ns, "geometry")),
+    get_wheel_speed_control_info(node, full_param_name(parameters_ns, "tracks_speed_control")),
     get_inertia_info(node, full_param_name(parameters_ns, "inertia")),
     get_eigen_vector_parameter<Eigen::Vector3d>(node, parameters_ns, "control_point")};
 }

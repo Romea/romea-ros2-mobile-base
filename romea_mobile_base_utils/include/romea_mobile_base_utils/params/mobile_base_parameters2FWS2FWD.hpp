@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_UTILS__PARAMS__MOBILE_BASE_PARAMETERS2FWS2FWD_HPP_
 #define ROMEA_MOBILE_BASE_UTILS__PARAMS__MOBILE_BASE_PARAMETERS2FWS2FWD_HPP_
 
@@ -36,8 +35,7 @@ namespace ros2
 
 template<typename Node>
 void declare_mobile_base_info_2FWS2FWD(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+  std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
   declare_two_wheeled_axles_info(node, full_param_name(parameters_ns, "geometry"));
   declare_steering_angle_control_info(
@@ -50,20 +48,17 @@ void declare_mobile_base_info_2FWS2FWD(
 
 template<typename Node>
 core::MobileBaseInfo2FWS2FWD get_mobile_base_info_2FWS2FWD(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+  std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
-  return {get_two_wheeled_axles_info(node, full_param_name(parameters_ns, "geometry")),
+  return {
+    get_two_wheeled_axles_info(node, full_param_name(parameters_ns, "geometry")),
     get_steering_angle_control_info(
-      node,
-      full_param_name(parameters_ns, "front_wheels_steering_control")),
+      node, full_param_name(parameters_ns, "front_wheels_steering_control")),
     get_wheel_speed_control_info(
-      node,
-      full_param_name(parameters_ns, "front_wheels_speed_control")),
+      node, full_param_name(parameters_ns, "front_wheels_speed_control")),
     get_inertia_info(node, full_param_name(parameters_ns, "inertia")),
     get_eigen_vector_parameter<Eigen::Vector3d>(node, parameters_ns, "control_point")};
 }
-
 
 }  // namespace ros2
 }  // namespace romea

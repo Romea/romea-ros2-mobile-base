@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_UTILS__PARAMS__MOBILE_BASE_PARAMETERS1FAS2FWD_HPP_
 #define ROMEA_MOBILE_BASE_UTILS__PARAMS__MOBILE_BASE_PARAMETERS1FAS2FWD_HPP_
 
@@ -38,8 +37,7 @@ namespace ros2
 
 template<typename Node>
 void declare_mobile_base_info_1FAS2FWD(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+  std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
   declare_two_wheeled_axles_info(node, full_param_name(parameters_ns, "geometry"));
   declare_steering_angle_control_info(
@@ -52,10 +50,10 @@ void declare_mobile_base_info_1FAS2FWD(
 
 template<typename Node>
 core::MobileBaseInfo1FAS2FWD get_mobile_base_info_1FAS2FWD(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+  std::shared_ptr<Node> node, const std::string & parameters_ns)
 {
-  return{get_two_wheeled_axles_info(node, full_param_name(parameters_ns, "geometry")),
+  return {
+    get_two_wheeled_axles_info(node, full_param_name(parameters_ns, "geometry")),
     get_steering_angle_control_info(
       node, full_param_name(parameters_ns, "front_axle_steering_control")),
     get_wheel_speed_control_info(

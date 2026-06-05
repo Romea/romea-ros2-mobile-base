@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
-#include <vector>
 #include <string>
+#include <vector>
 
 // local
 #include "romea_mobile_base_utils/ros2_control/hardware/steering_joint_hardware_interface.hpp"
@@ -58,7 +57,7 @@ void SteeringJointHardwareInterface::export_state_interface(
 }
 
 //-----------------------------------------------------------------------------
-core::SteeringAngleCommand SteeringJointHardwareInterface::get_command()const
+core::SteeringAngleCommand SteeringJointHardwareInterface::get_command() const
 {
   return command_.get();
 }
@@ -83,14 +82,14 @@ void SteeringJointHardwareInterface::set_feedback(const core::SteeringAngleState
 }
 
 //-----------------------------------------------------------------------------
-core::SteeringAngleState SteeringJointHardwareInterface::get_feedback()const
+core::SteeringAngleState SteeringJointHardwareInterface::get_feedback() const
 {
   return feedback_.get();
 }
 
 //-----------------------------------------------------------------------------
 void SteeringJointHardwareInterface::write_command(
-  sensor_msgs::msg::JointState & joint_state_command)const
+  sensor_msgs::msg::JointState & joint_state_command) const
 {
   joint_state_command.name[id_] = get_joint_name();
   set_position(joint_state_command, id_, get_command());

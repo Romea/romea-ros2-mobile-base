@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // ros
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
 
@@ -26,8 +25,7 @@ namespace ros2
 
 //-----------------------------------------------------------------------------
 SteeringJointGazeboInterface::SteeringJointGazeboInterface(
-  gazebo::physics::ModelPtr parent_model,
-  const hardware_interface::ComponentInfo & joint_info)
+  gazebo::physics::ModelPtr parent_model, const hardware_interface::ComponentInfo & joint_info)
 {
   // std::cout << " steering joint_info.name ";
   // std::cout << joint_info.name << std::endl;

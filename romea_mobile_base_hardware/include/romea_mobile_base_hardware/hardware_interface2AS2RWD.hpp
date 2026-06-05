@@ -12,10 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_INTERFACE2AS2RWD_HPP_
 #define ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_INTERFACE2AS2RWD_HPP_
-
 
 // std
 #include <string>

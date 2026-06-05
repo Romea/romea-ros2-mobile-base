@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_CONTROLLERS__DEAD_RECKONING_HPP_
 #define ROMEA_MOBILE_BASE_CONTROLLERS__DEAD_RECKONING_HPP_
 
@@ -24,7 +23,6 @@
 
 // romea core
 #include "romea_core_mobile_base/kinematic/KinematicMeasure.hpp"
-
 
 namespace romea
 {
@@ -38,11 +36,11 @@ public:
 
   void update(const rclcpp::Time & time, const core::KinematicMeasure & kinematic_measure);
 
-  const double & getX()const;
+  const double & getX() const;
 
-  const double & getY()const;
+  const double & getY() const;
 
-  const double & getHeading()const;
+  const double & getHeading() const;
 
   void reset();
 

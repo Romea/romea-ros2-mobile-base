@@ -1,4 +1,5 @@
-// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Copyright 2022 INRAE, French National Research Institute for Agriculture,
+// Food and Environment
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,30 +13,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_TELEOP__TELEOP_BASE_HPP_
 #define ROMEA_MOBILE_BASE_TELEOP__TELEOP_BASE_HPP_
 
-
 // std
 #include <map>
-#include <string>
 #include <memory>
+#include <string>
 
 // ros
 #include "rclcpp/rclcpp.hpp"
 #include "sensor_msgs/msg/joy.hpp"
 
 // romea
-#include "romea_mobile_base_utils/control/command_publisher.hpp"
 #include "romea_cmd_mux_utils/cmd_mux_interface.hpp"
 #include "romea_joystick_utils/joystick.hpp"
+#include "romea_mobile_base_utils/control/command_publisher.hpp"
 
 // local
 #include "romea_mobile_base_teleop/command_parameters.hpp"
 #include "romea_mobile_base_teleop/joystick_parameters.hpp"
 #include "romea_mobile_base_teleop/visibility_control.h"
-
 
 namespace romea
 {
@@ -56,8 +54,7 @@ public:
   virtual ~TeleopBase();
 
   ROMEA_MOBILE_BASE_TELEOP_PUBLIC
-  rclcpp::node_interfaces::NodeBaseInterface::SharedPtr
-  get_node_base_interface() const;
+  rclcpp::node_interfaces::NodeBaseInterface::SharedPtr get_node_base_interface() const;
 
 protected:
   void declare_parameters_();

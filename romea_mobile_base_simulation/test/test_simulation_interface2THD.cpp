@@ -12,19 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <fstream>
 #include <memory>
-#include <vector>
 #include <string>
+#include <vector>
 
 // gtest
 #include "gtest/gtest.h"
 
 // ros
-#include "rclcpp/node.hpp"
 #include "hardware_interface/component_parser.hpp"
+#include "rclcpp/node.hpp"
 
 // romea
 #include "../test/test_helper.h"
@@ -33,15 +32,9 @@
 class TestSimulationInterface2THD : public ::testing::Test
 {
 protected:
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  static void SetUpTestCase() { rclcpp::init(0, nullptr); }
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
+  static void TearDownTestCase() { rclcpp::shutdown(); }
 
   void SetUp() override
   {
@@ -63,7 +56,6 @@ protected:
   std::vector<hardware_interface::HardwareInfo> info;
 };
 
-
 TEST_F(TestSimulationInterface2THD, checkGetCommand)
 {
   romea::core::HardwareCommand2TD command = {0.611111, 1.6111};
@@ -75,10 +67,12 @@ TEST_F(TestSimulationInterface2THD, checkGetCommand)
 
   EXPECT_NEAR(
     simulation_command.leftSprocketWheelSpinningSetPoint,
-    command.leftSprocketWheelSpinningSetPoint, 0.001);
+    command.leftSprocketWheelSpinningSetPoint,
+    0.001);
   EXPECT_NEAR(
     simulation_command.rightSprocketWheelSpinningSetPoint,
-    command.rightSprocketWheelSpinningSetPoint, 0.001);
+    command.rightSprocketWheelSpinningSetPoint,
+    0.001);
   EXPECT_NEAR(simulation_command.frontLeftIdlerWheelSpinningSetPoint, 1.375, 0.001);
   EXPECT_NEAR(simulation_command.frontRightIdlerWheelSpinningSetPoint, 3.625, 0.001);
   EXPECT_NEAR(simulation_command.rearLeftIdlerWheelSpinningSetPoint, 1.375, 0.001);
@@ -135,25 +129,17 @@ TEST_F(TestSimulationInterface2THD, checkGetState)
 
   auto state_interfaces = interface->export_state_interfaces();
   EXPECT_NEAR(
-    state_interfaces[1].get_value(),
-    simulation_command.leftSprocketWheelSpinningSetPoint,
-    0.001);
+    state_interfaces[1].get_value(), simulation_command.leftSprocketWheelSpinningSetPoint, 0.001);
   EXPECT_NEAR(
-    state_interfaces[4].get_value(),
-    simulation_command.rightSprocketWheelSpinningSetPoint,
-    0.001);
+    state_interfaces[4].get_value(), simulation_command.rightSprocketWheelSpinningSetPoint, 0.001);
   EXPECT_NEAR(
-    state_interfaces[7].get_value(),
-    simulation_command.frontLeftIdlerWheelSpinningSetPoint,
-    0.001);
+    state_interfaces[7].get_value(), simulation_command.frontLeftIdlerWheelSpinningSetPoint, 0.001);
   EXPECT_NEAR(
     state_interfaces[10].get_value(),
     simulation_command.frontRightIdlerWheelSpinningSetPoint,
     0.001);
   EXPECT_NEAR(
-    state_interfaces[13].get_value(),
-    simulation_command.rearLeftIdlerWheelSpinningSetPoint,
-    0.001);
+    state_interfaces[13].get_value(), simulation_command.rearLeftIdlerWheelSpinningSetPoint, 0.001);
   EXPECT_NEAR(
     state_interfaces[16].get_value(),
     simulation_command.rearRightIdlerWheelSpinningSetPoint,

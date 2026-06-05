@@ -1,4 +1,5 @@
-// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Copyright 2022 INRAE, French National Research Institute for Agriculture,
+// Food and Environment
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,16 +16,16 @@
 // std
 #include <fstream>
 #include <memory>
-#include <string>
 #include <sstream>
+#include <string>
 #include <vector>
 
 // gtest
 #include "gtest/gtest.h"
 
 // ros
-#include "rclcpp/node.hpp"
 #include "hardware_interface/component_parser.hpp"
+#include "rclcpp/node.hpp"
 
 // romea
 #include "../test/test_helper.h"
@@ -34,15 +35,9 @@
 class TestHarwareInterface2AS2RWD : public ::testing::Test
 {
 protected:
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  static void SetUpTestCase() { rclcpp::init(0, nullptr); }
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
+  static void TearDownTestCase() { rclcpp::shutdown(); }
 
   void SetUp() override
   {
@@ -61,15 +56,13 @@ protected:
 
   void MakeInterface(const std::string & command_interface_type)
   {
-    interface = std::make_unique<romea::ros2::HardwareInterface2AS2RWD>(
-      info[0],
-      command_interface_type);
+    interface =
+      std::make_unique<romea::ros2::HardwareInterface2AS2RWD>(info[0], command_interface_type);
   }
 
   std::unique_ptr<romea::ros2::HardwareInterface2AS2RWD> interface;
   std::vector<hardware_interface::HardwareInfo> info;
 };
-
 
 TEST_F(TestHarwareInterface2AS2RWD, checkStateInterfaceNames)
 {
@@ -107,8 +100,7 @@ TEST_F(TestHarwareInterface2AS2RWD, DISABLED_checkCommandInterfaceTypeWhenEffort
   check_interface_name(command_interfaces[3], "robot_joint4/effort");
 }
 
-
-// TEST_F(TestHarwareInterface2AS2RWD, checkSetCurrentState)
+// TEST_F(TestHarwareInterface2AS2RWD, checkSetcurrent_state)
 // {
 //   MakeInterface(hardware_interface::HW_IF_VELOCITY);
 
@@ -201,7 +193,6 @@ TEST_F(TestHarwareInterface2AS2RWD, checkSetFeedbackUsingJointStates)
   }
 }
 
-
 TEST_F(TestHarwareInterface2AS2RWD, checkGetCommand)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
@@ -240,7 +231,6 @@ TEST_F(TestHarwareInterface2AS2RWD, checkGetCommandUsingJointState)
   EXPECT_DOUBLE_EQ(command.velocity[2], 3.0);
   EXPECT_DOUBLE_EQ(command.velocity[3], 4.0);
 }
-
 
 //-----------------------------------------------------------------------------
 int main(int argc, char ** argv)

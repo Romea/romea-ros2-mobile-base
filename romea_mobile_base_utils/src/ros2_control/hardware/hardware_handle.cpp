@@ -12,16 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
-#include <vector>
 #include <string>
+#include <vector>
 
 // local
-#include "romea_mobile_base_utils/ros2_control/info/joint_info.hpp"
-#include "romea_mobile_base_utils/ros2_control/info/interface_info.hpp"
 #include "romea_mobile_base_utils/ros2_control/hardware/hardware_handle.hpp"
-
+#include "romea_mobile_base_utils/ros2_control/info/interface_info.hpp"
+#include "romea_mobile_base_utils/ros2_control/info/joint_info.hpp"
 
 namespace romea
 {
@@ -30,8 +28,7 @@ namespace ros2
 
 //-----------------------------------------------------------------------------
 HardwareCommandInterface::HardwareCommandInterface(
-  const hardware_interface::InterfaceInfo & interface_info,
-  const std::string & joint_name)
+  const hardware_interface::InterfaceInfo & interface_info, const std::string & joint_name)
 : command_(0.0),
   command_min_(get_min(interface_info)),
   command_max_(get_max(interface_info)),
@@ -42,8 +39,7 @@ HardwareCommandInterface::HardwareCommandInterface(
 
 //-----------------------------------------------------------------------------
 HardwareCommandInterface::HardwareCommandInterface(
-  const hardware_interface::ComponentInfo & joint_info,
-  const std::string & interface_type)
+  const hardware_interface::ComponentInfo & joint_info, const std::string & interface_type)
 : HardwareCommandInterface(get_command_interface_info(joint_info, interface_type), joint_info.name)
 {
 }
@@ -68,7 +64,6 @@ void HardwareCommandInterface::export_interface(
   hardware_interfaces.push_back(CommandInterface(joint_name_, interface_type_, &command_));
 }
 
-
 //-----------------------------------------------------------------------------
 const std::string & HardwareCommandInterface::get_interface_type() const
 {
@@ -83,16 +78,14 @@ const std::string & HardwareCommandInterface::get_joint_name() const
 
 //-----------------------------------------------------------------------------
 HardwareStateInterface::HardwareStateInterface(
-  const hardware_interface::ComponentInfo & joint_info,
-  const std::string & interface_type)
+  const hardware_interface::ComponentInfo & joint_info, const std::string & interface_type)
 : HardwareStateInterface(get_state_interface_info(joint_info, interface_type), joint_info.name)
 {
 }
 
 //-----------------------------------------------------------------------------
 HardwareStateInterface::HardwareStateInterface(
-  const hardware_interface::InterfaceInfo & interface_info,
-  const std::string & joint_name)
+  const hardware_interface::InterfaceInfo & interface_info, const std::string & joint_name)
 : state_(0.0),
   state_min_(get_min(interface_info)),
   state_max_(get_max(interface_info)),
@@ -100,7 +93,6 @@ HardwareStateInterface::HardwareStateInterface(
   interface_type_(interface_info.name)
 {
 }
-
 
 //-----------------------------------------------------------------------------
 double HardwareStateInterface::get() const

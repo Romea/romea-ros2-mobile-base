@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_GAZEBO__STEERING_JOINT_GAZEBO_INTERFACE_HPP_
 #define ROMEA_MOBILE_BASE_GAZEBO__STEERING_JOINT_GAZEBO_INTERFACE_HPP_
 
@@ -26,7 +25,6 @@
 #include "gazebo/physics/Joint.hh"
 #include "gazebo/physics/Model.hh"
 
-
 namespace romea
 {
 namespace ros2
@@ -36,12 +34,11 @@ class SteeringJointGazeboInterface
 {
 public:
   SteeringJointGazeboInterface(
-    gazebo::physics::ModelPtr parent_model,
-    const hardware_interface::ComponentInfo & joint_info);
+    gazebo::physics::ModelPtr parent_model, const hardware_interface::ComponentInfo & joint_info);
 
   void set_command(const double & command);
 
-  double get_state()const;
+  double get_state() const;
 
 private:
   gazebo::physics::JointPtr sim_joint_;

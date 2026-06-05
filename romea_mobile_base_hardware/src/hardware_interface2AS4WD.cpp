@@ -18,8 +18,8 @@
 
 // romea core
 #include "romea_core_mobile_base/simulation/SimulationControl2AS4WD.hpp"
-#include "romea_mobile_base_utils/ros2_control/info/hardware_info2ASxxx.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2AS4WD.hpp"
+#include "romea_mobile_base_utils/ros2_control/info/hardware_info2ASxxx.hpp"
 
 namespace romea
 {
@@ -73,8 +73,7 @@ HardwareInterface2AS4WD::HardwareInterface2AS4WD(
 }
 
 //-----------------------------------------------------------------------------
-std::vector<hardware_interface::StateInterface>
-HardwareInterface2AS4WD::export_state_interfaces()
+std::vector<hardware_interface::StateInterface> HardwareInterface2AS4WD::export_state_interfaces()
 {
   std::vector<hardware_interface::StateInterface> state_interfaces;
   front_axle_steering_joint_.export_state_interface(state_interfaces);
@@ -108,12 +107,13 @@ HardwareInterface2AS4WD::export_command_interfaces()
 core::HardwareCommand2AS4WD HardwareInterface2AS4WD::get_hardware_command() const
 {
   // *INDENT-OFF*
-  return {front_axle_steering_joint_.get_command(),
-      rear_axle_steering_joint_.get_command(),
-      front_left_wheel_spinning_joint_.get_command(),
-      front_right_wheel_spinning_joint_.get_command(),
-      rear_left_wheel_spinning_joint_.get_command(),
-      rear_right_wheel_spinning_joint_.get_command()};
+  return {
+    front_axle_steering_joint_.get_command(),
+    rear_axle_steering_joint_.get_command(),
+    front_left_wheel_spinning_joint_.get_command(),
+    front_right_wheel_spinning_joint_.get_command(),
+    rear_left_wheel_spinning_joint_.get_command(),
+    rear_right_wheel_spinning_joint_.get_command()};
   // *INDENT-ON*
 }
 
@@ -166,15 +166,10 @@ void HardwareInterface2AS4WD::set_feedback(const sensor_msgs::msg::JointState & 
 }
 
 //-----------------------------------------------------------------------------
-void HardwareInterface2AS4WD::complete_feedback_(
-  const core::HardwareState2AS4WD &
-  hardware_state)
+void HardwareInterface2AS4WD::complete_feedback_(const core::HardwareState2AS4WD & hardware_state)
 {
-  core::SimulationState2AS4WD simulation_state = toSimulationState2AS4WD(
-    wheelbase_,
-    front_track_,
-    rear_track_,
-    hardware_state);
+  core::SimulationState2AS4WD simulation_state =
+    toSimulationState2AS4WD(wheelbase_, front_track_, rear_track_, hardware_state);
 
   front_left_wheel_steering_joint_feedback_.set(simulation_state.frontLeftWheelSteeringAngle);
   front_right_wheel_steering_joint_feedback_.set(simulation_state.frontRightWheelSteeringAngle);

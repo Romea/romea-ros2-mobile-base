@@ -31,9 +31,8 @@ namespace ros2
 SteeringJointGazeboInterface::SteeringJointGazeboInterface(
   gz::sim::EntityComponentManager & ecm,
   std::map<std::string, gz::sim::Entity> & enable_joints,
-  const hardware_interface::ComponentInfo & joint_info):
-    JointGazeboInterface(ecm, enable_joints, joint_info),
-    position_(0.0)
+  const hardware_interface::ComponentInfo & joint_info)
+: JointGazeboInterface(ecm, enable_joints, joint_info), position_(0.0)
 {
   create_state_gazebo_component_<gz::sim::components::JointPosition>();
   create_command_gazebo_component_<gz::sim::components::JointVelocityCmd>();

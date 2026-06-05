@@ -15,16 +15,16 @@
 // std
 #include <fstream>
 #include <memory>
-#include <string>
 #include <sstream>
+#include <string>
 #include <vector>
 
 // gtest
 #include "gtest/gtest.h"
 
 // ros
-#include "rclcpp/node.hpp"
 #include "hardware_interface/component_parser.hpp"
+#include "rclcpp/node.hpp"
 
 // romea
 #include "../test/test_helper.h"
@@ -34,15 +34,9 @@
 class TestHarwareInterface2FWS4WD : public ::testing::Test
 {
 protected:
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  static void SetUpTestCase() { rclcpp::init(0, nullptr); }
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
+  static void TearDownTestCase() { rclcpp::shutdown(); }
 
   void SetUp() override
   {
@@ -61,15 +55,13 @@ protected:
 
   void MakeInterface(const std::string & command_interface_type)
   {
-    interface = std::make_unique<romea::ros2::HardwareInterface2FWS4WD>(
-      info[0],
-      command_interface_type);
+    interface =
+      std::make_unique<romea::ros2::HardwareInterface2FWS4WD>(info[0], command_interface_type);
   }
 
   std::unique_ptr<romea::ros2::HardwareInterface2FWS4WD> interface;
   std::vector<hardware_interface::HardwareInfo> info;
 };
-
 
 TEST_F(TestHarwareInterface2FWS4WD, checkJointNames)
 {

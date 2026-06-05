@@ -16,6 +16,14 @@
     </description>
   </class>
 
+   <class name="romea_mobile_base_controllers/MobileBaseController2WD"
+          type="romea::ros2::MobileBaseController2WD"
+          base_class_type="controller_interface::ControllerInterface">
+     <description>
+       Controller for 2WD vehicle
+     </description>
+   </class>
+
    <class name="romea_mobile_base_controllers/MobileBaseController4WS4WD"
           type="romea::ros2::MobileBaseController4WS4WD"
           base_class_type="controller_interface::ControllerInterface">
@@ -32,6 +40,14 @@
      </description>
    </class>
 
+   <class name="romea_mobile_base_controllers/MobileBaseController1FAS2FWD"
+          type="romea::ros2::MobileBaseController1FAS2FWD"
+          base_class_type="controller_interface::ControllerInterface">
+     <description>
+       Controller for 1FAS2FWD vehicle
+     </description>
+   </class>
+
    <class name="romea_mobile_base_controllers/MobileBaseController2AS4WD"
           type="romea::ros2::MobileBaseController2AS4WD"
           base_class_type="controller_interface::ControllerInterface">
@@ -45,6 +61,14 @@
           base_class_type="controller_interface::ControllerInterface">
      <description>
        Controller for 2FWS4WD vehicle
+     </description>
+   </class>
+
+   <class name="romea_mobile_base_controllers/MobileBaseController2FWS2FWD"
+          type="romea::ros2::MobileBaseController2FWS2FWD"
+          base_class_type="controller_interface::ControllerInterface">
+     <description>
+       Controller for 2FWS2FWD vehicle
      </description>
    </class>
 

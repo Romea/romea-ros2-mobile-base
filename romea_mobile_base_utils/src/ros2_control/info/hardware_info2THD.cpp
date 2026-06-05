@@ -71,6 +71,5 @@ hardware_interface::ComponentInfo HardwareInfo2THD::get_rear_right_idler_wheel_s
   return hardware_info.joints[REAR_RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID];
 }
 
-
 }  // namespace ros2
 }  // namespace romea

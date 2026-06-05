@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <memory>
 #include <string>
@@ -33,8 +32,7 @@ namespace ros2
 template<typename HardwareInterface>
 HardwareSystemInterface<HardwareInterface>::HardwareSystemInterface(
   const std::string & hardware_interface_name)
-: hardware_interface_name_(hardware_interface_name),
-  hardware_interface_(nullptr)
+: hardware_interface_name_(hardware_interface_name), hardware_interface_(nullptr)
 {
 }
 
@@ -66,14 +64,13 @@ HardwareSystemInterface<HardwareInterface>::on_init(
   //   }
   // }
 
-
   if (hardware_interface::SystemInterface::on_init(hardware_info) != CallbackReturn::SUCCESS) {
     return CallbackReturn::ERROR;
   }
 
-  if (load_info_(hardware_info) == hardware_interface::return_type::OK &&
-    load_interface_(hardware_info) == hardware_interface::return_type::OK)
-  {
+  if (
+    load_info_(hardware_info) == hardware_interface::return_type::OK &&
+    load_interface_(hardware_info) == hardware_interface::return_type::OK) {
     return CallbackReturn::SUCCESS;
   } else {
     return CallbackReturn::ERROR;
@@ -94,9 +91,8 @@ hardware_interface::return_type HardwareSystemInterface<HardwareInterface>::load
   const hardware_interface::HardwareInfo & hardware_info)
 {
   try {
-    hardware_interface_ = std::make_unique<HardwareInterface>(
-      hardware_info,
-      hardware_interface::HW_IF_VELOCITY);
+    hardware_interface_ =
+      std::make_unique<HardwareInterface>(hardware_info, hardware_interface::HW_IF_VELOCITY);
     return hardware_interface::return_type::OK;
   } catch (std::runtime_error & e) {
     RCLCPP_FATAL_STREAM(rclcpp::get_logger("HardwareSystemInterface"), e.what());
@@ -111,10 +107,8 @@ HardwareSystemInterface<HardwareInterface>::on_configure(
   const rclcpp_lifecycle::State & previous_state)
 {
   RCLCPP_ERROR_STREAM(
-    rclcpp::get_logger(
-      hardware_interface_name_),
-    "on_configure : previous state " << int(previous_state.id()) << " " <<
-      previous_state.label());
+    rclcpp::get_logger(hardware_interface_name_),
+    "on_configure : previous state " << int(previous_state.id()) << " " << previous_state.label());
   return CallbackReturn::SUCCESS;
 
   if (connect_() == hardware_interface::return_type::OK) {
@@ -136,7 +130,6 @@ HardwareSystemInterface<HardwareInterface>::on_cleanup(
 
   return CallbackReturn::SUCCESS;
 }
-
 
 //-----------------------------------------------------------------------------
 template<typename HardwareInterface>
@@ -163,8 +156,7 @@ HardwareSystemInterface<HardwareInterface>::on_deactivate(
 {
   RCLCPP_ERROR_STREAM(
     rclcpp::get_logger(hardware_interface_name_),
-    "on_deactivate : previous state" << int(previous_state.id()) << " " <<
-      previous_state.label());
+    "on_deactivate : previous state" << int(previous_state.id()) << " " << previous_state.label());
 
   if (disconnect_() == hardware_interface::return_type::OK) {
     return CallbackReturn::SUCCESS;
@@ -196,8 +188,7 @@ HardwareSystemInterface<HardwareInterface>::on_shutdown(
 //-----------------------------------------------------------------------------
 template<typename HardwareInterface>
 rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
-HardwareSystemInterface<HardwareInterface>::on_error(
-  const rclcpp_lifecycle::State & previous_state)
+HardwareSystemInterface<HardwareInterface>::on_error(const rclcpp_lifecycle::State & previous_state)
 {
   RCLCPP_ERROR_STREAM(
     rclcpp::get_logger(hardware_interface_name_),
@@ -207,16 +198,16 @@ HardwareSystemInterface<HardwareInterface>::on_error(
 
 //-----------------------------------------------------------------------------
 template<typename HardwareInterface>
-std::vector<hardware_interface::StateInterface> HardwareSystemInterface<HardwareInterface>::
-export_state_interfaces()
+std::vector<hardware_interface::StateInterface>
+HardwareSystemInterface<HardwareInterface>::export_state_interfaces()
 {
   return hardware_interface_->export_state_interfaces();
 }
 
 //-----------------------------------------------------------------------------
 template<typename HardwareInterface>
-std::vector<hardware_interface::CommandInterface> HardwareSystemInterface<HardwareInterface>::
-export_command_interfaces()
+std::vector<hardware_interface::CommandInterface>
+HardwareSystemInterface<HardwareInterface>::export_command_interfaces()
 {
   return hardware_interface_->export_command_interfaces();
 }

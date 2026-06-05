@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_CONTROLLERS__MOBILE_BASE_CONTROLLER_HPP_
 #define ROMEA_MOBILE_BASE_CONTROLLERS__MOBILE_BASE_CONTROLLER_HPP_
 
@@ -22,20 +21,19 @@
 #include <vector>
 
 // ros
+#include "controller_interface/controller_interface.hpp"
 #include "rclcpp/rclcpp.hpp"
 #include "rclcpp_lifecycle/state.hpp"
-#include "controller_interface/controller_interface.hpp"
 #include "realtime_tools/realtime_buffer.h"
 
 // romea
-#include "romea_core_common/concurrency/SharedOptionalVariable.hpp"
 #include "romea_common_utils/realtime_publishers/stamped_data_publisher.hpp"
+#include "romea_core_common/concurrency/SharedOptionalVariable.hpp"
 
 // local
 #include "dead_reckoning.hpp"
 #include "dead_reckoning_publisher.hpp"
 #include "mobile_base_controller_traits.hpp"
-
 
 namespace romea
 {
@@ -47,20 +45,17 @@ using CallbackReturn = rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface
 template<typename InterfaceType, typename KinematicType>
 class MobileBaseController : public controller_interface::ControllerInterface
 {
-  using Kinematic =
-    typename MobileBaseControllerTraits<InterfaceType, KinematicType>::Kinematic;
+  using Kinematic = typename MobileBaseControllerTraits<InterfaceType, KinematicType>::Kinematic;
   using MobileBaseInfo =
     typename MobileBaseControllerTraits<InterfaceType, KinematicType>::MobileBaseInfo;
-  using Command =
-    typename MobileBaseControllerTraits<InterfaceType, KinematicType>::Command;
-  using CommandMsg =
-    typename MobileBaseControllerTraits<InterfaceType, KinematicType>::CommandMsg;
+  using Command = typename MobileBaseControllerTraits<InterfaceType, KinematicType>::Command;
+  using CommandMsg = typename MobileBaseControllerTraits<InterfaceType, KinematicType>::CommandMsg;
   using CommandRosMsg =
     typename MobileBaseControllerTraits<InterfaceType, KinematicType>::CommandRosMsg;
   using CommandLimits =
     typename MobileBaseControllerTraits<InterfaceType, KinematicType>::CommandLimits;
   using OdometryFrame =
-    typename  MobileBaseControllerTraits<InterfaceType, KinematicType>::OdometryFrame;
+    typename MobileBaseControllerTraits<InterfaceType, KinematicType>::OdometryFrame;
   using OdometryMeasure =
     typename MobileBaseControllerTraits<InterfaceType, KinematicType>::OdometryMeasure;
   using OdometryMeasureMsg =
@@ -69,9 +64,9 @@ class MobileBaseController : public controller_interface::ControllerInterface
 
   using OdometryMeasurePublisher =
     RealtimeStampedMessagePublisher<OdometryMeasure, OdometryMeasureMsg>;
-  using KinematicMeasurePublisher =
-    RealtimeStampedMessagePublisher<KinematicMeasure,
-      romea_mobile_base_msgs::msg::KinematicMeasureStamped>;
+  using KinematicMeasurePublisher = RealtimeStampedMessagePublisher<
+    KinematicMeasure,
+    romea_mobile_base_msgs::msg::KinematicMeasureStamped>;
 
   struct StampedCommand
   {
@@ -89,8 +84,7 @@ public:
   controller_interface::InterfaceConfiguration state_interface_configuration() const override;
 
   controller_interface::return_type update(
-    const rclcpp::Time & time,
-    const rclcpp::Duration & period) override;
+    const rclcpp::Time & time, const rclcpp::Duration & period) override;
 
   CallbackReturn on_init() override;
 
@@ -129,7 +123,6 @@ protected:
   void init_publishers_();
   void init_cmd_subscriber_();
 
-
   void reset_();
   void send_null_command();
   bool timeout_();
@@ -163,7 +156,6 @@ protected:
   std::unique_ptr<OdometryMeasurePublisher> odometry_measure_publisher_;
   std::unique_ptr<KinematicMeasurePublisher> kinematic_measure_publisher_;
 };
-
 
 using MobileBaseController1FAS2FWD =
   MobileBaseController<ControllerInterface1FAS2FWD, core::OneAxleSteeringKinematic>;

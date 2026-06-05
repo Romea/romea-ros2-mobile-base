@@ -29,28 +29,22 @@
 class TestMobileBaseControlParams : public ::testing::Test
 {
 protected:
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  static void SetUpTestCase() { rclcpp::init(0, nullptr); }
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
+  static void TearDownTestCase() { rclcpp::shutdown(); }
 
   void SetUp() override
   {
     rclcpp::NodeOptions no;
     no.arguments(
-      {"--ros-args", "--params-file",
-        std::string(TEST_DIR) + std::string("/test_mobile_base_control_parameters.yaml")});
+      {"--ros-args",
+       "--params-file",
+       std::string(TEST_DIR) + std::string("/test_mobile_base_control_parameters.yaml")});
     node = std::make_shared<rclcpp::Node>("test_mobile_base_control_paramerters", no);
   }
 
   std::shared_ptr<rclcpp::Node> node;
 };
-
 
 TEST_F(TestMobileBaseControlParams, getSteeringControl)
 {
@@ -71,7 +65,6 @@ TEST_F(TestMobileBaseControlParams, getSpeedControl)
   EXPECT_DOUBLE_EQ(control.sensor.speedStd, 7);
   EXPECT_DOUBLE_EQ(control.sensor.speedRange, 8);
 }
-
 
 //-----------------------------------------------------------------------------
 int main(int argc, char ** argv)

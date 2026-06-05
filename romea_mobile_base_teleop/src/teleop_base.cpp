@@ -1,4 +1,5 @@
-// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Copyright 2022 INRAE, French National Research Institute for Agriculture,
+// Food and Environment
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,14 +15,14 @@
 
 // std
 #include <memory>
-#include <utility>
 #include <string>
+#include <utility>
 
 // romea
-#include "romea_core_mobile_base/kinematic/skid_steering/SkidSteeringCommand.hpp"
-#include "romea_core_mobile_base/kinematic/omni_steering/OmniSteeringCommand.hpp"
 #include "romea_core_mobile_base/kinematic/axle_steering/OneAxleSteeringCommand.hpp"
 #include "romea_core_mobile_base/kinematic/axle_steering/TwoAxleSteeringCommand.hpp"
+#include "romea_core_mobile_base/kinematic/omni_steering/OmniSteeringCommand.hpp"
+#include "romea_core_mobile_base/kinematic/skid_steering/SkidSteeringCommand.hpp"
 
 // local
 #include "romea_mobile_base_teleop/teleop_base.hpp"
@@ -90,7 +91,6 @@ void TeleopBase<CommandType>::init_command_publisher_()
     cmd_mux_client_.subscribe(cmd_pub_->get_topic_name(), priority, 0.2);
   }
 }
-
 
 //-----------------------------------------------------------------------------
 template<class CommandType>

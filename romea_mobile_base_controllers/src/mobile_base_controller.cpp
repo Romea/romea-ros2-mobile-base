@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <memory>
 #include <string>
 
 // romea
+#include "romea_common_utils/params/node_parameters.hpp"
+#include "romea_common_utils/qos.hpp"
 #include "romea_mobile_base_utils/conversions/command_conversions.hpp"
 #include "romea_mobile_base_utils/conversions/kinematic_conversions.hpp"
 #include "romea_mobile_base_utils/params/command_limits_parameters.hpp"
 #include "romea_mobile_base_utils/params/mobile_base_parameters.hpp"
-#include "romea_common_utils/params/node_parameters.hpp"
-#include "romea_common_utils/qos.hpp"
 
 // local
 #include "romea_mobile_base_controllers/mobile_base_controller.hpp"
@@ -78,7 +77,7 @@ MobileBaseController<OdometryFrameType, KinematicType>::MobileBaseController()
 template<typename InterfaceType, typename KinematicType>
 CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_init()
 {
-//  std::cout << " on init" << std::endl;
+  //  std::cout << " on init" << std::endl;
   try {
     declare_command_limits_();
     declare_publish_period_();
@@ -96,15 +95,15 @@ CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_init()
   }
 }
 
-
 //-----------------------------------------------------------------------------
 template<typename InterfaceType, typename KinematicType>
 controller_interface::InterfaceConfiguration
 MobileBaseController<InterfaceType, KinematicType>::command_interface_configuration() const
 {
-//  std::cout << " command_interface_configuration" << std::endl;
+  //  std::cout << " command_interface_configuration" << std::endl;
   if (controller_interface_) {
-    return {controller_interface::interface_configuration_type::INDIVIDUAL,
+    return {
+      controller_interface::interface_configuration_type::INDIVIDUAL,
       InterfaceType::hardware_interface_names(joints_names_)};
   } else {
     return {controller_interface::interface_configuration_type::INDIVIDUAL, {}};
@@ -116,10 +115,11 @@ template<typename InterfaceType, typename KinematicType>
 controller_interface::InterfaceConfiguration
 MobileBaseController<InterfaceType, KinematicType>::state_interface_configuration() const
 {
-//  std::cout << " state_interface_configuration" << std::endl;
+  //  std::cout << " state_interface_configuration" << std::endl;
 
   if (controller_interface_) {
-    return {controller_interface::interface_configuration_type::INDIVIDUAL,
+    return {
+      controller_interface::interface_configuration_type::INDIVIDUAL,
       InterfaceType::hardware_interface_names(joints_names_)};
   } else {
     return {controller_interface::interface_configuration_type::INDIVIDUAL, {}};
@@ -131,7 +131,7 @@ template<typename InterfaceType, typename KinematicType>
 CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_configure(
   const rclcpp_lifecycle::State & /*previous_state*/)
 {
-//  std::cout << " on configure" << std::endl;
+  //  std::cout << " on configure" << std::endl;
 
   try {
     load_command_limits_();
@@ -141,7 +141,7 @@ CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_configure(
     init_interface_();
     init_publishers_();
     init_cmd_subscriber_();
-//    std::cout << " on configure OK" << std::endl;
+    //    std::cout << " on configure OK" << std::endl;
     return CallbackReturn::SUCCESS;
   } catch (std::runtime_error & e) {
     RCLCPP_ERROR_STREAM(get_node()->get_logger(), e.what());
@@ -154,11 +154,11 @@ template<typename InterfaceType, typename KinematicType>
 CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_activate(
   const rclcpp_lifecycle::State &)
 {
-//  std::cout << " on activate" << std::endl;
+  //  std::cout << " on activate" << std::endl;
 
   try {
-//    controller_interface_->register_loaned_command_interfaces(command_interfaces_);
-//    controller_interface_->register_loaned_state_interfaces(state_interfaces_);
+    //    controller_interface_->register_loaned_command_interfaces(command_interfaces_);
+    //    controller_interface_->register_loaned_state_interfaces(state_interfaces_);
 
     auto now = get_node()->get_clock()->now();
     previous_command_.cmd = Command();
@@ -182,7 +182,7 @@ template<typename InterfaceType, typename KinematicType>
 CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_deactivate(
   const rclcpp_lifecycle::State &)
 {
-//  std::cout << " on deactivate" << std::endl;
+  //  std::cout << " on deactivate" << std::endl;
 
   is_running_ = false;
   send_null_command();
@@ -194,7 +194,7 @@ template<typename InterfaceType, typename KinematicType>
 CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_cleanup(
   const rclcpp_lifecycle::State &)
 {
-//  std::cout << " on cleanup" << std::endl;
+  //  std::cout << " on cleanup" << std::endl;
 
   reset_();
   return CallbackReturn::SUCCESS;
@@ -216,7 +216,6 @@ CallbackReturn MobileBaseController<InterfaceType, KinematicType>::on_shutdown(
 {
   return CallbackReturn::SUCCESS;
 }
-
 
 //-----------------------------------------------------------------------------
 template<typename InterfaceType, typename KinematicType>
@@ -245,7 +244,7 @@ controller_interface::return_type MobileBaseController<InterfaceType, KinematicT
     //    RCLCPP_INFO_STREAM(get_node()->get_logger(),"\n"<<current_command_.cmd);
 
     send_current_command_();
-//    RCLCPP_INFO_STREAM(get_node()->get_logger(), "cooucou new command");
+    //    RCLCPP_INFO_STREAM(get_node()->get_logger(), "cooucou new command");
 
   } else if (timeout_()) {
     //    RCLCPP_INFO_STREAM(get_node()->get_logger(), "timeout, brake");
@@ -302,11 +301,7 @@ void MobileBaseController<OdometryFrameType, KinematicType>::update_controller_s
 template<typename OdometryFrameType, typename KinematicType>
 void MobileBaseController<OdometryFrameType, KinematicType>::clamp_current_command_()
 {
-  current_command_.cmd = clamp(
-    kinematic_parameters_,
-    user_command_limits_,
-    current_command_.cmd);
-
+  current_command_.cmd = clamp(kinematic_parameters_, user_command_limits_, current_command_.cmd);
 
   //    if(kinematic_command_clamp_)
   //    {
@@ -325,12 +320,11 @@ template<typename OdometryFrameType, typename KinematicType>
 void MobileBaseController<OdometryFrameType, KinematicType>::send_current_command_()
 {
   forwardKinematic(kinematic_parameters_, current_command_.cmd, odometry_frame_);
-//  RCLCPP_INFO_STREAM(get_node()->get_logger(),"odometry frame commad");
-//  RCLCPP_INFO_STREAM(get_node()->get_logger(),odometry_frame_);
+  //  RCLCPP_INFO_STREAM(get_node()->get_logger(),"odometry frame commad");
+  //  RCLCPP_INFO_STREAM(get_node()->get_logger(),odometry_frame_);
 
   controller_interface_->write(odometry_frame_, command_interfaces_);
 }
-
 
 //-----------------------------------------------------------------------------
 template<typename OdometryFrameType, typename KinematicType>
@@ -339,13 +333,12 @@ void MobileBaseController<OdometryFrameType, KinematicType>::send_null_command()
   controller_interface_->write(OdometryFrame(), command_interfaces_);
 }
 
-
 //-----------------------------------------------------------------------------
 template<typename OdometryFrameType, typename KinematicType>
 void MobileBaseController<OdometryFrameType, KinematicType>::command_callback_(
   typename CommandMsg::ConstSharedPtr cmd_msg)
 {
-//  RCLCPP_INFO_STREAM(get_node()->get_logger(),"command_callback_");
+  //  RCLCPP_INFO_STREAM(get_node()->get_logger(),"command_callback_");
   StampedCommand stamped_cmd;
   to_romea(*cmd_msg, stamped_cmd.cmd);
   stamped_cmd.stamp = get_node()->get_clock()->now();
@@ -362,8 +355,7 @@ void MobileBaseController<OdometryFrameType, KinematicType>::command_callback_(
     command_buffer_.store(stamped_cmd);
   } else {
     RCLCPP_ERROR(
-      get_node()->get_logger(),
-      "Can't accept new commands. Controller is not activated.");
+      get_node()->get_logger(), "Can't accept new commands. Controller is not activated.");
   }
 }
 
@@ -379,7 +371,7 @@ void MobileBaseController<OdometryFrameType, KinematicType>::reset_()
 }
 
 //-----------------------------------------------------------------------------
-template <typename InterfaceType, typename KinematicType>
+template<typename InterfaceType, typename KinematicType>
 void MobileBaseController<InterfaceType, KinematicType>::declare_joints_names_()
 {
   declare_parameter_with_default<std::string>(get_node(), JOINTS_PREFIX_PARAM_NAME, "");
@@ -393,18 +385,18 @@ void MobileBaseController<InterfaceType, KinematicType>::load_joints_names_()
   std::string prefix = get_parameter_or<std::string>(get_node(), JOINTS_PREFIX_PARAM_NAME, "");
   joints_names_ = InterfaceType::get_joints_names(get_node(), JOINTS_MAPPING_PARAM_NAME);
 
-//  std::cout << " joint_names "<< std::endl;
+  //  std::cout << " joint_names "<< std::endl;
   for (auto & joint_name : joints_names_) {
     joint_name = prefix + joint_name;
-//    std::cout << joint_name << std::endl;
+    //    std::cout << joint_name << std::endl;
   }
 }
 
 //-----------------------------------------------------------------------------
-template <typename InterfaceType, typename KinematicType>
+template<typename InterfaceType, typename KinematicType>
 void MobileBaseController<InterfaceType, KinematicType>::declare_mobile_base_info_()
 {
- declare_mobile_base_info<MobileBaseInfo>(get_node(), MOBILE_BASE_INFO_PARAM_NAME);
+  declare_mobile_base_info<MobileBaseInfo>(get_node(), MOBILE_BASE_INFO_PARAM_NAME);
 }
 
 //-----------------------------------------------------------------------------
@@ -416,7 +408,7 @@ MobileBaseController<InterfaceType, KinematicType>::load_mobile_base_info_()
 }
 
 //-----------------------------------------------------------------------------
-template <typename InterfaceType, typename KinematicType>
+template<typename InterfaceType, typename KinematicType>
 void MobileBaseController<InterfaceType, KinematicType>::declare_base_frame_id_()
 {
   declare_mobile_base_info<std::string>(get_node(), MOBILE_BASE_INFO_PARAM_NAME);
@@ -426,15 +418,15 @@ void MobileBaseController<InterfaceType, KinematicType>::declare_base_frame_id_(
 template<typename InterfaceType, typename KinematicType>
 std::string MobileBaseController<InterfaceType, KinematicType>::load_base_frame_id_()
 {
-  auto base_frame_id = get_parameter_or<std::string>(
-    get_node(), BASE_FRAME_ID_PARAM_NAME, DEFAULT_BASE_FRAME_ID);
+  auto base_frame_id =
+    get_parameter_or<std::string>(get_node(), BASE_FRAME_ID_PARAM_NAME, DEFAULT_BASE_FRAME_ID);
 
   RCLCPP_INFO_STREAM(get_node()->get_logger(), "Base frame_id set to " << base_frame_id);
   return base_frame_id;
 }
 
 //-----------------------------------------------------------------------------
-template <typename InterfaceType, typename KinematicType>
+template<typename InterfaceType, typename KinematicType>
 void MobileBaseController<InterfaceType, KinematicType>::declare_odom_frame_id_()
 {
   declare_mobile_base_info<std::string>(get_node(), ODOM_FRAME_ID_PARAM_NAME);
@@ -444,15 +436,15 @@ void MobileBaseController<InterfaceType, KinematicType>::declare_odom_frame_id_(
 template<typename InterfaceType, typename KinematicType>
 std::string MobileBaseController<InterfaceType, KinematicType>::load_odom_frame_id_()
 {
-  auto odom_frame_id = get_parameter_or<std::string>(
-    get_node(), ODOM_FRAME_ID_PARAM_NAME, DEFAULT_ODOM_FRAME_ID);
+  auto odom_frame_id =
+    get_parameter_or<std::string>(get_node(), ODOM_FRAME_ID_PARAM_NAME, DEFAULT_ODOM_FRAME_ID);
 
   RCLCPP_INFO_STREAM(get_node()->get_logger(), "Odometry frame_id set to " << odom_frame_id);
   return odom_frame_id;
 }
 
 //-----------------------------------------------------------------------------
-template <typename InterfaceType, typename KinematicType>
+template<typename InterfaceType, typename KinematicType>
 void MobileBaseController<InterfaceType, KinematicType>::declare_enable_odom_tf_()
 {
   declare_mobile_base_info<std::string>(get_node(), ENABLE_ODOM_TF_PARAM_NAME);
@@ -464,17 +456,15 @@ bool MobileBaseController<InterfaceType, KinematicType>::load_enable_odom_tf_()
 {
   bool enable_odom_tf = get_parameter_or<bool>(get_node(), ENABLE_ODOM_TF_PARAM_NAME, false);
   RCLCPP_INFO_STREAM(
-    get_node()->get_logger(),
-    "Publishing to tf is " << (enable_odom_tf ? "enabled" : "disabled"));
+    get_node()->get_logger(), "Publishing to tf is " << (enable_odom_tf ? "enabled" : "disabled"));
   return enable_odom_tf;
 }
 
 //-----------------------------------------------------------------------------
-template <typename InterfaceType, typename KinematicType>
+template<typename InterfaceType, typename KinematicType>
 void MobileBaseController<InterfaceType, KinematicType>::declare_publish_period_()
 {
-declare_parameter_with_default<double>(
-  get_node(), PUBLISH_RATE_PARAM_NAME, DEFAULT_PUBLISH_RATE);
+  declare_parameter_with_default<double>(get_node(), PUBLISH_RATE_PARAM_NAME, DEFAULT_PUBLISH_RATE);
 }
 
 //-----------------------------------------------------------------------------
@@ -492,10 +482,10 @@ void MobileBaseController<InterfaceType, KinematicType>::load_publish_period_()
 }
 
 //-----------------------------------------------------------------------------
-template <typename InterfaceType, typename KinematicType>
+template<typename InterfaceType, typename KinematicType>
 void MobileBaseController<InterfaceType, KinematicType>::declare_command_timeout_()
 {
- declare_parameter_with_default<double>(get_node(), TIMEOUT_PARAM_NAME, DEFAULT_COMMAND_TIMEOUT);
+  declare_parameter_with_default<double>(get_node(), TIMEOUT_PARAM_NAME, DEFAULT_COMMAND_TIMEOUT);
 }
 
 //-----------------------------------------------------------------------------
@@ -513,7 +503,7 @@ void MobileBaseController<OdometryFrameType, KinematicType>::load_command_timeou
 }
 
 //-----------------------------------------------------------------------------
-template <typename OdometryFrameType, typename KinematicType>
+template<typename OdometryFrameType, typename KinematicType>
 void MobileBaseController<OdometryFrameType, KinematicType>::declare_command_limits_()
 {
   declare_command_limits<CommandLimits>(get_node(), COMMMAND_LIMITS_PARAM_NAME);
@@ -523,8 +513,8 @@ void MobileBaseController<OdometryFrameType, KinematicType>::declare_command_lim
 template<typename OdometryFrameType, typename KinematicType>
 void MobileBaseController<OdometryFrameType, KinematicType>::load_command_limits_()
 {
-  std::cout <<" node name " <<get_node()->get_name() << std::endl;
-  std::cout <<" node namespace " <<get_node()->get_namespace() << std::endl;
+  std::cout << " node name " << get_node()->get_name() << std::endl;
+  std::cout << " node namespace " << get_node()->get_namespace() << std::endl;
   user_command_limits_ = get_command_limits<CommandLimits>(get_node(), COMMMAND_LIMITS_PARAM_NAME);
 }
 
@@ -532,7 +522,7 @@ void MobileBaseController<OdometryFrameType, KinematicType>::load_command_limits
 template<typename InterfaceType, typename KinematicType>
 void MobileBaseController<InterfaceType, KinematicType>::init_interface_()
 {
-//  std::cout << "init_interface_ " << std::endl;
+  //  std::cout << "init_interface_ " << std::endl;
   auto mobile_base_info = load_mobile_base_info_();
   controller_interface_ = std::make_unique<InterfaceType>(mobile_base_info);
   to_kinematic_parameters(mobile_base_info, kinematic_parameters_);
@@ -592,38 +582,27 @@ template class MobileBaseController<ControllerInterface4WS4WD, core::FourWheelSt
 #include "class_loader/register_macro.hpp"
 
 CLASS_LOADER_REGISTER_CLASS(
-  romea::ros2::MobileBaseController1FAS2FWD,
-  controller_interface::ControllerInterface)
+  romea::ros2::MobileBaseController1FAS2FWD, controller_interface::ControllerInterface)
 CLASS_LOADER_REGISTER_CLASS(
-  romea::ros2::MobileBaseController1FAS2RWD,
-  controller_interface::ControllerInterface)
+  romea::ros2::MobileBaseController1FAS2RWD, controller_interface::ControllerInterface)
 // CLASS_LOADER_REGISTER_CLASS(
 //  romea::MobileBaseController1FWS2RWD,
 //  controller_interface::ControllerInterface)
 CLASS_LOADER_REGISTER_CLASS(
-  romea::ros2::MobileBaseController2AS4WD,
-  controller_interface::ControllerInterface)
+  romea::ros2::MobileBaseController2AS4WD, controller_interface::ControllerInterface)
 CLASS_LOADER_REGISTER_CLASS(
-  romea::ros2::MobileBaseController2FWS2FWD,
-  controller_interface::ControllerInterface)
+  romea::ros2::MobileBaseController2FWS2FWD, controller_interface::ControllerInterface)
 CLASS_LOADER_REGISTER_CLASS(
-  romea::ros2::MobileBaseController2FWS2RWD,
-  controller_interface::ControllerInterface)
+  romea::ros2::MobileBaseController2FWS2RWD, controller_interface::ControllerInterface)
 CLASS_LOADER_REGISTER_CLASS(
-  romea::ros2::MobileBaseController2FWS4WD,
-  controller_interface::ControllerInterface)
+  romea::ros2::MobileBaseController2FWS4WD, controller_interface::ControllerInterface)
 CLASS_LOADER_REGISTER_CLASS(
-  romea::ros2::MobileBaseController2TD,
-  controller_interface::ControllerInterface)
+  romea::ros2::MobileBaseController2TD, controller_interface::ControllerInterface)
 CLASS_LOADER_REGISTER_CLASS(
-  romea::ros2::MobileBaseController2WD,
-  controller_interface::ControllerInterface)
+  romea::ros2::MobileBaseController2WD, controller_interface::ControllerInterface)
 CLASS_LOADER_REGISTER_CLASS(
-  romea::ros2::MobileBaseController4WD,
-  controller_interface::ControllerInterface)
+  romea::ros2::MobileBaseController4WD, controller_interface::ControllerInterface)
 CLASS_LOADER_REGISTER_CLASS(
-  romea::ros2::MobileBaseController4MWD,
-  controller_interface::ControllerInterface)
+  romea::ros2::MobileBaseController4MWD, controller_interface::ControllerInterface)
 CLASS_LOADER_REGISTER_CLASS(
-  romea::ros2::MobileBaseController4WS4WD,
-  controller_interface::ControllerInterface)
+  romea::ros2::MobileBaseController4WS4WD, controller_interface::ControllerInterface)

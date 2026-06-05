@@ -12,15 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <string>
 #include <vector>
 
 // romea
-#include "romea_mobile_base_utils/ros2_control/info/hardware_info2THD.hpp"
 #include "romea_mobile_base_simulation/simulation_interface2THD.hpp"
-
+#include "romea_mobile_base_utils/ros2_control/info/hardware_info2THD.hpp"
 
 namespace romea
 {
@@ -70,10 +68,7 @@ core::SimulationCommand2THD SimulationInterface2THD::get_hardware_command()
   };
 
   return toSimulationCommand2THD(
-    sprocket_wheel_radius_,
-    idler_wheel_radius_,
-    track_thickness_,
-    command);
+    sprocket_wheel_radius_, idler_wheel_radius_, track_thickness_, command);
 }
 
 //-----------------------------------------------------------------------------
@@ -104,13 +99,9 @@ sensor_msgs::msg::JointState SimulationInterface2THD::get_joint_state_command()
 void SimulationInterface2THD::set_feedback(const core::SimulationState2THD & simulation_state)
 {
   auto hardware_state = toHardwareState2TD(
-    sprocket_wheel_radius_,
-    idler_wheel_radius_,
-    track_thickness_,
-    simulation_state);
+    sprocket_wheel_radius_, idler_wheel_radius_, track_thickness_, simulation_state);
 
-  left_sprocket_wheel_spinning_joint_.set_feedback(
-    hardware_state.leftSprocketWheelSpinningMotion);
+  left_sprocket_wheel_spinning_joint_.set_feedback(hardware_state.leftSprocketWheelSpinningMotion);
   right_sprocket_wheel_spinning_joint_.set_feedback(
     hardware_state.rightSprocketWheelSpinningMotion);
   front_left_idler_wheel_spinning_joint_.set_feedback(
@@ -133,7 +124,6 @@ void SimulationInterface2THD::set_feedback(const sensor_msgs::msg::JointState & 
   rear_left_idler_wheel_spinning_joint_.read_feedback(joint_states);
   rear_right_idler_wheel_spinning_joint_.read_feedback(joint_states);
 
-
   core::SimulationState2THD simulation_state = {
     left_sprocket_wheel_spinning_joint_.get_feedback(),
     right_sprocket_wheel_spinning_joint_.get_feedback(),
@@ -143,20 +133,15 @@ void SimulationInterface2THD::set_feedback(const sensor_msgs::msg::JointState & 
     rear_right_idler_wheel_spinning_joint_.get_feedback()};
 
   auto hardware_state = toHardwareState2TD(
-    sprocket_wheel_radius_,
-    idler_wheel_radius_,
-    track_thickness_,
-    simulation_state);
+    sprocket_wheel_radius_, idler_wheel_radius_, track_thickness_, simulation_state);
 
-  left_sprocket_wheel_spinning_joint_.set_feedback(
-    hardware_state.leftSprocketWheelSpinningMotion);
+  left_sprocket_wheel_spinning_joint_.set_feedback(hardware_state.leftSprocketWheelSpinningMotion);
   right_sprocket_wheel_spinning_joint_.set_feedback(
     hardware_state.rightSprocketWheelSpinningMotion);
 }
 
 //-----------------------------------------------------------------------------
-std::vector<hardware_interface::StateInterface>
-SimulationInterface2THD::export_state_interfaces()
+std::vector<hardware_interface::StateInterface> SimulationInterface2THD::export_state_interfaces()
 {
   std::vector<hardware_interface::StateInterface> state_interfaces;
   left_sprocket_wheel_spinning_joint_.export_state_interfaces(state_interfaces);

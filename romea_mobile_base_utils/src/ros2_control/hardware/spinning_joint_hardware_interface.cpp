@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
+#include <sstream>
 #include <string>
 #include <vector>
-#include <sstream>
 
 // local
 #include "romea_mobile_base_utils/ros2_control/hardware/spinning_joint_hardware_interface.hpp"
@@ -45,9 +44,7 @@ core::RotationalMotionControlType toRotationalMotionCommandType(const std::strin
 SpinningJointHardwareInterface::SpinningJointHardwareInterface(
   const hardware_interface::ComponentInfo & joint_info,
   const std::string & spinning_joint_command_interface_type)
-: id_(0),
-  command_(joint_info, spinning_joint_command_interface_type),
-  feedback_(joint_info)
+: id_(0), command_(joint_info, spinning_joint_command_interface_type), feedback_(joint_info)
 {
 }
 
@@ -56,12 +53,9 @@ SpinningJointHardwareInterface::SpinningJointHardwareInterface(
   const size_t & joint_id,
   const hardware_interface::ComponentInfo & joint_info,
   const std::string & spinning_joint_command_interface_type)
-: id_(joint_id),
-  command_(joint_info, spinning_joint_command_interface_type),
-  feedback_(joint_info)
+: id_(joint_id), command_(joint_info, spinning_joint_command_interface_type), feedback_(joint_info)
 {
 }
-
 
 //-----------------------------------------------------------------------------
 void SpinningJointHardwareInterface::export_command_interface(
@@ -104,7 +98,7 @@ void SpinningJointHardwareInterface::Feedback::set(const core::RotationalMotionS
 }
 
 //-----------------------------------------------------------------------------
-core::RotationalMotionState SpinningJointHardwareInterface::Feedback::get()const
+core::RotationalMotionState SpinningJointHardwareInterface::Feedback::get() const
 {
   core::RotationalMotionState state;
   state.position = position.get();
@@ -139,14 +133,14 @@ void SpinningJointHardwareInterface::set_feedback(const core::RotationalMotionSt
 }
 
 //-----------------------------------------------------------------------------
-core::RotationalMotionState SpinningJointHardwareInterface::get_feedback()const
+core::RotationalMotionState SpinningJointHardwareInterface::get_feedback() const
 {
   return feedback_.get();
 }
 
 //-----------------------------------------------------------------------------
 void SpinningJointHardwareInterface::write_command(
-  sensor_msgs::msg::JointState & joint_state_command)const
+  sensor_msgs::msg::JointState & joint_state_command) const
 {
   joint_state_command.name[id_] = get_joint_name();
   if (get_command_type()[0] == 'v') {

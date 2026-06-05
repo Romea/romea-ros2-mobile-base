@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_INTERFACE2WD_HPP_
 #define ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_INTERFACE2WD_HPP_
 
@@ -42,7 +41,7 @@ public:
     const hardware_interface::HardwareInfo & hardware_info,
     const std::string & command_interface_type);
 
-  core::HardwareCommand2WD get_command()const;
+  core::HardwareCommand2WD get_command() const;
   void set_state(const core::HardwareState2WD & hardware_state);
 
   core::HardwareCommand2WD get_hardware_command() const;
@@ -58,7 +57,6 @@ private:
   SpinningJointHardwareInterface left_wheel_spinning_joint_;
   SpinningJointHardwareInterface right_wheel_spinning_joint_;
 };
-
 
 }  // namespace ros2
 }  // namespace romea

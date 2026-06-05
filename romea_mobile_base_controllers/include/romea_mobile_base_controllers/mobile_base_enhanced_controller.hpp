@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_CONTROLLERS__MOBILE_BASE_ENHANCED_CONTROLLER_HPP_
 #define ROMEA_MOBILE_BASE_CONTROLLERS__MOBILE_BASE_ENHANCED_CONTROLLER_HPP_
 
@@ -26,7 +25,6 @@
 
 // ros
 #include "sensor_msgs/msg/imu.hpp"
-
 
 namespace romea
 {
@@ -49,8 +47,7 @@ public:
   CallbackReturn on_init() override;
 
   controller_interface::return_type update(
-    const rclcpp::Time & time,
-    const rclcpp::Duration & period) override;
+    const rclcpp::Time & time, const rclcpp::Duration & period) override;
 
   CallbackReturn on_configure(const rclcpp_lifecycle::State & previous_state) override;
 

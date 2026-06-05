@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_GAZEBO__GAZEBO_INTERFACE2THD_HPP_
 #define ROMEA_MOBILE_BASE_GAZEBO__GAZEBO_INTERFACE2THD_HPP_
 
@@ -24,7 +23,6 @@
 
 // local
 #include "romea_mobile_base_gazebo/spinning_joint_gazebo_interface.hpp"
-
 
 namespace romea
 {

@@ -12,13 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_CONTROLLERS__INTERFACES__CONTROLLER_INTERFACE_COMMON_HPP_
 #define ROMEA_MOBILE_BASE_CONTROLLERS__INTERFACES__CONTROLLER_INTERFACE_COMMON_HPP_
 
 // std
 #include <string>
-
 
 // ros
 #include "controller_interface/controller_interface.hpp"

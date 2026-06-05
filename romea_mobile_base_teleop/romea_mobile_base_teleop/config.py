@@ -253,19 +253,6 @@ def get_default_joystick_remapping(mobile_base_configuration, joystick_configura
         return yaml.safe_load(f)
 
 
-# def get_default_joystick_implement_remapping(joystick_type):
-
-#     default_joystick_remapping_yaml_file = (
-#         get_package_share_directory("romea_teleop_description")
-#         + "/config/"
-#         + joystick_type
-#         + "_implement_remappings.yaml"
-#     )
-
-#     with open(default_joystick_remapping_yaml_file) as f:
-#         return yaml.safe_load(f)
-
-
 def get_teleop_complete_configuration(
     teleop_configuration, mobile_base_info, joystick_configuration
 ):

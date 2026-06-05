@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_GAZEBO__SPINNING_JOINT_GAZEBO_INTERFACE_HPP_
 #define ROMEA_MOBILE_BASE_GAZEBO__SPINNING_JOINT_GAZEBO_INTERFACE_HPP_
 
@@ -23,7 +22,6 @@
 // romea
 #include "romea_core_mobile_base/hardware/HardwareControlCommon.hpp"
 
-
 // local
 #include "romea_mobile_base_gazebo/joint_gazebo_interface.hpp"
 
@@ -32,8 +30,8 @@ namespace romea
 namespace ros2
 {
 
-class SpinningJointGazeboInterface :
-  public JointGazeboInterface<double, core::RotationalMotionState>
+class SpinningJointGazeboInterface
+: public JointGazeboInterface<double, core::RotationalMotionState>
 {
 public:
   SpinningJointGazeboInterface(
@@ -43,7 +41,7 @@ public:
     const std::string & command_interface_type);
 
   void set_command(const double & command) final;
-  core::RotationalMotionState get_state()const final;
+  core::RotationalMotionState get_state() const final;
 
 private:
   core::RotationalMotionControlType control_type;

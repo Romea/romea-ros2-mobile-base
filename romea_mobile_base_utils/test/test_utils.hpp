@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef TEST_UTILS_HPP_
 #define TEST_UTILS_HPP_
 
@@ -26,17 +25,13 @@
 #include "romea_common_utils/ros_versions.hpp"
 
 template<typename Interface>
-void check_interface_name(
-  const Interface & interface,
-  const std::string & expected_name)
+void check_interface_name(const Interface & interface, const std::string & expected_name)
 {
   EXPECT_STREQ(interface.get_name().c_str(), expected_name.c_str());
 }
 
 hardware_interface::InterfaceInfo make_interface_info(
-  const std::string & name,
-  const std::string & min,
-  const std::string & max)
+  const std::string & name, const std::string & min, const std::string & max)
 {
   hardware_interface::InterfaceInfo info;
   info.name = name;
@@ -44,6 +39,5 @@ hardware_interface::InterfaceInfo make_interface_info(
   info.max = max;
   return info;
 }
-
 
 #endif  // TEST_UTILS_HPP_

@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <memory>
 #include <string>
@@ -22,8 +21,8 @@
 #include "gtest/gtest.h"
 
 // ros
-#include "rclcpp/node.hpp"
 #include "hardware_interface/component_parser.hpp"
+#include "rclcpp/node.hpp"
 
 // romea
 #include "../test/test_helper.h"
@@ -33,53 +32,35 @@
 class TestSpinningJointHardwateInterface : public ::testing::Test
 {
 protected:
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  static void SetUpTestCase() { rclcpp::init(0, nullptr); }
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
+  static void TearDownTestCase() { rclcpp::shutdown(); }
 
   void SetUp() override
   {
     joint_info.name = "spinning_wheel";
     joint_info.type = "joint";
     joint_info.command_interfaces.push_back(
-      make_interface_info(
-        hardware_interface::HW_IF_VELOCITY,
-        "-1", "1"));
+      make_interface_info(hardware_interface::HW_IF_VELOCITY, "-1", "1"));
     joint_info.command_interfaces.push_back(
-      make_interface_info(
-        hardware_interface::HW_IF_EFFORT,
-        "-1", "1"));
+      make_interface_info(hardware_interface::HW_IF_EFFORT, "-1", "1"));
     joint_info.state_interfaces.push_back(
-      make_interface_info(
-        hardware_interface::HW_IF_POSITION,
-        "", ""));
+      make_interface_info(hardware_interface::HW_IF_POSITION, "", ""));
     joint_info.state_interfaces.push_back(
-      make_interface_info(
-        hardware_interface::HW_IF_VELOCITY,
-        "", ""));
+      make_interface_info(hardware_interface::HW_IF_VELOCITY, "", ""));
     joint_info.state_interfaces.push_back(
-      make_interface_info(
-        hardware_interface::HW_IF_EFFORT, "",
-        ""));
+      make_interface_info(hardware_interface::HW_IF_EFFORT, "", ""));
   }
 
   void MakeJoint(const std::string & command_interface_type)
   {
     joint = std::make_unique<romea::ros2::SpinningJointHardwareInterface>(
-      joint_info,
-      command_interface_type);
+      joint_info, command_interface_type);
   }
 
   std::unique_ptr<romea::ros2::SpinningJointHardwareInterface> joint;
   hardware_interface::ComponentInfo joint_info;
 };
-
 
 TEST_F(TestSpinningJointHardwateInterface, checkExportedStateInterfaces)
 {

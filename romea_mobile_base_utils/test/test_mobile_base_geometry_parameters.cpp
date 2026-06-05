@@ -29,19 +29,11 @@
 class TestMobileBaseGeometryParams : public ::testing::Test
 {
 protected:
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  static void SetUpTestCase() { rclcpp::init(0, nullptr); }
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
+  static void TearDownTestCase() { rclcpp::shutdown(); }
 
-  void SetUp() override
-  {
-  }
+  void SetUp() override {}
 
   void loadYaml(const std::string & config_filename)
   {
@@ -52,7 +44,6 @@ protected:
 
   std::shared_ptr<rclcpp::Node> node;
 };
-
 
 TEST_F(TestMobileBaseGeometryParams, GetWheeInfo)
 {
@@ -197,7 +188,6 @@ TEST_F(TestMobileBaseGeometryParams, GetTwoWheelAxlesInfo)
   EXPECT_DOUBLE_EQ(axles.rearAxle.wheels.width, 108);
   EXPECT_DOUBLE_EQ(axles.rearAxle.wheels.hubCarrierOffset, 109);
 }
-
 
 //-----------------------------------------------------------------------------
 int main(int argc, char ** argv)

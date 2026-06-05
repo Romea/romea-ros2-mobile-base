@@ -17,15 +17,15 @@
 #include <memory>
 
 // romea
-#include "romea_common_utils/qos.hpp"
 #include "romea_common_utils/params/control_parameters.hpp"
+#include "romea_common_utils/qos.hpp"
 #include "romea_mobile_base_controllers/mobile_base_enhanced_controller.hpp"
 
 namespace
 {
 const char ANGULAR_SPEED_PID_PARAM_NAME[] = "controller.angular_speed.pid";
 const char ANGULAR_SPEED_FILTER_ALPHA_PARAM_NAME[] = "controller.angular_speed.filter.alpha";
-}
+}  // namespace
 
 namespace romea
 {
@@ -36,7 +36,7 @@ namespace ros2
 template<typename InterfaceType, typename KinematicType>
 MobileBaseEnhancedController<InterfaceType, KinematicType>::MobileBaseEnhancedController()
 : MobileBaseController<InterfaceType, KinematicType>::MobileBaseController(),
-    imu_sub_(nullptr),
+  imu_sub_(nullptr),
   angular_speed_pid_(nullptr),
   angular_speed_filter_(nullptr),
   angular_speed_measure_(std::numeric_limits<double>::quiet_NaN())
@@ -47,7 +47,7 @@ MobileBaseEnhancedController<InterfaceType, KinematicType>::MobileBaseEnhancedCo
 template<typename InterfaceType, typename KinematicType>
 CallbackReturn MobileBaseEnhancedController<InterfaceType, KinematicType>::on_init()
 {
-//  std::cout << " on init" << std::endl;
+  //  std::cout << " on init" << std::endl;
   try {
     this->declare_command_limits_();
     this->declare_publish_period_();
@@ -67,13 +67,12 @@ CallbackReturn MobileBaseEnhancedController<InterfaceType, KinematicType>::on_in
   }
 }
 
-
 //-----------------------------------------------------------------------------
 template<typename InterfaceType, typename KinematicType>
 CallbackReturn MobileBaseEnhancedController<InterfaceType, KinematicType>::on_configure(
   const rclcpp_lifecycle::State & /*previous_state*/)
 {
-//  std::cout << " on configure" << std::endl;
+  //  std::cout << " on configure" << std::endl;
 
   try {
     this->load_command_limits_();
@@ -122,12 +121,9 @@ MobileBaseEnhancedController<InterfaceType, KinematicType>::update(
 
     if (isfinite(this->angular_speed_measure_)) {
       this->current_command_.cmd.angularSpeed = this->angular_speed_pid_->compute(
-          {
-            to_romea_duration(time),
-            this->current_command_.cmd.angularSpeed,
-            this->angular_speed_measure_
-          }
-      );
+        {to_romea_duration(time),
+         this->current_command_.cmd.angularSpeed,
+         this->angular_speed_measure_});
       // RCLCPP_INFO_STREAM(this->get_node()->get_logger(), " new angular speed command");
       // RCLCPP_INFO_STREAM(this->get_node()->get_logger(), "\n" << this->current_command_.cmd);
     } else {
@@ -140,7 +136,7 @@ MobileBaseEnhancedController<InterfaceType, KinematicType>::update(
     // RCLCPP_INFO_STREAM(this->get_node()->get_logger(), "\n" << this->current_command_.cmd);
 
     this->send_current_command_();
-//    RCLCPP_INFO_STREAM(this->get_node()->get_logger(), "cooucou new command");
+    //    RCLCPP_INFO_STREAM(this->get_node()->get_logger(), "cooucou new command");
 
   } else if (this->timeout_()) {
     //    RCLCPP_INFO_STREAM(this->get_node()->get_logger(), "timeout, brake");
@@ -156,10 +152,11 @@ void MobileBaseEnhancedController<InterfaceType, KinematicType>::init_imu_subscr
 {
   auto callback = std::bind(
     &MobileBaseEnhancedController<InterfaceType, KinematicType>::imu_callback_,
-    this, std::placeholders::_1);
+    this,
+    std::placeholders::_1);
 
-  this->imu_sub_ = this->get_node()->template create_subscription<ImuMsg>(
-    "imu/data", best_effort(1), callback);
+  this->imu_sub_ =
+    this->get_node()->template create_subscription<ImuMsg>("imu/data", best_effort(1), callback);
 }
 
 //-----------------------------------------------------------------------------
@@ -210,9 +207,7 @@ template class MobileBaseEnhancedController<ControllerInterface2TD, core::SkidSt
 #include "class_loader/register_macro.hpp"
 
 CLASS_LOADER_REGISTER_CLASS(
-  romea::ros2::MobileBaseEnhancedController4WD,
-  controller_interface::ControllerInterface)
+  romea::ros2::MobileBaseEnhancedController4WD, controller_interface::ControllerInterface)
 
 CLASS_LOADER_REGISTER_CLASS(
-  romea::ros2::MobileBaseEnhancedController2TD,
-  controller_interface::ControllerInterface)
+  romea::ros2::MobileBaseEnhancedController2TD, controller_interface::ControllerInterface)

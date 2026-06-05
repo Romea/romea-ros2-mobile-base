@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <string>
 #include <vector>
 
 // romea
-#include "romea_mobile_base_utils/ros2_control/info/hardware_info2ASxxx.hpp"
 #include "romea_mobile_base_simulation/simulation_interface2AS4WD.hpp"
+#include "romea_mobile_base_utils/ros2_control/info/hardware_info2ASxxx.hpp"
 
 namespace romea
 {
@@ -31,11 +30,9 @@ SimulationInterface2AS4WD::SimulationInterface2AS4WD(
   const hardware_interface::HardwareInfo & hardware_info,
   const std::string & spinning_joint_command_interface_type)
 : front_axle_steering_joint_(
-    FRONT_AXLE_STEERING_JOINT_ID,
-    hardware_info.joints[FRONT_AXLE_STEERING_JOINT_ID]),
+    FRONT_AXLE_STEERING_JOINT_ID, hardware_info.joints[FRONT_AXLE_STEERING_JOINT_ID]),
   rear_axle_steering_joint_(
-    REAR_AXLE_STEERING_JOINT_ID,
-    hardware_info.joints[REAR_AXLE_STEERING_JOINT_ID]),
+    REAR_AXLE_STEERING_JOINT_ID, hardware_info.joints[REAR_AXLE_STEERING_JOINT_ID]),
   front_left_wheel_spinning_joint_(
     FRONT_LEFT_WHEEL_SPINNING_JOINT_ID,
     hardware_info.joints[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID],
@@ -53,17 +50,13 @@ SimulationInterface2AS4WD::SimulationInterface2AS4WD(
     hardware_info.joints[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID],
     spinning_joint_command_interface_type),
   front_left_wheel_steering_joint_(
-    FRONT_LEFT_WHEEL_STEERING_JOINT_ID,
-    hardware_info.joints[FRONT_LEFT_WHEEL_STEERING_JOINT_ID]),
+    FRONT_LEFT_WHEEL_STEERING_JOINT_ID, hardware_info.joints[FRONT_LEFT_WHEEL_STEERING_JOINT_ID]),
   front_right_wheel_steering_joint_(
-    FRONT_RIGHT_WHEEL_STEERING_JOINT_ID,
-    hardware_info.joints[FRONT_RIGHT_WHEEL_STEERING_JOINT_ID]),
+    FRONT_RIGHT_WHEEL_STEERING_JOINT_ID, hardware_info.joints[FRONT_RIGHT_WHEEL_STEERING_JOINT_ID]),
   rear_left_wheel_steering_joint_(
-    REAR_LEFT_WHEEL_STEERING_JOINT_ID,
-    hardware_info.joints[REAR_LEFT_WHEEL_STEERING_JOINT_ID]),
+    REAR_LEFT_WHEEL_STEERING_JOINT_ID, hardware_info.joints[REAR_LEFT_WHEEL_STEERING_JOINT_ID]),
   rear_right_wheel_steering_joint_(
-    REAR_RIGHT_WHEEL_STEERING_JOINT_ID,
-    hardware_info.joints[REAR_RIGHT_WHEEL_STEERING_JOINT_ID]),
+    REAR_RIGHT_WHEEL_STEERING_JOINT_ID, hardware_info.joints[REAR_RIGHT_WHEEL_STEERING_JOINT_ID]),
   wheelbase_(get_wheelbase(hardware_info)),
   front_track_(get_front_track(hardware_info)),
   rear_track_(get_rear_track(hardware_info))
@@ -81,11 +74,7 @@ core::SimulationCommand2AS4WD SimulationInterface2AS4WD::get_hardware_command()
     rear_left_wheel_spinning_joint_.get_command(),
     rear_right_wheel_spinning_joint_.get_command()};
 
-  return toSimulationCommand2AS4WD(
-    wheelbase_,
-    front_track_,
-    rear_track_,
-    command);
+  return toSimulationCommand2AS4WD(wheelbase_, front_track_, rear_track_, command);
 }
 
 //-----------------------------------------------------------------------------
@@ -93,14 +82,10 @@ sensor_msgs::msg::JointState SimulationInterface2AS4WD::get_joint_state_command(
 {
   auto hardware_command = get_hardware_command();
 
-  front_left_wheel_steering_joint_.set_command(
-    hardware_command.frontLeftWheelSteeringAngle);
-  front_right_wheel_steering_joint_.set_command(
-    hardware_command.frontRightWheelSteeringAngle);
-  rear_left_wheel_steering_joint_.set_command(
-    hardware_command.rearLeftWheelSteeringAngle);
-  rear_right_wheel_steering_joint_.set_command(
-    hardware_command.rearRightWheelSteeringAngle);
+  front_left_wheel_steering_joint_.set_command(hardware_command.frontLeftWheelSteeringAngle);
+  front_right_wheel_steering_joint_.set_command(hardware_command.frontRightWheelSteeringAngle);
+  rear_left_wheel_steering_joint_.set_command(hardware_command.rearLeftWheelSteeringAngle);
+  rear_right_wheel_steering_joint_.set_command(hardware_command.rearRightWheelSteeringAngle);
 
   auto joint_state_command = make_joint_state_msg(10);
   front_axle_steering_joint_.write_command(joint_state_command);
@@ -120,34 +105,21 @@ sensor_msgs::msg::JointState SimulationInterface2AS4WD::get_joint_state_command(
 //-----------------------------------------------------------------------------
 void SimulationInterface2AS4WD::set_feedback(const core::SimulationState2AS4WD & simulation_state)
 {
-  auto hardware_state = toHardwareState2AS4WD(
-    wheelbase_,
-    front_track_,
-    rear_track_,
-    simulation_state);
+  auto hardware_state =
+    toHardwareState2AS4WD(wheelbase_, front_track_, rear_track_, simulation_state);
 
-  front_axle_steering_joint_.set_feedback(
-    hardware_state.frontAxleSteeringAngle);
-  rear_axle_steering_joint_.set_feedback(
-    hardware_state.rearAxleSteeringAngle);
+  front_axle_steering_joint_.set_feedback(hardware_state.frontAxleSteeringAngle);
+  rear_axle_steering_joint_.set_feedback(hardware_state.rearAxleSteeringAngle);
 
-  front_left_wheel_spinning_joint_.set_feedback(
-    hardware_state.frontLeftWheelSpinningMotion);
-  front_right_wheel_spinning_joint_.set_feedback(
-    hardware_state.frontRightWheelSpinningMotion);
-  rear_left_wheel_spinning_joint_.set_feedback(
-    hardware_state.rearLeftWheelSpinningMotion);
-  rear_right_wheel_spinning_joint_.set_feedback(
-    hardware_state.rearRightWheelSpinningMotion);
+  front_left_wheel_spinning_joint_.set_feedback(hardware_state.frontLeftWheelSpinningMotion);
+  front_right_wheel_spinning_joint_.set_feedback(hardware_state.frontRightWheelSpinningMotion);
+  rear_left_wheel_spinning_joint_.set_feedback(hardware_state.rearLeftWheelSpinningMotion);
+  rear_right_wheel_spinning_joint_.set_feedback(hardware_state.rearRightWheelSpinningMotion);
 
-  front_left_wheel_steering_joint_.set_feedback(
-    simulation_state.frontLeftWheelSteeringAngle);
-  front_right_wheel_steering_joint_.set_feedback(
-    simulation_state.frontRightWheelSteeringAngle);
-  rear_left_wheel_steering_joint_.set_feedback(
-    simulation_state.rearLeftWheelSteeringAngle);
-  rear_right_wheel_steering_joint_.set_feedback(
-    simulation_state.rearRightWheelSteeringAngle);
+  front_left_wheel_steering_joint_.set_feedback(simulation_state.frontLeftWheelSteeringAngle);
+  front_right_wheel_steering_joint_.set_feedback(simulation_state.frontRightWheelSteeringAngle);
+  rear_left_wheel_steering_joint_.set_feedback(simulation_state.rearLeftWheelSteeringAngle);
+  rear_right_wheel_steering_joint_.set_feedback(simulation_state.rearRightWheelSteeringAngle);
 }
 
 //-----------------------------------------------------------------------------
@@ -166,8 +138,7 @@ void SimulationInterface2AS4WD::set_feedback(const sensor_msgs::msg::JointState 
 }
 
 //-----------------------------------------------------------------------------
-std::vector<hardware_interface::StateInterface>
-SimulationInterface2AS4WD::export_state_interfaces()
+std::vector<hardware_interface::StateInterface> SimulationInterface2AS4WD::export_state_interfaces()
 {
   std::vector<hardware_interface::StateInterface> state_interfaces;
   front_axle_steering_joint_.export_state_interface(state_interfaces);

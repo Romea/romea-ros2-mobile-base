@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #include "romea_mobile_base_utils/conversions/command_conversions.hpp"
 
 namespace romea
@@ -29,8 +28,7 @@ void to_ros_msg(
     romea_two_axle_steering_command.frontSteeringAngle;
   ros_four_wheel_steering_msg.rear_steering_angle =
     romea_two_axle_steering_command.rearSteeringAngle;
-  ros_four_wheel_steering_msg.speed =
-    romea_two_axle_steering_command.longitudinalSpeed;
+  ros_four_wheel_steering_msg.speed = romea_two_axle_steering_command.longitudinalSpeed;
 }
 
 //-----------------------------------------------------------------------------
@@ -42,10 +40,8 @@ void to_romea(
     ros_four_wheel_steering_msg.front_steering_angle;
   romea_two_axle_steering_command.rearSteeringAngle =
     ros_four_wheel_steering_msg.rear_steering_angle;
-  romea_two_axle_steering_command.longitudinalSpeed =
-    ros_four_wheel_steering_msg.speed;
+  romea_two_axle_steering_command.longitudinalSpeed = ros_four_wheel_steering_msg.speed;
 }
-
 
 //-----------------------------------------------------------------------------
 void to_ros_msg(
@@ -82,7 +78,6 @@ void to_romea(
   romea_one_axle_steering_command.longitudinalSpeed = ros_twist_msg.linear.x;
   romea_one_axle_steering_command.steeringAngle = ros_twist_msg.angular.z;
 }
-
 
 //-----------------------------------------------------------------------------
 void to_ros_msg(
@@ -148,7 +143,6 @@ void to_romea(
     ros_two_axle_steering_command_msg.longitudinal_speed;
 }
 
-
 //-----------------------------------------------------------------------------
 void to_ros_msg(
   const core::OneAxleSteeringCommand & romea_one_axle_steering_command,
@@ -176,8 +170,7 @@ void to_ros_msg(
 {
   romea_skid_steering_command_msg.longitudinal_speed =
     romea_skid_steering_command.longitudinalSpeed;
-  romea_skid_steering_command_msg.angular_speed =
-    romea_skid_steering_command.angularSpeed;
+  romea_skid_steering_command_msg.angular_speed = romea_skid_steering_command.angularSpeed;
 }
 
 //-----------------------------------------------------------------------------
@@ -189,7 +182,6 @@ void to_romea(
   romea_skid_steering_command.longitudinalSpeed = ros_skid_steering_command_msg.longitudinal_speed;
 }
 
-
 //-----------------------------------------------------------------------------
 void to_ros_msg(
   const core::OmniSteeringCommand & romea_omni_steering_command,
@@ -197,10 +189,8 @@ void to_ros_msg(
 {
   romea_omni_steering_command_msg.longitudinal_speed =
     romea_omni_steering_command.longitudinalSpeed;
-  romea_omni_steering_command_msg.lateral_speed =
-    romea_omni_steering_command.lateralSpeed;
-  romea_omni_steering_command_msg.angular_speed =
-    romea_omni_steering_command.angularSpeed;
+  romea_omni_steering_command_msg.lateral_speed = romea_omni_steering_command.lateralSpeed;
+  romea_omni_steering_command_msg.angular_speed = romea_omni_steering_command.angularSpeed;
 }
 
 //-----------------------------------------------------------------------------

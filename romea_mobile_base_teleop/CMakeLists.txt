@@ -36,7 +36,6 @@ add_library(${PROJECT_NAME} SHARED
   src/one_axle_steering_teleop.cpp
   src/two_axle_steering_teleop.cpp
   src/teleop_base.cpp
-  src/implement_teleop.cpp
   src/command_parameters.cpp
   src/joystick_parameters.cpp)
 
@@ -79,11 +78,6 @@ rclcpp_components_register_node(${PROJECT_NAME}
 rclcpp_components_register_node(${PROJECT_NAME}
   PLUGIN romea::ros2::TwoAxleSteeringTeleop
   EXECUTABLE two_axle_steering_teleop_node
-)
-
-rclcpp_components_register_node(${PROJECT_NAME}
-  PLUGIN romea::ros2::ImplementTeleop
-  EXECUTABLE implement_teleop_node
 )
 
 ament_export_dependencies(rclcpp)
@@ -131,11 +125,13 @@ if(BUILD_TESTING)
 
     find_package(ament_lint_auto REQUIRED)
     set(ament_cmake_flake8_CONFIG_FILE "${CMAKE_SOURCE_DIR}/../.flake8")
-    list(APPEND AMENT_LINT_AUTO_EXCLUDE ament_cmake_copyright)
+    set(AMENT_LINT_AUTO_EXCLUDE
+      ament_cmake_copyright
+      ament_cmake_uncrustify
+    )
     ament_lint_auto_find_test_dependencies()
     add_subdirectory(test/drivers)
     add_subdirectory(test/python)
-
 endif()
 
 ament_package()

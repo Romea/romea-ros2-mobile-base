@@ -13,16 +13,16 @@
 // limitations under the License.
 
 // std
-#include <string>
 #include <memory>
+#include <string>
 
 // gtest
 #include "gtest/gtest.h"
 
 // romea
+#include "romea_common_utils/listeners/data_listener.hpp"
 #include "romea_mobile_base_msgs/msg/skid_steering_command.hpp"
 #include "romea_mobile_base_utils/control/command_publisher.hpp"
-#include "romea_common_utils/listeners/data_listener.hpp"
 
 // ros
 #include "rclcpp/node.hpp"
@@ -33,15 +33,9 @@
 class TestOmniSteeringCommandPublisher : public ::testing::Test
 {
 protected:
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  static void SetUpTestCase() { rclcpp::init(0, nullptr); }
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
+  static void TearDownTestCase() { rclcpp::shutdown(); }
 
   void SetUp() override
   {
@@ -53,8 +47,8 @@ protected:
 
   void make_publisher(const std::string & message_type)
   {
-    publisher = romea::ros2::make_command_publisher<romea::core::OmniSteeringCommand>(
-      node, message_type);
+    publisher =
+      romea::ros2::make_command_publisher<romea::core::OmniSteeringCommand>(node, message_type);
     publisher->activate();
   }
 
@@ -82,7 +76,6 @@ protected:
   std::shared_ptr<romea::ros2::PublisherBase<romea::core::OmniSteeringCommand>> publisher;
   std::shared_ptr<romea::ros2::DataListenerBase<romea::core::OmniSteeringCommand>> listener;
 };
-
 
 TEST_F(TestOmniSteeringCommandPublisher, checkPublishTwistMessage)
 {

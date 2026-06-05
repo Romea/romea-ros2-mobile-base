@@ -22,9 +22,8 @@
 #include "gtest/gtest.h"
 
 // ros
-#include "rclcpp/node.hpp"
 #include "hardware_interface/component_parser.hpp"
-
+#include "rclcpp/node.hpp"
 
 // romea
 #include "../test/test_helper.h"
@@ -33,15 +32,9 @@
 class TestSimulationInterface2AS4WD : public ::testing::Test
 {
 protected:
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  static void SetUpTestCase() { rclcpp::init(0, nullptr); }
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
+  static void TearDownTestCase() { rclcpp::shutdown(); }
 
   void SetUp() override
   {
@@ -62,7 +55,6 @@ protected:
   std::unique_ptr<romea::ros2::SimulationInterface2AS4WD> interface;
   std::vector<hardware_interface::HardwareInfo> info;
 };
-
 
 TEST_F(TestSimulationInterface2AS4WD, checkGetCommand)
 {
@@ -125,7 +117,6 @@ TEST_F(TestSimulationInterface2AS4WD, checkGetCommandUsingJointState)
   EXPECT_NEAR(simulation_command.velocity[9], 2.99038, 0.001);
 }
 
-
 TEST_F(TestSimulationInterface2AS4WD, checkGetState)
 {
   romea::core::HardwareCommand2AS4WD command = {0.3, -0.3, 2.2471, 2.99038, 2.2471, 2.99038};
@@ -140,18 +131,12 @@ TEST_F(TestSimulationInterface2AS4WD, checkGetState)
   romea::core::SimulationCommand2AS4WD simulation_command = interface->get_hardware_command();
 
   romea::core::SimulationState2AS4WD simulation_state;
-  simulation_state.frontAxleSteeringAngle =
-    simulation_command.frontAxleSteeringAngle;
-  simulation_state.rearAxleSteeringAngle =
-    simulation_command.rearAxleSteeringAngle;
-  simulation_state.frontLeftWheelSteeringAngle =
-    simulation_command.frontLeftWheelSteeringAngle;
-  simulation_state.frontRightWheelSteeringAngle =
-    simulation_command.frontRightWheelSteeringAngle;
-  simulation_state.rearLeftWheelSteeringAngle =
-    simulation_command.rearLeftWheelSteeringAngle;
-  simulation_state.rearRightWheelSteeringAngle =
-    simulation_command.rearRightWheelSteeringAngle;
+  simulation_state.frontAxleSteeringAngle = simulation_command.frontAxleSteeringAngle;
+  simulation_state.rearAxleSteeringAngle = simulation_command.rearAxleSteeringAngle;
+  simulation_state.frontLeftWheelSteeringAngle = simulation_command.frontLeftWheelSteeringAngle;
+  simulation_state.frontRightWheelSteeringAngle = simulation_command.frontRightWheelSteeringAngle;
+  simulation_state.rearLeftWheelSteeringAngle = simulation_command.rearLeftWheelSteeringAngle;
+  simulation_state.rearRightWheelSteeringAngle = simulation_command.rearRightWheelSteeringAngle;
   simulation_state.frontLeftWheelSpinningMotion.velocity =
     simulation_command.frontLeftWheelSpinningSetPoint;
   simulation_state.frontRightWheelSpinningMotion.velocity =
@@ -163,46 +148,20 @@ TEST_F(TestSimulationInterface2AS4WD, checkGetState)
   interface->set_feedback(simulation_state);
 
   auto state_interfaces = interface->export_state_interfaces();
+  EXPECT_NEAR(state_interfaces[0].get_value(), command.frontAxleSteeringAngle, 0.001);
+  EXPECT_NEAR(state_interfaces[1].get_value(), command.rearAxleSteeringAngle, 0.001);
+  EXPECT_NEAR(state_interfaces[3].get_value(), command.frontLeftWheelSpinningSetPoint, 0.001);
+  EXPECT_NEAR(state_interfaces[6].get_value(), command.frontRightWheelSpinningSetPoint, 0.001);
+  EXPECT_NEAR(state_interfaces[9].get_value(), command.rearLeftWheelSpinningSetPoint, 0.001);
+  EXPECT_NEAR(state_interfaces[12].get_value(), command.rearRightWheelSpinningSetPoint, 0.001);
   EXPECT_NEAR(
-    state_interfaces[0].get_value(),
-    command.frontAxleSteeringAngle,
-    0.001);
+    state_interfaces[14].get_value(), simulation_command.frontLeftWheelSteeringAngle, 0.001);
   EXPECT_NEAR(
-    state_interfaces[1].get_value(),
-    command.rearAxleSteeringAngle,
-    0.001);
+    state_interfaces[15].get_value(), simulation_command.frontRightWheelSteeringAngle, 0.001);
   EXPECT_NEAR(
-    state_interfaces[3].get_value(),
-    command.frontLeftWheelSpinningSetPoint,
-    0.001);
+    state_interfaces[16].get_value(), simulation_command.rearLeftWheelSteeringAngle, 0.001);
   EXPECT_NEAR(
-    state_interfaces[6].get_value(),
-    command.frontRightWheelSpinningSetPoint,
-    0.001);
-  EXPECT_NEAR(
-    state_interfaces[9].get_value(),
-    command.rearLeftWheelSpinningSetPoint,
-    0.001);
-  EXPECT_NEAR(
-    state_interfaces[12].get_value(),
-    command.rearRightWheelSpinningSetPoint,
-    0.001);
-  EXPECT_NEAR(
-    state_interfaces[14].get_value(),
-    simulation_command.frontLeftWheelSteeringAngle,
-    0.001);
-  EXPECT_NEAR(
-    state_interfaces[15].get_value(),
-    simulation_command.frontRightWheelSteeringAngle,
-    0.001);
-  EXPECT_NEAR(
-    state_interfaces[16].get_value(),
-    simulation_command.rearLeftWheelSteeringAngle,
-    0.001);
-  EXPECT_NEAR(
-    state_interfaces[17].get_value(),
-    simulation_command.rearRightWheelSteeringAngle,
-    0.001);
+    state_interfaces[17].get_value(), simulation_command.rearRightWheelSteeringAngle, 0.001);
 }
 
 TEST_F(TestSimulationInterface2AS4WD, checkGetStateUsingJointState)
@@ -231,7 +190,6 @@ TEST_F(TestSimulationInterface2AS4WD, checkGetStateUsingJointState)
   EXPECT_NEAR(state_interfaces[16].get_value(), simulation_command.position[4], 0.001);
   EXPECT_NEAR(state_interfaces[17].get_value(), simulation_command.position[5], 0.001);
 }
-
 
 //-----------------------------------------------------------------------------
 int main(int argc, char ** argv)

@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <string>
 #include <vector>
 
 // romea
 #include "romea_core_mobile_base/simulation/SimulationControl2TD.hpp"
-#include "romea_mobile_base_utils/ros2_control/info/hardware_info2TD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2TD.hpp"
+#include "romea_mobile_base_utils/ros2_control/info/hardware_info2TD.hpp"
 
 namespace romea
 {
@@ -49,10 +48,8 @@ HardwareInterface2TD::HardwareInterface2TD(
 {
 }
 
-
 //-----------------------------------------------------------------------------
-std::vector<hardware_interface::StateInterface>
-HardwareInterface2TD::export_state_interfaces()
+std::vector<hardware_interface::StateInterface> HardwareInterface2TD::export_state_interfaces()
 {
   std::vector<hardware_interface::StateInterface> state_interfaces;
   left_sprocket_wheel_spinning_joint_.export_state_interfaces(state_interfaces);
@@ -63,8 +60,7 @@ HardwareInterface2TD::export_state_interfaces()
 }
 
 //-----------------------------------------------------------------------------
-std::vector<hardware_interface::CommandInterface>
-HardwareInterface2TD::export_command_interfaces()
+std::vector<hardware_interface::CommandInterface> HardwareInterface2TD::export_command_interfaces()
 {
   std::vector<hardware_interface::CommandInterface> command_interfaces;
   left_sprocket_wheel_spinning_joint_.export_command_interface(command_interfaces);
@@ -76,8 +72,9 @@ HardwareInterface2TD::export_command_interfaces()
 core::HardwareCommand2TD HardwareInterface2TD::get_hardware_command() const
 {
   // *INDENT-OFF*
-  return {left_sprocket_wheel_spinning_joint_.get_command(),
-      right_sprocket_wheel_spinning_joint_.get_command()};
+  return {
+    left_sprocket_wheel_spinning_joint_.get_command(),
+    right_sprocket_wheel_spinning_joint_.get_command()};
   // *INDENT-ON*
   // return get_command();
 }
@@ -94,12 +91,9 @@ sensor_msgs::msg::JointState HardwareInterface2TD::get_joint_state_command() con
 //-----------------------------------------------------------------------------
 void HardwareInterface2TD::set_feedback(const core::HardwareState2TD & hardware_state)
 {
-  left_sprocket_wheel_spinning_joint_.set_feedback(
-    hardware_state.
-    leftSprocketWheelSpinningMotion);
+  left_sprocket_wheel_spinning_joint_.set_feedback(hardware_state.leftSprocketWheelSpinningMotion);
   right_sprocket_wheel_spinning_joint_.set_feedback(
-    hardware_state.
-    rightSprocketWheelSpinningMotion);
+    hardware_state.rightSprocketWheelSpinningMotion);
 
   // complete_feedback_(hardware_state);
 }
@@ -122,15 +116,11 @@ void HardwareInterface2TD::set_feedback(const sensor_msgs::msg::JointState & joi
 void HardwareInterface2TD::complete_feedback_(const core::HardwareState2TD & hardware_state)
 {
   core::SimulationState2TD simulation_state = toSimulationState2TD(
-    sprocket_wheel_radius_,
-    idler_wheel_radius_,
-    track_thickness_,
-    hardware_state);
+    sprocket_wheel_radius_, idler_wheel_radius_, track_thickness_, hardware_state);
 
   left_idler_wheel_spinning_joint_feedback_.set(simulation_state.leftIdlerWheelSpinningMotion);
   right_idler_wheel_spinning_joint_feedback_.set(simulation_state.rightIdlerWheelSpinningMotion);
 }
-
 
 }  // namespace ros2
 }  // namespace romea

@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <string>
 #include <vector>
 
 // romea
 #include "romea_core_mobile_base/simulation/SimulationControl2AS2FWD.hpp"
-#include "romea_mobile_base_utils/ros2_control/info/hardware_info2ASxxx.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2AS2FWD.hpp"
+#include "romea_mobile_base_utils/ros2_control/info/hardware_info2ASxxx.hpp"
 
 namespace romea
 {
@@ -72,8 +71,7 @@ HardwareInterface2AS2FWD::HardwareInterface2AS2FWD(
 }
 
 //-----------------------------------------------------------------------------
-std::vector<hardware_interface::StateInterface>
-HardwareInterface2AS2FWD::export_state_interfaces()
+std::vector<hardware_interface::StateInterface> HardwareInterface2AS2FWD::export_state_interfaces()
 {
   std::vector<hardware_interface::StateInterface> state_interfaces;
   front_axle_steering_joint_.export_state_interface(state_interfaces);
@@ -105,10 +103,11 @@ HardwareInterface2AS2FWD::export_command_interfaces()
 core::HardwareCommand2AS2FWD HardwareInterface2AS2FWD::get_hardware_command() const
 {
   // *INDENT-OFF*
-  return {front_axle_steering_joint_.get_command(),
-      rear_axle_steering_joint_.get_command(),
-      front_left_wheel_spinning_joint_.get_command(),
-      front_right_wheel_spinning_joint_.get_command()};
+  return {
+    front_axle_steering_joint_.get_command(),
+    rear_axle_steering_joint_.get_command(),
+    front_left_wheel_spinning_joint_.get_command(),
+    front_right_wheel_spinning_joint_.get_command()};
   // *INDENT-ON*
 }
 
@@ -153,9 +152,7 @@ void HardwareInterface2AS2FWD::set_feedback(const sensor_msgs::msg::JointState &
 }
 
 //-----------------------------------------------------------------------------
-void HardwareInterface2AS2FWD::complete_feedback_(
-  const core::HardwareState2AS2FWD &
-  hardware_state)
+void HardwareInterface2AS2FWD::complete_feedback_(const core::HardwareState2AS2FWD & hardware_state)
 {
   core::SimulationState2AS2FWD simulation_state = toSimulationState2AS2FWD(
     wheelbase_,
@@ -174,7 +171,6 @@ void HardwareInterface2AS2FWD::complete_feedback_(
   rear_left_wheel_spinning_joint_feedback_.set(simulation_state.rearLeftWheelSpinningMotion);
   rear_right_wheel_spinning_joint_feedback_.set(simulation_state.rearRightWheelSpinningMotion);
 }
-
 
 }  // namespace ros2
 }  // namespace romea

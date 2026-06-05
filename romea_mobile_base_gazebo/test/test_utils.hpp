@@ -12,22 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef TEST_UTILS_HPP_
 #define TEST_UTILS_HPP_
 
 // std
-#include <string>
+#include <fstream>
 #include <iostream>
 #include <sstream>
-#include <fstream>
+#include <string>
 
 // local
 #include "../test/test_helper.h"
 
 // tinyxml2
 #include "tinyxml2.h"  // NOLINT
-
 
 std::string interface_name(const std::string & vehicle_type)
 {
@@ -46,7 +44,7 @@ std::string empty_world_filename()
 
 std::string complete_world_filename(const std::string & vehicle_type)
 {
-  return "/tmp/"+ interface_name(vehicle_type) +"_world.sdf";
+  return "/tmp/" + interface_name(vehicle_type) + "_world.sdf";
 }
 
 std::string urdf_filename(const std::string & vehicle_type)
@@ -61,8 +59,8 @@ std::string sdf_filename(const std::string & vehicle_type)
 
 void create_urdf_file(const std::string & gazebo_interface_type, const std::string & vehicle_type)
 {
-  std::string create_urdf = "xacro " + xacro_filename(gazebo_interface_type) + " type:=" +
-    vehicle_type + " > " + urdf_filename(vehicle_type);
+  std::string create_urdf = "xacro " + xacro_filename(gazebo_interface_type) +
+                            " type:=" + vehicle_type + " > " + urdf_filename(vehicle_type);
   std::system(create_urdf.c_str());
 }
 
@@ -73,14 +71,13 @@ void create_urdf_file(const std::string & vehicle_type)
 
 void create_sdf_file(const std::string & vehicle_type)
 {
-  std::string create_sdf = "gz sdf -p " + urdf_filename(vehicle_type) + " > " + sdf_filename(
-    vehicle_type);
+  std::string create_sdf =
+    "gz sdf -p " + urdf_filename(vehicle_type) + " > " + sdf_filename(vehicle_type);
   std::system(create_sdf.c_str());
 }
 
 std::string make_urdf_description(
-  const std::string & gazebo_interface_type,
-  const std::string & vehicle_type)
+  const std::string & gazebo_interface_type, const std::string & vehicle_type)
 {
   create_urdf_file(gazebo_interface_type, vehicle_type);
   std::ifstream urdf_file(urdf_filename(vehicle_type));
@@ -109,21 +106,19 @@ std::string create_sdf_world_file(const std::string & vehicle_type)
 
   tinyxml2::XMLDocument world;
   world.LoadFile(empty_world_filename().c_str());
-  tinyxml2::XMLElement* worldElement = world.FirstChildElement("sdf")->FirstChildElement("world");
+  tinyxml2::XMLElement * worldElement = world.FirstChildElement("sdf")->FirstChildElement("world");
   assert(worldElement != nullptr);
 
   tinyxml2::XMLDocument robot;
   robot.LoadFile(sdf_filename(vehicle_type).c_str());
-  tinyxml2::XMLElement* robotElement = robot.FirstChildElement("sdf")->FirstChildElement("model");
+  tinyxml2::XMLElement * robotElement = robot.FirstChildElement("sdf")->FirstChildElement("model");
   assert(robotElement != nullptr);
 
-  tinyxml2::XMLNode* clonedModelNode = robotElement->DeepClone(&world);
+  tinyxml2::XMLNode * clonedModelNode = robotElement->DeepClone(&world);
   worldElement->InsertEndChild(clonedModelNode->ToElement());
 
   world.SaveFile(complete_world_filename(vehicle_type).c_str());
   return complete_world_filename(vehicle_type);
 }
 
-
-
-#endif    // TEST_UTILS_HPP_
+#endif  // TEST_UTILS_HPP_

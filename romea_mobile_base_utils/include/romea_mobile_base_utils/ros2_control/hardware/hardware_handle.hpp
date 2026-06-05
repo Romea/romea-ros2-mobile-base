@@ -12,14 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_UTILS__ROS2_CONTROL__HARDWARE__HARDWARE_HANDLE_HPP_
 #define ROMEA_MOBILE_BASE_UTILS__ROS2_CONTROL__HARDWARE__HARDWARE_HANDLE_HPP_
 
-
 // std
-#include <vector>
 #include <string>
+#include <vector>
 
 // ros
 #include "hardware_interface/handle.hpp"
@@ -36,17 +34,14 @@ namespace romea
 namespace ros2
 {
 
-
 class HardwareCommandInterface
 {
 public:
   HardwareCommandInterface(
-    const hardware_interface::ComponentInfo & joint_info,
-    const std::string & interface_type);
+    const hardware_interface::ComponentInfo & joint_info, const std::string & interface_type);
 
   HardwareCommandInterface(
-    const hardware_interface::InterfaceInfo & joint_info,
-    const std::string & joint_name);
+    const hardware_interface::InterfaceInfo & joint_info, const std::string & joint_name);
 
   void export_interface(std::vector<hardware_interface::CommandInterface> & hardware_interfaces);
 
@@ -70,12 +65,10 @@ class HardwareStateInterface
 {
 public:
   HardwareStateInterface(
-    const hardware_interface::ComponentInfo & joint_info,
-    const std::string & interface_type);
+    const hardware_interface::ComponentInfo & joint_info, const std::string & interface_type);
 
   HardwareStateInterface(
-    const hardware_interface::InterfaceInfo & interface_info,
-    const std::string & joint_name);
+    const hardware_interface::InterfaceInfo & interface_info, const std::string & joint_name);
 
   void export_interface(std::vector<hardware_interface::StateInterface> & state_interfaces);
 

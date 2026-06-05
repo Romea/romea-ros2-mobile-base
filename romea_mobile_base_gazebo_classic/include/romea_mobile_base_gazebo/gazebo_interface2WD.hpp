@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_GAZEBO__GAZEBO_INTERFACE2WD_HPP_
 #define ROMEA_MOBILE_BASE_GAZEBO__GAZEBO_INTERFACE2WD_HPP_
 
@@ -38,7 +37,6 @@ public:
     const hardware_interface::HardwareInfo & hardware_info,
     const std::string & command_interface_type);
 
-
   core::SimulationState2WD get_state() const;
   void set_command(const core::SimulationCommand2WD & command);
 
@@ -49,6 +47,5 @@ private:
 
 }  // namespace ros2
 }  // namespace romea
-
 
 #endif  // ROMEA_MOBILE_BASE_GAZEBO__GAZEBO_INTERFACE2WD_HPP_

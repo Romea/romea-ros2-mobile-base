@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <memory>
 #include <string>
@@ -29,10 +28,7 @@ namespace ros2
 //-----------------------------------------------------------------------------
 template<typename GazeboInterface, typename SimulationInterface>
 GazeboSystemInterface<GazeboInterface, SimulationInterface>::GazeboSystemInterface()
-: nh_(),
-  parent_model_(),
-  gazebo_interface_(nullptr),
-  simulation_interface_(nullptr)
+: nh_(), parent_model_(), gazebo_interface_(nullptr), simulation_interface_(nullptr)
 {
 }
 
@@ -49,15 +45,14 @@ bool GazeboSystemInterface<GazeboInterface, SimulationInterface>::initSim(
 
   // RCLCPP_ERROR(this->nh_->get_logger(), "initSim");
 
-  return check_physics_engine_configuration_() &&
-         init_gazebo_interfaces_(hardware_info) &&
+  return check_physics_engine_configuration_() && init_gazebo_interfaces_(hardware_info) &&
          init_hardware_interfaces_(hardware_info);
 }
 
 //-----------------------------------------------------------------------------
 template<typename GazeboInterface, typename SimulationInterface>
-bool GazeboSystemInterface<GazeboInterface,
-  SimulationInterface>::check_physics_engine_configuration_()
+bool GazeboSystemInterface<GazeboInterface, SimulationInterface>::
+  check_physics_engine_configuration_()
 {
   gazebo::physics::PhysicsEnginePtr physics = gazebo::physics::get_world()->Physics();
 
@@ -154,8 +149,7 @@ bool GazeboSystemInterface<GazeboInterface, SimulationInterface>::init_hardware_
 //-----------------------------------------------------------------------------
 template<typename GazeboInterface, typename SimulationInterface>
 hardware_interface::return_type GazeboSystemInterface<GazeboInterface, SimulationInterface>::read(
-  const rclcpp::Time & time,
-  const rclcpp::Duration & period)
+  const rclcpp::Time & time, const rclcpp::Duration & period)
 {
   simulation_interface_->set_feedback(gazebo_interface_->get_state());
   return hardware_interface::return_type::OK;
@@ -167,8 +161,7 @@ template<typename GazeboInterface, typename SimulationInterface>
 hardware_interface::return_type GazeboSystemInterface<GazeboInterface, SimulationInterface>::write()
 #else
 hardware_interface::return_type GazeboSystemInterface<GazeboInterface, SimulationInterface>::write(
-  const rclcpp::Time & time,
-  const rclcpp::Duration & period)
+  const rclcpp::Time & time, const rclcpp::Duration & period)
 #endif
 {
   gazebo_interface_->set_command(simulation_interface_->get_hardware_command());
@@ -193,23 +186,16 @@ template class GazeboSystemInterface<GazeboInterface4WS4WD, SimulationInterface4
 
 #include "pluginlib/class_list_macros.hpp"  // NOLINT
 PLUGINLIB_EXPORT_CLASS(
-  romea::ros2::GazeboSystemInterface4WD,
-  gazebo_ros2_control::GazeboSystemInterface)
+  romea::ros2::GazeboSystemInterface4WD, gazebo_ros2_control::GazeboSystemInterface)
 PLUGINLIB_EXPORT_CLASS(
-  romea::ros2::GazeboSystemInterface4WS4WD,
-  gazebo_ros2_control::GazeboSystemInterface)
+  romea::ros2::GazeboSystemInterface4WS4WD, gazebo_ros2_control::GazeboSystemInterface)
 PLUGINLIB_EXPORT_CLASS(
-  romea::ros2::GazeboSystemInterface1FAS2RWD,
-  gazebo_ros2_control::GazeboSystemInterface)
+  romea::ros2::GazeboSystemInterface1FAS2RWD, gazebo_ros2_control::GazeboSystemInterface)
 PLUGINLIB_EXPORT_CLASS(
-  romea::ros2::GazeboSystemInterface2AS4WD,
-  gazebo_ros2_control::GazeboSystemInterface)
+  romea::ros2::GazeboSystemInterface2AS4WD, gazebo_ros2_control::GazeboSystemInterface)
 PLUGINLIB_EXPORT_CLASS(
-  romea::ros2::GazeboSystemInterface2FWS4WD,
-  gazebo_ros2_control::GazeboSystemInterface)
+  romea::ros2::GazeboSystemInterface2FWS4WD, gazebo_ros2_control::GazeboSystemInterface)
 PLUGINLIB_EXPORT_CLASS(
-  romea::ros2::GazeboSystemInterface2FWS2RWD,
-  gazebo_ros2_control::GazeboSystemInterface)
+  romea::ros2::GazeboSystemInterface2FWS2RWD, gazebo_ros2_control::GazeboSystemInterface)
 PLUGINLIB_EXPORT_CLASS(
-  romea::ros2::GazeboSystemInterface2THD,
-  gazebo_ros2_control::GazeboSystemInterface)
+  romea::ros2::GazeboSystemInterface2THD, gazebo_ros2_control::GazeboSystemInterface)

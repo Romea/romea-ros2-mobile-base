@@ -1,4 +1,5 @@
-// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Copyright 2022 INRAE, French National Research Institute for Agriculture,
+// Food and Environment
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,7 +19,6 @@
 
 // local
 #include "romea_mobile_base_teleop/one_axle_steering_teleop.hpp"
-
 
 namespace romea
 {
@@ -83,18 +83,17 @@ std::map<std::string, int> OneAxleSteeringTeleop::get_joystick_buttons_mapping_(
 {
   return {
     {"slow_mode", get_slow_mode_button_mapping(node_)},
-    {"turbo_mode", get_turbo_mode_button_mapping(node_)}
-  };
+    {"turbo_mode", get_turbo_mode_button_mapping(node_)}};
 }
 
 //-----------------------------------------------------------------------------
-double OneAxleSteeringTeleop::compute_linear_speed_(const double & maximal_linear_speed)const
+double OneAxleSteeringTeleop::compute_linear_speed_(const double & maximal_linear_speed) const
 {
   return joy_->getAxeValue("linear_speed") * maximal_linear_speed;
 }
 
 //-----------------------------------------------------------------------------
-double OneAxleSteeringTeleop::compute_steering_angle_()const
+double OneAxleSteeringTeleop::compute_steering_angle_() const
 {
   return joy_->getAxeValue("steering_angle") * maximal_steering_angle_;
 }

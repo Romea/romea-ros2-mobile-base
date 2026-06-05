@@ -44,7 +44,6 @@ hardware_interface::ComponentInfo HardwareInfo1FASxxx::get_front_left_wheel_stee
   return hardware_info.joints[FRONT_LEFT_WHEEL_STEERING_JOINT_ID];
 }
 
-
 //-----------------------------------------------------------------------------
 hardware_interface::ComponentInfo HardwareInfo1FASxxx::get_front_right_wheel_steering_joint_info(
   const hardware_interface::HardwareInfo & hardware_info)
@@ -79,7 +78,6 @@ hardware_interface::ComponentInfo HardwareInfo1FASxxx::get_rear_right_wheel_spin
 {
   return hardware_info.joints[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID];
 }
-
 
 }  // namespace ros2
 }  // namespace romea

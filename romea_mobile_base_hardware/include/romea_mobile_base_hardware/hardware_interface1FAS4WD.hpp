@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_INTERFACE1FAS4WD_HPP_
 #define ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_INTERFACE1FAS4WD_HPP_
 
@@ -45,7 +44,6 @@ public:
   HardwareInterface1FAS4WD(
     const hardware_interface::HardwareInfo & hardware_info,
     const std::string & spinning_joint_command_interface_type);
-
 
   // core::HardwareCommand1FAS4WD get_command()const;
   core::HardwareCommand1FAS4WD get_hardware_command() const;

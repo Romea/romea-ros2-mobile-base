@@ -16,11 +16,10 @@
 #include <string>
 #include <vector>
 
-
 // romea
 #include "romea_core_mobile_base/simulation/SimulationControl2FWS2FWD.hpp"
-#include "romea_mobile_base_utils/ros2_control/info/hardware_info2FWSxxx.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2FWS2FWD.hpp"
+#include "romea_mobile_base_utils/ros2_control/info/hardware_info2FWSxxx.hpp"
 
 namespace romea
 {
@@ -73,8 +72,8 @@ std::vector<hardware_interface::StateInterface> HardwareInterface2FWS2FWD::expor
 }
 
 //-----------------------------------------------------------------------------
-std::vector<hardware_interface::CommandInterface> HardwareInterface2FWS2FWD::
-export_command_interfaces()
+std::vector<hardware_interface::CommandInterface>
+HardwareInterface2FWS2FWD::export_command_interfaces()
 {
   std::vector<hardware_interface::CommandInterface> command_interfaces;
   front_left_wheel_steering_joint_.export_command_interface(command_interfaces);
@@ -88,10 +87,11 @@ export_command_interfaces()
 core::HardwareCommand2FWS2FWD HardwareInterface2FWS2FWD::get_hardware_command() const
 {
   // *INDENT-OFF*
-  return {front_left_wheel_steering_joint_.get_command(),
-      front_right_wheel_steering_joint_.get_command(),
-      front_left_wheel_spinning_joint_.get_command(),
-      front_right_wheel_spinning_joint_.get_command()};
+  return {
+    front_left_wheel_steering_joint_.get_command(),
+    front_right_wheel_steering_joint_.get_command(),
+    front_left_wheel_spinning_joint_.get_command(),
+    front_right_wheel_spinning_joint_.get_command()};
   // *INDENT-ON*
 }
 
@@ -152,7 +152,6 @@ void HardwareInterface2FWS2FWD::complete_feedback_(
   rear_left_wheel_spinning_joint_feedback_.set(simulation_state.rearLeftWheelSpinningMotion);
   rear_right_wheel_spinning_joint_feedback_.set(simulation_state.rearRightWheelSpinningMotion);
 }
-
 
 }  // namespace ros2
 }  // namespace romea

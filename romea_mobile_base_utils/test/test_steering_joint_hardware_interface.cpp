@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <memory>
 #include <string>
@@ -22,8 +21,8 @@
 #include "gtest/gtest.h"
 
 // ros
-#include "rclcpp/node.hpp"
 #include "hardware_interface/component_parser.hpp"
+#include "rclcpp/node.hpp"
 
 // romea
 #include "../test/test_helper.h"
@@ -33,31 +32,20 @@
 class TestSteeringJointHardwateInterface : public ::testing::Test
 {
 protected:
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  static void SetUpTestCase() { rclcpp::init(0, nullptr); }
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
+  static void TearDownTestCase() { rclcpp::shutdown(); }
 
   void SetUp() override
   {
     joint_info.name = "steering_wheel";
     joint_info.type = "joint";
     joint_info.command_interfaces.push_back(
-      make_interface_info(
-        hardware_interface::HW_IF_POSITION,
-        "-1", "1"));
+      make_interface_info(hardware_interface::HW_IF_POSITION, "-1", "1"));
     joint_info.state_interfaces.push_back(
-      make_interface_info(
-        hardware_interface::HW_IF_POSITION,
-        "", ""));
+      make_interface_info(hardware_interface::HW_IF_POSITION, "", ""));
     joint = std::make_unique<romea::ros2::SteeringJointHardwareInterface>(joint_info);
   }
-
 
   std::unique_ptr<romea::ros2::SteeringJointHardwareInterface> joint;
   hardware_interface::ComponentInfo joint_info;

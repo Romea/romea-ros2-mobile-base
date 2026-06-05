@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <memory>
 #include <string>
@@ -30,28 +29,22 @@
 class TestCommandLimits : public ::testing::Test
 {
 protected:
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  static void SetUpTestCase() { rclcpp::init(0, nullptr); }
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
+  static void TearDownTestCase() { rclcpp::shutdown(); }
 
   void SetUp() override
   {
     rclcpp::NodeOptions no;
     no.arguments(
-      {"--ros-args", "--params-file",
-        std::string(TEST_DIR) + std::string("/test_command_limits_parameters.yaml")});
+      {"--ros-args",
+       "--params-file",
+       std::string(TEST_DIR) + std::string("/test_command_limits_parameters.yaml")});
     node = std::make_shared<rclcpp::Node>("test_command_limits_paramerters", no);
   }
 
   std::shared_ptr<rclcpp::Node> node;
 };
-
 
 TEST_F(TestCommandLimits, getSkidSteeringCommandLimits)
 {

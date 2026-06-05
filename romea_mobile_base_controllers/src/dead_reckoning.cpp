@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <cmath>
 
@@ -51,8 +50,7 @@ void DeadReckoning::reset()
 
 //-----------------------------------------------------------------------------
 void DeadReckoning::update(
-  const rclcpp::Time & time,
-  const core::KinematicMeasure & kinematic_measure)
+  const rclcpp::Time & time, const core::KinematicMeasure & kinematic_measure)
 {
   if (previous_update_time_.has_value()) {
     double dt = (time - *previous_update_time_).seconds();
@@ -74,19 +72,19 @@ void DeadReckoning::update(
 }
 
 //-----------------------------------------------------------------------------
-const double & DeadReckoning::getX()const
+const double & DeadReckoning::getX() const
 {
   return x_;
 }
 
 //-----------------------------------------------------------------------------
-const double & DeadReckoning::getY()const
+const double & DeadReckoning::getY() const
 {
   return y_;
 }
 
 //-----------------------------------------------------------------------------
-const double & DeadReckoning::getHeading()const
+const double & DeadReckoning::getHeading() const
 {
   return heading_;
 }

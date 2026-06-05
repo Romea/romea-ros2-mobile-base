@@ -1,4 +1,5 @@
-// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Copyright 2022 INRAE, French National Research Institute for Agriculture,
+// Food and Environment
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,8 +17,8 @@
 #define ROMEA_MOBILE_BASE_TELEOP__JOYSTICK_PARAMETERS_HPP_
 
 // std
-#include <string>
 #include <memory>
+#include <string>
 
 // ros
 #include "rclcpp/rclcpp.hpp"
@@ -47,12 +48,6 @@ void declare_slow_mode_button_mapping(std::shared_ptr<rclcpp::Node> node);
 
 void declare_turbo_mode_button_mapping(std::shared_ptr<rclcpp::Node> node);
 
-void declare_up_down_implement_axe_mapping(std::shared_ptr<rclcpp::Node> node);
-
-void declare_down_implement_button_mapping(std::shared_ptr<rclcpp::Node> node);
-
-void declare_up_implement_button_mapping(std::shared_ptr<rclcpp::Node> node);
-
 int get_backward_speed_axe_mapping(std::shared_ptr<rclcpp::Node> node);
 
 int get_forward_speed_axe_mapping(std::shared_ptr<rclcpp::Node> node);
@@ -72,12 +67,6 @@ int get_rear_steering_angle_axe_mapping(std::shared_ptr<rclcpp::Node> node);
 int get_slow_mode_button_mapping(std::shared_ptr<rclcpp::Node> node);
 
 int get_turbo_mode_button_mapping(std::shared_ptr<rclcpp::Node> node);
-
-int get_up_down_implement_axe_mapping(std::shared_ptr<rclcpp::Node> node);
-
-int get_down_implement_button_mapping(std::shared_ptr<rclcpp::Node> node);
-
-int get_up_implement_button_mapping(std::shared_ptr<rclcpp::Node> node);
 
 }  // namespace ros2
 }  // namespace romea

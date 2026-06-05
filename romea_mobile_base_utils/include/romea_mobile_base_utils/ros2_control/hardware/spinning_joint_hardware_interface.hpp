@@ -12,19 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_UTILS__ROS2_CONTROL__HARDWARE__SPINNING_JOINT_HARDWARE_INTERFACE_HPP_
 #define ROMEA_MOBILE_BASE_UTILS__ROS2_CONTROL__HARDWARE__SPINNING_JOINT_HARDWARE_INTERFACE_HPP_
-
 
 // std
 #include <string>
 #include <vector>
 
-
 // romea
-#include "romea_mobile_base_utils/ros2_control/hardware/hardware_handle.hpp"
 #include "romea_common_utils/joint_states.hpp"
+#include "romea_mobile_base_utils/ros2_control/hardware/hardware_handle.hpp"
 
 namespace romea
 {
@@ -32,7 +29,6 @@ namespace ros2
 {
 
 core::RotationalMotionControlType toRotationalMotionCommandType(const std::string & interface_type);
-
 
 class SpinningJointHardwareInterface
 {
@@ -49,7 +45,7 @@ public:
 
     void set(const core::RotationalMotionState & state);
 
-    core::RotationalMotionState get()const;
+    core::RotationalMotionState get() const;
 
     void export_state_interfaces(
       std::vector<hardware_interface::StateInterface> & state_interfaces);
@@ -69,7 +65,7 @@ public:
   void set_command(const double & command);
 
   void set_feedback(const core::RotationalMotionState & state);
-  core::RotationalMotionState get_feedback()const;
+  core::RotationalMotionState get_feedback() const;
 
   void write_command(sensor_msgs::msg::JointState & joint_state_command) const;
   void read_feedback(const sensor_msgs::msg::JointState & joint_state_feedback);
@@ -77,8 +73,7 @@ public:
 
   void export_command_interface(
     std::vector<hardware_interface::CommandInterface> & command_interfaces);
-  void export_state_interfaces(
-    std::vector<hardware_interface::StateInterface> & state_interfaces);
+  void export_state_interfaces(std::vector<hardware_interface::StateInterface> & state_interfaces);
 
   const std::string & get_command_type() const;
   const std::string & get_joint_name() const;

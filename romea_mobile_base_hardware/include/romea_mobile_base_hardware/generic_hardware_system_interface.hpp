@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_HARDWARE__GENERIC_HARDWARE_SYSTEM_INTERFACE_HPP_
 #define ROMEA_MOBILE_BASE_HARDWARE__GENERIC_HARDWARE_SYSTEM_INTERFACE_HPP_
 
 // std
-#include <vector>
 #include <memory>
 #include <string>
+#include <vector>
 
 // ros
 #include "hardware_interface/system_interface.hpp"
@@ -27,20 +26,20 @@
 // romea
 #include "romea_common_utils/ros_versions.hpp"
 // #include "romea_mobile_base_hardware/hardware_interface2WD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface4WD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface4WS4WD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface2FWS4WD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface2FWS2RWD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface2FWS2FWD.hpp"
+#include "romea_mobile_base_hardware/hardware_interface1FAS2FWD.hpp"
+#include "romea_mobile_base_hardware/hardware_interface1FAS2RWD.hpp"
+#include "romea_mobile_base_hardware/hardware_interface1FAS4WD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2AS2FWD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2AS2RWD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2AS4WD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface1FAS2RWD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface1FAS2FWD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface1FAS4WD.hpp"
+#include "romea_mobile_base_hardware/hardware_interface2FWS2FWD.hpp"
+#include "romea_mobile_base_hardware/hardware_interface2FWS2RWD.hpp"
+#include "romea_mobile_base_hardware/hardware_interface2FWS4WD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2TD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2THD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2TTD.hpp"
+#include "romea_mobile_base_hardware/hardware_interface4WD.hpp"
+#include "romea_mobile_base_hardware/hardware_interface4WS4WD.hpp"
 
 namespace romea
 {
@@ -55,7 +54,7 @@ public:
 
 public:
   explicit GenericHardwareSystemInterface(
-    const std::string & hardware_interface_name = "HardwareInterface");                                                                               // NOLINT
+    const std::string & hardware_interface_name = "HardwareInterface");  // NOLINT
 
   virtual ~GenericHardwareSystemInterface() = default;
 
@@ -85,12 +84,10 @@ protected:
     const hardware_interface::HardwareInfo & hardware_info);
 
   virtual hardware_interface::return_type read(
-    const rclcpp::Time & time,
-    const rclcpp::Duration & period);
+    const rclcpp::Time & time, const rclcpp::Duration & period);
 
   virtual hardware_interface::return_type write(
-    const rclcpp::Time & time,
-    const rclcpp::Duration & period);
+    const rclcpp::Time & time, const rclcpp::Duration & period);
 
   void feedback_callback_(sensor_msgs::msg::JointState::ConstSharedPtr msg);
 
@@ -134,8 +131,7 @@ using GenericHardwareSystemInterface4WS4WD =
   GenericHardwareSystemInterface<HardwareInterface4WS4WD>;
 // using GenericHardwareSystemInterface2TD =
 //   GenericHardwareSystemInterface<HardwareInterface2TD>;
-using GenericHardwareSystemInterface2THD =
-  GenericHardwareSystemInterface<HardwareInterface2THD>;
+using GenericHardwareSystemInterface2THD = GenericHardwareSystemInterface<HardwareInterface2THD>;
 // using GenericHardwareSystemInterface2TTD =
 //   GenericHardwareSystemInterface<HardwareInterface2TTD>;
 

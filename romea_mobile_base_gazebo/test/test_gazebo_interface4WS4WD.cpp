@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <string>
 
@@ -30,8 +29,6 @@
 #include "../test/test_helper.h"
 #include "../test/test_utils.hpp"
 
-
-
 TEST(TestGazeboInterface4WS4WD, testSetGet)
 {
   std::string urdf = make_urdf_description("4WS4WD");
@@ -41,20 +38,16 @@ TEST(TestGazeboInterface4WS4WD, testSetGet)
   fixture.Simulator();
 
   romea::core::SimulationCommand4WS4WD command = {1.0, -1.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};
-  for (size_t i=0; i < 1000; ++i) {
+  for (size_t i = 0; i < 1000; ++i) {
     fixture.interface->set_command(command);
     fixture.Step();
   }
   auto state = fixture.interface->get_state();
 
-  EXPECT_NEAR(
-    command.frontLeftWheelSteeringAngle, state.frontLeftWheelSteeringAngle, 0.1);
-  EXPECT_NEAR(
-    command.frontRightWheelSteeringAngle, state.frontRightWheelSteeringAngle, 0.1);
-  EXPECT_NEAR(
-    command.rearLeftWheelSteeringAngle, state.rearLeftWheelSteeringAngle, 0.1);
-  EXPECT_NEAR(
-    command.rearRightWheelSteeringAngle, state.rearRightWheelSteeringAngle, 0.1);
+  EXPECT_NEAR(command.frontLeftWheelSteeringAngle, state.frontLeftWheelSteeringAngle, 0.1);
+  EXPECT_NEAR(command.frontRightWheelSteeringAngle, state.frontRightWheelSteeringAngle, 0.1);
+  EXPECT_NEAR(command.rearLeftWheelSteeringAngle, state.rearLeftWheelSteeringAngle, 0.1);
+  EXPECT_NEAR(command.rearRightWheelSteeringAngle, state.rearRightWheelSteeringAngle, 0.1);
   EXPECT_NEAR(
     command.frontLeftWheelSpinningSetPoint, state.frontLeftWheelSpinningMotion.velocity, 0.1);
   EXPECT_NEAR(

@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <memory>
 #include <string>
@@ -31,13 +30,12 @@ namespace
 {
 const char DEFAULT_BASE_FRAME_ID[] = "base_link";
 const char DEFAULT_ODOM_FRAME_ID[] = "odom";
-}
+}  // namespace
 
 namespace romea
 {
 namespace ros2
 {
-
 
 //-----------------------------------------------------------------------------
 DeadReckoningPublisher::DeadReckoningPublisher(
@@ -45,9 +43,7 @@ DeadReckoningPublisher::DeadReckoningPublisher(
   const std::string & odom_frame_id,
   const std::string & base_frame_id,
   const bool & enable_odom_tf)
-: odom_pub_(nullptr),
-  tf_odom_pub_(nullptr),
-  dead_reckoning_()
+: odom_pub_(nullptr), tf_odom_pub_(nullptr), dead_reckoning_()
 {
   initOdomPublisher_(node, odom_frame_id, base_frame_id);
 
@@ -81,11 +77,9 @@ void DeadReckoningPublisher::initOdomTFPublisher_(
   tf_odom_pub_->msg_.transforms[0].header.frame_id = odom_frame_id;
 }
 
-
 //-----------------------------------------------------------------------------
 void DeadReckoningPublisher::update(
-  const rclcpp::Time & time,
-  const core::KinematicMeasure & kinematic_measure)
+  const rclcpp::Time & time, const core::KinematicMeasure & kinematic_measure)
 {
   dead_reckoning_.update(time, kinematic_measure);
 

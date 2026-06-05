@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <memory>
 #include <string>
@@ -53,9 +52,9 @@ GenericHardwareSystemInterface<HardwareInterface>::on_init(
     return CallbackReturn::ERROR;
   }
 
-  if (load_info_(hardware_info) == hardware_interface::return_type::OK &&
-    load_interface_(hardware_info) == hardware_interface::return_type::OK)
-  {
+  if (
+    load_info_(hardware_info) == hardware_interface::return_type::OK &&
+    load_interface_(hardware_info) == hardware_interface::return_type::OK) {
     node_ = std::make_shared<rclcpp::Node>("joint_state_bridge");
 
     joint_state_pub_ = node_->create_publisher<sensor_msgs::msg::JointState>(
@@ -63,7 +62,8 @@ GenericHardwareSystemInterface<HardwareInterface>::on_init(
 
     auto callback = std::bind(
       &GenericHardwareSystemInterface<HardwareInterface>::feedback_callback_,
-      this, std::placeholders::_1);
+      this,
+      std::placeholders::_1);
 
     joint_state_sub_ = node_->create_subscription<sensor_msgs::msg::JointState>(
       "bridge/joint_state_feedback", best_effort(1), callback);
@@ -88,9 +88,8 @@ hardware_interface::return_type GenericHardwareSystemInterface<HardwareInterface
   const hardware_interface::HardwareInfo & hardware_info)
 {
   try {
-    hardware_interface_ = std::make_unique<HardwareInterface>(
-      hardware_info,
-      hardware_interface::HW_IF_VELOCITY);
+    hardware_interface_ =
+      std::make_unique<HardwareInterface>(hardware_info, hardware_interface::HW_IF_VELOCITY);
     return hardware_interface::return_type::OK;
   } catch (std::runtime_error & e) {
     RCLCPP_FATAL_STREAM(rclcpp::get_logger("GenericHardwareSystemInterface"), e.what());
@@ -124,7 +123,6 @@ GenericHardwareSystemInterface<HardwareInterface>::on_cleanup(
   return CallbackReturn::SUCCESS;
 }
 
-
 //-----------------------------------------------------------------------------
 template<typename HardwareInterface>
 rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
@@ -150,7 +148,6 @@ GenericHardwareSystemInterface<HardwareInterface>::on_deactivate(
 
   return CallbackReturn::SUCCESS;
 }
-
 
 //-----------------------------------------------------------------------------
 template<typename HardwareInterface>
@@ -180,8 +177,7 @@ GenericHardwareSystemInterface<HardwareInterface>::on_error(
 //-----------------------------------------------------------------------------
 template<typename HardwareInterface>
 hardware_interface::return_type GenericHardwareSystemInterface<HardwareInterface>::read(
-  const rclcpp::Time & time,
-  const rclcpp::Duration & period)
+  const rclcpp::Time & time, const rclcpp::Duration & period)
 {
   rclcpp::spin_some(node_);
   std::lock_guard<std::mutex> guard(mutex_);
@@ -194,14 +190,12 @@ hardware_interface::return_type GenericHardwareSystemInterface<HardwareInterface
 //-----------------------------------------------------------------------------
 template<typename HardwareInterface>
 hardware_interface::return_type GenericHardwareSystemInterface<HardwareInterface>::write(
-  const rclcpp::Time & time,
-  const rclcpp::Duration & period)
+  const rclcpp::Time & time, const rclcpp::Duration & period)
 {
   command_ = hardware_interface_->get_joint_state_command();
   joint_state_pub_->publish(command_);
   return hardware_interface::return_type::OK;
 }
-
 
 //-----------------------------------------------------------------------------
 template<typename HardwareInterface>
@@ -250,11 +244,8 @@ template class GenericHardwareSystemInterface<HardwareInterface2TTD>;
 
 #include "pluginlib/class_list_macros.hpp"
 PLUGINLIB_EXPORT_CLASS(
-  romea::ros2::GenericHardwareSystemInterface4WS4WD,
-  hardware_interface::SystemInterface)
+  romea::ros2::GenericHardwareSystemInterface4WS4WD, hardware_interface::SystemInterface)
 PLUGINLIB_EXPORT_CLASS(
-  romea::ros2::GenericHardwareSystemInterface2FWS4WD,
-  hardware_interface::SystemInterface)
+  romea::ros2::GenericHardwareSystemInterface2FWS4WD, hardware_interface::SystemInterface)
 PLUGINLIB_EXPORT_CLASS(
-  romea::ros2::GenericHardwareSystemInterface2THD,
-  hardware_interface::SystemInterface)
+  romea::ros2::GenericHardwareSystemInterface2THD, hardware_interface::SystemInterface)

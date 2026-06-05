@@ -12,15 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <string>
 #include <vector>
 
-
 // romea
-#include "romea_mobile_base_utils/ros2_control/info/hardware_info4WS4WD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface4WS4WD.hpp"
+#include "romea_mobile_base_utils/ros2_control/info/hardware_info4WS4WD.hpp"
 
 namespace romea
 {
@@ -62,10 +60,8 @@ HardwareInterface4WS4WD::HardwareInterface4WS4WD(
 {
 }
 
-
 //-----------------------------------------------------------------------------
-std::vector<hardware_interface::StateInterface>
-HardwareInterface4WS4WD::export_state_interfaces()
+std::vector<hardware_interface::StateInterface> HardwareInterface4WS4WD::export_state_interfaces()
 {
   std::vector<hardware_interface::StateInterface> state_interfaces;
   front_left_wheel_steering_joint_.export_state_interface(state_interfaces);
@@ -99,14 +95,15 @@ HardwareInterface4WS4WD::export_command_interfaces()
 core::HardwareCommand4WS4WD HardwareInterface4WS4WD::get_hardware_command() const
 {
   // *INDENT-OFF*
-  return {front_left_wheel_steering_joint_.get_command(),
-      front_right_wheel_steering_joint_.get_command(),
-      rear_left_wheel_steering_joint_.get_command(),
-      rear_right_wheel_steering_joint_.get_command(),
-      front_left_wheel_spinning_joint_.get_command(),
-      front_right_wheel_spinning_joint_.get_command(),
-      rear_left_wheel_spinning_joint_.get_command(),
-      rear_right_wheel_spinning_joint_.get_command()};
+  return {
+    front_left_wheel_steering_joint_.get_command(),
+    front_right_wheel_steering_joint_.get_command(),
+    rear_left_wheel_steering_joint_.get_command(),
+    rear_right_wheel_steering_joint_.get_command(),
+    front_left_wheel_spinning_joint_.get_command(),
+    front_right_wheel_spinning_joint_.get_command(),
+    rear_left_wheel_spinning_joint_.get_command(),
+    rear_right_wheel_spinning_joint_.get_command()};
   // *INDENT-ON*
 }
 
@@ -151,7 +148,6 @@ void HardwareInterface4WS4WD::set_feedback(const sensor_msgs::msg::JointState & 
   rear_left_wheel_spinning_joint_.read_feedback(joint_states);
   rear_right_wheel_spinning_joint_.read_feedback(joint_states);
 }
-
 
 }  // namespace ros2
 }  // namespace romea

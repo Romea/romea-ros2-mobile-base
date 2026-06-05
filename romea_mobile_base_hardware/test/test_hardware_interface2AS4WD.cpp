@@ -1,4 +1,5 @@
-// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Copyright 2022 INRAE, French National Research Institute for Agriculture,
+// Food and Environment
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,16 +16,16 @@
 // std
 #include <fstream>
 #include <memory>
-#include <string>
 #include <sstream>
+#include <string>
 #include <vector>
 
 // gtest
 #include "gtest/gtest.h"
 
 // ros
-#include "rclcpp/node.hpp"
 #include "hardware_interface/component_parser.hpp"
+#include "rclcpp/node.hpp"
 
 // romea
 #include "../test/test_helper.h"
@@ -34,15 +35,9 @@
 class TestHarwareInterface2AS4WD : public ::testing::Test
 {
 protected:
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  static void SetUpTestCase() { rclcpp::init(0, nullptr); }
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
+  static void TearDownTestCase() { rclcpp::shutdown(); }
 
   void SetUp() override
   {
@@ -61,15 +56,13 @@ protected:
 
   void MakeInterface(const std::string & command_interface_type)
   {
-    interface = std::make_unique<romea::ros2::HardwareInterface2AS4WD>(
-      info[0],
-      command_interface_type);
+    interface =
+      std::make_unique<romea::ros2::HardwareInterface2AS4WD>(info[0], command_interface_type);
   }
 
   std::unique_ptr<romea::ros2::HardwareInterface2AS4WD> interface;
   std::vector<hardware_interface::HardwareInfo> info;
 };
-
 
 TEST_F(TestHarwareInterface2AS4WD, checkStateInterfaceNames)
 {
@@ -111,8 +104,7 @@ TEST_F(TestHarwareInterface2AS4WD, DISABLED_checkCommandInterfaceTypeWhenEffortC
   check_interface_name(command_interfaces[5], "robot_joint6/effort");
 }
 
-
-// TEST_F(TestHarwareInterface2AS4WD, checkSetCurrentState)
+// TEST_F(TestHarwareInterface2AS4WD, checkSetcurrent_state)
 // {
 //   MakeInterface(hardware_interface::HW_IF_VELOCITY);
 
@@ -135,7 +127,6 @@ TEST_F(TestHarwareInterface2AS4WD, DISABLED_checkCommandInterfaceTypeWhenEffortC
 //   romea::core::SteeringAngleState front_right_wheel_steering_angle = 16.;
 //   romea::core::SteeringAngleState rear_left_wheel_steering_angle = 17.;
 //   romea::core::SteeringAngleState rear_right_wheel_steering_angle = 18.;
-
 
 //   interface->set_state(
 //     current_state,
@@ -169,7 +160,6 @@ TEST_F(TestHarwareInterface2AS4WD, checkSetFeedback)
   current_state.rearRightWheelSpinningMotion.position = 12.0;
   current_state.rearRightWheelSpinningMotion.velocity = 13.0;
   current_state.rearRightWheelSpinningMotion.torque = 14.0;
-
 
   interface->set_feedback(current_state);
 
@@ -216,7 +206,6 @@ TEST_F(TestHarwareInterface2AS4WD, checkSetFeedbackUsingJointStates)
     EXPECT_DOUBLE_EQ(state_interfaces[i].get_value(), i + 1.0);
   }
 }
-
 
 TEST_F(TestHarwareInterface2AS4WD, checkGetCommand)
 {

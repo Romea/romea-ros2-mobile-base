@@ -14,16 +14,16 @@
 
 // std
 #include <fstream>
-#include <string>
 #include <memory>
+#include <string>
 #include <vector>
 
 // gtest
 #include "gtest/gtest.h"
 
 // ros
-#include "rclcpp/node.hpp"
 #include "hardware_interface/component_parser.hpp"
+#include "rclcpp/node.hpp"
 
 // romea
 #include "../test/test_helper.h"
@@ -32,15 +32,9 @@
 class TestHardwareInfo2TD : public ::testing::Test
 {
 protected:
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  static void SetUpTestCase() { rclcpp::init(0, nullptr); }
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
+  static void TearDownTestCase() { rclcpp::shutdown(); }
 
   void SetUp() override
   {
@@ -60,24 +54,24 @@ protected:
   std::vector<hardware_interface::HardwareInfo> info;
 };
 
-
 TEST_F(TestHardwareInfo2TD, checkJointsInfo)
 {
   EXPECT_STREQ(
-    romea::ros2::HardwareInfo2TD::get_left_sprocket_wheel_spinning_joint_info(
-      info[0]).name.c_str(), "robot_joint1");
+    romea::ros2::HardwareInfo2TD::get_left_sprocket_wheel_spinning_joint_info(info[0]).name.c_str(),
+    "robot_joint1");
 
   EXPECT_STREQ(
-    romea::ros2::HardwareInfo2TD::get_right_sprocket_wheel_spinning_joint_info(
-      info[0]).name.c_str(), "robot_joint2");
+    romea::ros2::HardwareInfo2TD::get_right_sprocket_wheel_spinning_joint_info(info[0])
+      .name.c_str(),
+    "robot_joint2");
 
   EXPECT_STREQ(
-    romea::ros2::HardwareInfo2TD::get_left_idler_wheel_spinning_joint_info(
-      info[0]).name.c_str(), "robot_joint3");
+    romea::ros2::HardwareInfo2TD::get_left_idler_wheel_spinning_joint_info(info[0]).name.c_str(),
+    "robot_joint3");
 
   EXPECT_STREQ(
-    romea::ros2::HardwareInfo2TD::get_right_idler_wheel_spinning_joint_info(
-      info[0]).name.c_str(), "robot_joint4");
+    romea::ros2::HardwareInfo2TD::get_right_idler_wheel_spinning_joint_info(info[0]).name.c_str(),
+    "robot_joint4");
 }
 
 TEST_F(TestHardwareInfo2TD, checkHardwareParameters)

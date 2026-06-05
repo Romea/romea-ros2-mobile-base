@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_CONTROLLERS__INTERFACES__CONTROLLER_INTERFACE1FAS2RWD_HPP_
 #define ROMEA_MOBILE_BASE_CONTROLLERS__INTERFACES__CONTROLLER_INTERFACE1FAS2RWD_HPP_
 
@@ -22,8 +21,8 @@
 #include <vector>
 
 // romea core
-#include "romea_core_mobile_base/odometry/OdometryFrame1FAS2RWD.hpp"
 #include "romea_core_mobile_base/info/MobileBaseInfo1FAS2RWD.hpp"
+#include "romea_core_mobile_base/odometry/OdometryFrame1FAS2RWD.hpp"
 
 // local
 #include "controller_interface_common.hpp"
@@ -53,20 +52,18 @@ public:
 
   void write(
     const core::OdometryFrame1FAS2RWD & command,
-    LoanedCommandInterfaces & loaned_command_interfaces)const;
+    LoanedCommandInterfaces & loaned_command_interfaces) const;
 
   void read(
     const LoanedStateInterfaces & loaned_state_interfaces,
-    core::OdometryFrame1FAS2RWD & measurement)const;
+    core::OdometryFrame1FAS2RWD & measurement) const;
 
 public:
   static void declare_joints_names(
-    std::shared_ptr<HardwareInterfaceNode> node,
-    const std::string & parameters_ns);
+    std::shared_ptr<HardwareInterfaceNode> node, const std::string & parameters_ns);
 
   static std::vector<std::string> get_joints_names(
-    std::shared_ptr<HardwareInterfaceNode> node,
-    const std::string & parameters_ns);
+    std::shared_ptr<HardwareInterfaceNode> node, const std::string & parameters_ns);
 
   static std::vector<std::string> hardware_interface_names(
     const std::vector<std::string> & joints_names);

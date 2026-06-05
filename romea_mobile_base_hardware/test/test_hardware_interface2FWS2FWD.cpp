@@ -1,4 +1,5 @@
-// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Copyright 2022 INRAE, French National Research Institute for Agriculture,
+// Food and Environment
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,16 +16,16 @@
 // std
 #include <fstream>
 #include <memory>
-#include <string>
 #include <sstream>
+#include <string>
 #include <vector>
 
 // gtest
 #include "gtest/gtest.h"
 
 // ros
-#include "rclcpp/node.hpp"
 #include "hardware_interface/component_parser.hpp"
+#include "rclcpp/node.hpp"
 
 // romea
 #include "../test/test_helper.h"
@@ -34,15 +35,9 @@
 class TestHarwareInterface2FWS2FWD : public ::testing::Test
 {
 protected:
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  static void SetUpTestCase() { rclcpp::init(0, nullptr); }
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
+  static void TearDownTestCase() { rclcpp::shutdown(); }
 
   void SetUp() override
   {
@@ -60,14 +55,13 @@ protected:
 
   void MakeInterface(const std::string & command_interface_type)
   {
-    interface = std::make_unique<romea::ros2::HardwareInterface2FWS2FWD>(
-      info[0], command_interface_type);
+    interface =
+      std::make_unique<romea::ros2::HardwareInterface2FWS2FWD>(info[0], command_interface_type);
   }
 
   std::unique_ptr<romea::ros2::HardwareInterface2FWS2FWD> interface;
   std::vector<hardware_interface::HardwareInfo> info;
 };
-
 
 TEST_F(TestHarwareInterface2FWS2FWD, checkStateInterfaceNames)
 {
@@ -101,7 +95,7 @@ TEST_F(TestHarwareInterface2FWS2FWD, DISABLED_checkCommandInterfaceTypeWhenEffor
   check_interface_name(command_interfaces[3], "robot_joint4/effort");
 }
 
-// TEST_F(TestHarwareInterface2FWS2FWD, checkSetCurrentState)
+// TEST_F(TestHarwareInterface2FWS2FWD, checkSetcurrent_state)
 // {
 //   MakeInterface(hardware_interface::HW_IF_VELOCITY);
 
@@ -122,7 +116,6 @@ TEST_F(TestHarwareInterface2FWS2FWD, DISABLED_checkCommandInterfaceTypeWhenEffor
 //   rear_right_wheel_spinning_set_point.position = 12.0;
 //   rear_right_wheel_spinning_set_point.velocity = 13.0;
 //   rear_right_wheel_spinning_set_point.torque = 14.0;
-
 
 //   interface->set_state(
 //     current_state,
@@ -182,7 +175,6 @@ TEST_F(TestHarwareInterface2FWS2FWD, checkSetFeedbackUsingJointStates)
     EXPECT_DOUBLE_EQ(state_interfaces[i].get_value(), i + 1.0);
   }
 }
-
 
 TEST_F(TestHarwareInterface2FWS2FWD, checkGetCommand)
 {

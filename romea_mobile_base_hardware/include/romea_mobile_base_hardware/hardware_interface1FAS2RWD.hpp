@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_INTERFACE1FAS2RWD_HPP_
 #define ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_INTERFACE1FAS2RWD_HPP_
 
@@ -38,19 +37,18 @@ public:
     FRONT_AXLE_STEERING_JOINT_ID = 0,
     REAR_LEFT_WHEEL_SPINNING_JOINT_ID = 1,
     REAR_RIGHT_WHEEL_SPINNING_JOINT_ID = 2
-      // FRONT_AXLE_STEERING_JOINT_ID = 0,
-      // FRONT_LEFT_WHEEL_STEERING_JOINT_ID = 1,
-      // FRONT_RIGHT_WHEEL_STEERING_JOINT_ID = 2,
-      // FRONT_LEFT_WHEEL_SPINNING_JOINT_ID = 3,
-      // FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID = 4,
-      // REAR_LEFT_WHEEL_SPINNING_JOINT_ID = 5,
-      // REAR_RIGHT_WHEEL_SPINNING_JOINT_ID = 6
+    // FRONT_AXLE_STEERING_JOINT_ID = 0,
+    // FRONT_LEFT_WHEEL_STEERING_JOINT_ID = 1,
+    // FRONT_RIGHT_WHEEL_STEERING_JOINT_ID = 2,
+    // FRONT_LEFT_WHEEL_SPINNING_JOINT_ID = 3,
+    // FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID = 4,
+    // REAR_LEFT_WHEEL_SPINNING_JOINT_ID = 5,
+    // REAR_RIGHT_WHEEL_SPINNING_JOINT_ID = 6
   };
 
   HardwareInterface1FAS2RWD(
     const hardware_interface::HardwareInfo & hardware_info,
     const std::string & spinning_joint_command_interface_type);
-
 
   core::HardwareCommand1FAS2RWD get_hardware_command() const;
   sensor_msgs::msg::JointState get_joint_state_command() const;

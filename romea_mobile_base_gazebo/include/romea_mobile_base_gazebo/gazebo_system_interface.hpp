@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_GAZEBO__GAZEBO_SYSTEM_INTERFACE_HPP_
 #define ROMEA_MOBILE_BASE_GAZEBO__GAZEBO_SYSTEM_INTERFACE_HPP_
 
 // std
 #include <map>
 #include <memory>
-#include <vector>
 #include <string>
+#include <vector>
 
 // ros
 #include "gz_ros2_control/gz_system_interface.hpp"
@@ -40,7 +39,6 @@
 #include "romea_mobile_base_simulation/simulation_interface4WD.hpp"
 #include "romea_mobile_base_simulation/simulation_interface4WS4WD.hpp"
 
-
 // local
 #include "romea_mobile_base_gazebo/gazebo_interface1FASxxx.hpp"
 #include "romea_mobile_base_gazebo/gazebo_interface2ASxxx.hpp"
@@ -51,7 +49,6 @@
 #include "romea_mobile_base_gazebo/gazebo_interface2WD.hpp"
 #include "romea_mobile_base_gazebo/gazebo_interface4WD.hpp"
 #include "romea_mobile_base_gazebo/gazebo_interface4WS4WD.hpp"
-
 
 namespace romea
 {
@@ -78,8 +75,7 @@ public:
     std::map<std::string, sim::Entity> & enable_joints,
     const hardware_interface::HardwareInfo & hardware_info,
     sim::EntityComponentManager & ecm,
-    unsigned int update_rate)override;
-
+    unsigned int update_rate) override;
 
   CallbackReturn on_init(const hardware_interface::HardwareInfo & hardware_info) override;
 
@@ -96,12 +92,10 @@ public:
   //   const std::vector<std::string> & stop_interfaces) override;
 
   hardware_interface::return_type read(
-    const rclcpp::Time & time,
-    const rclcpp::Duration & period) override;
+    const rclcpp::Time & time, const rclcpp::Duration & period) override;
 
   hardware_interface::return_type write(
-    const rclcpp::Time & time,
-    const rclcpp::Duration & period)override;
+    const rclcpp::Time & time, const rclcpp::Duration & period) override;
 
 private:
   // bool check_physics_engine_configuration_();
@@ -111,8 +105,7 @@ private:
     std::map<std::string, sim::Entity> & enable_joints,
     const hardware_interface::HardwareInfo & hardware_info);
 
-  bool init_hardware_interfaces_(
-    const hardware_interface::HardwareInfo & hardware_info);
+  bool init_hardware_interfaces_(const hardware_interface::HardwareInfo & hardware_info);
 
 private:
   rclcpp::Node::SharedPtr nh_;
@@ -132,16 +125,13 @@ using GazeboSystemInterface2FWS2RWD =
   GazeboSystemInterface<GazeboInterface2FWSxxx, SimulationInterface2FWS2RWD>;
 using GazeboSystemInterface2FWS4WD =
   GazeboSystemInterface<GazeboInterface2FWSxxx, SimulationInterface2FWS4WD>;
-using GazeboSystemInterface2TD =
-  GazeboSystemInterface<GazeboInterface2TD, SimulationInterface2TD>;
+using GazeboSystemInterface2TD = GazeboSystemInterface<GazeboInterface2TD, SimulationInterface2TD>;
 using GazeboSystemInterface2THD =
   GazeboSystemInterface<GazeboInterface2THD, SimulationInterface2THD>;
 using GazeboSystemInterface2TTD =
   GazeboSystemInterface<GazeboInterface2TTD, SimulationInterface2TTD>;
-using GazeboSystemInterface2WD =
-  GazeboSystemInterface<GazeboInterface2WD, SimulationInterface2WD>;
-using GazeboSystemInterface4WD =
-  GazeboSystemInterface<GazeboInterface4WD, SimulationInterface4WD>;
+using GazeboSystemInterface2WD = GazeboSystemInterface<GazeboInterface2WD, SimulationInterface2WD>;
+using GazeboSystemInterface4WD = GazeboSystemInterface<GazeboInterface4WD, SimulationInterface4WD>;
 using GazeboSystemInterface4WS4WD =
   GazeboSystemInterface<GazeboInterface4WS4WD, SimulationInterface4WS4WD>;
 

@@ -1,4 +1,5 @@
-// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Copyright 2022 INRAE, French National Research Institute for Agriculture,
+// Food and Environment
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <map>
 #include <memory>
@@ -21,15 +21,17 @@
 // gtest
 #include "gtest/gtest.h"
 
-// romea
+// command_conversions.hpp must be included before data_listener.hpp because
+// DataListener calls to_romea() from a template.
+// clang-format off
 #include "romea_mobile_base_utils/conversions/command_conversions.hpp"
 #include "romea_common_utils/listeners/data_listener.hpp"
-
+// clang-format on
 
 // local
 #include "../drivers/test_helper.h"
-#include "testable_teleop.hpp"
 #include "romea_mobile_base_teleop/omni_steering_teleop.hpp"
+#include "testable_teleop.hpp"
 
 using TestableOmniSteeringTeleop = TestableTeleop<romea::ros2::OmniSteeringTeleop>;
 using OmniSteeringCommandListener = romea::ros2::DataListenerBase<romea::core::OmniSteeringCommand>;
@@ -38,8 +40,7 @@ class MessageJoystickPublisher
 {
 public:
   MessageJoystickPublisher(
-    const std::shared_ptr<rclcpp::Node> & node,
-    const std::map<std::string, int> & joystick_mapping)
+    const std::shared_ptr<rclcpp::Node> & node, const std::map<std::string, int> & joystick_mapping)
   : joystick_mapping_(joystick_mapping),
     joy_pub_(node->create_publisher<sensor_msgs::msg::Joy>("joystick/joy", 1))
   {
@@ -68,26 +69,14 @@ private:
   std::shared_ptr<rclcpp::Publisher<sensor_msgs::msg::Joy>> joy_pub_;
 };
 
-
 class TestOmniSteeringTeleop : public ::testing::Test
 {
 public:
-  TestOmniSteeringTeleop()
-  : teleop(),
-    joy_pub(),
-    cmd_sub()
-  {
-  }
+  TestOmniSteeringTeleop() : teleop(), joy_pub(), cmd_sub() {}
 
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  static void SetUpTestCase() { rclcpp::init(0, nullptr); }
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
+  static void TearDownTestCase() { rclcpp::shutdown(); }
 
   template<typename MgsType>
   void make_listener(const std::string & topic_name)
@@ -101,14 +90,11 @@ public:
     rclcpp::NodeOptions no;
 
     no.arguments(
-      {"--ros-args",
-        "--params-file",
-        std::string(TEST_DIR) + "/test_omni_steering_teleop.yaml"});
+      {"--ros-args", "--params-file", std::string(TEST_DIR) + "/test_omni_steering_teleop.yaml"});
 
     teleop = std::make_unique<TestableOmniSteeringTeleop>(no);
 
-    joy_pub = std::make_unique<MessageJoystickPublisher>(
-      teleop->get_node(), teleop->get_mapping());
+    joy_pub = std::make_unique<MessageJoystickPublisher>(teleop->get_node(), teleop->get_mapping());
 
     std::string message_type = romea::ros2::get_command_output_message_type(teleop->get_node());
 
@@ -127,18 +113,12 @@ public:
     const int slow_mode,
     const int turbo_mode)
   {
-    joy_pub->publish(
-      linear_speed,
-      lateral_speed,
-      angular_speed,
-      slow_mode,
-      turbo_mode);
+    joy_pub->publish(linear_speed, lateral_speed, angular_speed, slow_mode, turbo_mode);
 
     rclcpp::spin_some(teleop->get_node());
     rclcpp::sleep_for(std::chrono::milliseconds(100));
     rclcpp::spin_some(teleop->get_node());
   }
-
 
   std::unique_ptr<TestableOmniSteeringTeleop> teleop;
   std::unique_ptr<MessageJoystickPublisher> joy_pub;

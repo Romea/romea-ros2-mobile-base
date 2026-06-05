@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <map>
 #include <string>
@@ -22,7 +21,6 @@
 
 // local
 #include "romea_mobile_base_gazebo/gazebo_interface2WD.hpp"
-
 
 namespace romea
 {
@@ -35,21 +33,23 @@ GazeboInterface2WD::GazeboInterface2WD(
   std::map<std::string, gz::sim::Entity> & enable_joints,
   const hardware_interface::HardwareInfo & hardware_info,
   const std::string & command_interface_type)
-: left_wheel_spinning_joint_(ecm, enable_joints,
+: left_wheel_spinning_joint_(
+    ecm,
+    enable_joints,
     hardware_info.joints[HardwareInterface2WD::LEFT_WHEEL_SPINNING_JOINT_ID],
     command_interface_type),
-  right_wheel_spinning_joint_(ecm, enable_joints,
+  right_wheel_spinning_joint_(
+    ecm,
+    enable_joints,
     hardware_info.joints[HardwareInterface2WD::RIGHT_WHEEL_SPINNING_JOINT_ID],
     command_interface_type)
 {
 }
 
-
 //-----------------------------------------------------------------------------
 core::SimulationState2WD GazeboInterface2WD::get_state() const
 {
-  return {left_wheel_spinning_joint_.get_state(),
-      right_wheel_spinning_joint_.get_state()};
+  return {left_wheel_spinning_joint_.get_state(), right_wheel_spinning_joint_.get_state()};
 }
 
 //-----------------------------------------------------------------------------

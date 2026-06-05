@@ -26,32 +26,25 @@
 #include "../test/test_helper.h"
 #include "romea_mobile_base_utils/params/mobile_base_parameters2FWS2FWD.hpp"
 
-
 class TestMobileBaseParams2FWS2FWD : public ::testing::Test
 {
 protected:
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  static void SetUpTestCase() { rclcpp::init(0, nullptr); }
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
+  static void TearDownTestCase() { rclcpp::shutdown(); }
 
   void SetUp() override
   {
     rclcpp::NodeOptions no;
     no.arguments(
-      {"--ros-args", "--params-file", std::string(
-          TEST_DIR) + "/test_mobile_base_parameters_2FWS2FWD.yaml"});
+      {"--ros-args",
+       "--params-file",
+       std::string(TEST_DIR) + "/test_mobile_base_parameters_2FWS2FWD.yaml"});
     node = std::make_shared<rclcpp::Node>("test_mobile_base_parameters_2FWS2FWD", no);
   }
 
   std::shared_ptr<rclcpp::Node> node;
 };
-
 
 TEST_F(TestMobileBaseParams2FWS2FWD, checkGetInfo)
 {

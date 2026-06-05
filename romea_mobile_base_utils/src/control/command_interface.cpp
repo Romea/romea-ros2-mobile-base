@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <memory>
 #include <string>
@@ -42,8 +41,7 @@ CommandInterface<CommandType>::~CommandInterface()
 //-----------------------------------------------------------------------------
 template<typename CommandType>
 void CommandInterface<CommandType>::subscribe_to_cmd_mux(
-  const int & priority,
-  const double & timeout)
+  const int & priority, const double & timeout)
 {
   if (priority != -1) {
     try {
@@ -115,12 +113,10 @@ void CommandInterface<CommandType>::disable_emergency_stop()
 
 //-----------------------------------------------------------------------------
 template<typename CommandType>
-void CommandInterface<CommandType>::connect_timeout_callback(
-  std::function<void(void)> callback)
+void CommandInterface<CommandType>::connect_timeout_callback(std::function<void(void)> callback)
 {
   timeout_callback_ = callback;
 }
-
 
 //-----------------------------------------------------------------------------
 template<typename CommandType>
@@ -166,7 +162,6 @@ void CommandInterface<CommandType>::publish_command_(const bool & timeout)
   //  //  std::cout << msg << std::endl;
   //  commandPublisher_.publish(msg);
 
-
   if (is_started()) {
     if (!timeout) {
       cmd_pub_->publish(command_);
@@ -200,7 +195,6 @@ template class CommandInterface<core::SkidSteeringCommand>;
 template class CommandInterface<core::OmniSteeringCommand>;
 template class CommandInterface<core::OneAxleSteeringCommand>;
 template class CommandInterface<core::TwoAxleSteeringCommand>;
-
 
 }  // namespace  ros2
 }  // namespace  romea

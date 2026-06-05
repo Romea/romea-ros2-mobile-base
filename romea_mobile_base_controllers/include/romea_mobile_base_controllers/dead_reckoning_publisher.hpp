@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_CONTROLLERS__DEAD_RECKONING_PUBLISHER_HPP_
 #define ROMEA_MOBILE_BASE_CONTROLLERS__DEAD_RECKONING_PUBLISHER_HPP_
 
@@ -24,12 +23,11 @@
 #include "romea_mobile_base_msgs/msg/kinematic_measure_stamped.hpp"
 
 // ros
+#include "nav_msgs/msg/odometry.hpp"
 #include "rclcpp/node.hpp"
 #include "rclcpp_lifecycle/lifecycle_node.hpp"
 #include "realtime_tools/realtime_publisher.h"
 #include "tf2_msgs/msg/tf_message.hpp"
-#include "nav_msgs/msg/odometry.hpp"
-
 
 // local
 #include "dead_reckoning.hpp"
@@ -55,9 +53,7 @@ public:
     const std::string & base_frame_id,
     const bool & enable_odom_tf);
 
-  void update(
-    const rclcpp::Time & time,
-    const core::KinematicMeasure & kinematic_measure);
+  void update(const rclcpp::Time & time, const core::KinematicMeasure & kinematic_measure);
 
   void reset();
 

@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <algorithm>
 #include <limits>
@@ -26,18 +25,14 @@
 namespace
 {
 
-const hardware_interface::InterfaceInfo &
-get_interface_info(
+const hardware_interface::InterfaceInfo & get_interface_info(
   const std::vector<hardware_interface::InterfaceInfo> & interface_infos,
   const std::string & joint_name,
   const std::string & interface_type,
   const std::string & interface_name)
 {
   const auto & interface = std::find_if(
-    interface_infos.begin(),
-    interface_infos.end(),
-    [&interface_name](const auto & interface)
-    {
+    interface_infos.begin(), interface_infos.end(), [&interface_name](const auto & interface) {
       return interface.name == interface_name;
     });
 
@@ -61,33 +56,20 @@ namespace romea
 namespace ros2
 {
 
-
 //-----------------------------------------------------------------------------
-const hardware_interface::InterfaceInfo &
-get_command_interface_info(
-  const hardware_interface::ComponentInfo & joint_info,
-  const std::string & interface_name)
+const hardware_interface::InterfaceInfo & get_command_interface_info(
+  const hardware_interface::ComponentInfo & joint_info, const std::string & interface_name)
 {
   return get_interface_info(
-    joint_info.command_interfaces,
-    joint_info.name,
-    "command",
-    interface_name);
+    joint_info.command_interfaces, joint_info.name, "command", interface_name);
 }
 
 //-----------------------------------------------------------------------------
-const hardware_interface::InterfaceInfo &
-get_state_interface_info(
-  const hardware_interface::ComponentInfo & joint_info,
-  const std::string & interface_name)
+const hardware_interface::InterfaceInfo & get_state_interface_info(
+  const hardware_interface::ComponentInfo & joint_info, const std::string & interface_name)
 {
-  return get_interface_info(
-    joint_info.state_interfaces,
-    joint_info.name,
-    "state",
-    interface_name);
+  return get_interface_info(joint_info.state_interfaces, joint_info.name, "state", interface_name);
 }
-
 
 }  // namespace ros2
 }  // namespace romea

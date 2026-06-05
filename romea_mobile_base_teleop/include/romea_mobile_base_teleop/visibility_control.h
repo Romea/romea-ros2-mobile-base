@@ -1,4 +1,5 @@
-// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Copyright 2022 INRAE, French National Research Institute for Agriculture,
+// Food and Environment
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,39 +17,38 @@
 #define ROMEA_MOBILE_BASE_TELEOP__VISIBILITY_CONTROL_H_
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 // This logic was borrowed (then namespaced) from the examples on the gcc wiki:
 //     https://gcc.gnu.org/wiki/Visibility
 
 #if defined _WIN32 || defined __CYGWIN__
-  #ifdef __GNUC__
-    #define ROMEA_MOBILE_BASE_TELEOP_EXPORT __attribute__ ((dllexport))
-    #define ROMEA_MOBILE_BASE_TELEOP_IMPORT __attribute__ ((dllimport))
-  #else
-    #define ROMEA_MOBILE_BASE_TELEOP_EXPORT __declspec(dllexport)
-    #define ROMEA_MOBILE_BASE_TELEOP_IMPORT __declspec(dllimport)
-  #endif
-  #ifdef ROMEA_MOBILE_BASE_TELEOP_BUILDING_DLL
-    #define ROMEA_MOBILE_BASE_TELEOP_PUBLIC ROMEA_MOBILE_BASE_TELEOP_EXPORT
-  #else
-    #define ROMEA_MOBILE_BASE_TELEOP_PUBLIC ROMEA_MOBILE_BASE_TELEOP_IMPORT
-  #endif
-  #define ROMEA_MOBILE_BASE_TELEOP_PUBLIC_TYPE ROMEA_MOBILE_BASE_TELEOP_PUBLIC
-  #define ROMEA_MOBILE_BASE_TELEOP_LOCAL
+#ifdef __GNUC__
+#define ROMEA_MOBILE_BASE_TELEOP_EXPORT __attribute__((dllexport))
+#define ROMEA_MOBILE_BASE_TELEOP_IMPORT __attribute__((dllimport))
 #else
-  #define ROMEA_MOBILE_BASE_TELEOP_EXPORT __attribute__ ((visibility("default")))
-  #define ROMEA_MOBILE_BASE_TELEOP_IMPORT
-  #if __GNUC__ >= 4
-    #define ROMEA_MOBILE_BASE_TELEOP_PUBLIC __attribute__ ((visibility("default")))
-    #define ROMEA_MOBILE_BASE_TELEOP_LOCAL  __attribute__ ((visibility("hidden")))
-  #else
-    #define ROMEA_MOBILE_BASE_TELEOP_PUBLIC
-    #define ROMEA_MOBILE_BASE_TELEOP_LOCAL
-  #endif
-  #define ROMEA_MOBILE_BASE_TELEOP_PUBLIC_TYPE
+#define ROMEA_MOBILE_BASE_TELEOP_EXPORT __declspec(dllexport)
+#define ROMEA_MOBILE_BASE_TELEOP_IMPORT __declspec(dllimport)
+#endif
+#ifdef ROMEA_MOBILE_BASE_TELEOP_BUILDING_DLL
+#define ROMEA_MOBILE_BASE_TELEOP_PUBLIC ROMEA_MOBILE_BASE_TELEOP_EXPORT
+#else
+#define ROMEA_MOBILE_BASE_TELEOP_PUBLIC ROMEA_MOBILE_BASE_TELEOP_IMPORT
+#endif
+#define ROMEA_MOBILE_BASE_TELEOP_PUBLIC_TYPE ROMEA_MOBILE_BASE_TELEOP_PUBLIC
+#define ROMEA_MOBILE_BASE_TELEOP_LOCAL
+#else
+#define ROMEA_MOBILE_BASE_TELEOP_EXPORT __attribute__((visibility("default")))
+#define ROMEA_MOBILE_BASE_TELEOP_IMPORT
+#if __GNUC__ >= 4
+#define ROMEA_MOBILE_BASE_TELEOP_PUBLIC __attribute__((visibility("default")))
+#define ROMEA_MOBILE_BASE_TELEOP_LOCAL __attribute__((visibility("hidden")))
+#else
+#define ROMEA_MOBILE_BASE_TELEOP_PUBLIC
+#define ROMEA_MOBILE_BASE_TELEOP_LOCAL
+#endif
+#define ROMEA_MOBILE_BASE_TELEOP_PUBLIC_TYPE
 #endif
 
 #ifdef __cplusplus

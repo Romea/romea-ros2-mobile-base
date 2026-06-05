@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <memory>
 #include <string>
@@ -30,33 +29,34 @@
 class TestControllerInterface4WS4WD : public ::testing::Test
 {
 protected:
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  static void SetUpTestCase() { rclcpp::init(0, nullptr); }
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
+  static void TearDownTestCase() { rclcpp::shutdown(); }
 
   void SetUp() override
   {
     rclcpp::NodeOptions no;
     no.arguments(
       {"--ros-args",
-        "-p", "joints.front_left_wheel_steering_joint_name:=J1",
-        "-p", "joints.front_right_wheel_steering_joint_name:=J2",
-        "-p", "joints.rear_left_wheel_steering_joint_name:=J3",
-        "-p", "joints.rear_right_wheel_steering_joint_name:=J4",
-        "-p", "joints.front_left_wheel_spinning_joint_name:=J5",
-        "-p", "joints.front_right_wheel_spinning_joint_name:=J6",
-        "-p", "joints.rear_left_wheel_spinning_joint_name:=J7",
-        "-p", "joints.rear_right_wheel_spinning_joint_name:=J8"
-      });
+       "-p",
+       "joints.front_left_wheel_steering_joint_name:=J1",
+       "-p",
+       "joints.front_right_wheel_steering_joint_name:=J2",
+       "-p",
+       "joints.rear_left_wheel_steering_joint_name:=J3",
+       "-p",
+       "joints.rear_right_wheel_steering_joint_name:=J4",
+       "-p",
+       "joints.front_left_wheel_spinning_joint_name:=J5",
+       "-p",
+       "joints.front_right_wheel_spinning_joint_name:=J6",
+       "-p",
+       "joints.rear_left_wheel_spinning_joint_name:=J7",
+       "-p",
+       "joints.rear_right_wheel_spinning_joint_name:=J8"});
 
-    node = std::make_shared<romea::ros2::HardwareInterfaceNode>(
-      "test_interface_controller_4WS4WD", no);
+    node =
+      std::make_shared<romea::ros2::HardwareInterfaceNode>("test_interface_controller_4WS4WD", no);
 
     state_values.resize(8);
     command_values.resize(8);
@@ -65,54 +65,38 @@ protected:
     joints_names = romea::ros2::ControllerInterface4WS4WD::get_joints_names(node, "joints");
 
     state_hardware_interfaces.emplace_back(
-      joints_names[0], hardware_interface::HW_IF_POSITION,
-      &state_values[0]);
+      joints_names[0], hardware_interface::HW_IF_POSITION, &state_values[0]);
     state_hardware_interfaces.emplace_back(
-      joints_names[1], hardware_interface::HW_IF_POSITION,
-      &state_values[1]);
+      joints_names[1], hardware_interface::HW_IF_POSITION, &state_values[1]);
     state_hardware_interfaces.emplace_back(
-      joints_names[2], hardware_interface::HW_IF_POSITION,
-      &state_values[2]);
+      joints_names[2], hardware_interface::HW_IF_POSITION, &state_values[2]);
     state_hardware_interfaces.emplace_back(
-      joints_names[3], hardware_interface::HW_IF_POSITION,
-      &state_values[3]);
+      joints_names[3], hardware_interface::HW_IF_POSITION, &state_values[3]);
     state_hardware_interfaces.emplace_back(
-      joints_names[4], hardware_interface::HW_IF_VELOCITY,
-      &state_values[4]);
+      joints_names[4], hardware_interface::HW_IF_VELOCITY, &state_values[4]);
     state_hardware_interfaces.emplace_back(
-      joints_names[5], hardware_interface::HW_IF_VELOCITY,
-      &state_values[5]);
+      joints_names[5], hardware_interface::HW_IF_VELOCITY, &state_values[5]);
     state_hardware_interfaces.emplace_back(
-      joints_names[6], hardware_interface::HW_IF_VELOCITY,
-      &state_values[6]);
+      joints_names[6], hardware_interface::HW_IF_VELOCITY, &state_values[6]);
     state_hardware_interfaces.emplace_back(
-      joints_names[7], hardware_interface::HW_IF_VELOCITY,
-      &state_values[7]);
+      joints_names[7], hardware_interface::HW_IF_VELOCITY, &state_values[7]);
 
     command_hardware_interfaces.emplace_back(
-      joints_names[0], hardware_interface::HW_IF_POSITION,
-      &command_values[0]);
+      joints_names[0], hardware_interface::HW_IF_POSITION, &command_values[0]);
     command_hardware_interfaces.emplace_back(
-      joints_names[1], hardware_interface::HW_IF_POSITION,
-      &command_values[1]);
+      joints_names[1], hardware_interface::HW_IF_POSITION, &command_values[1]);
     command_hardware_interfaces.emplace_back(
-      joints_names[2], hardware_interface::HW_IF_POSITION,
-      &command_values[2]);
+      joints_names[2], hardware_interface::HW_IF_POSITION, &command_values[2]);
     command_hardware_interfaces.emplace_back(
-      joints_names[3], hardware_interface::HW_IF_POSITION,
-      &command_values[3]);
+      joints_names[3], hardware_interface::HW_IF_POSITION, &command_values[3]);
     command_hardware_interfaces.emplace_back(
-      joints_names[4], hardware_interface::HW_IF_VELOCITY,
-      &command_values[4]);
+      joints_names[4], hardware_interface::HW_IF_VELOCITY, &command_values[4]);
     command_hardware_interfaces.emplace_back(
-      joints_names[5], hardware_interface::HW_IF_VELOCITY,
-      &command_values[5]);
+      joints_names[5], hardware_interface::HW_IF_VELOCITY, &command_values[5]);
     command_hardware_interfaces.emplace_back(
-      joints_names[6], hardware_interface::HW_IF_VELOCITY,
-      &command_values[6]);
+      joints_names[6], hardware_interface::HW_IF_VELOCITY, &command_values[6]);
     command_hardware_interfaces.emplace_back(
-      joints_names[7], hardware_interface::HW_IF_VELOCITY,
-      &command_values[7]);
+      joints_names[7], hardware_interface::HW_IF_VELOCITY, &command_values[7]);
 
     for (auto & state_hardware_interface : state_hardware_interfaces) {
       state_loaned_interfaces.emplace_back(state_hardware_interface);
@@ -144,8 +128,8 @@ protected:
 
 TEST_F(TestControllerInterface4WS4WD, checkHardwareInterfaceNames)
 {
-  auto hardware_interface_names = romea::ros2::ControllerInterface4WS4WD::hardware_interface_names(
-    joints_names);
+  auto hardware_interface_names =
+    romea::ros2::ControllerInterface4WS4WD::hardware_interface_names(joints_names);
   EXPECT_STREQ(hardware_interface_names[0].c_str(), "J1/position");
   EXPECT_STREQ(hardware_interface_names[1].c_str(), "J2/position");
   EXPECT_STREQ(hardware_interface_names[2].c_str(), "J3/position");
@@ -155,7 +139,6 @@ TEST_F(TestControllerInterface4WS4WD, checkHardwareInterfaceNames)
   EXPECT_STREQ(hardware_interface_names[6].c_str(), "J7/velocity");
   EXPECT_STREQ(hardware_interface_names[7].c_str(), "J8/velocity");
 }
-
 
 TEST_F(TestControllerInterface4WS4WD, checkWrite)
 {
@@ -179,7 +162,6 @@ TEST_F(TestControllerInterface4WS4WD, checkWrite)
   EXPECT_EQ(command_values[6], 6);
   EXPECT_EQ(command_values[7], 8);
 }
-
 
 TEST_F(TestControllerInterface4WS4WD, checkRead)
 {

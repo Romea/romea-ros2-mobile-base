@@ -1,4 +1,5 @@
-// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Copyright 2022 INRAE, French National Research Institute for Agriculture,
+// Food and Environment
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,14 +13,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <map>
 #include <string>
 
 // local
 #include "romea_mobile_base_teleop/omni_steering_teleop.hpp"
-
 
 namespace romea
 {
@@ -89,8 +88,7 @@ std::map<std::string, int> OmniSteeringTeleop::get_joystick_buttons_mapping_()
 {
   return {
     {"slow_mode", get_slow_mode_button_mapping(node_)},
-    {"turbo_mode", get_turbo_mode_button_mapping(node_)}
-  };
+    {"turbo_mode", get_turbo_mode_button_mapping(node_)}};
 }
 
 //-----------------------------------------------------------------------------
@@ -110,7 +108,6 @@ double OmniSteeringTeleop::compute_angular_speed_(const double & maximal_angular
 {
   return joy_->getAxeValue("angular_speed") * maximal_angular_speed;
 }
-
 
 //-----------------------------------------------------------------------------
 void OmniSteeringTeleop::joystick_callback_(const Joystick & joy)

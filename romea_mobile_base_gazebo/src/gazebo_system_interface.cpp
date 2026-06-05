@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <map>
 #include <memory>
@@ -30,9 +29,7 @@ namespace ros2
 //-----------------------------------------------------------------------------
 template<typename GazeboInterface, typename SimulationInterface>
 GazeboSystemInterface<GazeboInterface, SimulationInterface>::GazeboSystemInterface()
-  :nh_(nullptr),
-   gazebo_interface_(nullptr),
-   simulation_interface_(nullptr)
+: nh_(nullptr), gazebo_interface_(nullptr), simulation_interface_(nullptr)
 {
 }
 
@@ -47,7 +44,7 @@ bool GazeboSystemInterface<GazeboInterface, SimulationInterface>::initSim(
 {
   nh_ = model_nh;
   return init_gazebo_interfaces_(ecm, enable_joints, hardware_info) &&
-    init_hardware_interfaces_(hardware_info);
+         init_hardware_interfaces_(hardware_info);
 }
 
 //-----------------------------------------------------------------------------
@@ -110,13 +107,13 @@ GazeboSystemInterface<GazeboInterface, SimulationInterface>::export_command_inte
 //-----------------------------------------------------------------------------
 template<typename GazeboInterface, typename SimulationInterface>
 bool GazeboSystemInterface<GazeboInterface, SimulationInterface>::init_gazebo_interfaces_(
-    sim::EntityComponentManager & ecm,
-    std::map<std::string, sim::Entity> & enable_joints,
-    const hardware_interface::HardwareInfo & hardware_info)
+  sim::EntityComponentManager & ecm,
+  std::map<std::string, sim::Entity> & enable_joints,
+  const hardware_interface::HardwareInfo & hardware_info)
 {
   try {
-    gazebo_interface_ = std::make_unique<GazeboInterface>(
-      ecm, enable_joints, hardware_info, "velocity");
+    gazebo_interface_ =
+      std::make_unique<GazeboInterface>(ecm, enable_joints, hardware_info, "velocity");
     // RCLCPP_ERROR(this->nh_->get_logger(), "init_gazebo_interfaces_ OK");
     return true;
   } catch (std::runtime_error & e) {
@@ -145,8 +142,7 @@ bool GazeboSystemInterface<GazeboInterface, SimulationInterface>::init_hardware_
 //-----------------------------------------------------------------------------
 template<typename GazeboInterface, typename SimulationInterface>
 hardware_interface::return_type GazeboSystemInterface<GazeboInterface, SimulationInterface>::read(
-  const rclcpp::Time & /*time*/,
-  const rclcpp::Duration & /*period*/)
+  const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
 {
   simulation_interface_->set_feedback(gazebo_interface_->get_state());
   return hardware_interface::return_type::OK;
@@ -155,8 +151,7 @@ hardware_interface::return_type GazeboSystemInterface<GazeboInterface, Simulatio
 //-----------------------------------------------------------------------------
 template<typename GazeboInterface, typename SimulationInterface>
 hardware_interface::return_type GazeboSystemInterface<GazeboInterface, SimulationInterface>::write(
-  const rclcpp::Time & /*time*/,
-  const rclcpp::Duration & /*period*/)
+  const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
 {
   gazebo_interface_->set_command(simulation_interface_->get_hardware_command());
   return hardware_interface::return_type::OK;
@@ -178,26 +173,18 @@ template class GazeboSystemInterface<GazeboInterface4WS4WD, SimulationInterface4
 }  // namespace ros2
 }  // namespace romea
 
-
 #include "pluginlib/class_list_macros.hpp"  // NOLINT
 PLUGINLIB_EXPORT_CLASS(
-  romea::ros2::GazeboSystemInterface4WD,
-  gz_ros2_control::GazeboSimSystemInterface)
+  romea::ros2::GazeboSystemInterface4WD, gz_ros2_control::GazeboSimSystemInterface)
 PLUGINLIB_EXPORT_CLASS(
-  romea::ros2::GazeboSystemInterface4WS4WD,
-  gz_ros2_control::GazeboSimSystemInterface)
+  romea::ros2::GazeboSystemInterface4WS4WD, gz_ros2_control::GazeboSimSystemInterface)
 PLUGINLIB_EXPORT_CLASS(
-  romea::ros2::GazeboSystemInterface1FAS2RWD,
-  gz_ros2_control::GazeboSimSystemInterface)
+  romea::ros2::GazeboSystemInterface1FAS2RWD, gz_ros2_control::GazeboSimSystemInterface)
 PLUGINLIB_EXPORT_CLASS(
-  romea::ros2::GazeboSystemInterface2AS4WD,
-  gz_ros2_control::GazeboSimSystemInterface)
+  romea::ros2::GazeboSystemInterface2AS4WD, gz_ros2_control::GazeboSimSystemInterface)
 PLUGINLIB_EXPORT_CLASS(
-  romea::ros2::GazeboSystemInterface2FWS4WD,
-  gz_ros2_control::GazeboSimSystemInterface)
+  romea::ros2::GazeboSystemInterface2FWS4WD, gz_ros2_control::GazeboSimSystemInterface)
 PLUGINLIB_EXPORT_CLASS(
-  romea::ros2::GazeboSystemInterface2FWS2RWD,
-  gz_ros2_control::GazeboSimSystemInterface)
+  romea::ros2::GazeboSystemInterface2FWS2RWD, gz_ros2_control::GazeboSimSystemInterface)
 PLUGINLIB_EXPORT_CLASS(
-  romea::ros2::GazeboSystemInterface2THD,
-  gz_ros2_control::GazeboSimSystemInterface)
+  romea::ros2::GazeboSystemInterface2THD, gz_ros2_control::GazeboSimSystemInterface)

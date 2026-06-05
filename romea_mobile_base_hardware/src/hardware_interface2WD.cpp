@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <string>
 #include <vector>
@@ -40,10 +39,8 @@ HardwareInterface2WD::HardwareInterface2WD(
 {
 }
 
-
 //-----------------------------------------------------------------------------
-std::vector<hardware_interface::StateInterface>
-HardwareInterface2WD::export_state_interfaces()
+std::vector<hardware_interface::StateInterface> HardwareInterface2WD::export_state_interfaces()
 {
   std::vector<hardware_interface::StateInterface> state_interfaces;
   left_wheel_spinning_joint_.export_state_interfaces(state_interfaces);
@@ -52,8 +49,7 @@ HardwareInterface2WD::export_state_interfaces()
 }
 
 //-----------------------------------------------------------------------------
-std::vector<hardware_interface::CommandInterface>
-HardwareInterface2WD::export_command_interfaces()
+std::vector<hardware_interface::CommandInterface> HardwareInterface2WD::export_command_interfaces()
 {
   std::vector<hardware_interface::CommandInterface> command_interfaces;
   left_wheel_spinning_joint_.export_command_interface(command_interfaces);
@@ -61,13 +57,11 @@ HardwareInterface2WD::export_command_interfaces()
   return command_interfaces;
 }
 
-
 //-----------------------------------------------------------------------------
-core::HardwareCommand2WD HardwareInterface2WD::get_command()const
+core::HardwareCommand2WD HardwareInterface2WD::get_command() const
 {
   // *INDENT-OFF*
-  return {left_wheel_spinning_joint_.get_command(),
-      right_wheel_spinning_joint_.get_command()};
+  return {left_wheel_spinning_joint_.get_command(), right_wheel_spinning_joint_.get_command()};
   // *INDENT-ON*
 }
 
@@ -85,7 +79,6 @@ sensor_msgs::msg::JointState HardwareInterface2WD::get_joint_state_command() con
   right_wheel_spinning_joint_.write_command(joint_states);
   return joint_states;
 }
-
 
 //-----------------------------------------------------------------------------
 void HardwareInterface2WD::set_state(const core::HardwareState2WD & hardware_state)

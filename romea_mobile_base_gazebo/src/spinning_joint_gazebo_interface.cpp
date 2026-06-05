@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // string
 #include <map>
 #include <string>
@@ -33,8 +32,8 @@ SpinningJointGazeboInterface::SpinningJointGazeboInterface(
   gz::sim::EntityComponentManager & ecm,
   std::map<std::string, gz::sim::Entity> & enable_joints,
   const hardware_interface::ComponentInfo & joint_info,
-  const std::string & command_interface_type):
-  JointGazeboInterface(ecm, enable_joints, joint_info)
+  const std::string & command_interface_type)
+: JointGazeboInterface(ecm, enable_joints, joint_info)
 {
   if (!command_interface_type.compare(hardware_interface::HW_IF_VELOCITY)) {
     control_type = core::RotationalMotionControlType::VELOCITY;

@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef TEST_UTILS_HPP_
 #define TEST_UTILS_HPP_
 
 // std
-#include <string>
+#include <fstream>
 #include <iostream>
 #include <sstream>
-#include <fstream>
+#include <string>
 
 // local
 #include "../test/test_helper.h"
@@ -47,8 +46,8 @@ std::string sdf_filename(const std::string & vehicle_type)
 
 void create_urdf_file(const std::string & gazebo_interface_type, const std::string & vehicle_type)
 {
-  std::string create_urdf = "xacro " + xacro_filename(gazebo_interface_type) + " type:=" +
-    vehicle_type + " > " + urdf_filename(vehicle_type);
+  std::string create_urdf = "xacro " + xacro_filename(gazebo_interface_type) +
+                            " type:=" + vehicle_type + " > " + urdf_filename(vehicle_type);
   std::cout << create_urdf << std::endl;
   std::system(create_urdf.c_str());
 }
@@ -60,15 +59,14 @@ void create_urdf_file(const std::string & vehicle_type)
 
 void create_sdf_file(const std::string & vehicle_type)
 {
-  std::string create_sdf = "gz sdf -p " + urdf_filename(vehicle_type) + " > " + sdf_filename(
-    vehicle_type);
+  std::string create_sdf =
+    "gz sdf -p " + urdf_filename(vehicle_type) + " > " + sdf_filename(vehicle_type);
   std::cout << create_sdf << std::endl;
   std::system(create_sdf.c_str());
 }
 
 std::string make_urdf_description(
-  const std::string & gazebo_interface_type,
-  const std::string & vehicle_type)
+  const std::string & gazebo_interface_type, const std::string & vehicle_type)
 {
   std::cout << gazebo_interface_type << " " << vehicle_type << std::endl;
   create_urdf_file(gazebo_interface_type, vehicle_type);
@@ -83,7 +81,6 @@ std::string make_urdf_description(const std::string & vehicle_type)
   return make_urdf_description(vehicle_type, vehicle_type);
 }
 
-
 std::string make_sdf_description(const std::string & vehicle_type)
 {
   create_sdf_file(vehicle_type);
@@ -93,4 +90,4 @@ std::string make_sdf_description(const std::string & vehicle_type)
   return sdf_content.str();
 }
 
-#endif    // TEST_UTILS_HPP_
+#endif  // TEST_UTILS_HPP_

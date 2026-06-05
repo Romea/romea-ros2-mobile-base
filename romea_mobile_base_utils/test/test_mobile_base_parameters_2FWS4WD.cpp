@@ -13,8 +13,8 @@
 // limitations under the License.
 
 // std
-#include <string>
 #include <memory>
+#include <string>
 
 // gtest
 #include "gtest/gtest.h"
@@ -26,32 +26,25 @@
 #include "../test/test_helper.h"
 #include "romea_mobile_base_utils/params/mobile_base_parameters2FWS4WD.hpp"
 
-
 class TestMobileBaseParams2FWS4WD : public ::testing::Test
 {
 protected:
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  static void SetUpTestCase() { rclcpp::init(0, nullptr); }
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
+  static void TearDownTestCase() { rclcpp::shutdown(); }
 
   void SetUp() override
   {
     rclcpp::NodeOptions no;
     no.arguments(
-      {"--ros-args", "--params-file",
-        std::string(TEST_DIR) + "/test_mobile_base_parameters_2FWS4WD.yaml"});
+      {"--ros-args",
+       "--params-file",
+       std::string(TEST_DIR) + "/test_mobile_base_parameters_2FWS4WD.yaml"});
     node = std::make_shared<rclcpp::Node>("test_mobile_base_parameters_2FWS4WD", no);
   }
 
   std::shared_ptr<rclcpp::Node> node;
 };
-
 
 TEST_F(TestMobileBaseParams2FWS4WD, checkGetInfo)
 {

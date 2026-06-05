@@ -17,8 +17,8 @@
 #include <vector>
 
 // romea
-#include "romea_mobile_base_utils/ros2_control/info/hardware_info2TD.hpp"
 #include "romea_mobile_base_simulation/simulation_interface2TD.hpp"
+#include "romea_mobile_base_utils/ros2_control/info/hardware_info2TD.hpp"
 
 namespace romea
 {
@@ -29,7 +29,7 @@ namespace ros2
 SimulationInterface2TD::SimulationInterface2TD(
   const hardware_interface::HardwareInfo & hardware_info,
   const std::string & command_interface_type)
-:  left_sprocket_wheel_spinning_joint_(
+: left_sprocket_wheel_spinning_joint_(
     LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID,
     hardware_info.joints[LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID],
     command_interface_type),
@@ -60,20 +60,15 @@ core::SimulationCommand2TD SimulationInterface2TD::get_hardware_command()
   };
 
   return toSimulationCommand2TD(
-    sprocket_wheel_radius_,
-    idler_wheel_radius_,
-    track_thickness_,
-    command);
+    sprocket_wheel_radius_, idler_wheel_radius_, track_thickness_, command);
 }
 
 //-----------------------------------------------------------------------------
 sensor_msgs::msg::JointState SimulationInterface2TD::get_joint_state_command()
 {
   auto hardware_command = get_hardware_command();
-  left_idler_wheel_spinning_joint_.set_command(
-    hardware_command.leftIdlerWheelSpinningSetPoint);
-  right_idler_wheel_spinning_joint_.set_command(
-    hardware_command.rightIdlerWheelSpinningSetPoint);
+  left_idler_wheel_spinning_joint_.set_command(hardware_command.leftIdlerWheelSpinningSetPoint);
+  right_idler_wheel_spinning_joint_.set_command(hardware_command.rightIdlerWheelSpinningSetPoint);
 
   auto joint_state_command = make_joint_state_msg(8);
   left_sprocket_wheel_spinning_joint_.write_command(joint_state_command);
@@ -88,19 +83,13 @@ sensor_msgs::msg::JointState SimulationInterface2TD::get_joint_state_command()
 void SimulationInterface2TD::set_feedback(const core::SimulationState2TD & simulation_state)
 {
   auto hardware_state = toHardwareState2TD(
-    sprocket_wheel_radius_,
-    idler_wheel_radius_,
-    track_thickness_,
-    simulation_state);
+    sprocket_wheel_radius_, idler_wheel_radius_, track_thickness_, simulation_state);
 
-  left_sprocket_wheel_spinning_joint_.set_feedback(
-    hardware_state.leftSprocketWheelSpinningMotion);
+  left_sprocket_wheel_spinning_joint_.set_feedback(hardware_state.leftSprocketWheelSpinningMotion);
   right_sprocket_wheel_spinning_joint_.set_feedback(
     hardware_state.rightSprocketWheelSpinningMotion);
-  left_idler_wheel_spinning_joint_.set_feedback(
-    simulation_state.leftIdlerWheelSpinningMotion);
-  right_idler_wheel_spinning_joint_.set_feedback(
-    simulation_state.rightIdlerWheelSpinningMotion);
+  left_idler_wheel_spinning_joint_.set_feedback(simulation_state.leftIdlerWheelSpinningMotion);
+  right_idler_wheel_spinning_joint_.set_feedback(simulation_state.rightIdlerWheelSpinningMotion);
 }
 
 //-----------------------------------------------------------------------------
@@ -118,20 +107,15 @@ void SimulationInterface2TD::set_feedback(const sensor_msgs::msg::JointState & j
     right_idler_wheel_spinning_joint_.get_feedback()};
 
   auto hardware_state = toHardwareState2TD(
-    sprocket_wheel_radius_,
-    idler_wheel_radius_,
-    track_thickness_,
-    simulation_state);
+    sprocket_wheel_radius_, idler_wheel_radius_, track_thickness_, simulation_state);
 
-  left_sprocket_wheel_spinning_joint_.set_feedback(
-    hardware_state.leftSprocketWheelSpinningMotion);
+  left_sprocket_wheel_spinning_joint_.set_feedback(hardware_state.leftSprocketWheelSpinningMotion);
   right_sprocket_wheel_spinning_joint_.set_feedback(
     hardware_state.rightSprocketWheelSpinningMotion);
 }
 
 //-----------------------------------------------------------------------------
-std::vector<hardware_interface::StateInterface>
-SimulationInterface2TD::export_state_interfaces()
+std::vector<hardware_interface::StateInterface> SimulationInterface2TD::export_state_interfaces()
 {
   std::vector<hardware_interface::StateInterface> state_interfaces;
   left_sprocket_wheel_spinning_joint_.export_state_interfaces(state_interfaces);

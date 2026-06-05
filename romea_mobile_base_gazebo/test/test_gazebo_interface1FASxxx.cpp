@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <string>
 
@@ -26,10 +25,9 @@
 #include "romea_mobile_base_gazebo/gazebo_interface1FASxxx.hpp"
 
 // test
-#include "../test/test_helper.h"
 #include "../test/test_fixture.hpp"
+#include "../test/test_helper.h"
 #include "../test/test_utils.hpp"
-
 
 TEST(TestGazeboInterface1FASxxx, testSetGet1FAS2FWD)
 {
@@ -40,18 +38,15 @@ TEST(TestGazeboInterface1FASxxx, testSetGet1FAS2FWD)
   fixture.Simulator();
 
   romea::core::SimulationCommand1FASxxx command = {0.1, 0.2, 0.3, 2.0, -2.0, 3.0, -3.0};
-  for (size_t i=0; i < 1000; ++i) {
+  for (size_t i = 0; i < 1000; ++i) {
     fixture.interface->set_command(command);
     fixture.Step();
   }
   auto state = fixture.interface->get_state();
 
-  EXPECT_NEAR(
-    command.frontAxleSteeringAngle, state.frontAxleSteeringAngle, 0.1);
-  EXPECT_NEAR(
-    command.frontLeftWheelSteeringAngle, state.frontLeftWheelSteeringAngle, 0.1);
-  EXPECT_NEAR(
-    command.frontRightWheelSteeringAngle, state.frontRightWheelSteeringAngle, 0.1);
+  EXPECT_NEAR(command.frontAxleSteeringAngle, state.frontAxleSteeringAngle, 0.1);
+  EXPECT_NEAR(command.frontLeftWheelSteeringAngle, state.frontLeftWheelSteeringAngle, 0.1);
+  EXPECT_NEAR(command.frontRightWheelSteeringAngle, state.frontRightWheelSteeringAngle, 0.1);
   EXPECT_NEAR(
     command.frontLeftWheelSpinningSetPoint, state.frontLeftWheelSpinningMotion.velocity, 0.1);
   EXPECT_NEAR(
@@ -71,18 +66,15 @@ TEST(TestGazeboInterface1FASxxx, testSetGet1FAS2RWD)
   fixture.Simulator();
 
   romea::core::SimulationCommand1FASxxx command = {0.1, 0.2, 0.3, 2.0, -2.0, 3.0, -3.0};
-  for (size_t i=0; i < 1000; ++i) {
+  for (size_t i = 0; i < 1000; ++i) {
     fixture.interface->set_command(command);
     fixture.Step();
   }
   auto state = fixture.interface->get_state();
 
-  EXPECT_NEAR(
-    command.frontAxleSteeringAngle, state.frontAxleSteeringAngle, 0.1);
-  EXPECT_NEAR(
-    command.frontLeftWheelSteeringAngle, state.frontLeftWheelSteeringAngle, 0.1);
-  EXPECT_NEAR(
-    command.frontRightWheelSteeringAngle, state.frontRightWheelSteeringAngle, 0.1);
+  EXPECT_NEAR(command.frontAxleSteeringAngle, state.frontAxleSteeringAngle, 0.1);
+  EXPECT_NEAR(command.frontLeftWheelSteeringAngle, state.frontLeftWheelSteeringAngle, 0.1);
+  EXPECT_NEAR(command.frontRightWheelSteeringAngle, state.frontRightWheelSteeringAngle, 0.1);
   EXPECT_NEAR(
     command.frontLeftWheelSpinningSetPoint, state.frontLeftWheelSpinningMotion.velocity, 0.1);
   EXPECT_NEAR(
@@ -102,18 +94,15 @@ TEST(TestGazeboInterface1FASxxx, testSetGet1FAS4WD)
   fixture.Simulator();
 
   romea::core::SimulationCommand1FASxxx command = {0.1, 0.2, 0.3, 2.0, -2.0, 3.0, -3.0};
-  for (size_t i=0; i < 1000; ++i) {
+  for (size_t i = 0; i < 1000; ++i) {
     fixture.interface->set_command(command);
     fixture.Step();
   }
   auto state = fixture.interface->get_state();
 
-  EXPECT_NEAR(
-    command.frontAxleSteeringAngle, state.frontAxleSteeringAngle, 0.1);
-  EXPECT_NEAR(
-    command.frontLeftWheelSteeringAngle, state.frontLeftWheelSteeringAngle, 0.1);
-  EXPECT_NEAR(
-    command.frontRightWheelSteeringAngle, state.frontRightWheelSteeringAngle, 0.1);
+  EXPECT_NEAR(command.frontAxleSteeringAngle, state.frontAxleSteeringAngle, 0.1);
+  EXPECT_NEAR(command.frontLeftWheelSteeringAngle, state.frontLeftWheelSteeringAngle, 0.1);
+  EXPECT_NEAR(command.frontRightWheelSteeringAngle, state.frontRightWheelSteeringAngle, 0.1);
   EXPECT_NEAR(
     command.frontLeftWheelSpinningSetPoint, state.frontLeftWheelSpinningMotion.velocity, 0.1);
   EXPECT_NEAR(

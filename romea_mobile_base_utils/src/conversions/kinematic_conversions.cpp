@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <string>
 
@@ -55,7 +54,6 @@ void to_ros_msg(
     ros_kinematic_msg.covariance.data());
 }
 
-
 //-----------------------------------------------------------------------------
 void to_ros_msg(
   const rclcpp::Time & stamp,
@@ -87,7 +85,6 @@ void to_ros_msg(
   ros_twist_with_covariance.covariance[35] = romea_kinematic_measure.covariance(2, 2);
 }
 
-
 //-----------------------------------------------------------------------------
 core::OneAxleSteeringMeasure to_romea(
   const romea_mobile_base_msgs::msg::OneAxleSteeringMeasure & msg)
@@ -114,7 +111,6 @@ void to_ros_msg(
     ros_one_axle_steering_measure_msg.covariance.data());
 }
 
-
 //-----------------------------------------------------------------------------
 void to_ros_msg(
   const rclcpp::Time & stamp,
@@ -126,7 +122,6 @@ void to_ros_msg(
   ros_one_axle_steering_measure_msg.header.stamp = stamp;
   to_ros_msg(romea_one_axle_steering_measure, ros_one_axle_steering_measure_msg.measure);
 }
-
 
 //-----------------------------------------------------------------------------
 core::TwoAxleSteeringMeasure to_romea(
@@ -217,7 +212,6 @@ void to_ros_msg(
   ros_omni_steering_measure_msg.header.stamp = stamp;
   to_ros_msg(romea_omni_steering_measure, ros_omni_steering_measure_msg.measure);
 }
-
 
 //-----------------------------------------------------------------------------
 void to_ros_msg(

@@ -12,54 +12,50 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_CONTROLLERS__MOBILE_BASE_CONTROLLER_TRAITS_HPP_
 #define ROMEA_MOBILE_BASE_CONTROLLERS__MOBILE_BASE_CONTROLLER_TRAITS_HPP_
 
 // ros
-#include "four_wheel_steering_msgs/msg/four_wheel_steering.hpp"
 #include "ackermann_msgs/msg/ackermann_drive.hpp"
+#include "four_wheel_steering_msgs/msg/four_wheel_steering.hpp"
 #include "geometry_msgs/msg/twist.hpp"
 
 // romea core
-#include "romea_core_mobile_base/kinematic/skid_steering/InverseSkidSteeringKinematic.hpp"
-#include "romea_core_mobile_base/kinematic/omni_steering/InverseMecanumWheelSteeringKinematic.hpp"
-#include "romea_core_mobile_base/kinematic/wheel_steering/InverseFourWheelSteeringKinematic.hpp"
-#include "romea_core_mobile_base/kinematic/wheel_steering/InverseTwoWheelSteeringKinematic.hpp"
-#include "romea_core_mobile_base/kinematic/axle_steering/InverseOneAxleSteeringKinematic.hpp"
-#include "romea_core_mobile_base/kinematic/axle_steering/InverseTwoAxleSteeringKinematic.hpp"
-
-#include "romea_core_mobile_base/kinematic/skid_steering/ForwardSkidSteeringKinematic.hpp"
-#include "romea_core_mobile_base/kinematic/omni_steering/ForwardMecanumWheelSteeringKinematic.hpp"
-#include "romea_core_mobile_base/kinematic/wheel_steering/FowardFourWheelSteeringKinematic.hpp"
-#include "romea_core_mobile_base/kinematic/wheel_steering/FowardTwoWheelSteeringKinematic.hpp"
 #include "romea_core_mobile_base/kinematic/axle_steering/FowardOneAxleSteeringKinematic.hpp"
 #include "romea_core_mobile_base/kinematic/axle_steering/FowardTwoAxleSteeringKinematic.hpp"
+#include "romea_core_mobile_base/kinematic/axle_steering/InverseOneAxleSteeringKinematic.hpp"
+#include "romea_core_mobile_base/kinematic/axle_steering/InverseTwoAxleSteeringKinematic.hpp"
+#include "romea_core_mobile_base/kinematic/omni_steering/ForwardMecanumWheelSteeringKinematic.hpp"
+#include "romea_core_mobile_base/kinematic/omni_steering/InverseMecanumWheelSteeringKinematic.hpp"
+#include "romea_core_mobile_base/kinematic/skid_steering/ForwardSkidSteeringKinematic.hpp"
+#include "romea_core_mobile_base/kinematic/skid_steering/InverseSkidSteeringKinematic.hpp"
+#include "romea_core_mobile_base/kinematic/wheel_steering/FowardFourWheelSteeringKinematic.hpp"
+#include "romea_core_mobile_base/kinematic/wheel_steering/FowardTwoWheelSteeringKinematic.hpp"
+#include "romea_core_mobile_base/kinematic/wheel_steering/InverseFourWheelSteeringKinematic.hpp"
+#include "romea_core_mobile_base/kinematic/wheel_steering/InverseTwoWheelSteeringKinematic.hpp"
 
 // romea ros
 #include "romea_mobile_base_msgs/msg/kinematic_measure_stamped.hpp"
-#include "romea_mobile_base_msgs/msg/one_axle_steering_measure_stamped.hpp"
-#include "romea_mobile_base_msgs/msg/two_axle_steering_measure_stamped.hpp"
-#include "romea_mobile_base_msgs/msg/skid_steering_measure_stamped.hpp"
-#include "romea_mobile_base_msgs/msg/omni_steering_measure_stamped.hpp"
-
-#include "romea_mobile_base_msgs/msg/one_axle_steering_command.hpp"
-#include "romea_mobile_base_msgs/msg/two_axle_steering_command.hpp"
-#include "romea_mobile_base_msgs/msg/skid_steering_command.hpp"
 #include "romea_mobile_base_msgs/msg/omni_steering_command.hpp"
+#include "romea_mobile_base_msgs/msg/omni_steering_measure_stamped.hpp"
+#include "romea_mobile_base_msgs/msg/one_axle_steering_command.hpp"
+#include "romea_mobile_base_msgs/msg/one_axle_steering_measure_stamped.hpp"
+#include "romea_mobile_base_msgs/msg/skid_steering_command.hpp"
+#include "romea_mobile_base_msgs/msg/skid_steering_measure_stamped.hpp"
+#include "romea_mobile_base_msgs/msg/two_axle_steering_command.hpp"
+#include "romea_mobile_base_msgs/msg/two_axle_steering_measure_stamped.hpp"
 
 // local
 #include "romea_mobile_base_controllers/interfaces/controller_interface1FAS2FWD.hpp"
 #include "romea_mobile_base_controllers/interfaces/controller_interface1FAS2RWD.hpp"
 #include "romea_mobile_base_controllers/interfaces/controller_interface2AS4WD.hpp"
-#include "romea_mobile_base_controllers/interfaces/controller_interface2FWS2RWD.hpp"
 #include "romea_mobile_base_controllers/interfaces/controller_interface2FWS2FWD.hpp"
+#include "romea_mobile_base_controllers/interfaces/controller_interface2FWS2RWD.hpp"
 #include "romea_mobile_base_controllers/interfaces/controller_interface2FWS4WD.hpp"
 #include "romea_mobile_base_controllers/interfaces/controller_interface2TD.hpp"
 #include "romea_mobile_base_controllers/interfaces/controller_interface2WD.hpp"
 #include "romea_mobile_base_controllers/interfaces/controller_interface4WD.hpp"
 #include "romea_mobile_base_controllers/interfaces/controller_interface4WS4WD.hpp"
-
 
 namespace romea
 {
@@ -196,7 +192,6 @@ struct MobileBaseControllerTraits<ControllerInterface2TD, core::SkidSteeringKine
   using OdometryMeasureMsg = romea_mobile_base_msgs::msg::SkidSteeringMeasureStamped;
   using MobileBaseInfo = core::MobileBaseInfo2TD;
 };
-
 
 template<>
 struct MobileBaseControllerTraits<ControllerInterface4WD, core::MecanumWheelSteeringKinematic>

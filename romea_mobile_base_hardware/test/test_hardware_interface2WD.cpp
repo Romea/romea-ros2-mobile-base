@@ -13,18 +13,18 @@
 // limitations under the License.
 
 // std
-#include <memory>
 #include <fstream>
-#include <string>
+#include <memory>
 #include <sstream>
+#include <string>
 #include <vector>
 
 // gtest
 #include "gtest/gtest.h"
 
 // ros
-#include "rclcpp/node.hpp"
 #include "hardware_interface/component_parser.hpp"
+#include "rclcpp/node.hpp"
 
 // local
 #include "../test/test_helper.h"
@@ -34,15 +34,9 @@
 class TestHarwareInterface2WD : public ::testing::Test
 {
 protected:
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  static void SetUpTestCase() { rclcpp::init(0, nullptr); }
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
+  static void TearDownTestCase() { rclcpp::shutdown(); }
 
   void SetUp() override
   {
@@ -68,7 +62,6 @@ protected:
   std::unique_ptr<romea::ros2::HardwareInterface2WD> interface;
   std::vector<hardware_interface::HardwareInfo> info;
 };
-
 
 TEST_F(TestHarwareInterface2WD, checkStateInterfaceNames)
 {
@@ -136,7 +129,6 @@ TEST_F(TestHarwareInterface4WD, checkSetFeedbackUsingJointStates)
   }
 }
 
-
 TEST_F(TestHarwareInterface2WD, checkGetCommand)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
@@ -168,7 +160,6 @@ TEST_F(TestHarwareInterface4WD, checkGetCommandUsingJointState)
   EXPECT_DOUBLE_EQ(command.velocity[0], 1.0);
   EXPECT_DOUBLE_EQ(command.velocity[1], 2.0);
 }
-
 
 //-----------------------------------------------------------------------------
 int main(int argc, char ** argv)

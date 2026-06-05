@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <string>
 #include <vector>
 
 // romea
 #include "romea_core_mobile_base/simulation/SimulationControl2THD.hpp"
-#include "romea_mobile_base_utils/ros2_control/info/hardware_info2THD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2THD.hpp"
+#include "romea_mobile_base_utils/ros2_control/info/hardware_info2THD.hpp"
 
 namespace romea
 {
@@ -54,8 +53,7 @@ HardwareInterface2THD::HardwareInterface2THD(
 }
 
 //-----------------------------------------------------------------------------
-std::vector<hardware_interface::StateInterface>
-HardwareInterface2THD::export_state_interfaces()
+std::vector<hardware_interface::StateInterface> HardwareInterface2THD::export_state_interfaces()
 {
   std::vector<hardware_interface::StateInterface> state_interfaces;
   left_sprocket_wheel_spinning_joint_.export_state_interfaces(state_interfaces);
@@ -68,8 +66,7 @@ HardwareInterface2THD::export_state_interfaces()
 }
 
 //-----------------------------------------------------------------------------
-std::vector<hardware_interface::CommandInterface>
-HardwareInterface2THD::export_command_interfaces()
+std::vector<hardware_interface::CommandInterface> HardwareInterface2THD::export_command_interfaces()
 {
   std::vector<hardware_interface::CommandInterface> command_interfaces;
   left_sprocket_wheel_spinning_joint_.export_command_interface(command_interfaces);
@@ -81,8 +78,9 @@ HardwareInterface2THD::export_command_interfaces()
 core::HardwareCommand2TD HardwareInterface2THD::get_hardware_command() const
 {
   // *INDENT-OFF*
-  return {left_sprocket_wheel_spinning_joint_.get_command(),
-      right_sprocket_wheel_spinning_joint_.get_command()};
+  return {
+    left_sprocket_wheel_spinning_joint_.get_command(),
+    right_sprocket_wheel_spinning_joint_.get_command()};
   // *INDENT-ON*
 
   // return get_command();
@@ -100,8 +98,7 @@ sensor_msgs::msg::JointState HardwareInterface2THD::get_joint_state_command() co
 //-----------------------------------------------------------------------------
 void HardwareInterface2THD::set_feedback(const core::HardwareState2TD & hardware_state)
 {
-  left_sprocket_wheel_spinning_joint_.set_feedback(
-    hardware_state.leftSprocketWheelSpinningMotion);
+  left_sprocket_wheel_spinning_joint_.set_feedback(hardware_state.leftSprocketWheelSpinningMotion);
   right_sprocket_wheel_spinning_joint_.set_feedback(
     hardware_state.rightSprocketWheelSpinningMotion);
   // complete_feedback_(hardware_state);
@@ -125,10 +122,7 @@ void HardwareInterface2THD::set_feedback(const sensor_msgs::msg::JointState & jo
 void HardwareInterface2THD::complete_feedback_(const core::HardwareState2TD & hardware_state)
 {
   core::SimulationState2THD simulation_state = toSimulationState2THD(
-    sprocket_wheel_radius_,
-    idler_wheel_radius_,
-    track_thickness_,
-    hardware_state);
+    sprocket_wheel_radius_, idler_wheel_radius_, track_thickness_, hardware_state);
 
   front_left_idler_wheel_spinning_joint_feedback_.set(
     simulation_state.frontLeftIdlerWheelSpinningMotion);

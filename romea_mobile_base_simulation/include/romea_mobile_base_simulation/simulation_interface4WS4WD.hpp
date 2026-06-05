@@ -12,14 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_SIMULATION__SIMULATION_INTERFACE4WS4WD_HPP_
 #define ROMEA_MOBILE_BASE_SIMULATION__SIMULATION_INTERFACE4WS4WD_HPP_
 
 // romea
-#include "romea_mobile_base_hardware/hardware_interface4WS4WD.hpp"
 #include "romea_core_mobile_base/simulation/SimulationControl4WS4WD.hpp"
-
+#include "romea_mobile_base_hardware/hardware_interface4WS4WD.hpp"
 
 namespace romea
 {

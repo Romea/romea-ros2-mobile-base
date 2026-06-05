@@ -12,21 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <string>
 #include <vector>
 
 // romea
 #include "romea_core_mobile_base/simulation/SimulationControl2FWS2RWD.hpp"
-#include "romea_mobile_base_utils/ros2_control/info/hardware_info2FWSxxx.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2FWS2RWD.hpp"
+#include "romea_mobile_base_utils/ros2_control/info/hardware_info2FWSxxx.hpp"
 
 namespace romea
 {
 namespace ros2
 {
-
 
 //-----------------------------------------------------------------------------
 HardwareInterface2FWS2RWD::HardwareInterface2FWS2RWD(
@@ -72,8 +70,8 @@ std::vector<hardware_interface::StateInterface> HardwareInterface2FWS2RWD::expor
 }
 
 //-----------------------------------------------------------------------------
-std::vector<hardware_interface::CommandInterface> HardwareInterface2FWS2RWD::
-export_command_interfaces()
+std::vector<hardware_interface::CommandInterface>
+HardwareInterface2FWS2RWD::export_command_interfaces()
 {
   std::vector<hardware_interface::CommandInterface> command_interfaces;
   front_left_wheel_steering_joint_.export_command_interface(command_interfaces);
@@ -87,10 +85,11 @@ export_command_interfaces()
 core::HardwareCommand2FWS2RWD HardwareInterface2FWS2RWD::get_hardware_command() const
 {
   // *INDENT-OFF*
-  return {front_left_wheel_steering_joint_.get_command(),
-      front_right_wheel_steering_joint_.get_command(),
-      rear_left_wheel_spinning_joint_.get_command(),
-      rear_right_wheel_spinning_joint_.get_command()};
+  return {
+    front_left_wheel_steering_joint_.get_command(),
+    front_right_wheel_steering_joint_.get_command(),
+    rear_left_wheel_spinning_joint_.get_command(),
+    rear_right_wheel_spinning_joint_.get_command()};
   // *INDENT-ON*
 }
 
@@ -149,7 +148,6 @@ void HardwareInterface2FWS2RWD::complete_feedback_(
   front_left_wheel_spinning_joint_feedback_.set(simulation_state.rearLeftWheelSpinningMotion);
   front_right_wheel_spinning_joint_feedback_.set(simulation_state.rearRightWheelSpinningMotion);
 }
-
 
 }  // namespace ros2
 }  // namespace romea

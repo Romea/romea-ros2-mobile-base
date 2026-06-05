@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_GAZEBO__STEERING_JOINT_GAZEBO_INTERFACE_HPP_
 #define ROMEA_MOBILE_BASE_GAZEBO__STEERING_JOINT_GAZEBO_INTERFACE_HPP_
 
@@ -26,14 +25,12 @@
 // local
 #include "romea_mobile_base_gazebo/joint_gazebo_interface.hpp"
 
-
 namespace romea
 {
 namespace ros2
 {
 
-class SteeringJointGazeboInterface :
-  public JointGazeboInterface<double, double>
+class SteeringJointGazeboInterface : public JointGazeboInterface<double, double>
 {
 public:
   SteeringJointGazeboInterface(
@@ -41,12 +38,11 @@ public:
     std::map<std::string, gz::sim::Entity> & enable_joints,
     const hardware_interface::ComponentInfo & joint_info);
 
-  void set_command(const double & command)final;
+  void set_command(const double & command) final;
 
-  double get_state()const final;
+  double get_state() const final;
 
-private :
-
+private:
   mutable double position_;
 };
 

@@ -12,20 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <fstream>
 #include <memory>
-#include <string>
 #include <sstream>
+#include <string>
 #include <vector>
 
 // gtest
 #include "gtest/gtest.h"
 
 // ros
-#include "rclcpp/node.hpp"
 #include "hardware_interface/component_parser.hpp"
+#include "rclcpp/node.hpp"
 
 // local
 #include "../test/test_helper.h"
@@ -35,15 +34,9 @@
 class TestHarwareInterface4WS4WD : public ::testing::Test
 {
 protected:
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  static void SetUpTestCase() { rclcpp::init(0, nullptr); }
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
+  static void TearDownTestCase() { rclcpp::shutdown(); }
 
   void SetUp() override
   {
@@ -55,22 +48,20 @@ protected:
     std::ifstream file(urdf_file.c_str());
     std::stringstream buffer;
     buffer << file.rdbuf();
-//    std::cout << buffer.str() <<std::endl;
+    //    std::cout << buffer.str() <<std::endl;
 
     info = hardware_interface::parse_control_resources_from_urdf(buffer.str());
   }
 
   void MakeInterface(const std::string & command_interface_type)
   {
-    interface = std::make_unique<romea::ros2::HardwareInterface4WS4WD>(
-      info[0],
-      command_interface_type);
+    interface =
+      std::make_unique<romea::ros2::HardwareInterface4WS4WD>(info[0], command_interface_type);
   }
 
   std::unique_ptr<romea::ros2::HardwareInterface4WS4WD> interface;
   std::vector<hardware_interface::HardwareInfo> info;
 };
-
 
 TEST_F(TestHarwareInterface4WS4WD, checkStateInterfaceNames)
 {
@@ -85,7 +76,6 @@ TEST_F(TestHarwareInterface4WS4WD, checkStateInterfaceNames)
   check_interface_name(state_interfaces[10], "robot_joint7/position");
   check_interface_name(state_interfaces[13], "robot_joint8/position");
 }
-
 
 TEST_F(TestHarwareInterface4WS4WD, checkCommandInterfaceTypeWhenVelocityControlIsUsed)
 {
@@ -114,7 +104,6 @@ TEST_F(TestHarwareInterface4WS4WD, DISABLED_checkCommandInterfaceTypeWhenEffortC
   check_interface_name(command_interfaces[6], "robot_joint7/effort");
   check_interface_name(command_interfaces[7], "robot_joint8/effort");
 }
-
 
 TEST_F(TestHarwareInterface4WS4WD, checkSetFeedback)
 {
@@ -145,7 +134,6 @@ TEST_F(TestHarwareInterface4WS4WD, checkSetFeedback)
     EXPECT_DOUBLE_EQ(state_interfaces[i].get_value(), i + 1.0);
   }
 }
-
 
 TEST_F(TestHarwareInterface4WS4WD, checkSetFeedbackUsingJointStates)
 {
@@ -184,7 +172,6 @@ TEST_F(TestHarwareInterface4WS4WD, checkSetFeedbackUsingJointStates)
     EXPECT_DOUBLE_EQ(state_interfaces[i].get_value(), i + 1.0);
   }
 }
-
 
 TEST_F(TestHarwareInterface4WS4WD, checkGetCommand)
 {

@@ -12,17 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_UTILS__ROS2_CONTROL__HARDWARE__STEERING_JOINT_HARDWARE_INTERFACE_HPP_
 #define ROMEA_MOBILE_BASE_UTILS__ROS2_CONTROL__HARDWARE__STEERING_JOINT_HARDWARE_INTERFACE_HPP_
 
 // std
-#include <vector>
 #include <string>
+#include <vector>
 
 // romea
-#include "romea_mobile_base_utils/ros2_control/hardware/hardware_handle.hpp"
 #include "romea_common_utils/joint_states.hpp"
+#include "romea_mobile_base_utils/ros2_control/hardware/hardware_handle.hpp"
 
 namespace romea
 {
@@ -39,15 +38,13 @@ public:
   explicit SteeringJointHardwareInterface(const hardware_interface::ComponentInfo & joint_info);
 
   SteeringJointHardwareInterface(
-    const size_t & joint_id,
-    const hardware_interface::ComponentInfo & joint_info
-  );
+    const size_t & joint_id, const hardware_interface::ComponentInfo & joint_info);
 
   core::SteeringAngleCommand get_command() const;
   void set_command(const core::SteeringAngleCommand & command);
 
   void set_feedback(const core::SteeringAngleState & state);
-  core::SteeringAngleState get_feedback()const;
+  core::SteeringAngleState get_feedback() const;
 
   void write_command(sensor_msgs::msg::JointState & joint_state_command) const;
   void read_feedback(const sensor_msgs::msg::JointState & joint_state_feedback);

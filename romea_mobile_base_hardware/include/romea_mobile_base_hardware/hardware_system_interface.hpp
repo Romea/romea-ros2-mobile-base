@@ -12,34 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_SYSTEM_INTERFACE_HPP_
 #define ROMEA_MOBILE_BASE_HARDWARE__HARDWARE_SYSTEM_INTERFACE_HPP_
 
 // std
-#include <vector>
 #include <memory>
 #include <string>
+#include <vector>
 
 // ros
 #include "hardware_interface/system_interface.hpp"
 
 // local
 // #include "romea_mobile_base_hardware/hardware_interface2WD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface4WD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface4WS4WD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface2FWS4WD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface2FWS2RWD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface2FWS2FWD.hpp"
+#include "romea_mobile_base_hardware/hardware_interface1FAS2FWD.hpp"
+#include "romea_mobile_base_hardware/hardware_interface1FAS2RWD.hpp"
+#include "romea_mobile_base_hardware/hardware_interface1FAS4WD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2AS2FWD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2AS2RWD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2AS4WD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface1FAS2RWD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface1FAS2FWD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface1FAS4WD.hpp"
+#include "romea_mobile_base_hardware/hardware_interface2FWS2FWD.hpp"
+#include "romea_mobile_base_hardware/hardware_interface2FWS2RWD.hpp"
+#include "romea_mobile_base_hardware/hardware_interface2FWS4WD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2TD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2THD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2TTD.hpp"
+#include "romea_mobile_base_hardware/hardware_interface4WD.hpp"
+#include "romea_mobile_base_hardware/hardware_interface4WS4WD.hpp"
 
 namespace romea
 {

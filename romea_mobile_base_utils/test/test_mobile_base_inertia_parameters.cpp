@@ -13,8 +13,8 @@
 // limitations under the License.
 
 // std
-#include <string>
 #include <memory>
+#include <string>
 
 // gtest
 #include "gtest/gtest.h"
@@ -29,19 +29,11 @@
 class TestMobileBaseInertiaParams : public ::testing::Test
 {
 protected:
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  static void SetUpTestCase() { rclcpp::init(0, nullptr); }
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
+  static void TearDownTestCase() { rclcpp::shutdown(); }
 
-  void SetUp() override
-  {
-  }
+  void SetUp() override {}
 
   void loadYaml(const std::string & config_filename)
   {
@@ -52,7 +44,6 @@ protected:
 
   std::shared_ptr<rclcpp::Node> node;
 };
-
 
 TEST_F(TestMobileBaseInertiaParams, GetFullDescription)
 {
@@ -67,7 +58,6 @@ TEST_F(TestMobileBaseInertiaParams, GetFullDescription)
   EXPECT_DOUBLE_EQ(inertia.zMoment, 5);
 }
 
-
 TEST_F(TestMobileBaseInertiaParams, GetDescriptionWithoutCenterPosition)
 {
   loadYaml(std::string(TEST_DIR) + "/test_mobile_base_inertia_parameters.yaml");
@@ -80,7 +70,6 @@ TEST_F(TestMobileBaseInertiaParams, GetDescriptionWithoutCenterPosition)
   EXPECT_DOUBLE_EQ(inertia.center.z(), 0);
   EXPECT_DOUBLE_EQ(inertia.zMoment, 5);
 }
-
 
 //-----------------------------------------------------------------------------
 int main(int argc, char ** argv)

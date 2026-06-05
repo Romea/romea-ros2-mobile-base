@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <string>
 
@@ -30,7 +29,6 @@
 #include "../test/test_helper.h"
 #include "../test/test_utils.hpp"
 
-
 TEST(TestGazeboInterface2TD, testSetGet)
 {
   std::string urdf = make_urdf_description("2TD");
@@ -40,7 +38,7 @@ TEST(TestGazeboInterface2TD, testSetGet)
   fixture.Simulator();
 
   romea::core::SimulationCommand2TD command = {-1.0, 1.0, -2.0, 2.0};
-  for (size_t i=0; i < 1000; ++i) {
+  for (size_t i = 0; i < 1000; ++i) {
     fixture.interface->set_command(command);
     fixture.Step();
   }
@@ -49,7 +47,9 @@ TEST(TestGazeboInterface2TD, testSetGet)
   EXPECT_NEAR(
     command.leftSprocketWheelSpinningSetPoint, state.leftSprocketWheelSpinningMotion.velocity, 0.1);
   EXPECT_NEAR(
-    command.rightSprocketWheelSpinningSetPoint, state.rightSprocketWheelSpinningMotion.velocity, 0.1); // NOLINT
+    command.rightSprocketWheelSpinningSetPoint,
+    state.rightSprocketWheelSpinningMotion.velocity,
+    0.1);  // NOLINT
   EXPECT_NEAR(
     command.leftIdlerWheelSpinningSetPoint, state.leftIdlerWheelSpinningMotion.velocity, 0.1);
   EXPECT_NEAR(

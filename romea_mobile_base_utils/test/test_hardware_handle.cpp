@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <string>
 
@@ -33,15 +32,9 @@
 class TestHardwareInterfaceHandle : public ::testing::Test
 {
 protected:
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  static void SetUpTestCase() { rclcpp::init(0, nullptr); }
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
+  static void TearDownTestCase() { rclcpp::shutdown(); }
 
   void SetUp() override
   {
@@ -79,7 +72,6 @@ protected:
   }
   hardware_interface::HardwareInfo info;
 };
-
 
 TEST_F(TestHardwareInterfaceHandle, checkMakeHardwareCommandInterface)
 {

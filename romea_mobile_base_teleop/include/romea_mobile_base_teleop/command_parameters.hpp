@@ -1,4 +1,5 @@
-// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Copyright 2022 INRAE, French National Research Institute for Agriculture,
+// Food and Environment
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,10 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_TELEOP__COMMAND_PARAMETERS_HPP_
 #define ROMEA_MOBILE_BASE_TELEOP__COMMAND_PARAMETERS_HPP_
-
 
 // std
 #include <memory>
@@ -47,7 +46,6 @@ void declare_maximal_lateral_speeds(std::shared_ptr<rclcpp::Node> node);
 
 void declare_maximal_angular_speeds(std::shared_ptr<rclcpp::Node> node);
 
-
 double get_maximal_steering_angle(std::shared_ptr<rclcpp::Node> node);
 
 double get_maximal_front_steering_angle(std::shared_ptr<rclcpp::Node> node);
@@ -60,7 +58,6 @@ MaximalSpeeds get_maximal_lateral_speeds(std::shared_ptr<rclcpp::Node> node);
 
 MaximalSpeeds get_maximal_angular_speeds(std::shared_ptr<rclcpp::Node> node);
 
-
 void declare_command_output_message_type(std::shared_ptr<rclcpp::Node> node);
 
 std::string get_command_output_message_type(std::shared_ptr<rclcpp::Node> node);
@@ -68,7 +65,6 @@ std::string get_command_output_message_type(std::shared_ptr<rclcpp::Node> node);
 void declare_command_output_message_priority(std::shared_ptr<rclcpp::Node> node);
 
 int get_command_output_message_priority(std::shared_ptr<rclcpp::Node> node);
-
 
 }  // namespace ros2
 }  // namespace romea

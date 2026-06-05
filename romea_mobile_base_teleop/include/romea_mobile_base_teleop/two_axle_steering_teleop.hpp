@@ -1,4 +1,5 @@
-// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Copyright 2022 INRAE, French National Research Institute for Agriculture,
+// Food and Environment
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,7 +12,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 
 #ifndef ROMEA_MOBILE_BASE_TELEOP__TWO_AXLE_STEERING_TELEOP_HPP_
 #define ROMEA_MOBILE_BASE_TELEOP__TWO_AXLE_STEERING_TELEOP_HPP_
@@ -46,11 +46,11 @@ private:
 
   std::map<std::string, int> get_joystick_buttons_mapping_() override;
 
-  void  declare_command_ranges_() override;
+  void declare_command_ranges_() override;
 
   void get_command_ranges_() override;
 
-  void joystick_callback_(const Joystick & joy)override;
+  void joystick_callback_(const Joystick & joy) override;
 
   double compute_linear_speed_(const double & maximal_linear_speed) const;
 

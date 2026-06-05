@@ -12,30 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_UTILS__CONVERSIONS__COMMAND_CONVERSIONS_HPP_
 #define ROMEA_MOBILE_BASE_UTILS__CONVERSIONS__COMMAND_CONVERSIONS_HPP_
 
 // romea
-#include "romea_core_mobile_base/kinematic/skid_steering/SkidSteeringCommand.hpp"
 #include "romea_core_mobile_base/kinematic/axle_steering/OneAxleSteeringCommand.hpp"
 #include "romea_core_mobile_base/kinematic/axle_steering/TwoAxleSteeringCommand.hpp"
 #include "romea_core_mobile_base/kinematic/omni_steering/OmniSteeringCommand.hpp"
-#include "romea_mobile_base_msgs/msg/one_axle_steering_command.hpp"
-#include "romea_mobile_base_msgs/msg/two_axle_steering_command.hpp"
-#include "romea_mobile_base_msgs/msg/skid_steering_command.hpp"
+#include "romea_core_mobile_base/kinematic/skid_steering/SkidSteeringCommand.hpp"
 #include "romea_mobile_base_msgs/msg/omni_steering_command.hpp"
+#include "romea_mobile_base_msgs/msg/one_axle_steering_command.hpp"
+#include "romea_mobile_base_msgs/msg/skid_steering_command.hpp"
+#include "romea_mobile_base_msgs/msg/two_axle_steering_command.hpp"
 
 // ros
-#include "geometry_msgs/msg/twist.hpp"
-#include "four_wheel_steering_msgs/msg/four_wheel_steering.hpp"
 #include "ackermann_msgs/msg/ackermann_drive.hpp"
+#include "four_wheel_steering_msgs/msg/four_wheel_steering.hpp"
+#include "geometry_msgs/msg/twist.hpp"
 
 namespace romea
 {
 namespace ros2
 {
-
 
 void to_ros_msg(
   const core::TwoAxleSteeringCommand & romea_two_axle_steering_command,
@@ -108,7 +106,6 @@ void to_ros_msg(
 void to_romea(
   const romea_mobile_base_msgs::msg::OmniSteeringCommand & ros_omni_steering_command_msg,
   core::OmniSteeringCommand & romea_omni_steering_command);
-
 
 }  // namespace ros2
 }  // namespace romea

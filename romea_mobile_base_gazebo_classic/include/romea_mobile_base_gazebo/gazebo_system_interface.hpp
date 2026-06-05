@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_GAZEBO__GAZEBO_SYSTEM_INTERFACE_HPP_
 #define ROMEA_MOBILE_BASE_GAZEBO__GAZEBO_SYSTEM_INTERFACE_HPP_
 
@@ -38,7 +37,6 @@
 #include "romea_mobile_base_simulation/simulation_interface4WD.hpp"
 #include "romea_mobile_base_simulation/simulation_interface4WS4WD.hpp"
 
-
 // local
 #include "romea_mobile_base_gazebo/gazebo_interface1FASxxx.hpp"
 #include "romea_mobile_base_gazebo/gazebo_interface2ASxxx.hpp"
@@ -49,7 +47,6 @@
 #include "romea_mobile_base_gazebo/gazebo_interface2WD.hpp"
 #include "romea_mobile_base_gazebo/gazebo_interface4WD.hpp"
 #include "romea_mobile_base_gazebo/gazebo_interface4WS4WD.hpp"
-
 
 namespace romea
 {
@@ -82,12 +79,10 @@ public:
   std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
 
   virtual hardware_interface::return_type read(
-    const rclcpp::Time & time,
-    const rclcpp::Duration & period);
+    const rclcpp::Time & time, const rclcpp::Duration & period);
 
   virtual hardware_interface::return_type write(
-    const rclcpp::Time & time,
-    const rclcpp::Duration & period);
+    const rclcpp::Time & time, const rclcpp::Duration & period);
 
 private:
   bool check_physics_engine_configuration_();
@@ -115,16 +110,13 @@ using GazeboSystemInterface2FWS2RWD =
   GazeboSystemInterface<GazeboInterface2FWSxxx, SimulationInterface2FWS2RWD>;
 using GazeboSystemInterface2FWS4WD =
   GazeboSystemInterface<GazeboInterface2FWSxxx, SimulationInterface2FWS4WD>;
-using GazeboSystemInterface2TD =
-  GazeboSystemInterface<GazeboInterface2TD, SimulationInterface2TD>;
+using GazeboSystemInterface2TD = GazeboSystemInterface<GazeboInterface2TD, SimulationInterface2TD>;
 using GazeboSystemInterface2THD =
   GazeboSystemInterface<GazeboInterface2THD, SimulationInterface2THD>;
 using GazeboSystemInterface2TTD =
   GazeboSystemInterface<GazeboInterface2TTD, SimulationInterface2TTD>;
-using GazeboSystemInterface2WD =
-  GazeboSystemInterface<GazeboInterface2WD, SimulationInterface2WD>;
-using GazeboSystemInterface4WD =
-  GazeboSystemInterface<GazeboInterface4WD, SimulationInterface4WD>;
+using GazeboSystemInterface2WD = GazeboSystemInterface<GazeboInterface2WD, SimulationInterface2WD>;
+using GazeboSystemInterface4WD = GazeboSystemInterface<GazeboInterface4WD, SimulationInterface4WD>;
 using GazeboSystemInterface4WS4WD =
   GazeboSystemInterface<GazeboInterface4WS4WD, SimulationInterface4WS4WD>;
 

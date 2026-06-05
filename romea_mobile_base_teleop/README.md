@@ -1,264 +1,230 @@
-# ROMEA Teleop Drivers #
+# romea_mobile_base_teleop
 
-# 1 Overview #
+## 1) Overview
 
-This package contains teleop nodes for skid, ackermann (one axle), four wheel (two axles) and omni steering robots. It converts joystick messages into command messages compatible with the vehicle controllers. Additionally, these nodes can automatically register and unregister the teleoperation output topic with the romea_cmd_mux_node from the romea_cmd_mux package.
+`romea_mobile_base_teleop` provides joystick teleoperation nodes for the mobile base command families used in the ROMEA stack.
 
-# 2 Nodes #
+It converts `sensor_msgs/msg/Joy` messages into command messages compatible with `romea_mobile_base_controllers` and with common ROS command interfaces.
 
+The package provides:
 
-### 2.1 skid_steering_teleop_node ###
+* teleoperation nodes for skid, omni, one-axle and two-axle steering commands
+* default joystick remapping files for common devices
+* a launch file that selects the correct teleoperation node from the mobile base configuration
+* a Python module that completes and clamps teleoperation configurations from robot and joystick descriptions
 
-### 2.1.1 Subscribed Topics ###
+Teleoperation is enabled only while `slow_mode` or `turbo_mode` is pressed. When the mode button is released, the node sends a null command once to stop the robot.
 
-- **joy** : (sensor_msgs/Joy)
+If `cmd_output.message_priority` is different from `-1`, the teleoperation output topic is registered in the command multiplexer provided by the `romea_cmd_mux` package. When the priority is `-1`, no command mux registration is attempted.
 
-  Joystick messages to be translated to velocity commands.  
+---
 
-### 2.1.2 Published Topics ###
+## 2) Teleoperation nodes
 
-- **cmd_vel** (geometry_msgs/Twist)
+All mobile base teleoperation nodes subscribe to:
 
-  ROS velocity messages arising from joystick commands. Available if parameter cmd_output.message_type is equal to geometry_msgs/Twist.
+| Topic | Type | Description |
+|-------|------|-------------|
+| `joystick/joy` | `sensor_msgs/msg/Joy` | joystick input, usually remapped from the joystick driver topic |
 
-- cmd_skid_steering (romea_mobile_base_msgs/SkidSteeringCommand)
+They publish one command topic selected by `cmd_output.message_type`.
 
-  Romea skid steering command messages arising from joystick commands. Available if parameter cmd_output.message_type is equal to romea_mobile_base_msgs/SkidSteeringCommand.
+### 2.1 Mobile base nodes
 
-### 2.1.3 Parameters ###
+| Executable | Command family | Supported output message types | Output topic |
+|------------|----------------|--------------------------------|--------------|
+| `skid_steering_teleop_node` | skid steering | `geometry_msgs/Twist` | `cmd_vel` |
+| `skid_steering_teleop_node` | skid steering | `romea_mobile_base_msgs/SkidSteeringCommand` | `cmd_skid_steering` |
+| `omni_steering_teleop_node` | omni steering | `geometry_msgs/Twist` | `cmd_vel` |
+| `omni_steering_teleop_node` | omni steering | `romea_mobile_base_msgs/OmniSteeringCommand` | `cmd_omni_steering` |
+| `one_axle_steering_teleop_node` | one-axle steering | `geometry_msgs/Twist` | `cmd_vel` |
+| `one_axle_steering_teleop_node` | one-axle steering | `ackermann_msgs/AckermannDrive` | `cmd_steer` |
+| `one_axle_steering_teleop_node` | one-axle steering | `romea_mobile_base_msgs/OneAxleSteeringCommand` | `cmd_one_axle_steering` |
+| `two_axle_steering_teleop_node` | two-axle steering | `four_wheel_steering_msgs/FourWheelSteering` | `cmd_4ws` |
+| `two_axle_steering_teleop_node` | two-axle steering | `romea_mobile_base_msgs/TwoAxleSteeringCommand` | `cmd_two_axle_steering` |
 
-- jostick_mapping.axes.linear_speed (string, default node)
+The output topic is selected internally by `romea_mobile_base_utils` from the configured message type.
 
-    Id of the stick (axe) used to get linear speed from joy msg
+---
 
-- jostick_maping.axes.angular_speed (string, default none)
+## 3) Configuration
 
-    Id of the stick (axe) used to get angular speed from joy msg
+Teleoperation nodes use three parameter groups:
 
-- joystick_remapping.buttons.slow_mode (string, default none)
+| Group | Purpose |
+|-------|---------|
+| `joystick_mapping` | maps logical teleoperation actions to joystick axis and button ids |
+| `cmd_output` | selects the output message type and optional command mux priority |
+| `cmd_range` | defines the slow and turbo command limits used by teleoperation |
 
-    Id of the button used to get slow motion mode status from joy msg
+### 3.1 Common parameters
 
-- joystick_remapping.buttons.turbo_mode (string, default none) 
+```yaml
+cmd_output:
+  message_type: romea_mobile_base_msgs/SkidSteeringCommand
+  message_priority: -1
 
-    Id of the button used to get turbo motion mode status from joy msg
+cmd_range:
+  maximal_linear_speed:
+    slow_mode: 1.0
+    turbo_mode: 2.0
+```
 
-- cmd_output.message_type (string, default none)
+`message_priority` is optional and defaults to `-1`. With this value, the teleoperation node does not register its output topic in `romea_cmd_mux`.
 
-  Type of messages published by teleop node : geometry_msgs/Twist or   romea_mobile_base_msgs/SkidSteeringCommand
+`turbo_mode` values are optional in user teleoperation configurations generated through the Python helper. Missing turbo values are completed from the mobile base limits.
 
-- cmd_output.message_priority(int, default -1)
+### 3.2 Joystick mappings
 
-  Priority of messages from 0 to 255. If this parameters is defined by user, the teleop will call automatically service cmd_mux/subscribe to register output topic (cmd_vel or cmd_skid_steering) to cmd_mux node ( see romea_cmd_mux package). 
+The expected joystick actions depend on the command family.
 
-- cmd_range.maximal_linear_speed.slow_mode (double, default none)
+| Command family | Axes |
+|----------------|------|
+| `skid_steering` | `linear_speed`, `angular_speed` |
+| `omni_steering` | `linear_speed`, `lateral_speed`, `angular_speed` |
+| `one_axle_steering` | `linear_speed`, `steering_angle` |
+| `two_axle_steering` | `forward_speed`, `backward_speed`, `front_steering_angle`, `rear_steering_angle` |
 
-    Output maximal linear speed when slow mode is activated   
+Mobile base teleoperation nodes use these buttons:
 
-- cmd_range.maximal_linear_speed.turbo_mode (double, default none)
+| Button | Purpose |
+|--------|---------|
+| `slow_mode` | enable teleoperation using slow command limits |
+| `turbo_mode` | enable teleoperation using turbo command limits |
 
-    Output maximal linear speed when turbo mode is activated 
+Example runtime parameter file for a skid-steering teleoperation node:
 
-- cmd_range.maximal_angular_speed.slow_mode (double, default none)
+```yaml
+/**:
+  ros__parameters:
+    joystick_mapping:
+      axes: {linear_speed: 0, angular_speed: 1}
+      buttons: {slow_mode: 0, turbo_mode: 1}
 
-    Output maximal angular speed  when slow motion mode is activated   
+    cmd_output:
+      message_type: romea_mobile_base_msgs/SkidSteeringCommand
+      message_priority: -1
 
-- cmd_range.maximal_angular_speed_.turbo_mode (double, default none)
+    cmd_range:
+      maximal_linear_speed: {slow_mode: 1.0, turbo_mode: 2.0}
+      maximal_angular_speed: {slow_mode: 0.5, turbo_mode: 1.0}
+```
 
-    Output maximal angular speed  when turbo motion mode is activated      
+---
 
+## 4) Default joystick remappings
 
-# 2.2 omni_steering_teleop_node #
+The `config/` directory contains default remapping files that map symbolic joystick names to the logical teleoperation actions expected by the nodes.
 
-### 2.2.1 Subscribed Topics ###
+Supported remapping files include:
 
-  - joy : (sensor_msgs/Joy)
+| Joystick type | Command families |
+|---------------|------------------|
+| `microsoft_xbox` | `skid_steering`, `omni_steering`, `one_axle_steering`, `two_axle_steering` |
+| `sony_dualshock4` | `skid_steering`, `omni_steering`, `one_axle_steering`, `two_axle_steering` |
+| `keyboard` | `one_axle_steering`, `two_axle_steering` |
 
-    Joystick messages to be translated to velocity commands.  
+The Python helper selects the default file from:
 
-### 2.2.2 Published Topics ###
+```text
+<joystick_type>_<command_type>_remappings.yaml
+```
 
-  - cmd_vel (geometry_msgs/Twist)
+For example, a Microsoft Xbox joystick used with a skid-steering robot selects:
 
-    Ros velocity messages arising from joystick commands. Available if parameter cmd_output.message_type is equal to geometry_msgs/Twist.
-    
-- cmd_omni_steering (romea_mobile_base_msgs/OmniSteeringCommand)
+```text
+microsoft_xbox_skid_steering_remappings.yaml
+```
 
-  Romea omni steering command messages arising from joystick commands. Available if parameter cmd_output.message_type is equal to romea_mobile_base_msgs/OmniSteeringCommand.
+---
 
+## 5) Usage
 
-### 2.2.3 Parameters ###
+The package provides `teleop.launch.py` to start the teleoperation node matching the mobile base command type.
 
-- joystick_mapping.axes.linear_speed (string, default none)
+It reads:
 
-     Id of the stick (axe) used to get linear speed from joy msg
+* a compact mobile base configuration, derived from the robot configuration stored in the `config/` directory of the `<robot_name>_description` package using the Python API of `romea_mobile_base_description`
+* a joystick configuration, usually selected from the `config/` directory of `romea_joystick_utils` package
+* a teleoperation configuration, provided by the user or by a robot-specific bringup package
+* the joystick topic to use
 
-- jostick_mapping.axes.lateral_speed (string, default none)
+Then it:
 
-     Id of the stick (axe) used to get lateral speed from joy msg 
+* determines the mobile base command type from the mobile base configuration
+* completes the teleoperation configuration
+* clamps requested teleoperation limits to the robot command limits
+* applies the joystick remapping
+* starts the matching `<command_type>_teleop_node`
 
-- jostick_mapping.axes.angular_speed (string, default none)
+Example:
 
-     Id of the stick (axe) used to get angular speed from joy msg 
+```bash
+ros2 launch romea_mobile_base_teleop teleop.launch.py \
+  mobile_base_configuration_file_path:=path/to/mobile_base_configuration.yaml \
+  joystick_configuration_file_path:=path/to/joystick_configuration.yaml \
+  teleop_configuration_file_path:=path/to/teleop_configuration.yaml \
+  joystick_topic:=/robot/joystick/joy
+```
 
-- joystick.remapping.buttons.slow_mode (string, default none)
+The launch file remaps the node input topic `joystick/joy` to the provided `joystick_topic`.
 
-     Id of the button used to get slow motion mode status from joy msg 
+---
 
-- joystick.remapping.buttons.turbo_mode (string, default none) 
+## 6) Python API
 
-     Id of the button used to get turbo motion mode status from joy msg 
+The installed Python module provides helpers to create the runtime configuration passed to the C++ teleoperation nodes.
 
-- cmd_output.message_type (string, default none)
+This configuration is built from:
 
-     Type of messages published by teleop node : geometry_msgs/Twist or   romea_mobile_base_msgs/OmniSteeringCommand
+* `teleop_configuration` -> user teleoperation preferences, output message type and requested command ranges
+* `mobile_base_configuration` -> robot command type and physical command limits
+* `joystick_configuration` -> joystick type and axis/button layout
 
-- cmd_output.message_priority(int, default -1)
+Main helpers include:
 
-     Priority of messages from 0 to 255. If this parameters is defined by user, the teleop will call automatically service cmd_mux/subscribe to register output topic (cmd_vel or cmd_omni_steering) to cmd_mux node ( see romea_cmd_mux package). 
+| Function | Purpose |
+|----------|---------|
+| `cmd_range_clamp()` | clamps user teleoperation limits against the mobile base command limits |
+| `get_default_joystick_remapping()` | loads the default remapping file for a joystick type and command type |
+| `get_teleop_complete_configuration()` | combines teleop, mobile base and joystick configurations into the runtime node parameters |
 
-- cmd_range.maximal_linear_speed.slow_mode (double, default none)
+Example:
 
-     Output maximal linear speed when slow mode is activated   
+```python
+from romea_mobile_base_teleop import get_teleop_complete_configuration
 
-- cmd_range.maximal_linear_speed.turbo_mode (double, default none)
+complete_configuration = get_teleop_complete_configuration(
+    teleop_configuration,
+    mobile_base_configuration,
+    joystick_configuration,
+)
+```
 
-     Output maximal linear speed when turbo mode is activated 
+The resulting configuration contains:
 
-- cmd_range.maximal_lateral_speed.slow_mode (double, default none)
+```yaml
+cmd_output:
+  ...
+cmd_range:
+  ...
+joystick_mapping:
+  axes:
+    ...
+  buttons:
+    ...
+```
 
-     Output maximal lateral speed when slow mode is activated   
+---
 
-- cmd_range.maximal_lateral_speed.turbo_mode (double, default none)
+## 7) Relation with other mobile base packages
 
-     Output maximal linear speed when turbo mode is activated 
+`romea_mobile_base_teleop` is part of the mobile base runtime stack:
 
-- cmd_range.maximal_angular_speed.slow_mode (double, default none)
+* `romea_mobile_base_description` defines the robot command type and command limits
+* `romea_mobile_base_utils` provides the command publishers used to publish teleoperation messages
+* `romea_joystick_utils` parses `sensor_msgs/msg/Joy` messages from joystick mappings
+* `romea_cmd_mux` can arbitrate teleoperation commands with other command sources
+* `romea_mobile_base_meta_bringup` uses this package through robot-specific launch files
 
-     Output maximal angular speed  when slow motion mode is activated   
-
-- cmd_range.maximal_angular_speed_.turbo_mode (double, default none)
-
-     Output maximal angular speed  when turbo motion mode is activated      
-
-
-# 2.3 one_axle_teleop_node #
-
-### 2.3.1 Subscribed Topics ###
-
-  - joy : (sensor_msgs/Joy)
-
-    Joystick messages to be translated to velocity commands.  
-
-### 2.3.2 Published Topics ###
-
-- cmd_vel (geometry_msgs/Twist)    
-
-    Ros velocity messages arising from Joystick commands. To ensure compatibility with ackermann controller from ros_controllers package geometry_msgs::Twist msg is used to command instead of an ackermann msg. Linear speed is set into twist.linear.x parameter and steering angle is set into twist.angular.z parameter (yes it is weird) .  Available if parameter cmd_output.message_type is equal to (geometry_msgs/Twist). 
-
-- cmd_omni_steering (romea_mobile_base_msgs/AxleSteeringCommand)
-
-  Romea omni steering command messages arising from joystick commands. Available if parameter cmd_output.message_type is equal to romea_mobile_base_msgs/OneAxleSteeringCommand.
-
-### 2.4.3 Parameters ###
-
-  - jostick_mapping.axes.linear_speed (string, default none)
-
-    Id of the stick (axe) used to get linear_speed from joy msg 
-
-- jostick_mapping.axes.stering_angle (string, default none)
-
-  Id of the stick (axe) used to get steering_angle from joy msg 
-
-- joystick_mapping.buttons.slow_mode (string, default none)
-
-  Id of the button (axe) used to get slow motion mode status from joy msg 
-
-- joystick_mapping.buttons.turbo_mode (string, default none) 
-
-  Id of the button (axe) used to get turbo motion mode status from joy msg 
-
-- cmd_output.message_type (string, default none)
-
-  Type of messages published by teleop node : geometry_msgs/Twist or   romea_mobile_base_msgs/OneAxleSteeringCommand
-
-- cmd_output.message_priority(int, default -1)
-
-  Priority of messages from 0 to 255. If this parameters is defined by user, the teleop will call automatically service cmd_mux/subscribe to register output topic (cmd_vel or cmd_one_axle_steering) to cmd_mux node ( see romea_cmd_mux package). 
-
-- cmd_range.maximal_linear_speed.slow_mode (double, default none)
-
-  Output maximal linear speed when slow mode is activated   
-
-- cmd_range.maximal_linear_speed.turbo_mode (double, default none)
-
-  Output maximal linear speed when turbo mode is activated 
-
-- cmd_range.maximal_steering_angle (double, default none)
-
-  Output maximal steering angle          
-
-# 2.4 two_axle_steering_teleop_node #
-
-### 2.4.1 Subscribed Topics ###
-
-  - joy : (sensor_msgs/Joy)
-
-    Joystick messages to be translated to velocity commands.  
-
-### 2.4.2 Published Topics ###
-
-  - cmd_4ws (four_wheel_steering_msgs/FourWheelSteering)
-
-    Ros velocity messages arising from joystick commands. Available if parameter cmd_output.type is equal to four_wheel_steering_msgs/FourWheelSteering.
-
-- cmd_two_axle_steering (romea_mobile_base_msgs/TwoAxleSteeringCommand)
-
-  Romea two axle steering command messages arising from joystick commands. Available if parameter cmd_output.type is equal to romea_mobile_base_msgs/TwoAxleSteeringCommand.
-
-### 2.4.3 Parameters ###
-
-- jostick_mapping.axes.linear_speed (string, default none)
-
-  Id of the stick (axe) used to get linear speed from joy msg 
-
-- jostick_mapping.axes.front_stering_angle (string, default none)
-
-  Id of the stick (axe) used to get front_steering_angle from joy msg 
-
-- jostick_mapping.axes.rear_stering_angle (string, default none)
-
-  Id of the stick (axe) used to get rear_steering_angle from joy msg 
-
-- joystick_mapping.buttons.slow_mode (string, default none)
-
-  Id of the button used to get slow motion mode status from joy msg 
-
-- joystick_mapping.buttons.turbo_mode (string, default none) 
-
-  Id of the button used to get turbo motion mode status from joy msg 
-
-- cmd_output.message_type (string, default none)
-
-  Type of messages published by teleop node : four_wheel_steering_msgs/FourWheelSteering or   romea_mobile_base_msgs/TwoAxleSteeringCommand
-
-- cmd_output.message_priority(int, default -1)
-
-  Priority of messages from 0 to 255. If this parameters is defined by user, the teleop will call automatically service cmd_mux/subscribe to register output topic (cmd_vel or cmd_one_axle_steering) to cmd_mux node ( see romea_cmd_mux package). 
-
-- cmd_range.maximal_linear_speed.slow_mode (double, default none)
-
-  Output maximal linear speed when slow mode is activated   
-
-- cmd_range.maximal_linear_speed.turbo_mode (double, default none)
-
-  Output maximal linear speed when turbo mode is activated 
-
-- cmd_range.maximal_front_steering_angle (double, default none)
-
-  Output maximal front steering angle          
-
-- cmd_range.maximal_front_steering_angle (double, default none)
-
-  Output maximal front steering angle 
-
+Together, these packages let a robot-specific bringup select the correct teleoperation node and keep joystick layouts, command limits and output message types consistent with the mobile base architecture.

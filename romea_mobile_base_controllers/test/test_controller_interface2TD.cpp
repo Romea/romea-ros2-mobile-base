@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <memory>
 #include <string>
@@ -30,24 +29,20 @@
 class TestControllerInterface2TD : public ::testing::Test
 {
 protected:
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  static void SetUpTestCase() { rclcpp::init(0, nullptr); }
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
+  static void TearDownTestCase() { rclcpp::shutdown(); }
 
   void SetUp() override
   {
     rclcpp::NodeOptions no;
-    no.arguments(
-      {"--ros-args",
-        "-p", "joints.left_sprocket_wheel_spinning_joint_name:=J1",
-        "-p", "joints.right_sprocket_wheel_spinning_joint_name:=J2",
-      });
+    no.arguments({
+      "--ros-args",
+      "-p",
+      "joints.left_sprocket_wheel_spinning_joint_name:=J1",
+      "-p",
+      "joints.right_sprocket_wheel_spinning_joint_name:=J2",
+    });
 
     node =
       std::make_shared<romea::ros2::HardwareInterfaceNode>("test_interface_controller_2TD", no);
@@ -59,18 +54,14 @@ protected:
     joints_names = romea::ros2::ControllerInterface2TD::get_joints_names(node, "joints");
 
     state_hardware_interfaces.emplace_back(
-      joints_names[0], hardware_interface::HW_IF_VELOCITY,
-      &state_values[0]);
+      joints_names[0], hardware_interface::HW_IF_VELOCITY, &state_values[0]);
     state_hardware_interfaces.emplace_back(
-      joints_names[1], hardware_interface::HW_IF_VELOCITY,
-      &state_values[1]);
+      joints_names[1], hardware_interface::HW_IF_VELOCITY, &state_values[1]);
 
     command_hardware_interfaces.emplace_back(
-      joints_names[0], hardware_interface::HW_IF_VELOCITY,
-      &command_values[0]);
+      joints_names[0], hardware_interface::HW_IF_VELOCITY, &command_values[0]);
     command_hardware_interfaces.emplace_back(
-      joints_names[1], hardware_interface::HW_IF_VELOCITY,
-      &command_values[1]);
+      joints_names[1], hardware_interface::HW_IF_VELOCITY, &command_values[1]);
 
     for (auto & state_hardware_interface : state_hardware_interfaces) {
       state_loaned_interfaces.emplace_back(state_hardware_interface);
@@ -100,11 +91,10 @@ protected:
   std::unique_ptr<romea::ros2::ControllerInterface2TD> controller_interface;
 };
 
-
 TEST_F(TestControllerInterface2TD, checkHardwareInterfaceNames)
 {
-  auto hardware_interface_names = romea::ros2::ControllerInterface2TD::hardware_interface_names(
-    joints_names);
+  auto hardware_interface_names =
+    romea::ros2::ControllerInterface2TD::hardware_interface_names(joints_names);
   EXPECT_STREQ(hardware_interface_names[0].c_str(), "J1/velocity");
   EXPECT_STREQ(hardware_interface_names[1].c_str(), "J2/velocity");
 }

@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <algorithm>
 #include <limits>
@@ -23,12 +22,10 @@
 // local
 #include "romea_mobile_base_utils/ros2_control/info/interface_info.hpp"
 
-
 namespace romea
 {
 namespace ros2
 {
-
 
 //-----------------------------------------------------------------------------
 double get_min(const hardware_interface::InterfaceInfo & interface_info)

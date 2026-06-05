@@ -12,22 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_UTILS__CONTROL__COMMAND_TRAITS_HPP_
 #define ROMEA_MOBILE_BASE_UTILS__CONTROL__COMMAND_TRAITS_HPP_
 
 #include <romea_core_mobile_base/kinematic/axle_steering/OneAxleSteeringCommand.hpp>
-#include <romea_core_mobile_base/kinematic/axle_steering/TwoAxleSteeringCommand.hpp>
-#include <romea_core_mobile_base/kinematic/omni_steering/OmniSteeringCommand.hpp>
-#include <romea_core_mobile_base/kinematic/skid_steering/SkidSteeringCommand.hpp>
 #include <romea_core_mobile_base/kinematic/axle_steering/OneAxleSteeringMeasure.hpp>
+#include <romea_core_mobile_base/kinematic/axle_steering/TwoAxleSteeringCommand.hpp>
 #include <romea_core_mobile_base/kinematic/axle_steering/TwoAxleSteeringMeasure.hpp>
+#include <romea_core_mobile_base/kinematic/omni_steering/OmniSteeringCommand.hpp>
 #include <romea_core_mobile_base/kinematic/omni_steering/OmniSteeringMeasure.hpp>
+#include <romea_core_mobile_base/kinematic/skid_steering/SkidSteeringCommand.hpp>
 #include <romea_core_mobile_base/kinematic/skid_steering/SkidSteeringMeasure.hpp>
 #include <romea_mobile_base_msgs/msg/omni_steering_measure_stamped.hpp>
 #include <romea_mobile_base_msgs/msg/one_axle_steering_measure_stamped.hpp>
-#include <romea_mobile_base_msgs/msg/two_axle_steering_measure_stamped.hpp>
 #include <romea_mobile_base_msgs/msg/skid_steering_measure_stamped.hpp>
+#include <romea_mobile_base_msgs/msg/two_axle_steering_measure_stamped.hpp>
 
 namespace romea
 {

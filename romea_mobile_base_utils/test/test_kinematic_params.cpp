@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <memory>
 #include <string>
@@ -29,19 +28,11 @@
 class TestKinematicParams : public ::testing::Test
 {
 protected:
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  static void SetUpTestCase() { rclcpp::init(0, nullptr); }
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
+  static void TearDownTestCase() { rclcpp::shutdown(); }
 
-  void SetUp() override
-  {
-  }
+  void SetUp() override {}
 
   void loadYaml(const std::string & config_filename)
   {
@@ -52,7 +43,6 @@ protected:
 
   std::shared_ptr<rclcpp::Node> node;
 };
-
 
 TEST_F(TestKinematicParams, load4WDtoSkidSteeringKinematicParams)
 {
@@ -67,7 +57,6 @@ TEST_F(TestKinematicParams, load4WDtoSkidSteeringKinematicParams)
   EXPECT_DOUBLE_EQ(kinematic_parameters.maximalWheelAcceleration, 1.);
   EXPECT_DOUBLE_EQ(kinematic_parameters.wheelSpeedVariance, 0.1 * 0.1);
 }
-
 
 TEST_F(TestKinematicParams, load4WS4WDtoFourWheelSteeringKinematicParams)
 {
@@ -89,8 +78,8 @@ TEST_F(TestKinematicParams, load4WS4WDtoFourWheelSteeringKinematicParams)
   EXPECT_DOUBLE_EQ(kinematic_parameters.wheelAngleVariance, 0.017453 * 0.017453);
 }
 
-
-TEST_F(TestKinematicParams, load4WS4WDtoTwoAxleKinematicParams) {
+TEST_F(TestKinematicParams, load4WS4WDtoTwoAxleKinematicParams)
+{
   loadYaml(std::string(TEST_DIR) + std::string("/data/4WS4WD_params.yaml"));
 
   romea::NodeParameters node_parameters(node);
@@ -111,7 +100,8 @@ TEST_F(TestKinematicParams, load4WS4WDtoTwoAxleKinematicParams) {
   //  EXPECT_DOUBLE_EQ(parameters.maximalSteeringAngularSpeed,0.017453*0.017453);
 }
 
-TEST_F(TestKinematicParams, load2WS4WDtoTwoWheelSteeringKinematicParams) {
+TEST_F(TestKinematicParams, load2WS4WDtoTwoWheelSteeringKinematicParams)
+{
   loadYaml(std::string(TEST_DIR) + std::string("/data/2FWS4WD_params.yaml"));
 
   romea::NodeParameters node_parameters(node);
@@ -133,7 +123,8 @@ TEST_F(TestKinematicParams, load2WS4WDtoTwoWheelSteeringKinematicParams) {
   EXPECT_DOUBLE_EQ(kinematic_parameters.wheelAngleVariance, 0.017453 * 0.017453);
 }
 
-TEST_F(TestKinematicParams, load2WS4WDtoOneSteeringKinematicParams) {
+TEST_F(TestKinematicParams, load2WS4WDtoOneSteeringKinematicParams)
+{
   loadYaml(std::string(TEST_DIR) + std::string("data/2FWS4WD_params.yaml"));
 
   romea::NodeParameters node_parameters(node);

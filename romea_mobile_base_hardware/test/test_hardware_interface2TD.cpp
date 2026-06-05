@@ -1,4 +1,5 @@
-// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Copyright 2022 INRAE, French National Research Institute for Agriculture,
+// Food and Environment
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,16 +16,16 @@
 // std
 #include <fstream>
 #include <memory>
-#include <string>
 #include <sstream>
+#include <string>
 #include <vector>
 
 // gtest
 #include "gtest/gtest.h"
 
 // ros
-#include "rclcpp/node.hpp"
 #include "hardware_interface/component_parser.hpp"
+#include "rclcpp/node.hpp"
 
 // romea
 #include "../test/test_helper.h"
@@ -34,15 +35,9 @@
 class TestHarwareInterface2TD : public ::testing::Test
 {
 protected:
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  static void SetUpTestCase() { rclcpp::init(0, nullptr); }
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
+  static void TearDownTestCase() { rclcpp::shutdown(); }
 
   void SetUp() override
   {
@@ -68,7 +63,6 @@ protected:
   std::unique_ptr<romea::ros2::HardwareInterface2TD> interface;
   std::vector<hardware_interface::HardwareInfo> info;
 };
-
 
 TEST_F(TestHarwareInterface2TD, checkStateInterfaceNames)
 {
@@ -96,7 +90,7 @@ TEST_F(TestHarwareInterface2TD, DISABLED_checkCommandInterfaceTypeWhenEffortCont
   check_interface_name(command_interfaces[1], "robot_joint2/effort");
 }
 
-// TEST_F(TestHarwareInterface2TD, checkSetCurrentState)
+// TEST_F(TestHarwareInterface2TD, checkSetcurrent_state)
 // {
 //   MakeInterface(hardware_interface::HW_IF_VELOCITY);
 
@@ -169,7 +163,6 @@ TEST_F(TestHarwareInterface2TD, checkSetFeedbackUsingJointStates)
   }
 }
 
-
 TEST_F(TestHarwareInterface2TD, checkGetCommand)
 {
   MakeInterface(hardware_interface::HW_IF_VELOCITY);
@@ -201,7 +194,6 @@ TEST_F(TestHarwareInterface2TD, checkGetCommandUsingJointState)
   EXPECT_DOUBLE_EQ(command.velocity[0], 1.0);
   EXPECT_DOUBLE_EQ(command.velocity[1], 2.0);
 }
-
 
 //-----------------------------------------------------------------------------
 int main(int argc, char ** argv)

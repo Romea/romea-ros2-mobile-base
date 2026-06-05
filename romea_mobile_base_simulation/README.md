@@ -1,33 +1,111 @@
 # romea_mobile_base_simulation
 
-The **romea_mobile_base_simulation** library enables seamless interaction between ROS2  controllers developped in **romea_mobile_base_controllers** library and simulation environnement, handling variations in actuator configurations and types depending on the specific robot (see table below). In the ROMEA ecosystem, the aim is to give users the impression of controlling the real robot, even when working within a simulation. To achieve this, each robot type is associated with a controller that translates user commands from the control space into appropriate actions for the "real" robot joints and retrieves joint states to estimate odometry. 
+## 1) Overview
 
-This library, **romea_mobile_base_simulation**, provides a set of classes permettant d'ecchange:
+`romea_mobile_base_simulation` provides the adaptation layer used to connect ROMEA mobile base controllers to simulated robots, even when the simulated model exposes a different joint layout from the real robot controller.
 
-1. Calculate the commands to apply to simulated joints based on the commands required for the real joints.
-2. Estimate the real joint states based on the simulated joint states returned by the simulator.
+It bridges controller-side and simulation-side joint layouts by:
 
-The library is designed to simplify the development of interfaces with simulators, as shown in packages like **romea_mobile_base_gazebo** and **romea_mobile_base_gazebo_classic**.
+* converting the joint commands expected by the real mobile base controller into the joint commands expected by the simulated model;
+* converting simulated joint states back into the joint states expected by the controller;
+* providing reusable `GenericSimulationSystemInterface` plugins, implemented as `hardware_interface::SystemInterface`, that exchange commands and feedback with a simulator through `sensor_msgs/msg/JointState` messages.
 
+## 2) Simulation concept
 
+In the ROMEA stack, controllers are written as if they were controlling the real robot hardware. A simulator, however, may expose a more complete or slightly different set of joints. For example, a real `1FAS2RWD` robot controller commands one front axle steering joint and two rear spinning wheels, while the simulated model can expose individual front wheel steering joints and additional wheel joints.
 
-| Real Robot | Actuators hold by controller                                 | Simulated Robot | Actuators hold by simulator                                  |
-| ---------- | ------------------------------------------------------------ | --------------- | ------------------------------------------------------------ |
-| 2WD        | left_wheel_spinning_joint <br>right_wheel_spinning_joint     | 2WD             | left_wheel_spinning joint <br/>right_wheel_spinning_joint    |
-| 4WD        | front_left_wheel_spinning_joint <br/>front_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint <br/>rear_right_wheel_spinning_joint | 4WD             | front_left_wheel_spinning joint <br/>front_right_wheel_spinning_joint <br/>rear_left_wheel_spinning joint <br/>rear_right_wheel_spinning_joint |
-| 1FAS2FWD   | front_axle_steering_joint <br/>front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint | 1FAS4WD         | front_axle_steering_joint <br/>front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint |
-| 1FAS2RWD   | front_axle_steering_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint | 1FAS4WD         | front_axle_steering_joint <br/>front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint |
-| 1FAS4WD    | front_axle_steering_joint <br/>front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint | 1FAS4WD         | front_axle_steering_joint <br/>front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint |
-| 2AS2FWD    | front_axle_steering_joint <br/>rear_axle_steering_joint <br/>front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint | 2AS4WD          | front_axle_steering_joint <br/>rear_axle_steering_joint <br/>front_right_wheel_steering_joint <br/>front_left_wheel_steering_joint <br/>rear_right_wheel_steering_joint <br/>rear_left_wheel_steering_joint</br> front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint |
-| 2AS2RWD    | front_axle_steering_joint <br/>rear_axle_steering_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint | 2AS4WD          | front_axle_steering_joint <br/>rear_axle_steering_joint <br/>front_right_wheel_steering_joint <br/>front_left_wheel_steering_joint <br/>rear_right_wheel_steering_joint <br/>rear_left_wheel_steering_joint</br> front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint |
-| 2AS4WD     | front_axle_steering_joint <br/>rear_axle_steering_joint <br/>front_right_wheel_steering_joint <br/>front_left_wheel_steering_joint <br/>rear_right_wheel_steering_joint <br/>rear_left_wheel_steering_joint</br> front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint | 2AS4WD          | front_axle_steering_joint <br/>rear_axle_steering_joint <br/>front_right_wheel_steering_joint <br/>front_left_wheel_steering_joint <br/>rear_right_wheel_steering_joint <br/>rear_left_wheel_steering_joint</br> front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint |
-| 2FWS2FWD   | front_right_wheel_steering_joint <br/>front_left_wheel_steering_joint <br/>front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint | 2FWS4WD         | front_right_wheel_steering_joint <br/>front_left_wheel_steering_joint <br/>front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint |
-| 2FWS2RWD   | front_right_wheel_steering_joint <br/>front_left_wheel_steering_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint | 2FWS4WD         | front_right_wheel_steering_joint <br/>front_left_wheel_steering_joint <br/>front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint |
-| 2FWS4WD    | front_right_wheel_steering_joint <br/>front_left_wheel_steering_joint <br/>front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint | 2FWS4WD         | front_right_wheel_steering_joint <br/>front_left_wheel_steering_joint <br/>front_right_wheel_spinning_joint <br/>front_left_wheel_spinning_joint <br/>rear_right_wheel_spinning_joint <br/>rear_left_wheel_spinning_joint |
-| 2TD        | left_sprocket_wheel_spinning_joint</br> right_sprocket_wheel_spinning_joint</br> | 2TD             | left_sprocket_wheel_spinning_joint</br> right_sprocket_wheel_spinning_joint</br> left_idler_wheel_spinning_joint</br> right_idler_wheel_spinning_joint</br> |
-| 2TD        | left_sprocket_wheel_spinning_joint</br> right_sprocket_wheel_spinning_joint</br> | 2THD            | left_sprocket_wheel_spinning_joint</br> right_sprocket_wheel_spinning_joint</br> front_left_idler_wheel_spinning_joint</br> front_right_idler_wheel_spinning_joint</br> rear_left_idler_wheel_spinning_joint</br> rear_right_idler_wheel_spinning_joint</br> |
-| 2TD        | left_sprocket_wheel_spinning_joint</br> right_sprocket_wheel_spinning_joint</br> | 2TTD            | left_sprocket_wheel_spinning_joint</br> right_sprocket_wheel_spinning_joint</br> left_idler_wheel_spinning_joint</br> right_idler_wheel_spinning_joint</br> front_left_roller_wheel_spinning_joint</br> front_right_roller_wheel_spinning_joint</br> rear_left_roller_wheel_spinning_joint</br> rear_right_roller_wheel_spinning_joint</br> |
+The package separates two notions:
 
+* **controller-side mobile base architecture**: the architecture seen by `romea_mobile_base_controllers`;
+* **simulation-side architecture**: the joint layout exposed by the simulator.
 
-#  #
+For identical layouts, the simulation interface can directly reuse the corresponding hardware interface. For reduced real layouts simulated with a more complete model, a dedicated simulation interface performs the conversion.
 
+The architecture-specific simulation interfaces are reusable building blocks. They can be used directly by simulator-specific packages such as `romea_mobile_base_gazebo` and `romea_mobile_base_gazebo_classic`, or wrapped by a generic ROS 2 hardware plugin.
+
+This gives two integration modes:
+
+* simulator-specific packages use the `SimulationInterface*` classes to implement dedicated integrations where the simulator and the `controller_manager` exchange data through the simulator backend;
+* `GenericSimulationSystemInterface*` plugins can be used with remote simulators such as 4DV Virtualiz or Isaac Sim, when a simulator-side adapter can receive joint commands and send joint feedback as `sensor_msgs/msg/JointState` messages.
+
+## 3) Simulation interfaces
+
+The following simulation interfaces are provided by the library:
+
+| Controller-side architecture | Simulation-side architecture | Interface |
+|---|---|---|
+| `2WD` | `2WD` | `SimulationInterface2WD` |
+| `4WD` | `4WD` | `SimulationInterface4WD` |
+| `1FAS2FWD` | `1FAS4WD` | `SimulationInterface1FAS2FWD` |
+| `1FAS2RWD` | `1FAS4WD` | `SimulationInterface1FAS2RWD` |
+| `2AS4WD` | `2AS4WD` | `SimulationInterface2AS4WD` |
+| `2FWS2FWD` | `2FWS4WD` | `SimulationInterface2FWS2FWD` |
+| `2FWS2RWD` | `2FWS4WD` | `SimulationInterface2FWS2RWD` |
+| `2FWS4WD` | `2FWS4WD` | `SimulationInterface2FWS4WD` |
+| `4WS4WD` | `4WS4WD` | `SimulationInterface4WS4WD` |
+| `2TD` | `2TD` | `SimulationInterface2TD` |
+| `2TD` | `2THD` | `SimulationInterface2THD` |
+| `2TD` | `2TTD` | `SimulationInterface2TTD` |
+
+The `2TD -> 2THD` and `2TD -> 2TTD` interfaces are used to drive simulated continuous-track models with additional idler or roller joints while keeping a simpler `2TD` controller interface.
+
+## 4) Generic Simulation Interfaces
+
+### 4.1) Concept
+
+`GenericSimulationSystemInterface` wraps an architecture-specific `SimulationInterface*` into a reusable `hardware_interface::SystemInterface` plugin that communicates with a simulator through `sensor_msgs/msg/JointState` topics.
+
+This mode is useful when the simulator is connected through a ROS topic bridge, for example with a remote simulator. The simulator-side bridge is responsible for subscribing to `bridge/joint_state_command`, applying the commands to the simulated model, and publishing feedback on `bridge/joint_state_feedback`.
+
+### 4.2) Runtime behavior
+
+At runtime, a `GenericSimulationSystemInterface`:
+
+1. loads the `ros2_control` hardware information generated from the robot description;
+2. creates the architecture-specific simulation interface;
+3. exports the same command and state interfaces as a normal mobile base hardware interface;
+4. converts controller-side joint commands into simulation-side joint commands;
+5. converts simulation-side joint feedback back into controller-side joint states;
+6. exchanges these commands and feedback with the simulator through `sensor_msgs/msg/JointState` topics.
+
+### 4.3) Exported plugins and bridge topics
+
+The package currently exports the following generic `hardware_interface::SystemInterface` plugins:
+
+Plugin names follow the `romea_mobile_base_simulation/GenericSimulationSystemInterface<mobile_base_architecture>` convention. Plugin names in the table are written with their full `ros2_control` plugin name.
+
+| Plugin | Simulation interface | Used by |
+|---|---|---|
+| `romea_mobile_base_simulation/GenericSimulationSystemInterface2FWS4WD` | `SimulationInterface2FWS4WD` | Pom 4x4 |
+| `romea_mobile_base_simulation/GenericSimulationSystemInterface4WS4WD` | `SimulationInterface4WS4WD` | Adap2e |
+
+For now, only the `2FWS4WD` and `4WS4WD` generic simulation system interfaces are exported. Other simulation interfaces are available in the library and are covered by tests; their generic system plugins will be added progressively.
+
+The generic bridge topics are:
+
+| Topic | Direction | Description |
+|---|---|---|
+| `bridge/joint_state_command` | published by this package | joint commands converted for the simulated model |
+| `bridge/joint_state_feedback` | subscribed by this package | simulated joint states returned by the simulator |
+
+Gazebo integration packages use the simulation interfaces more directly, without exposing this generic `JointState` bridge.
+
+## 5) ros2_control integration
+
+In a simulation setup, the `controller_manager` loads the hardware plugin declared in the robot URDF, more precisely in the `<ros2_control>` tag generated by the description package.
+
+This hardware plugin exports:
+
+* command interfaces, where mobile base controllers write actuator commands;
+* state interfaces, where mobile base controllers read actuator feedback.
+
+The mobile base controller does not communicate directly with the simulator. It writes commands to the exported command interfaces and reads the exported state interfaces to estimate odometry. The simulation layer is responsible for forwarding these commands to the simulated joints and converting simulator feedback back into the state interfaces expected by the controller.
+
+## 6) Relation with other mobile base packages
+
+`romea_mobile_base_simulation` does not define controllers, robot descriptions or simulator-specific integrations by itself. It sits between them:
+
+* `romea_mobile_base_description` defines the URDF and `ros2_control` descriptions used to select the simulated hardware plugin;
+* `romea_mobile_base_controllers` consumes the controller-side command and state interfaces;
+* `romea_mobile_base_hardware` provides the base hardware interface classes reused by the simulation layer;
+* simulator-specific packages reuse the simulation interfaces directly or connect the generic bridge topics to an external simulator.

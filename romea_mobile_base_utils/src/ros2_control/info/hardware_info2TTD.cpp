@@ -68,14 +68,13 @@ hardware_interface::ComponentInfo HardwareInfo2TTD::get_front_left_roller_wheel_
 
 // *INDENT-OFF*
 //-----------------------------------------------------------------------------
-hardware_interface::ComponentInfo HardwareInfo2TTD::
-get_front_right_roller_wheel_spinning_joint_info(
+hardware_interface::ComponentInfo
+HardwareInfo2TTD::get_front_right_roller_wheel_spinning_joint_info(
   const hardware_interface::HardwareInfo & hardware_info)
 {
   return hardware_info.joints[FRONT_RIGHT_ROLLER_WHEEL_SPINNING_JOINT_ID];
 }
 // *INDENT-ON*
-
 
 //-----------------------------------------------------------------------------
 hardware_interface::ComponentInfo HardwareInfo2TTD::get_rear_left_roller_wheel_spinning_joint_info(
@@ -90,7 +89,6 @@ hardware_interface::ComponentInfo HardwareInfo2TTD::get_rear_right_roller_wheel_
 {
   return hardware_info.joints[REAR_RIGHT_ROLLER_WHEEL_SPINNING_JOINT_ID];
 }
-
 
 }  // namespace ros2
 }  // namespace romea

@@ -2,6 +2,18 @@
 
 This project contains multiple ROS2 packages designed to control mobile robot bases, suitable for both real-world applications and simulations. For detailed information on each package, please refer to the README files within individual packages.
 
+## **Extension model**
+
+`romea_mobile_base` defines the generic ROS2 mobile base abstraction used in the ROMEA ecosystem.
+
+Robot-specific packages extend this abstraction mainly through:
+
+- `<robot>_description` → extends `romea_mobile_base_description` with robot-specific geometry, inertia, URDF and ros2_control descriptions
+- `<robot>_hardware` → extends `romea_mobile_base_hardware` with robot-specific hardware communication and control interfaces
+- `<robot>_bringup` → connects these robot-specific extensions to the generic `romea_mobile_base_meta_bringup` workflow
+
+This structure allows different mobile robots to share the same control, teleoperation, simulation and meta-bringup conventions while keeping platform-specific code isolated in robot packages.
+
 ## **Usage**
 
 1. create a ROS workspace

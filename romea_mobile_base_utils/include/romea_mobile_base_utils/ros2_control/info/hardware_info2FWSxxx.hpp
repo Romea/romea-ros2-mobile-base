@@ -12,14 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_UTILS__ROS2_CONTROL__INFO__HARDWARE_INFO2FWSXXX_HPP_
 #define ROMEA_MOBILE_BASE_UTILS__ROS2_CONTROL__INFO__HARDWARE_INFO2FWSXXX_HPP_
 
-
 // ros
 #include "romea_mobile_base_utils/ros2_control/info/hardware_info_common.hpp"
-
 
 namespace romea
 {

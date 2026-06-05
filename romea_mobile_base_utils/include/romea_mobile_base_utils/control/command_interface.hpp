@@ -12,22 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_UTILS__CONTROL__COMMAND_INTERFACE_HPP_
 #define ROMEA_MOBILE_BASE_UTILS__CONTROL__COMMAND_INTERFACE_HPP_
 
 // std
 #include <atomic>
-#include <memory>
 #include <functional>
-#include <string>
+#include <memory>
 #include <mutex>
+#include <string>
 
 // romea
 #include "romea_cmd_mux_utils/cmd_mux_interface.hpp"
-
-#include "romea_mobile_base_utils/conversions/kinematic_conversions.hpp"
 #include "romea_mobile_base_utils/control/command_publisher.hpp"
+#include "romea_mobile_base_utils/conversions/kinematic_conversions.hpp"
 
 namespace romea
 {
@@ -41,7 +39,6 @@ struct CommandInterfaceConfiguration
   double rate;
 };
 
-
 template<typename CommandType>
 class CommandInterface
 {
@@ -51,9 +48,7 @@ public:
 
 public:
   template<typename Node>
-  CommandInterface(
-    std::shared_ptr<Node> node,
-    const Configuration & configuration);
+  CommandInterface(std::shared_ptr<Node> node, const Configuration & configuration);
 
   ~CommandInterface();
 
@@ -77,9 +72,7 @@ public:
 
   bool is_emergency_stop_activated();
 
-  void subscribe_to_cmd_mux(
-    const int & priority,
-    const double & timetout);
+  void subscribe_to_cmd_mux(const int & priority, const double & timetout);
 
   void unsubscribe_to_cmd_mux();
 
@@ -117,13 +110,11 @@ private:
   std::function<void(void)> timeout_callback_;
 };
 
-
 //-----------------------------------------------------------------------------
 template<typename CommandType>
 template<typename Node>
 CommandInterface<CommandType>::CommandInterface(
-  std::shared_ptr<Node> node,
-  const Configuration & configuration)
+  std::shared_ptr<Node> node, const Configuration & configuration)
 : cmd_pub_(nullptr),
   cmd_mux_client_(node),
   logger_(node->get_logger()),
@@ -152,8 +143,7 @@ CommandInterface<CommandType>::CommandInterface(
 template<typename CommandType>
 template<typename Node>
 void CommandInterface<CommandType>::create_publisher_(
-  std::shared_ptr<Node> node,
-  const std::string & output_message_type)
+  std::shared_ptr<Node> node, const std::string & output_message_type)
 {
   cmd_pub_ = make_command_publisher<CommandType>(node, output_message_type);
 }
@@ -161,9 +151,7 @@ void CommandInterface<CommandType>::create_publisher_(
 //-----------------------------------------------------------------------------
 template<typename CommandType>
 template<typename Node>
-void CommandInterface<CommandType>::create_timer_(
-  std::shared_ptr<Node> node,
-  const double & period)
+void CommandInterface<CommandType>::create_timer_(std::shared_ptr<Node> node, const double & period)
 {
   auto timer_callback = std::bind(&CommandInterface::timer_callback_, this);
   timer_ = node->create_wall_timer(core::durationFromSecond(period), timer_callback);

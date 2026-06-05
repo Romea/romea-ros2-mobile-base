@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <map>
 #include <string>
 
 // romea
+#include "romea_mobile_base_gazebo/gazebo_interface2THD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2THD.hpp"
 #include "romea_mobile_base_utils/ros2_control/info/hardware_info2THD.hpp"
-#include "romea_mobile_base_gazebo/gazebo_interface2THD.hpp"
 
 namespace romea
 {
@@ -33,22 +32,34 @@ GazeboInterface2THD::GazeboInterface2THD(
   std::map<std::string, gz::sim::Entity> & enable_joints,
   const hardware_interface::HardwareInfo & hardware_info,
   const std::string & command_interface_type)
-: left_sprocket_wheel_spinning_joint_(ecm, enable_joints,
+: left_sprocket_wheel_spinning_joint_(
+    ecm,
+    enable_joints,
     HardwareInfo2THD::get_left_sprocket_wheel_spinning_joint_info(hardware_info),
     command_interface_type),
-  right_sprocket_wheel_spinning_joint_(ecm, enable_joints,
+  right_sprocket_wheel_spinning_joint_(
+    ecm,
+    enable_joints,
     HardwareInfo2THD::get_right_sprocket_wheel_spinning_joint_info(hardware_info),
     command_interface_type),
-  front_left_idler_wheel_spinning_joint_(ecm, enable_joints,
+  front_left_idler_wheel_spinning_joint_(
+    ecm,
+    enable_joints,
     HardwareInfo2THD::get_front_left_idler_wheel_spinning_joint_info(hardware_info),
     command_interface_type),
-  front_right_idler_wheel_spinning_joint_(ecm, enable_joints,
+  front_right_idler_wheel_spinning_joint_(
+    ecm,
+    enable_joints,
     HardwareInfo2THD::get_front_right_idler_wheel_spinning_joint_info(hardware_info),
     command_interface_type),
-  rear_left_idler_wheel_spinning_joint_(ecm, enable_joints,
+  rear_left_idler_wheel_spinning_joint_(
+    ecm,
+    enable_joints,
     HardwareInfo2THD::get_rear_left_idler_wheel_spinning_joint_info(hardware_info),
     command_interface_type),
-  rear_right_idler_wheel_spinning_joint_(ecm, enable_joints,
+  rear_right_idler_wheel_spinning_joint_(
+    ecm,
+    enable_joints,
     HardwareInfo2THD::get_rear_right_idler_wheel_spinning_joint_info(hardware_info),
     command_interface_type)
 {
@@ -57,12 +68,13 @@ GazeboInterface2THD::GazeboInterface2THD(
 //-----------------------------------------------------------------------------
 core::SimulationState2THD GazeboInterface2THD::get_state() const
 {
-  return {left_sprocket_wheel_spinning_joint_.get_state(),
-      right_sprocket_wheel_spinning_joint_.get_state(),
-      front_left_idler_wheel_spinning_joint_.get_state(),
-      front_right_idler_wheel_spinning_joint_.get_state(),
-      rear_left_idler_wheel_spinning_joint_.get_state(),
-      rear_right_idler_wheel_spinning_joint_.get_state()};
+  return {
+    left_sprocket_wheel_spinning_joint_.get_state(),
+    right_sprocket_wheel_spinning_joint_.get_state(),
+    front_left_idler_wheel_spinning_joint_.get_state(),
+    front_right_idler_wheel_spinning_joint_.get_state(),
+    rear_left_idler_wheel_spinning_joint_.get_state(),
+    rear_right_idler_wheel_spinning_joint_.get_state()};
 }
 
 //-----------------------------------------------------------------------------
@@ -143,7 +155,6 @@ void GazeboInterface2THD::set_command(const core::SimulationCommand2THD & comman
 //       hardware_interface.rear_right_idler_wheel_spinning_joint_feedback);
 
 //}
-
 
 ////-----------------------------------------------------------------------------
 // void read(const GazeboInterface2THD & gazebo_interface,

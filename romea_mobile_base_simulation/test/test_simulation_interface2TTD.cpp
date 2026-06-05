@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <fstream>
 #include <memory>
@@ -23,8 +22,8 @@
 #include "gtest/gtest.h"
 
 // ros
-#include "rclcpp/node.hpp"
 #include "hardware_interface/component_parser.hpp"
+#include "rclcpp/node.hpp"
 
 // romea
 #include "../test/test_helper.h"
@@ -33,15 +32,9 @@
 class TestSimulationInterface2TTD : public ::testing::Test
 {
 protected:
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  static void SetUpTestCase() { rclcpp::init(0, nullptr); }
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
+  static void TearDownTestCase() { rclcpp::shutdown(); }
 
   void SetUp() override
   {
@@ -63,7 +56,6 @@ protected:
   std::vector<hardware_interface::HardwareInfo> info;
 };
 
-
 TEST_F(TestSimulationInterface2TTD, checkGetCommand)
 {
   romea::core::HardwareCommand2TD command = {0.611111, 1.6111};
@@ -75,10 +67,12 @@ TEST_F(TestSimulationInterface2TTD, checkGetCommand)
 
   EXPECT_NEAR(
     simulation_command.leftSprocketWheelSpinningSetPoint,
-    command.leftSprocketWheelSpinningSetPoint, 0.001);
+    command.leftSprocketWheelSpinningSetPoint,
+    0.001);
   EXPECT_NEAR(
     simulation_command.rightSprocketWheelSpinningSetPoint,
-    command.rightSprocketWheelSpinningSetPoint, 0.001);
+    command.rightSprocketWheelSpinningSetPoint,
+    0.001);
   EXPECT_NEAR(simulation_command.leftIdlerWheelSpinningSetPoint, 1.375, 0.001);
   EXPECT_NEAR(simulation_command.rightIdlerWheelSpinningSetPoint, 3.625, 0.001);
   EXPECT_NEAR(simulation_command.frontLeftRollerWheelSpinningSetPoint, 1.375, 0.001);
@@ -86,7 +80,6 @@ TEST_F(TestSimulationInterface2TTD, checkGetCommand)
   EXPECT_NEAR(simulation_command.rearLeftRollerWheelSpinningSetPoint, 1.375, 0.001);
   EXPECT_NEAR(simulation_command.rearRightRollerWheelSpinningSetPoint, 3.625, 0.001);
 }
-
 
 TEST_F(TestSimulationInterface2TTD, checkGetCommandUsingJointState)
 {
@@ -115,7 +108,6 @@ TEST_F(TestSimulationInterface2TTD, checkGetCommandUsingJointState)
   EXPECT_NEAR(simulation_command.velocity[6], 1.375, 0.001);
   EXPECT_NEAR(simulation_command.velocity[7], 3.625, 0.001);
 }
-
 
 TEST_F(TestSimulationInterface2TTD, checkGetState)
 {
@@ -147,21 +139,13 @@ TEST_F(TestSimulationInterface2TTD, checkGetState)
 
   auto state_interfaces = interface->export_state_interfaces();
   EXPECT_NEAR(
-    state_interfaces[1].get_value(),
-    simulation_command.leftSprocketWheelSpinningSetPoint,
-    0.001);
+    state_interfaces[1].get_value(), simulation_command.leftSprocketWheelSpinningSetPoint, 0.001);
   EXPECT_NEAR(
-    state_interfaces[4].get_value(),
-    simulation_command.rightSprocketWheelSpinningSetPoint,
-    0.001);
+    state_interfaces[4].get_value(), simulation_command.rightSprocketWheelSpinningSetPoint, 0.001);
   EXPECT_NEAR(
-    state_interfaces[7].get_value(),
-    simulation_command.leftIdlerWheelSpinningSetPoint,
-    0.001);
+    state_interfaces[7].get_value(), simulation_command.leftIdlerWheelSpinningSetPoint, 0.001);
   EXPECT_NEAR(
-    state_interfaces[10].get_value(),
-    simulation_command.rightIdlerWheelSpinningSetPoint,
-    0.001);
+    state_interfaces[10].get_value(), simulation_command.rightIdlerWheelSpinningSetPoint, 0.001);
   EXPECT_NEAR(
     state_interfaces[13].get_value(),
     simulation_command.frontLeftRollerWheelSpinningSetPoint,
@@ -200,7 +184,6 @@ TEST_F(TestSimulationInterface2TTD, checkGetStateUsingJointState)
   EXPECT_NEAR(state_interfaces[19].get_value(), simulation_command.velocity[6], 0.001);
   EXPECT_NEAR(state_interfaces[22].get_value(), simulation_command.velocity[7], 0.001);
 }
-
 
 //-----------------------------------------------------------------------------
 int main(int argc, char ** argv)

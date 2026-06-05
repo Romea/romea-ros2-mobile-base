@@ -87,6 +87,5 @@ hardware_interface::ComponentInfo HardwareInfo4WS4WD::get_rear_right_wheel_spinn
   return hardware_info.joints[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID];
 }
 
-
 }  // namespace ros2
 }  // namespace romea

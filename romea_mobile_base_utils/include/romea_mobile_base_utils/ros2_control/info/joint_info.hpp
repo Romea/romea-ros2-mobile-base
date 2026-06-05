@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_UTILS__ROS2_CONTROL__INFO__JOINT_INFO_HPP_
 #define ROMEA_MOBILE_BASE_UTILS__ROS2_CONTROL__INFO__JOINT_INFO_HPP_
 
@@ -22,22 +21,16 @@
 // ros
 #include "hardware_interface/hardware_info.hpp"
 
-
 namespace romea
 {
 namespace ros2
 {
 
-const hardware_interface::InterfaceInfo &
-get_command_interface_info(
-  const hardware_interface::ComponentInfo & joint_info,
-  const std::string & interface_name);
+const hardware_interface::InterfaceInfo & get_command_interface_info(
+  const hardware_interface::ComponentInfo & joint_info, const std::string & interface_name);
 
-const hardware_interface::InterfaceInfo &
-get_state_interface_info(
-  const hardware_interface::ComponentInfo & joint_info,
-  const std::string & interface_name);
-
+const hardware_interface::InterfaceInfo & get_state_interface_info(
+  const hardware_interface::ComponentInfo & joint_info, const std::string & interface_name);
 
 }  // namespace ros2
 }  // namespace romea

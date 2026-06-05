@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_GAZEBO__JOINT_GAZEBO_INTERFACE_HPP_
 #define ROMEA_MOBILE_BASE_GAZEBO__JOINT_GAZEBO_INTERFACE_HPP_
 
@@ -25,11 +24,11 @@
 
 // gazebo
 #include <gz/sim/System.hh>
-#include <gz/sim/components/JointType.hh>
-#include <gz/sim/components/JointPosition.hh>
-#include <gz/sim/components/JointVelocity.hh>
-#include <gz/sim/components/JointTransmittedWrench.hh>
 #include <gz/sim/components/JointForceCmd.hh>
+#include <gz/sim/components/JointPosition.hh>
+#include <gz/sim/components/JointTransmittedWrench.hh>
+#include <gz/sim/components/JointType.hh>
+#include <gz/sim/components/JointVelocity.hh>
 #include <gz/sim/components/JointVelocityCmd.hh>
 
 namespace romea
@@ -37,15 +36,15 @@ namespace romea
 namespace ros2
 {
 
-template <typename Command, typename State>
+template<typename Command, typename State>
 class JointGazeboInterface
 {
 public:
   JointGazeboInterface(
     gz::sim::EntityComponentManager & ecm,
     std::map<std::string, gz::sim::Entity> & enable_joints,
-    const hardware_interface::ComponentInfo & joint_info):
-    ecm_(& ecm)
+    const hardware_interface::ComponentInfo & joint_info)
+  : ecm_(&ecm)
   {
     // std::cout << " spinning joint_info.name ";
     // std::cout << joint_info.name << std::endl;
@@ -67,40 +66,36 @@ public:
 
 public:
   virtual void set_command(const Command & command) = 0;
-  virtual State get_state()const = 0;
+  virtual State get_state() const = 0;
 
 public:
-  template <typename ComponentType>
+  template<typename ComponentType>
   void create_state_gazebo_component_()
   {
-    if (!ecm_->EntityHasComponentType(sim_joint_, ComponentType().TypeId()))
-    {
+    if (!ecm_->EntityHasComponentType(sim_joint_, ComponentType().TypeId())) {
       ecm_->CreateComponent(sim_joint_, ComponentType());
     }
   }
 
-  template <typename ComponentType>
+  template<typename ComponentType>
   void create_command_gazebo_component_()
   {
-    if (!ecm_->EntityHasComponentType(sim_joint_, ComponentType().TypeId()))
-    {
+    if (!ecm_->EntityHasComponentType(sim_joint_, ComponentType().TypeId())) {
       ecm_->CreateComponent(sim_joint_, ComponentType({0}));
     }
   }
 
-
-  template <typename ComponentType>
+  template<typename ComponentType>
   double get_state_() const
   {
-    if constexpr (std::is_same_v<ComponentType, gz::sim::components::JointTransmittedWrench>)
-    {
+    if constexpr (std::is_same_v<ComponentType, gz::sim::components::JointTransmittedWrench>) {
       return ecm_->Component<ComponentType>(sim_joint_)->Data().torque().z();
-    }else{
+    } else {
       return ecm_->Component<ComponentType>(sim_joint_)->Data()[0];
     }
   }
 
-  template <typename ComponentType>
+  template<typename ComponentType>
   void set_command_(const double & command)
   {
     ecm_->SetComponentData<ComponentType>(sim_joint_, {command});

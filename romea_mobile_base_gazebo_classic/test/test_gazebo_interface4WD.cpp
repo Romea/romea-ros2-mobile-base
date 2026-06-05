@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <string>
 
@@ -20,20 +19,20 @@
 #include "gtest/gtest.h"
 
 // ros
-#include "rclcpp/node.hpp"
 #include "hardware_interface/component_parser.hpp"
+#include "rclcpp/node.hpp"
 
 // gazebo
 #include "gazebo/test/ServerFixture.hh"
 
-
 // romea
 #include "../test/test_helper.h"
-#include "test_utils.hpp"
 #include "romea_mobile_base_gazebo/gazebo_interface4WD.hpp"
+#include "test_utils.hpp"
 
-class TestGazeboInterface4WD : public gazebo::ServerFixture {};
-
+class TestGazeboInterface4WD : public gazebo::ServerFixture
+{
+};
 
 TEST_F(TestGazeboInterface4WD, testSetGet)
 {
@@ -50,21 +49,13 @@ TEST_F(TestGazeboInterface4WD, testSetGet)
   auto state = gazebo_interface.get_state();
 
   EXPECT_NEAR(
-    command.frontLeftWheelSpinningSetPoint,
-    state.frontLeftWheelSpinningMotion.velocity,
-    0.1);
+    command.frontLeftWheelSpinningSetPoint, state.frontLeftWheelSpinningMotion.velocity, 0.1);
   EXPECT_NEAR(
-    command.frontRightWheelSpinningSetPoint,
-    state.frontRightWheelSpinningMotion.velocity,
-    0.1);
+    command.frontRightWheelSpinningSetPoint, state.frontRightWheelSpinningMotion.velocity, 0.1);
   EXPECT_NEAR(
-    command.rearLeftWheelSpinningSetPoint,
-    state.rearLeftWheelSpinningMotion.velocity,
-    0.1);
+    command.rearLeftWheelSpinningSetPoint, state.rearLeftWheelSpinningMotion.velocity, 0.1);
   EXPECT_NEAR(
-    command.rearRightWheelSpinningSetPoint,
-    state.rearRightWheelSpinningMotion.velocity,
-    0.1);
+    command.rearRightWheelSpinningSetPoint, state.rearRightWheelSpinningMotion.velocity, 0.1);
 }
 
 //-----------------------------------------------------------------------------

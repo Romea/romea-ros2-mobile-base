@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // std
 #include <string>
 
@@ -22,7 +21,6 @@
 // ros
 #include "hardware_interface/component_parser.hpp"
 
-
 // romea
 #include "romea_mobile_base_gazebo/gazebo_interface4WD.hpp"
 
@@ -30,7 +28,6 @@
 #include "../test/test_fixture.hpp"
 #include "../test/test_helper.h"
 #include "../test/test_utils.hpp"
-
 
 TEST(TestGazeboInterface4WD, testSetGet)
 {
@@ -41,7 +38,7 @@ TEST(TestGazeboInterface4WD, testSetGet)
   fixture.Simulator();
 
   romea::core::SimulationCommand4WD command = {-1.0, 1.0, -2.0, 2.0};
-  for (size_t i=0; i < 1000; ++i) {
+  for (size_t i = 0; i < 1000; ++i) {
     fixture.interface->set_command(command);
     fixture.Step();
   }
