@@ -20,9 +20,11 @@
 #include "gtest/gtest.h"
 
 // romea
-#include "romea_common_utils/listeners/data_listener.hpp"
-#include "romea_mobile_base_msgs/msg/skid_steering_command.hpp"
+// clang-format off
 #include "romea_mobile_base_utils/control/command_publisher.hpp"
+#include "romea_mobile_base_msgs/msg/omni_steering_command.hpp"
+#include "romea_common_utils/listeners/data_listener.hpp"
+// clang-format on
 
 // ros
 #include "rclcpp/node.hpp"
