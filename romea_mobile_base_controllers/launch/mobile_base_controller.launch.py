@@ -49,8 +49,8 @@ def launch_setup(context, *args, **kwargs):
             controller_yaml_filename,
             "--controller-manager",
             controller_manager_name,
-            # "--namespace",
-            # "/adap2e/base"
+            "--switch-timeout",
+            "15"
         ],
         output="screen",
     )
@@ -63,6 +63,8 @@ def launch_setup(context, *args, **kwargs):
             "joint_state_broadcaster",
             "--controller-manager",
             controller_manager_name,
+            "--switch-timeout",
+            "15"
         ],
         # output="screen",
     )
