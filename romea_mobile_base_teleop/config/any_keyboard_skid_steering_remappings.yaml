@@ -1,0 +1,6 @@
+axes:
+  linear_speed: up_down
+  angular_speed: left_right
+buttons:
+  slow_mode: key_c
+  turbo_mode: key_v
