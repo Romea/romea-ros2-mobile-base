@@ -21,7 +21,8 @@
       wheel_mass="${sprocket_wheel_mass}"
       wheel_width="${track_width}"
       wheel_radius="${sprocket_wheel_radius+track_thickness}"
-      left_right="-1">
+      left_right="-1"
+      with_slip="1">
 
       <origin
         xyz="${sprocket_wheel_x-body_reference_x} ${track/2} ${sprocket_wheel_z - chassis_height}"
@@ -35,7 +36,8 @@
       wheel_mass="${sprocket_wheel_mass}"
       wheel_width="${track_width}"
       wheel_radius="${sprocket_wheel_radius+track_thickness}"
-      left_right="1">
+      left_right="1"
+      with_slip="1">
       <origin
         xyz="${sprocket_wheel_x-body_reference_x} ${-track/2} ${sprocket_wheel_z - chassis_height}"
         rpy="${-M_PI/2} 0 0" />
@@ -48,7 +50,8 @@
       wheel_mass="${idler_wheel_mass}"
       wheel_width="${track_width}"
       wheel_radius="${idler_wheel_radius+track_thickness}"
-      left_right="-1">
+      left_right="-1"
+      with_slip="1">
       <origin
         xyz="${wheelbase/2-body_reference_x} ${track/2} ${idler_wheel_radius - chassis_height}"
         rpy="${-M_PI/2} 0 0" />
@@ -61,7 +64,8 @@
       wheel_mass="${idler_wheel_mass}"
       wheel_width="${track_width}"
       wheel_radius="${idler_wheel_radius+track_thickness}"
-      left_right="1">
+      left_right="1"
+      with_slip="1">
       <origin
         xyz="${wheelbase/2-body_reference_x} ${-track/2} ${idler_wheel_radius - chassis_height}"
         rpy="${-M_PI/2} 0 0" />

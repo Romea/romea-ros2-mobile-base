@@ -2,7 +2,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="wheel">
 
   <xacro:macro name="wheel"
-    params="parent_link wheel_spinning_link wheel_spinning_joint wheel_mass wheel_width wheel_radius left_right *joint_origin *visual_wheel">
+    params="parent_link wheel_spinning_link wheel_spinning_joint wheel_mass wheel_width wheel_radius left_right with_slip:=0 *joint_origin *visual_wheel">
 
     <gazebo reference="${prefix}${wheel_spinning_link}">
       <material>Gazebo/Black</material>
@@ -80,6 +80,20 @@
         <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
       </joint>
     </transmission>
+
+    <xacro:if value="${with_slip}">
+      <gazebo>
+        <plugin filename="libignition-gazebo-wheel-slip-system.so"
+          name="ignition::gazebo::systems::WheelSlip">
+          <wheel link_name="${prefix}${wheel_spinning_link}">
+            <slip_compliance_lateral>0.1</slip_compliance_lateral>
+            <slip_compliance_longitudinal>0.1</slip_compliance_longitudinal>
+            <wheel_normal_force>100</wheel_normal_force>
+            <wheel_radius>${wheel_radius}</wheel_radius>
+          </wheel>
+        </plugin>
+      </gazebo>
+    </xacro:if>
 
   </xacro:macro>
 </robot>
