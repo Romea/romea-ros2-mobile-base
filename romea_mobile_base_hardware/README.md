@@ -71,13 +71,13 @@ It is useful for robots with closed low-level controllers, where direct actuator
 At runtime, a `GenericHardwareSystemInterface`:
 
 1. loads the `hardware_interface::HardwareInfo` generated from the robot description;
-2. creates the architecture-specific `HardwareInterface*`;
+2. creates the requested architecture-specific `HardwareInterface*`;
 3. exports the command and state interfaces expected by the mobile base controller;
-4. publishes controller-side joint commands on `bridge/joint_state_command`;
-5. subscribes to joint feedback on `bridge/joint_state_feedback`;
+4. publishes controller-side joint commands on `bridge/<interface_name>/joint_state_command`;
+5. subscribes to joint feedback on `bridge/<interface_name>/joint_state_feedback`;
 6. updates the exported state interfaces from the received feedback.
 
-Robot-specific hardware packages that need direct access to the low-level controller can derive from `HardwareSystemInterface<HardwareInterface>`, select the appropriate `HardwareInterface*`, and implement their own `read()` and `write()` methods.
+Robot-specific hardware packages that need direct access to the low-level controller can derive from `HardwareSystemInterfaceLegacy<HardwareInterface>`, select the appropriate `HardwareInterface*`, and implement their own `read()` and `write()` methods.
 
 ### 4.3) Exported plugins
 
@@ -85,11 +85,9 @@ The exported plugins are:
 
 | Plugin | Hardware interface |
 |---|---|
-| `romea_mobile_base_hardware/GenericHardwareSystemInterface2FWS4WD` | `HardwareInterface2FWS4WD` |
-| `romea_mobile_base_hardware/GenericHardwareSystemInterface4WS4WD` | `HardwareInterface4WS4WD` |
-| `romea_mobile_base_hardware/GenericHardwareSystemInterface2THD` | `HardwareInterface2THD` |
+| `romea_mobile_base_hardware/GenericHardwareSystemInterface` | Selected from the `hardware_interfaces` parameters |
 
-Only these generic plugins are currently exported in `plugins.xml`. Other architecture-specific hardware interfaces are available as C++ classes and can be used by dedicated hardware or simulation packages.
+Only this generic plugin is currently exported in `plugins.xml`. Architecture-specific hardware interfaces are available as C++ classes and can be used by dedicated hardware or simulation packages.
 
 ## 5) Relation with other mobile base packages
 

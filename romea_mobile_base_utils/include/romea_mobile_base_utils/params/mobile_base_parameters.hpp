@@ -26,6 +26,7 @@
 #include "mobile_base_parameters2FWS2FWD.hpp"
 #include "mobile_base_parameters2FWS2RWD.hpp"
 #include "mobile_base_parameters2FWS4WD.hpp"
+#include "mobile_base_parameters2FWC2RWD.hpp"
 #include "mobile_base_parameters2TD.hpp"
 #include "mobile_base_parameters2WD.hpp"
 #include "mobile_base_parameters4WD.hpp"
@@ -51,6 +52,8 @@ void declare_mobile_base_info(std::shared_ptr<Node> node, const std::string & pa
     declare_mobile_base_info_2FWS2RWD(node, parameters_ns);
   } else if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo2FWS4WD>) {
     declare_mobile_base_info_2FWS4WD(node, parameters_ns);
+  } else if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo2FWC2RWD>) {
+    declare_mobile_base_info_2FWC2RWD(node, parameters_ns);
   } else if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo2TD>) {
     declare_mobile_base_info_2TD(node, parameters_ns);
   } else if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo2WD>) {
@@ -77,6 +80,8 @@ MobileBaseInfo get_mobile_base_info(std::shared_ptr<Node> node, const std::strin
     return get_mobile_base_info_2FWS2RWD(node, parameters_ns);
   } else if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo2FWS4WD>) {
     return get_mobile_base_info_2FWS4WD(node, parameters_ns);
+  } else if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo2FWC2RWD>) {
+    return get_mobile_base_info_2FWC2RWD(node, parameters_ns);
   } else if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo2TD>) {
     return get_mobile_base_info_2TD(node, parameters_ns);
   } else if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo2WD>) {

@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="prefix" value="robot_" />
+  <xacro:property name="front_left_wheel_swiveling_joint" value="joint1" />
+  <xacro:property name="front_right_wheel_swiveling_joint" value="joint2" />
+  <xacro:property name="front_left_wheel_spinning_joint" value="joint3" />
+  <xacro:property name="front_right_wheel_spinning_joint" value="joint4" />
+  <xacro:property name="rear_left_wheel_spinning_joint" value="joint5" />
+  <xacro:property name="rear_right_wheel_spinning_joint" value="joint6" />
+
+  <xacro:property name="simulation_hardware_plugin" value="foo" />
+  <xacro:property name="wheelbase" value="1.4" />
+  <xacro:property name="front_track" value="1.2" />
+  <xacro:property name="front_wheel_x_offset" value="0.1" />
+  <xacro:property name="front_wheel_radius" value="0.4" />
+  <xacro:property name="rear_track" value="1.0" />
+  <xacro:property name="rear_wheel_radius" value="0.6" />
+  <xacro:property name="maximal_wheel_speed" value="1.0" />
+
+  <link name="robot_base_link" />
+  <link name="robot_link1" />
+  <link name="robot_link2" />
+  <link name="robot_link3" />
+  <link name="robot_link4" />
+  <link name="robot_link5" />
+  <link name="robot_link6" />
+
+  <joint name="robot_joint1" type="continuous">
+    <parent link="robot_base_link" />
+    <child link="robot_link1" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+  <joint name="robot_joint2" type="continuous">
+    <parent link="robot_base_link" />
+    <child link="robot_link2" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+  <joint name="robot_joint3" type="continuous">
+    <parent link="robot_link1" />
+    <child link="robot_link3" />
+    <axis xyz="0 1 0" />
+  </joint>
+
+  <joint name="robot_joint4" type="continuous">
+    <parent link="robot_link2" />
+    <child link="robot_link4" />
+    <axis xyz="0 1 0" />
+  </joint>
+
+  <joint name="robot_joint5" type="continuous">
+    <parent link="robot_base_link" />
+    <child link="robot_link5" />
+    <axis xyz="0 1 0" />
+  </joint>
+
+  <joint name="robot_joint6" type="continuous">
+    <parent link="robot_base_link" />
+    <child link="robot_link6" />
+    <axis xyz="0 1 0" />
+  </joint>
+
+  <xacro:include
+    filename="$(find romea_mobile_base_description)/ros2_control/base2FWC2RWD.ros2_control.xacro" />
+  <xacro:base_control mode="simulation" base_name="base" hardware_plugin="${simulation_hardware_plugin}" />
+
+</robot>

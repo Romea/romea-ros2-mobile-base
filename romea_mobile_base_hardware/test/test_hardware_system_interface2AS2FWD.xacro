@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<robot name="robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="steering_joint" params="name parent child command">
+    <joint name="${name}" type="revolute">
+      <parent link="${parent}" />
+      <child link="${child}" />
+      <axis xyz="0 0 1" />
+      <limit lower="-1" upper="1" effort="10" velocity="10" />
+    </joint>
+  </xacro:macro>
+
+  <xacro:macro name="spinning_joint" params="name parent child">
+    <joint name="${name}" type="continuous">
+      <parent link="${parent}" />
+      <child link="${child}" />
+      <axis xyz="0 1 0" />
+    </joint>
+  </xacro:macro>
+
+  <xacro:macro name="steering_control_joint" params="name command">
+    <joint name="${name}">
+      <command_interface name="position" />
+      <state_interface name="position" />
+    </joint>
+  </xacro:macro>
+
+  <xacro:macro name="spinning_control_joint" params="name command">
+    <joint name="${name}">
+      <command_interface name="velocity" />
+      <state_interface name="position" />
+      <state_interface name="velocity" />
+      <state_interface name="effort" />
+    </joint>
+  </xacro:macro>
+
+  <link name="base_link" />
+  <link name="front_axle_steering_link" />
+  <link name="rear_axle_steering_link" />
+  <link name="front_left_wheel_steering_link" />
+  <link name="front_right_wheel_steering_link" />
+  <link name="rear_left_wheel_steering_link" />
+  <link name="rear_right_wheel_steering_link" />
+  <link name="front_left_wheel_spinning_link" />
+  <link name="front_right_wheel_spinning_link" />
+  <link name="rear_left_wheel_spinning_link" />
+  <link name="rear_right_wheel_spinning_link" />
+
+  <xacro:steering_joint name="front_axle_steering_joint" parent="base_link" child="front_axle_steering_link" command="true" />
+  <xacro:steering_joint name="rear_axle_steering_joint" parent="base_link" child="rear_axle_steering_link" command="true" />
+  <xacro:steering_joint name="front_left_wheel_steering_joint" parent="base_link" child="front_left_wheel_steering_link" command="false" />
+  <xacro:steering_joint name="front_right_wheel_steering_joint" parent="base_link" child="front_right_wheel_steering_link" command="false" />
+  <xacro:steering_joint name="rear_left_wheel_steering_joint" parent="base_link" child="rear_left_wheel_steering_link" command="false" />
+  <xacro:steering_joint name="rear_right_wheel_steering_joint" parent="base_link" child="rear_right_wheel_steering_link" command="false" />
+  <xacro:spinning_joint name="front_left_wheel_spinning_joint" parent="front_left_wheel_steering_link" child="front_left_wheel_spinning_link" />
+  <xacro:spinning_joint name="front_right_wheel_spinning_joint" parent="front_right_wheel_steering_link" child="front_right_wheel_spinning_link" />
+  <xacro:spinning_joint name="rear_left_wheel_spinning_joint" parent="rear_left_wheel_steering_link" child="rear_left_wheel_spinning_link" />
+  <xacro:spinning_joint name="rear_right_wheel_spinning_joint" parent="rear_right_wheel_steering_link" child="rear_right_wheel_spinning_link" />
+
+  <ros2_control name="robot" type="system">
+    <hardware>
+      <plugin>romea_mobile_base_hardware/GenericHardwareSystemInterface</plugin>
+
+      <param name="hardware_interfaces">mobile_base</param>
+      <param name="mobile_base.type">2AS2FWD</param>
+
+      <param name="mobile_base.front_axle_steering_joint_name">front_axle_steering_joint</param>
+      <param name="mobile_base.rear_axle_steering_joint_name">rear_axle_steering_joint</param>
+      <param name="mobile_base.front_left_wheel_spinning_joint_name">front_left_wheel_spinning_joint</param>
+      <param name="mobile_base.front_right_wheel_spinning_joint_name">front_right_wheel_spinning_joint</param>
+      <param name="mobile_base.front_left_wheel_steering_joint_name">front_left_wheel_steering_joint</param>
+      <param name="mobile_base.front_right_wheel_steering_joint_name">front_right_wheel_steering_joint</param>
+      <param name="mobile_base.rear_left_wheel_steering_joint_name">rear_left_wheel_steering_joint</param>
+      <param name="mobile_base.rear_right_wheel_steering_joint_name">rear_right_wheel_steering_joint</param>
+      <param name="mobile_base.rear_left_wheel_spinning_joint_name">rear_left_wheel_spinning_joint</param>
+      <param name="mobile_base.rear_right_wheel_spinning_joint_name">rear_right_wheel_spinning_joint</param>
+
+      <param name="mobile_base.spinning_joint_command_interface_type">velocity</param>
+      <param name="mobile_base.wheelbase">1.4</param>
+      <param name="mobile_base.front_track">1.2</param>
+      <param name="mobile_base.front_wheel_radius">0.4</param>
+      <param name="mobile_base.front_hub_carrier_offset">0.1</param>
+      <param name="mobile_base.rear_track">1.4</param>
+      <param name="mobile_base.rear_wheel_radius">0.6</param>
+      <param name="mobile_base.rear_hub_carrier_offset">0.15</param>
+    </hardware>
+
+    <xacro:steering_control_joint name="front_axle_steering_joint" command="true" />
+    <xacro:steering_control_joint name="rear_axle_steering_joint" command="true" />
+    <xacro:spinning_control_joint name="front_left_wheel_spinning_joint" command="true" />
+    <xacro:spinning_control_joint name="front_right_wheel_spinning_joint" command="true" />
+    <xacro:steering_control_joint name="front_left_wheel_steering_joint" command="false" />
+    <xacro:steering_control_joint name="front_right_wheel_steering_joint" command="false" />
+    <xacro:steering_control_joint name="rear_left_wheel_steering_joint" command="false" />
+    <xacro:steering_control_joint name="rear_right_wheel_steering_joint" command="false" />
+    <xacro:spinning_control_joint name="rear_left_wheel_spinning_joint" command="false" />
+    <xacro:spinning_control_joint name="rear_right_wheel_spinning_joint" command="false" />
+  </ros2_control>
+
+</robot>

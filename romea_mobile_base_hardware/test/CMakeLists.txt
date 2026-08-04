@@ -3,49 +3,23 @@ find_package(ament_cmake_gtest REQUIRED)
 get_filename_component(TEST_DIR_SRC ${CMAKE_CURRENT_SOURCE_DIR} ABSOLUTE)
 configure_file(test_helper.h.in test_helper.h)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
-configure_file(test_utils.hpp test_utils.hpp)
 
-ament_add_gtest(${PROJECT_NAME}_test_hardware_interface1FAS2FWD test_hardware_interface1FAS2FWD.cpp)
-target_link_libraries(${PROJECT_NAME}_test_hardware_interface1FAS2FWD ${PROJECT_NAME})
+function(add_hardware_system_test test_name)
+  ament_add_gtest(${PROJECT_NAME}_${test_name} ${test_name}.cpp)
+  target_link_libraries(${PROJECT_NAME}_${test_name} ${PROJECT_NAME})
+endfunction()
 
-ament_add_gtest(${PROJECT_NAME}_test_hardware_interface1FAS2RWD test_hardware_interface1FAS2RWD.cpp)
-target_link_libraries(${PROJECT_NAME}_test_hardware_interface1FAS2RWD ${PROJECT_NAME})
-
-ament_add_gtest(${PROJECT_NAME}_test_hardware_interface1FAS4WD test_hardware_interface1FAS4WD.cpp)
-target_link_libraries(${PROJECT_NAME}_test_hardware_interface1FAS4WD ${PROJECT_NAME})
-
-ament_add_gtest(${PROJECT_NAME}_test_hardware_interface2AS2FWD test_hardware_interface2AS2FWD.cpp)
-target_link_libraries(${PROJECT_NAME}_test_hardware_interface2AS2FWD ${PROJECT_NAME})
-
-ament_add_gtest(${PROJECT_NAME}_test_hardware_interface2AS2RWD test_hardware_interface2AS2RWD.cpp)
-target_link_libraries(${PROJECT_NAME}_test_hardware_interface2AS2RWD ${PROJECT_NAME})
-
-ament_add_gtest(${PROJECT_NAME}_test_hardware_interface2AS4WD test_hardware_interface2AS4WD.cpp)
-target_link_libraries(${PROJECT_NAME}_test_hardware_interface2AS4WD ${PROJECT_NAME})
-
-ament_add_gtest(${PROJECT_NAME}_test_hardware_interface2TD test_hardware_interface2TD.cpp)
-target_link_libraries(${PROJECT_NAME}_test_hardware_interface2TD ${PROJECT_NAME})
-
-ament_add_gtest(${PROJECT_NAME}_test_hardware_interface2THD test_hardware_interface2THD.cpp)
-target_link_libraries(${PROJECT_NAME}_test_hardware_interface2THD ${PROJECT_NAME})
-
-ament_add_gtest(${PROJECT_NAME}_test_hardware_interface2TTD test_hardware_interface2TTD.cpp)
-target_link_libraries(${PROJECT_NAME}_test_hardware_interface2TTD ${PROJECT_NAME})
-
-ament_add_gtest(${PROJECT_NAME}_test_hardware_interface2FWS4WD test_hardware_interface2FWS4WD.cpp)
-target_link_libraries(${PROJECT_NAME}_test_hardware_interface2FWS4WD ${PROJECT_NAME})
-
-ament_add_gtest(${PROJECT_NAME}_test_hardware_interface2FWS2RWD test_hardware_interface2FWS2RWD.cpp)
-target_link_libraries(${PROJECT_NAME}_test_hardware_interface2FWS2RWD ${PROJECT_NAME})
-
-ament_add_gtest(${PROJECT_NAME}_test_hardware_interface2FWS2FWD test_hardware_interface2FWS2FWD.cpp)
-target_link_libraries(${PROJECT_NAME}_test_hardware_interface2FWS2FWD ${PROJECT_NAME})
-
-# ament_add_gtest(${PROJECT_NAME}_test_hardware_interface2WD test_hardware_interface2WD.cpp)
-# target_link_libraries(${PROJECT_NAME}_test_hardware_interface2WD ${PROJECT_NAME})
-
-ament_add_gtest(${PROJECT_NAME}_test_hardware_interface4WS4WD test_hardware_interface4WS4WD.cpp)
-target_link_libraries(${PROJECT_NAME}_test_hardware_interface4WS4WD ${PROJECT_NAME})
-
-ament_add_gtest(${PROJECT_NAME}_test_hardware_interface4WD test_hardware_interface4WD.cpp)
-target_link_libraries(${PROJECT_NAME}_test_hardware_interface4WD ${PROJECT_NAME})
+add_hardware_system_test(test_hardware_system_interface1FAS2FWD)
+add_hardware_system_test(test_hardware_system_interface1FAS2RWD)
+add_hardware_system_test(test_hardware_system_interface1FAS4WD)
+add_hardware_system_test(test_hardware_system_interface4WD)
+add_hardware_system_test(test_hardware_system_interface2FWS2FWD)
+add_hardware_system_test(test_hardware_system_interface2FWS2RWD)
+add_hardware_system_test(test_hardware_system_interface2FWS4WD)
+add_hardware_system_test(test_hardware_system_interface2AS2FWD)
+add_hardware_system_test(test_hardware_system_interface2AS2RWD)
+add_hardware_system_test(test_hardware_system_interface2AS4WD)
+add_hardware_system_test(test_hardware_system_interface4WS4WD)
+add_hardware_system_test(test_hardware_system_interface2TD)
+add_hardware_system_test(test_hardware_system_interface2THD)
+add_hardware_system_test(test_hardware_system_interface2TTD)

@@ -17,6 +17,7 @@
 
 // std
 #include <string>
+#include <type_traits>
 
 // ros
 #include <hardware_interface/hardware_info.hpp>
@@ -31,12 +32,39 @@ bool has_parameter(
 const std::string & get_parameter(
   const hardware_interface::HardwareInfo & hardware_info, const std::string & parameter_name);
 
+inline std::string full_parameter_name(
+  const std::string & parameter_prefix, const std::string & parameter_name)
+{
+  return parameter_prefix + "." + parameter_name;
+}
+
+inline const std::string & get_parameter(
+  const hardware_interface::HardwareInfo & hardware_info,
+  const std::string & parameter_prefix,
+  const std::string & parameter_name)
+{
+  return get_parameter(hardware_info, full_parameter_name(parameter_prefix, parameter_name));
+}
+
 template<typename T>
 T get_parameter(
   const hardware_interface::HardwareInfo & hardware_info, const std::string & parameter_name)
 {
   std::string parameter = get_parameter(hardware_info, parameter_name);
-  return romea::core::lexical_cast<T>(parameter);
+  if constexpr (std::is_same_v<std::decay_t<T>, std::string>) {
+    return parameter;
+  } else {
+    return romea::core::lexical_cast<T>(parameter);
+  }
+}
+
+template<typename T>
+T get_parameter(
+  const hardware_interface::HardwareInfo & hardware_info,
+  const std::string & parameter_prefix,
+  const std::string & parameter_name)
+{
+  return get_parameter<T>(hardware_info, full_parameter_name(parameter_prefix, parameter_name));
 }
 
 template<typename T>
@@ -52,8 +80,28 @@ T get_parameter_or(
   }
 }
 
+template<typename T>
+T get_parameter_or(
+  const hardware_interface::HardwareInfo & hardware_info,
+  const std::string & parameter_prefix,
+  const std::string & parameter_name,
+  const T & default_value)
+{
+  return get_parameter_or<T>(
+    hardware_info, full_parameter_name(parameter_prefix, parameter_name), default_value);
+}
+
 const hardware_interface::ComponentInfo & get_joint_info(
   const hardware_interface::HardwareInfo & hardware_info, const std::string & joint_name);
+
+inline const hardware_interface::ComponentInfo & get_joint_info(
+  const hardware_interface::HardwareInfo & hardware_info,
+  const std::string & parameters_prefix,
+  const std::string & parameter_name)
+{
+  return get_joint_info(
+    hardware_info, get_parameter(hardware_info, parameters_prefix, parameter_name));
+}
 
 double get_wheelbase(const hardware_interface::HardwareInfo & hardware_info);
 

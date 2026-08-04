@@ -46,6 +46,20 @@ protected:
  <!-- |    EDITING THIS FILE BY HAND IS NOT RECOMMENDED                                 | -->
  <!-- =================================================================================== -->
  <robot name="robot">
+   <link name="base_link"/>
+   <link name="link1"/>
+   <link name="link2"/>
+
+   <joint name="joint1" type="revolute">
+     <parent link="base_link"/>
+     <child link="link1"/>
+     <limit lower="-1." upper="1." effort="1." velocity="1."/>
+   </joint>
+   <joint name="joint2" type="continuous">
+     <parent link="base_link"/>
+     <child link="link2"/>
+   </joint>
+
    <ros2_control name="base" type="system">
      <hardware>
        <plugin>fake_components/GenericSystem</plugin>

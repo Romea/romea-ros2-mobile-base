@@ -21,6 +21,7 @@
 
 // romea
 #include "romea_core_mobile_base/hardware/HardwareControl2FWS4WD.hpp"
+#include "romea_mobile_base_hardware/hardware_interface_base.hpp"
 #include "romea_mobile_base_utils/ros2_control/hardware/spinning_joint_hardware_interface.hpp"
 #include "romea_mobile_base_utils/ros2_control/hardware/steering_joint_hardware_interface.hpp"
 
@@ -29,8 +30,25 @@ namespace romea
 namespace ros2
 {
 
-struct HardwareInterface2FWS4WD
+struct HardwareInterface2FWS4WD final : public HardwareInterfaceBase
 {
+  struct Configuration
+  {
+    Configuration() = default;
+
+    Configuration(
+      const hardware_interface::HardwareInfo & hardware_info,
+      const std::string & parameters_prefix);
+
+    hardware_interface::ComponentInfo front_left_wheel_steering_joint_info;
+    hardware_interface::ComponentInfo front_right_wheel_steering_joint_info;
+    hardware_interface::ComponentInfo front_left_wheel_spinning_joint_info;
+    hardware_interface::ComponentInfo front_right_wheel_spinning_joint_info;
+    hardware_interface::ComponentInfo rear_left_wheel_spinning_joint_info;
+    hardware_interface::ComponentInfo rear_right_wheel_spinning_joint_info;
+    std::string spinning_joint_command_interface_type;
+  };
+
   enum JointIDs
   {
     FRONT_LEFT_WHEEL_STEERING_JOINT_ID = 0,
@@ -45,8 +63,10 @@ struct HardwareInterface2FWS4WD
     const hardware_interface::HardwareInfo & hardware_info,
     const std::string & wheel_spinning_joint_command_interface_type);
 
+  HardwareInterface2FWS4WD(const Configuration & configuration);
+
   core::HardwareCommand2FWS4WD get_hardware_command() const;
-  sensor_msgs::msg::JointState get_joint_state_command() const;
+  sensor_msgs::msg::JointState get_joint_state_command();
 
   void set_feedback(const core::HardwareState2FWS4WD & hardware_state);
   void set_feedback(const sensor_msgs::msg::JointState & joint_states);

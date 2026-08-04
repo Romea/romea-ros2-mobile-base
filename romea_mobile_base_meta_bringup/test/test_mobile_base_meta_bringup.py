@@ -45,7 +45,7 @@ def test_get_model(meta_description):
 
 
 def test_get_version(meta_description):
-    assert meta_description.get_version() == "fat"
+    assert meta_description.get_version() == "one"
 
 
 def test_get_simulation_initial_xyz(meta_description):

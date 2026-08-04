@@ -10,7 +10,7 @@ launch:
 configuration:
   manufacturer: inrae
   model: adap2e
-  version: fat
+  version: one
 records:
   joint_states: true
   controller/odom: true

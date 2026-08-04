@@ -27,6 +27,45 @@ namespace ros2
 {
 
 //-----------------------------------------------------------------------------
+HardwareInterface2FWS2FWD::Configuration::Configuration(
+  const hardware_interface::HardwareInfo & hardware_info,
+  const std::string & parameters_prefix)
+{
+  front_left_wheel_steering_joint_info =
+    get_joint_info(hardware_info, parameters_prefix, "front_left_wheel_steering_joint_name");
+  front_right_wheel_steering_joint_info =
+    get_joint_info(hardware_info, parameters_prefix, "front_right_wheel_steering_joint_name");
+  front_left_wheel_spinning_joint_info =
+    get_joint_info(hardware_info, parameters_prefix, "front_left_wheel_spinning_joint_name");
+  front_right_wheel_spinning_joint_info =
+    get_joint_info(hardware_info, parameters_prefix, "front_right_wheel_spinning_joint_name");
+  rear_left_wheel_spinning_joint_info =
+    get_joint_info(hardware_info, parameters_prefix, "rear_left_wheel_spinning_joint_name");
+  rear_right_wheel_spinning_joint_info =
+    get_joint_info(hardware_info, parameters_prefix, "rear_right_wheel_spinning_joint_name");
+  spinning_joint_command_interface_type =
+    get_parameter_or<std::string>(
+      hardware_info,
+      parameters_prefix,
+      "spinning_joint_command_interface_type",
+      hardware_interface::HW_IF_VELOCITY);
+  wheelbase =
+    get_parameter<double>(hardware_info, parameters_prefix, "wheelbase");
+  front_track =
+    get_parameter<double>(hardware_info, parameters_prefix, "front_track");
+  rear_track =
+    get_parameter<double>(hardware_info, parameters_prefix, "rear_track");
+  front_wheel_radius =
+    get_parameter<double>(hardware_info, parameters_prefix, "front_wheel_radius");
+  rear_wheel_radius =
+    get_parameter<double>(hardware_info, parameters_prefix, "rear_wheel_radius");
+  front_hub_carrier_offset =
+    get_parameter<double>(hardware_info, parameters_prefix, "front_hub_carrier_offset");
+  rear_hub_carrier_offset =
+    get_parameter<double>(hardware_info, parameters_prefix, "rear_hub_carrier_offset");
+}
+
+//-----------------------------------------------------------------------------
 HardwareInterface2FWS2FWD::HardwareInterface2FWS2FWD(
   const hardware_interface::HardwareInfo & hardware_info,
   const std::string & spinning_joint_command_interface_type)
@@ -55,6 +94,32 @@ HardwareInterface2FWS2FWD::HardwareInterface2FWS2FWD(
   rear_wheel_radius_(get_rear_wheel_radius(hardware_info)),
   front_hub_carrier_offset_(get_front_hub_carrier_offset(hardware_info)),
   rear_hub_carrier_offset_(get_rear_hub_carrier_offset(hardware_info))
+{
+}
+
+//-----------------------------------------------------------------------------
+HardwareInterface2FWS2FWD::HardwareInterface2FWS2FWD(const Configuration & configuration)
+: front_left_wheel_steering_joint_(
+    FRONT_LEFT_WHEEL_STEERING_JOINT_ID, configuration.front_left_wheel_steering_joint_info),
+  front_right_wheel_steering_joint_(
+    FRONT_RIGHT_WHEEL_STEERING_JOINT_ID, configuration.front_right_wheel_steering_joint_info),
+  front_left_wheel_spinning_joint_(
+    FRONT_LEFT_WHEEL_SPINNING_JOINT_ID,
+    configuration.front_left_wheel_spinning_joint_info,
+    configuration.spinning_joint_command_interface_type),
+  front_right_wheel_spinning_joint_(
+    FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID,
+    configuration.front_right_wheel_spinning_joint_info,
+    configuration.spinning_joint_command_interface_type),
+  rear_left_wheel_spinning_joint_feedback_(configuration.rear_left_wheel_spinning_joint_info),
+  rear_right_wheel_spinning_joint_feedback_(configuration.rear_right_wheel_spinning_joint_info),
+  wheelbase_(configuration.wheelbase),
+  front_track_(configuration.front_track),
+  rear_track_(configuration.rear_track),
+  front_wheel_radius_(configuration.front_wheel_radius),
+  rear_wheel_radius_(configuration.rear_wheel_radius),
+  front_hub_carrier_offset_(configuration.front_hub_carrier_offset),
+  rear_hub_carrier_offset_(configuration.rear_hub_carrier_offset)
 {
 }
 
@@ -96,7 +161,7 @@ core::HardwareCommand2FWS2FWD HardwareInterface2FWS2FWD::get_hardware_command() 
 }
 
 //-----------------------------------------------------------------------------
-sensor_msgs::msg::JointState HardwareInterface2FWS2FWD::get_joint_state_command() const
+sensor_msgs::msg::JointState HardwareInterface2FWS2FWD::get_joint_state_command()
 {
   auto joint_states = make_joint_state_msg(4);
   front_left_wheel_steering_joint_.write_command(joint_states);

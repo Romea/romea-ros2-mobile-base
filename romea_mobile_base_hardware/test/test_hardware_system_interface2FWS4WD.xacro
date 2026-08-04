@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<robot name="robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <link name="base_link" />
+  <link name="front_left_wheel_steering_link" />
+  <link name="front_right_wheel_steering_link" />
+  <link name="front_left_wheel_spinning_link" />
+  <link name="front_right_wheel_spinning_link" />
+  <link name="rear_left_wheel_spinning_link" />
+  <link name="rear_right_wheel_spinning_link" />
+
+  <joint name="front_left_wheel_steering_joint" type="revolute">
+    <parent link="base_link" />
+    <child link="front_left_wheel_steering_link" />
+    <axis xyz="0 0 1" />
+    <limit lower="-1" upper="1" effort="10" velocity="10" />
+  </joint>
+
+  <joint name="front_right_wheel_steering_joint" type="revolute">
+    <parent link="base_link" />
+    <child link="front_right_wheel_steering_link" />
+    <axis xyz="0 0 1" />
+    <limit lower="-1" upper="1" effort="10" velocity="10" />
+  </joint>
+
+  <joint name="front_left_wheel_spinning_joint" type="continuous">
+    <parent link="front_left_wheel_steering_link" />
+    <child link="front_left_wheel_spinning_link" />
+    <axis xyz="0 1 0" />
+  </joint>
+
+  <joint name="front_right_wheel_spinning_joint" type="continuous">
+    <parent link="front_right_wheel_steering_link" />
+    <child link="front_right_wheel_spinning_link" />
+    <axis xyz="0 1 0" />
+  </joint>
+
+  <joint name="rear_left_wheel_spinning_joint" type="continuous">
+    <parent link="base_link" />
+    <child link="rear_left_wheel_spinning_link" />
+    <axis xyz="0 1 0" />
+  </joint>
+
+  <joint name="rear_right_wheel_spinning_joint" type="continuous">
+    <parent link="base_link" />
+    <child link="rear_right_wheel_spinning_link" />
+    <axis xyz="0 1 0" />
+  </joint>
+
+  <ros2_control name="robot" type="system">
+    <hardware>
+      <plugin>romea_mobile_base_hardware/GenericHardwareSystemInterface</plugin>
+
+      <param name="hardware_interfaces">mobile_base</param>
+      <param name="mobile_base.type">2FWS4WD</param>
+
+      <param name="mobile_base.front_left_wheel_steering_joint_name">front_left_wheel_steering_joint</param>
+      <param name="mobile_base.front_right_wheel_steering_joint_name">front_right_wheel_steering_joint</param>
+      <param name="mobile_base.front_left_wheel_spinning_joint_name">front_left_wheel_spinning_joint</param>
+      <param name="mobile_base.front_right_wheel_spinning_joint_name">front_right_wheel_spinning_joint</param>
+      <param name="mobile_base.rear_left_wheel_spinning_joint_name">rear_left_wheel_spinning_joint</param>
+      <param name="mobile_base.rear_right_wheel_spinning_joint_name">rear_right_wheel_spinning_joint</param>
+
+      <param name="mobile_base.spinning_joint_command_interface_type">velocity</param>
+    </hardware>
+
+    <joint name="front_left_wheel_steering_joint">
+      <command_interface name="position" />
+      <state_interface name="position" />
+    </joint>
+
+    <joint name="front_right_wheel_steering_joint">
+      <command_interface name="position" />
+      <state_interface name="position" />
+    </joint>
+
+    <joint name="front_left_wheel_spinning_joint">
+      <command_interface name="velocity" />
+      <state_interface name="position" />
+      <state_interface name="velocity" />
+      <state_interface name="effort" />
+    </joint>
+
+    <joint name="front_right_wheel_spinning_joint">
+      <command_interface name="velocity" />
+      <state_interface name="position" />
+      <state_interface name="velocity" />
+      <state_interface name="effort" />
+    </joint>
+
+    <joint name="rear_left_wheel_spinning_joint">
+      <command_interface name="velocity" />
+      <state_interface name="position" />
+      <state_interface name="velocity" />
+      <state_interface name="effort" />
+    </joint>
+
+    <joint name="rear_right_wheel_spinning_joint">
+      <command_interface name="velocity" />
+      <state_interface name="position" />
+      <state_interface name="velocity" />
+      <state_interface name="effort" />
+    </joint>
+  </ros2_control>
+
+</robot>

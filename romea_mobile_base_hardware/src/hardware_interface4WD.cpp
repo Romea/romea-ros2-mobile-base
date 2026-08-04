@@ -26,6 +26,27 @@ namespace ros2
 {
 
 //-----------------------------------------------------------------------------
+HardwareInterface4WD::Configuration::Configuration(
+  const hardware_interface::HardwareInfo & hardware_info,
+  const std::string & parameters_prefix)
+{
+  front_left_wheel_spinning_joint_info =
+    get_joint_info(hardware_info, parameters_prefix, "front_left_wheel_spinning_joint_name");
+  front_right_wheel_spinning_joint_info =
+    get_joint_info(hardware_info, parameters_prefix, "front_right_wheel_spinning_joint_name");
+  rear_left_wheel_spinning_joint_info =
+    get_joint_info(hardware_info, parameters_prefix, "rear_left_wheel_spinning_joint_name");
+  rear_right_wheel_spinning_joint_info =
+    get_joint_info(hardware_info, parameters_prefix, "rear_right_wheel_spinning_joint_name");
+  command_interface_type =
+    get_parameter_or<std::string>(
+      hardware_info,
+      parameters_prefix,
+      "command_interface_type",
+      hardware_interface::HW_IF_VELOCITY);
+}
+
+//-----------------------------------------------------------------------------
 HardwareInterface4WD::HardwareInterface4WD(
   const hardware_interface::HardwareInfo & hardware_info,
   const std::string & command_interface_type)
@@ -45,6 +66,27 @@ HardwareInterface4WD::HardwareInterface4WD(
     REAR_RIGHT_WHEEL_SPINNING_JOINT_ID,
     HardwareInfo4WD::get_rear_right_wheel_spinning_joint_info(hardware_info),
     command_interface_type)
+{
+}
+
+//-----------------------------------------------------------------------------
+HardwareInterface4WD::HardwareInterface4WD(const Configuration & configuration)
+: front_left_wheel_spinning_joint_(
+    FRONT_LEFT_WHEEL_SPINNING_JOINT_ID,
+    configuration.front_left_wheel_spinning_joint_info,
+    configuration.command_interface_type),
+  front_right_wheel_spinning_joint_(
+    FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID,
+    configuration.front_right_wheel_spinning_joint_info,
+    configuration.command_interface_type),
+  rear_left_wheel_spinning_joint_(
+    REAR_LEFT_WHEEL_SPINNING_JOINT_ID,
+    configuration.rear_left_wheel_spinning_joint_info,
+    configuration.command_interface_type),
+  rear_right_wheel_spinning_joint_(
+    REAR_RIGHT_WHEEL_SPINNING_JOINT_ID,
+    configuration.rear_right_wheel_spinning_joint_info,
+    configuration.command_interface_type)
 {
 }
 
@@ -83,7 +125,7 @@ core::HardwareCommand4WD HardwareInterface4WD::get_hardware_command() const
 }
 
 //-----------------------------------------------------------------------------
-sensor_msgs::msg::JointState HardwareInterface4WD::get_joint_state_command() const
+sensor_msgs::msg::JointState HardwareInterface4WD::get_joint_state_command()
 {
   auto joint_states = make_joint_state_msg(4);
   front_left_wheel_spinning_joint_.write_command(joint_states);

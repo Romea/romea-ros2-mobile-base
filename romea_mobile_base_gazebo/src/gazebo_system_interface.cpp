@@ -13,45 +13,63 @@
 // limitations under the License.
 
 // std
+#include <algorithm>
 #include <map>
 #include <memory>
+#include <sstream>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
-// local
+// romea
 #include "romea_mobile_base_gazebo/gazebo_system_interface.hpp"
+#include "romea_mobile_base_utils/ros2_control/info/hardware_info_common.hpp"
 
 namespace romea
 {
 namespace ros2
 {
 
+namespace
+{
+
+std::vector<std::string> split_interface_names(const std::string & interfaces)
+{
+  std::string normalized = interfaces;
+  std::replace(normalized.begin(), normalized.end(), ',', ' ');
+  std::replace(normalized.begin(), normalized.end(), ';', ' ');
+
+  std::stringstream stream(normalized);
+  std::vector<std::string> names;
+  std::string name;
+  while (stream >> name) {
+    names.push_back(name);
+  }
+  return names;
+}
+
+}  // namespace
+
 //-----------------------------------------------------------------------------
-template<typename GazeboInterface, typename SimulationInterface>
-GazeboSystemInterface<GazeboInterface, SimulationInterface>::GazeboSystemInterface()
-: nh_(nullptr), gazebo_interface_(nullptr), simulation_interface_(nullptr)
+GazeboSystemInterface::GazeboSystemInterface() : nh_(nullptr)
 {
 }
 
 //-----------------------------------------------------------------------------
-template<typename GazeboInterface, typename SimulationInterface>
-bool GazeboSystemInterface<GazeboInterface, SimulationInterface>::initSim(
+bool GazeboSystemInterface::initSim(
   rclcpp::Node::SharedPtr & model_nh,
-  std::map<std::string, gz::sim::Entity> & enable_joints,
+  std::map<std::string, sim::Entity> & enable_joints,
   const hardware_interface::HardwareInfo & hardware_info,
   sim::EntityComponentManager & ecm,
   unsigned int /*update_rate*/)
 {
   nh_ = model_nh;
-  return init_gazebo_interfaces_(ecm, enable_joints, hardware_info) &&
-         init_hardware_interfaces_(hardware_info);
+  return load_interfaces_(ecm, enable_joints, hardware_info);
 }
 
 //-----------------------------------------------------------------------------
-template<typename GazeboInterface, typename SimulationInterface>
 rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
-GazeboSystemInterface<GazeboInterface, SimulationInterface>::on_init(
-  const hardware_interface::HardwareInfo & hardware_info)
+GazeboSystemInterface::on_init(const hardware_interface::HardwareInfo & hardware_info)
 {
   if (hardware_interface::SystemInterface::on_init(hardware_info) != CallbackReturn::SUCCESS) {
     return CallbackReturn::ERROR;
@@ -61,130 +79,117 @@ GazeboSystemInterface<GazeboInterface, SimulationInterface>::on_init(
 }
 
 //-----------------------------------------------------------------------------
-template<typename GazeboInterface, typename SimulationInterface>
 rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
-GazeboSystemInterface<GazeboInterface, SimulationInterface>::on_activate(
-  const rclcpp_lifecycle::State & /*previous_state*/)
+GazeboSystemInterface::on_activate(const rclcpp_lifecycle::State & /*previous_state*/)
 {
   return CallbackReturn::SUCCESS;
 }
 
 //-----------------------------------------------------------------------------
-template<typename GazeboInterface, typename SimulationInterface>
 rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
-GazeboSystemInterface<GazeboInterface, SimulationInterface>::on_deactivate(
-  const rclcpp_lifecycle::State & /*previous_state*/)
+GazeboSystemInterface::on_deactivate(const rclcpp_lifecycle::State & /*previous_state*/)
 {
   return CallbackReturn::SUCCESS;
 }
 
 //-----------------------------------------------------------------------------
-template<typename GazeboInterface, typename SimulationInterface>
-std::vector<hardware_interface::StateInterface>
-GazeboSystemInterface<GazeboInterface, SimulationInterface>::export_state_interfaces()
-{
-  return simulation_interface_->export_state_interfaces();
-}
-
-//-----------------------------------------------------------------------------
-template<typename GazeboInterface, typename SimulationInterface>
-std::vector<hardware_interface::CommandInterface>
-GazeboSystemInterface<GazeboInterface, SimulationInterface>::export_command_interfaces()
-{
-  return simulation_interface_->export_command_interfaces();
-}
-
-// //-----------------------------------------------------------------------------
-// template<typename GazeboInterface, typename SimulationInterface>
-// hardware_interface::return_type GazeboSystemInterface<GazeboInterface, SimulationInterface>::
-// perform_command_mode_switch(
-//     const std::vector<std::string> & /*start_interfaces*/,
-//     const std::vector<std::string> & /*stop_interfaces*/)
-// {
-//   return hardware_interface::return_type::OK;
-// }
-
-//-----------------------------------------------------------------------------
-template<typename GazeboInterface, typename SimulationInterface>
-bool GazeboSystemInterface<GazeboInterface, SimulationInterface>::init_gazebo_interfaces_(
+bool GazeboSystemInterface::load_interfaces_(
   sim::EntityComponentManager & ecm,
   std::map<std::string, sim::Entity> & enable_joints,
   const hardware_interface::HardwareInfo & hardware_info)
 {
   try {
-    gazebo_interface_ =
-      std::make_unique<GazeboInterface>(ecm, enable_joints, hardware_info, "velocity");
-    // RCLCPP_ERROR(this->nh_->get_logger(), "init_gazebo_interfaces_ OK");
+    const auto default_interface_names =
+      get_parameter_or<std::string>(hardware_info, "hardware_interfaces", "mobile_base");
+
+    interface_names_ = split_interface_names(
+      get_parameter_or<std::string>(
+        hardware_info, "simulation_interfaces", default_interface_names));
+
+    if (interface_names_.empty()) {
+      throw std::runtime_error("simulation_interfaces parameter is empty");
+    }
+
+    for (const auto & interface_name : interface_names_) {
+      const auto interface_type = get_parameter(hardware_info, interface_name, "type");
+      const auto parameters_prefix = get_parameter_or<std::string>(
+        hardware_info, interface_name, "parameters_prefix", interface_name);
+
+      auto simulation_interface =
+        make_simulation_interface(hardware_info, interface_type, parameters_prefix);
+      const auto gazebo_joint_infos =
+        get_gazebo_joint_infos(hardware_info, interface_type, parameters_prefix);
+
+      gazebo_interfaces_.emplace(
+        interface_name,
+        std::make_unique<GenericGazeboInterface>(ecm, enable_joints, gazebo_joint_infos));
+
+      simulation_interfaces_.emplace(interface_name, std::move(simulation_interface));
+    }
+
     return true;
-  } catch (std::runtime_error & e) {
-    // RCLCPP_ERROR(this->nh_->get_logger(), "init_gazebo_interfaces_ not OK");
+  } catch (const std::exception & e) {
     RCLCPP_ERROR_STREAM(nh_->get_logger(), e.what());
     return false;
   }
 }
 
 //-----------------------------------------------------------------------------
-template<typename GazeboInterface, typename SimulationInterface>
-bool GazeboSystemInterface<GazeboInterface, SimulationInterface>::init_hardware_interfaces_(
-  const hardware_interface::HardwareInfo & hardware_info)
+std::vector<hardware_interface::StateInterface> GazeboSystemInterface::export_state_interfaces()
 {
-  try {
-    simulation_interface_ = std::make_unique<SimulationInterface>(hardware_info, "velocity");
-    // RCLCPP_ERROR(this->nh_->get_logger(), "init_hardware_interfaces_ OK");
-    return true;
-  } catch (std::runtime_error & e) {
-    // RCLCPP_ERROR(this->nh_->get_logger(), "init_hardware_interfaces_ not OK");
-    RCLCPP_ERROR_STREAM(nh_->get_logger(), e.what());
-    return false;
+  std::vector<hardware_interface::StateInterface> state_interfaces;
+  for (const auto & interface_name : interface_names_) {
+    auto interface_state_interfaces =
+      simulation_interfaces_.at(interface_name)->export_state_interfaces();
+    state_interfaces.reserve(state_interfaces.size() + interface_state_interfaces.size());
+    for (auto & state_interface : interface_state_interfaces) {
+      state_interfaces.push_back(std::move(state_interface));
+    }
   }
+  return state_interfaces;
 }
 
 //-----------------------------------------------------------------------------
-template<typename GazeboInterface, typename SimulationInterface>
-hardware_interface::return_type GazeboSystemInterface<GazeboInterface, SimulationInterface>::read(
+std::vector<hardware_interface::CommandInterface>
+GazeboSystemInterface::export_command_interfaces()
+{
+  std::vector<hardware_interface::CommandInterface> command_interfaces;
+  for (const auto & interface_name : interface_names_) {
+    auto interface_command_interfaces =
+      simulation_interfaces_.at(interface_name)->export_command_interfaces();
+    command_interfaces.reserve(command_interfaces.size() + interface_command_interfaces.size());
+    for (auto & command_interface : interface_command_interfaces) {
+      command_interfaces.push_back(std::move(command_interface));
+    }
+  }
+  return command_interfaces;
+}
+
+//-----------------------------------------------------------------------------
+hardware_interface::return_type GazeboSystemInterface::read(
   const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
 {
-  simulation_interface_->set_feedback(gazebo_interface_->get_state());
+  for (const auto & interface_name : interface_names_) {
+    const auto feedback = gazebo_interfaces_.at(interface_name)->get_joint_state();
+    simulation_interfaces_.at(interface_name)->set_feedback(feedback);
+  }
   return hardware_interface::return_type::OK;
 }
 
 //-----------------------------------------------------------------------------
-template<typename GazeboInterface, typename SimulationInterface>
-hardware_interface::return_type GazeboSystemInterface<GazeboInterface, SimulationInterface>::write(
+hardware_interface::return_type GazeboSystemInterface::write(
   const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
 {
-  gazebo_interface_->set_command(simulation_interface_->get_hardware_command());
+  for (const auto & interface_name : interface_names_) {
+    const auto command = simulation_interfaces_.at(interface_name)->get_joint_state_command();
+    gazebo_interfaces_.at(interface_name)->set_command(command);
+  }
   return hardware_interface::return_type::OK;
 }
-
-template class GazeboSystemInterface<GazeboInterface1FASxxx, SimulationInterface1FAS2FWD>;
-template class GazeboSystemInterface<GazeboInterface1FASxxx, SimulationInterface1FAS2RWD>;
-template class GazeboSystemInterface<GazeboInterface2ASxxx, SimulationInterface2AS4WD>;
-template class GazeboSystemInterface<GazeboInterface2FWSxxx, SimulationInterface2FWS2FWD>;
-template class GazeboSystemInterface<GazeboInterface2FWSxxx, SimulationInterface2FWS2RWD>;
-template class GazeboSystemInterface<GazeboInterface2FWSxxx, SimulationInterface2FWS4WD>;
-template class GazeboSystemInterface<GazeboInterface2TD, SimulationInterface2TD>;
-template class GazeboSystemInterface<GazeboInterface2THD, SimulationInterface2THD>;
-template class GazeboSystemInterface<GazeboInterface2TTD, SimulationInterface2TTD>;
-// template class GazeboSystemInterface<GazeboInterface2WD, SimulationInterface2WD>;
-template class GazeboSystemInterface<GazeboInterface4WD, SimulationInterface4WD>;
-template class GazeboSystemInterface<GazeboInterface4WS4WD, SimulationInterface4WS4WD>;
 
 }  // namespace ros2
 }  // namespace romea
 
 #include "pluginlib/class_list_macros.hpp"  // NOLINT
 PLUGINLIB_EXPORT_CLASS(
-  romea::ros2::GazeboSystemInterface4WD, gz_ros2_control::GazeboSimSystemInterface)
-PLUGINLIB_EXPORT_CLASS(
-  romea::ros2::GazeboSystemInterface4WS4WD, gz_ros2_control::GazeboSimSystemInterface)
-PLUGINLIB_EXPORT_CLASS(
-  romea::ros2::GazeboSystemInterface1FAS2RWD, gz_ros2_control::GazeboSimSystemInterface)
-PLUGINLIB_EXPORT_CLASS(
-  romea::ros2::GazeboSystemInterface2AS4WD, gz_ros2_control::GazeboSimSystemInterface)
-PLUGINLIB_EXPORT_CLASS(
-  romea::ros2::GazeboSystemInterface2FWS4WD, gz_ros2_control::GazeboSimSystemInterface)
-PLUGINLIB_EXPORT_CLASS(
-  romea::ros2::GazeboSystemInterface2FWS2RWD, gz_ros2_control::GazeboSimSystemInterface)
-PLUGINLIB_EXPORT_CLASS(
-  romea::ros2::GazeboSystemInterface2THD, gz_ros2_control::GazeboSimSystemInterface)
+  romea::ros2::GazeboSystemInterface, gz_ros2_control::GazeboSimSystemInterface)

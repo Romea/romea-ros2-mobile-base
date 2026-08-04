@@ -22,15 +22,39 @@
 // romea
 #include "romea_core_mobile_base/simulation/SimulationControl1FAS2RWD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface1FAS2RWD.hpp"
+#include "romea_mobile_base_simulation/simulation_interface_base.hpp"
 
 namespace romea
 {
 namespace ros2
 {
 
-class SimulationInterface1FAS2RWD
+class SimulationInterface1FAS2RWD final : public SimulationInterfaceBase
 {
 public:
+  struct Configuration
+  {
+    Configuration() = default;
+
+    Configuration(
+      const hardware_interface::HardwareInfo & hardware_info,
+      const std::string & parameters_prefix);
+
+    hardware_interface::ComponentInfo front_axle_steering_joint_info;
+    hardware_interface::ComponentInfo rear_left_wheel_spinning_joint_info;
+    hardware_interface::ComponentInfo rear_right_wheel_spinning_joint_info;
+    hardware_interface::ComponentInfo front_left_wheel_steering_joint_info;
+    hardware_interface::ComponentInfo front_right_wheel_steering_joint_info;
+    hardware_interface::ComponentInfo front_left_wheel_spinning_joint_info;
+    hardware_interface::ComponentInfo front_right_wheel_spinning_joint_info;
+    std::string spinning_joint_command_interface_type;
+    double wheelbase;
+    double front_track;
+    double front_wheel_radius;
+    double front_hub_carrier_offset;
+    double rear_wheel_radius;
+  };
+
   enum JointIds
   {
     FRONT_AXLE_STEERING_JOINT_ID = 0,
@@ -46,14 +70,16 @@ public:
     const hardware_interface::HardwareInfo & hardware_info,
     const std::string & spinning_joint_command_interface_type);
 
+  SimulationInterface1FAS2RWD(const Configuration & configuration);
+
   core::SimulationCommand1FAS2RWD get_hardware_command();
-  sensor_msgs::msg::JointState get_joint_state_command();
+  sensor_msgs::msg::JointState get_joint_state_command() override;
 
   void set_feedback(const core::SimulationState1FAS2RWD & simulation_state);
-  void set_feedback(const sensor_msgs::msg::JointState & joint_states);
+  void set_feedback(const sensor_msgs::msg::JointState & joint_states) override;
 
-  std::vector<hardware_interface::StateInterface> export_state_interfaces();
-  std::vector<hardware_interface::CommandInterface> export_command_interfaces();
+  std::vector<hardware_interface::StateInterface> export_state_interfaces() override;
+  std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
 
 private:
   SteeringJointHardwareInterface front_axle_steering_joint_;
@@ -70,6 +96,9 @@ private:
   const double front_hub_carrier_offset_;
   const double rear_wheel_radius_;
 };
+
+std::vector<hardware_interface::ComponentInfo> get_gazebo_joint_infos(
+  const SimulationInterface1FAS2RWD::Configuration & configuration);
 
 }  // namespace ros2
 }  // namespace romea

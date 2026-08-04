@@ -46,6 +46,9 @@ target_link_libraries(${PROJECT_NAME}_test_mobile_base_parameters_2FWS2FWD ${PRO
 ament_add_gtest(${PROJECT_NAME}_test_mobile_base_parameters_2FWS2RWD test_mobile_base_parameters_2FWS2RWD.cpp)
 target_link_libraries(${PROJECT_NAME}_test_mobile_base_parameters_2FWS2RWD ${PROJECT_NAME})
 
+ament_add_gtest(${PROJECT_NAME}_test_mobile_base_parameters_2FWC2RWD test_mobile_base_parameters_2FWC2RWD.cpp)
+target_link_libraries(${PROJECT_NAME}_test_mobile_base_parameters_2FWC2RWD ${PROJECT_NAME})
+
 ament_add_gtest(${PROJECT_NAME}_test_mobile_base_parameters_2FWS4WD test_mobile_base_parameters_2FWS4WD.cpp)
 target_link_libraries(${PROJECT_NAME}_test_mobile_base_parameters_2FWS4WD ${PROJECT_NAME})
 
@@ -72,6 +75,9 @@ target_link_libraries(${PROJECT_NAME}_test_hardware_info2ASxxx ${PROJECT_NAME})
 
 ament_add_gtest(${PROJECT_NAME}_test_hardware_info2FWSxxx test_hardware_info2FWSxxx.cpp)
 target_link_libraries(${PROJECT_NAME}_test_hardware_info2FWSxxx ${PROJECT_NAME})
+
+ament_add_gtest(${PROJECT_NAME}_test_hardware_info2FWC2RWD test_hardware_info2FWC2RWD.cpp)
+target_link_libraries(${PROJECT_NAME}_test_hardware_info2FWC2RWD ${PROJECT_NAME})
 
 ament_add_gtest(${PROJECT_NAME}_test_hardware_info2TD test_hardware_info2TD.cpp)
 target_link_libraries(${PROJECT_NAME}_test_hardware_info2TD ${PROJECT_NAME})

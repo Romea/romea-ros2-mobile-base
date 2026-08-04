@@ -35,6 +35,7 @@ find_package(pal_statistics REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
   src/generic_hardware_system_interface.cpp
+  src/hardware_interface_base.cpp
   src/hardware_interface1FAS2FWD.cpp
   src/hardware_interface1FAS2RWD.cpp
   src/hardware_interface1FAS4WD.cpp
@@ -42,6 +43,7 @@ add_library(${PROJECT_NAME} SHARED
   src/hardware_interface2AS2RWD.cpp
   src/hardware_interface2AS4WD.cpp
   src/hardware_interface2FWS2FWD.cpp
+  src/hardware_interface2FWC2RWD.cpp
   src/hardware_interface2FWS2RWD.cpp
   src/hardware_interface2FWS4WD.cpp
   # src/hardware_interface2WD.cpp
@@ -50,7 +52,8 @@ add_library(${PROJECT_NAME} SHARED
   src/hardware_interface2TTD.cpp
   src/hardware_interface4WD.cpp
   src/hardware_interface4WS4WD.cpp
-  src/hardware_system_interface.cpp)
+  src/hardware_system_interface.cpp
+  src/hardware_system_interface_legacy.cpp)
 
 ament_target_dependencies(${PROJECT_NAME}
   rclcpp
@@ -107,6 +110,7 @@ if(BUILD_TESTING)
   list(APPEND AMENT_LINT_AUTO_EXCLUDE ament_cmake_copyright)
   list(APPEND AMENT_LINT_AUTO_EXCLUDE ament_cmake_uncrustify)
   ament_lint_auto_find_test_dependencies()
+  add_subdirectory(test_legacy)
   add_subdirectory(test)
 endif()
 

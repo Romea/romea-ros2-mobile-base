@@ -46,7 +46,7 @@ def urdf():
 
 
 def test_mobile_base_name(urdf):
-    assert urdf.get("name") == "adap2e_fat"
+    assert urdf.get("name") == "adap2e_one"
 
 
 def test_mobile_base_link_name(urdf):

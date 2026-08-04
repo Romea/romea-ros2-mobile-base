@@ -15,6 +15,9 @@
 #ifndef ROMEA_MOBILE_BASE_SIMULATION__SIMULATION_INTERFACE2FWS4WD_HPP_
 #define ROMEA_MOBILE_BASE_SIMULATION__SIMULATION_INTERFACE2FWS4WD_HPP_
 
+// std
+#include <vector>
+
 // romea
 #include "romea_core_mobile_base/simulation/SimulationControl2FWS4WD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2FWS4WD.hpp"
@@ -25,6 +28,9 @@ namespace ros2
 {
 
 using SimulationInterface2FWS4WD = HardwareInterface2FWS4WD;
+
+std::vector<hardware_interface::ComponentInfo> get_gazebo_joint_infos(
+  const HardwareInterface2FWS4WD::Configuration & configuration);
 
 }  // namespace ros2
 }  // namespace romea

@@ -1,2 +1,7 @@
-#define TEST_DIR "@TEST_DIR_SRC@"
+#ifndef TEST_HELPER_H_
+#define TEST_HELPER_H_
 
+#define TEST_DIR "@TEST_DIR_SRC@"
+#define TEST_LEGACY_DIR "@CMAKE_CURRENT_SOURCE_DIR@/../test_legacy"
+
+#endif  // TEST_HELPER_H_

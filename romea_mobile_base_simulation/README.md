@@ -55,14 +55,14 @@ The `2TD -> 2THD` and `2TD -> 2TTD` interfaces are used to drive simulated conti
 
 `GenericSimulationSystemInterface` wraps an architecture-specific `SimulationInterface*` into a reusable `hardware_interface::SystemInterface` plugin that communicates with a simulator through `sensor_msgs/msg/JointState` topics.
 
-This mode is useful when the simulator is connected through a ROS topic bridge, for example with a remote simulator. The simulator-side bridge is responsible for subscribing to `bridge/joint_state_command`, applying the commands to the simulated model, and publishing feedback on `bridge/joint_state_feedback`.
+This mode is useful when the simulator is connected through a ROS topic bridge, for example with a remote simulator. The simulator-side bridge is responsible for subscribing to `bridge/<interface_name>/joint_state_command`, applying the commands to the simulated model, and publishing feedback on `bridge/<interface_name>/joint_state_feedback`.
 
 ### 4.2) Runtime behavior
 
 At runtime, a `GenericSimulationSystemInterface`:
 
 1. loads the `ros2_control` hardware information generated from the robot description;
-2. creates the architecture-specific simulation interface;
+2. creates the requested architecture-specific simulation interface;
 3. exports the same command and state interfaces as a normal mobile base hardware interface;
 4. converts controller-side joint commands into simulation-side joint commands;
 5. converts simulation-side joint feedback back into controller-side joint states;
@@ -70,23 +70,20 @@ At runtime, a `GenericSimulationSystemInterface`:
 
 ### 4.3) Exported plugins and bridge topics
 
-The package currently exports the following generic `hardware_interface::SystemInterface` plugins:
-
-Plugin names follow the `romea_mobile_base_simulation/GenericSimulationSystemInterface<mobile_base_architecture>` convention. Plugin names in the table are written with their full `ros2_control` plugin name.
+The package currently exports the following generic `hardware_interface::SystemInterface` plugin:
 
 | Plugin | Simulation interface | Used by |
 |---|---|---|
-| `romea_mobile_base_simulation/GenericSimulationSystemInterface2FWS4WD` | `SimulationInterface2FWS4WD` | Pom 4x4 |
-| `romea_mobile_base_simulation/GenericSimulationSystemInterface4WS4WD` | `SimulationInterface4WS4WD` | Adap2e |
+| `romea_mobile_base_simulation/GenericSimulationSystemInterface` | Selected from the `simulation_interfaces` parameters | Remote simulators |
 
-For now, only the `2FWS4WD` and `4WS4WD` generic simulation system interfaces are exported. Other simulation interfaces are available in the library and are covered by tests; their generic system plugins will be added progressively.
+Only this generic simulation system interface is exported. Architecture-specific simulation interfaces are available in the library and are selected from the `ros2_control` parameters.
 
 The generic bridge topics are:
 
 | Topic | Direction | Description |
 |---|---|---|
-| `bridge/joint_state_command` | published by this package | joint commands converted for the simulated model |
-| `bridge/joint_state_feedback` | subscribed by this package | simulated joint states returned by the simulator |
+| `bridge/<interface_name>/joint_state_command` | published by this package | joint commands converted for the simulated model |
+| `bridge/<interface_name>/joint_state_feedback` | subscribed by this package | simulated joint states returned by the simulator |
 
 Gazebo integration packages use the simulation interfaces more directly, without exposing this generic `JointState` bridge.
 

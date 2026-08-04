@@ -16,109 +16,84 @@
 #define TEST_UTILS_HPP_
 
 // std
+#include <cassert>
 #include <fstream>
-#include <iostream>
 #include <sstream>
 #include <string>
 
-// local
-#include "../test/test_helper.h"
+// test
+#include "test_helper.h"  // NOLINT
 
 // tinyxml2
 #include "tinyxml2.h"  // NOLINT
 
-std::string interface_name(const std::string & vehicle_type)
-{
-  return "test_gazebo_interface" + vehicle_type;
-}
-
-std::string xacro_filename(const std::string & vehicle_type)
-{
-  return std::string(TEST_DIR) + "/" + interface_name(vehicle_type) + ".xacro";
-}
-
 std::string empty_world_filename()
 {
-  return std::string(TEST_DIR) + "/gz_empty.sdf";
+  return std::string(TEST_LEGACY_DIR) + "/gz_empty.sdf";
 }
 
-std::string complete_world_filename(const std::string & vehicle_type)
+std::string xacro_filename(const std::string & name)
 {
-  return "/tmp/" + interface_name(vehicle_type) + "_world.sdf";
+  return std::string(TEST_DIR) + "/" + name + ".xacro";
 }
 
-std::string urdf_filename(const std::string & vehicle_type)
+std::string urdf_filename(const std::string & name)
 {
-  return "/tmp/" + interface_name(vehicle_type) + ".urdf";
+  return "/tmp/" + name + ".urdf";
 }
 
-std::string sdf_filename(const std::string & vehicle_type)
+std::string sdf_filename(const std::string & name)
 {
-  return "/tmp/" + interface_name(vehicle_type) + ".sdf";
+  return "/tmp/" + name + ".sdf";
 }
 
-void create_urdf_file(const std::string & gazebo_interface_type, const std::string & vehicle_type)
+std::string world_filename(const std::string & name)
 {
-  std::string create_urdf = "xacro " + xacro_filename(gazebo_interface_type) +
-                            " type:=" + vehicle_type + " > " + urdf_filename(vehicle_type);
-  std::system(create_urdf.c_str());
+  return "/tmp/" + name + "_world.sdf";
 }
 
-void create_urdf_file(const std::string & vehicle_type)
+void create_urdf_file(const std::string & name)
 {
-  create_urdf_file(vehicle_type, vehicle_type);
+  const std::string command = "xacro " + xacro_filename(name) + " > " + urdf_filename(name);
+  std::system(command.c_str());
 }
 
-void create_sdf_file(const std::string & vehicle_type)
+void create_sdf_file(const std::string & name)
 {
-  std::string create_sdf =
-    "gz sdf -p " + urdf_filename(vehicle_type) + " > " + sdf_filename(vehicle_type);
-  std::system(create_sdf.c_str());
+  const std::string command = "gz sdf -p " + urdf_filename(name) + " > " + sdf_filename(name);
+  std::system(command.c_str());
 }
 
-std::string make_urdf_description(
-  const std::string & gazebo_interface_type, const std::string & vehicle_type)
+std::string make_urdf_description(const std::string & name)
 {
-  create_urdf_file(gazebo_interface_type, vehicle_type);
-  std::ifstream urdf_file(urdf_filename(vehicle_type));
+  create_urdf_file(name);
+
+  std::ifstream urdf_file(urdf_filename(name));
   std::stringstream urdf_content;
   urdf_content << urdf_file.rdbuf();
   return urdf_content.str();
 }
 
-std::string make_urdf_description(const std::string & vehicle_type)
+std::string create_sdf_world_file(const std::string & name)
 {
-  return make_urdf_description(vehicle_type, vehicle_type);
-}
-
-std::string make_sdf_description(const std::string & vehicle_type)
-{
-  create_sdf_file(vehicle_type);
-  std::ifstream sdf_file(sdf_filename(vehicle_type));
-  std::stringstream sdf_content;
-  sdf_content << sdf_file.rdbuf();
-  return sdf_content.str();
-}
-
-std::string create_sdf_world_file(const std::string & vehicle_type)
-{
-  create_sdf_file(vehicle_type);
+  create_sdf_file(name);
 
   tinyxml2::XMLDocument world;
   world.LoadFile(empty_world_filename().c_str());
-  tinyxml2::XMLElement * worldElement = world.FirstChildElement("sdf")->FirstChildElement("world");
-  assert(worldElement != nullptr);
+  tinyxml2::XMLElement * world_element =
+    world.FirstChildElement("sdf")->FirstChildElement("world");
+  assert(world_element != nullptr);
 
   tinyxml2::XMLDocument robot;
-  robot.LoadFile(sdf_filename(vehicle_type).c_str());
-  tinyxml2::XMLElement * robotElement = robot.FirstChildElement("sdf")->FirstChildElement("model");
-  assert(robotElement != nullptr);
+  robot.LoadFile(sdf_filename(name).c_str());
+  tinyxml2::XMLElement * robot_element = robot.FirstChildElement("sdf")->FirstChildElement("model");
+  assert(robot_element != nullptr);
 
-  tinyxml2::XMLNode * clonedModelNode = robotElement->DeepClone(&world);
-  worldElement->InsertEndChild(clonedModelNode->ToElement());
+  tinyxml2::XMLNode * cloned_model = robot_element->DeepClone(&world);
+  world_element->InsertEndChild(cloned_model->ToElement());
 
-  world.SaveFile(complete_world_filename(vehicle_type).c_str());
-  return complete_world_filename(vehicle_type);
+  world.SaveFile(world_filename(name).c_str());
+  return world_filename(name);
 }
 
 #endif  // TEST_UTILS_HPP_

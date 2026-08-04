@@ -1,2 +1,6 @@
+#ifndef TEST_HELPER_H_
+#define TEST_HELPER_H_
+
 #define TEST_DIR "@TEST_DIR_SRC@"
 
+#endif

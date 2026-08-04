@@ -35,15 +35,20 @@ find_package(pal_statistics REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
   src/generic_simulation_system_interface.cpp
+  src/simulation_interface_base.cpp
   src/simulation_interface1FAS2FWD.cpp
   src/simulation_interface1FAS2FWD.cpp
   src/simulation_interface1FAS2RWD.cpp
   src/simulation_interface2AS4WD.cpp
   src/simulation_interface2FWS2FWD.cpp
   src/simulation_interface2FWS2RWD.cpp
+  src/simulation_interface2FWC2RWD.cpp
   src/simulation_interface2TD.cpp
   src/simulation_interface2THD.cpp
-  src/simulation_interface2TTD.cpp)
+  src/simulation_interface2TTD.cpp
+  src/simulation_interface2FWS4WD.cpp
+  src/simulation_interface4WD.cpp
+  src/simulation_interface4WS4WD.cpp)
 
 ament_target_dependencies(${PROJECT_NAME}
   rclcpp
@@ -100,7 +105,9 @@ install(
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   list(APPEND AMENT_LINT_AUTO_EXCLUDE ament_cmake_copyright)
+  list(APPEND AMENT_LINT_AUTO_EXCLUDE ament_cmake_uncrustify)
   ament_lint_auto_find_test_dependencies()
+  add_subdirectory(test_legacy)
   add_subdirectory(test)
 endif()
 

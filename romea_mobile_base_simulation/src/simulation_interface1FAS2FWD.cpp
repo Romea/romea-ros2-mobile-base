@@ -17,6 +17,7 @@
 #include <vector>
 
 // romea
+#include "hardware_interface/types/hardware_interface_type_values.hpp"
 #include "romea_mobile_base_simulation/simulation_interface1FAS2FWD.hpp"
 #include "romea_mobile_base_utils/ros2_control/info/hardware_info1FASxxx.hpp"
 
@@ -29,36 +30,126 @@ namespace ros2
 SimulationInterface1FAS2FWD::SimulationInterface1FAS2FWD(
   const hardware_interface::HardwareInfo & hardware_info,
   const std::string & spinning_joint_command_interface_type)
+: SimulationInterface1FAS2FWD(
+    [&]() {
+      Configuration configuration;
+      configuration.front_axle_steering_joint_info =
+        hardware_info.joints[FRONT_AXLE_STEERING_JOINT_ID];
+      configuration.front_left_wheel_steering_joint_info =
+        hardware_info.joints[FRONT_LEFT_WHEEL_STEERING_JOINT_ID];
+      configuration.front_right_wheel_steering_joint_info =
+        hardware_info.joints[FRONT_RIGHT_WHEEL_STEERING_JOINT_ID];
+      configuration.front_left_wheel_spinning_joint_info =
+        hardware_info.joints[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID];
+      configuration.front_right_wheel_spinning_joint_info =
+        hardware_info.joints[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID];
+      configuration.rear_left_wheel_spinning_joint_info =
+        hardware_info.joints[REAR_LEFT_WHEEL_SPINNING_JOINT_ID];
+      configuration.rear_right_wheel_spinning_joint_info =
+        hardware_info.joints[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID];
+      configuration.spinning_joint_command_interface_type = spinning_joint_command_interface_type;
+      configuration.wheelbase = get_wheelbase(hardware_info);
+      configuration.front_track = get_front_track(hardware_info);
+      configuration.front_wheel_radius = get_front_wheel_radius(hardware_info);
+      configuration.front_hub_carrier_offset = get_front_hub_carrier_offset(hardware_info);
+      configuration.rear_track = get_rear_track(hardware_info);
+      configuration.rear_wheel_radius = get_rear_wheel_radius(hardware_info);
+      configuration.rear_hub_carrier_offset = get_rear_hub_carrier_offset(hardware_info);
+      return configuration;
+    }())
+{
+}
+
+//-----------------------------------------------------------------------------
+SimulationInterface1FAS2FWD::Configuration::Configuration(
+  const hardware_interface::HardwareInfo & hardware_info, const std::string & parameters_prefix)
+: front_axle_steering_joint_info(
+    get_joint_info(hardware_info, parameters_prefix, "front_axle_steering_joint_name")),
+  front_left_wheel_steering_joint_info(
+    get_joint_info(hardware_info, parameters_prefix, "front_left_wheel_steering_joint_name")),
+  front_right_wheel_steering_joint_info(
+    get_joint_info(hardware_info, parameters_prefix, "front_right_wheel_steering_joint_name")),
+  front_left_wheel_spinning_joint_info(
+    get_joint_info(hardware_info, parameters_prefix, "front_left_wheel_spinning_joint_name")),
+  front_right_wheel_spinning_joint_info(
+    get_joint_info(hardware_info, parameters_prefix, "front_right_wheel_spinning_joint_name")),
+  rear_left_wheel_spinning_joint_info(
+    get_joint_info(hardware_info, parameters_prefix, "rear_left_wheel_spinning_joint_name")),
+  rear_right_wheel_spinning_joint_info(
+    get_joint_info(hardware_info, parameters_prefix, "rear_right_wheel_spinning_joint_name")),
+  spinning_joint_command_interface_type(
+    get_parameter_or<std::string>(
+      hardware_info, parameters_prefix, "spinning_joint_command_interface_type", "velocity")),
+  wheelbase(get_parameter<double>(hardware_info, parameters_prefix, "wheelbase")),
+  front_track(get_parameter<double>(hardware_info, parameters_prefix, "front_track")),
+  front_wheel_radius(
+    get_parameter<double>(hardware_info, parameters_prefix, "front_wheel_radius")),
+  front_hub_carrier_offset(
+    get_parameter<double>(hardware_info, parameters_prefix, "front_hub_carrier_offset")),
+  rear_track(get_parameter<double>(hardware_info, parameters_prefix, "rear_track")),
+  rear_wheel_radius(get_parameter<double>(hardware_info, parameters_prefix, "rear_wheel_radius")),
+  rear_hub_carrier_offset(
+    get_parameter<double>(hardware_info, parameters_prefix, "rear_hub_carrier_offset"))
+{
+}
+
+//-----------------------------------------------------------------------------
+SimulationInterface1FAS2FWD::SimulationInterface1FAS2FWD(const Configuration & configuration)
 : front_axle_steering_joint_(
-    FRONT_AXLE_STEERING_JOINT_ID, hardware_info.joints[FRONT_AXLE_STEERING_JOINT_ID]),
+    FRONT_AXLE_STEERING_JOINT_ID, configuration.front_axle_steering_joint_info),
   front_left_wheel_spinning_joint_(
     FRONT_LEFT_WHEEL_SPINNING_JOINT_ID,
-    hardware_info.joints[FRONT_LEFT_WHEEL_SPINNING_JOINT_ID],
-    spinning_joint_command_interface_type),
+    configuration.front_left_wheel_spinning_joint_info,
+    configuration.spinning_joint_command_interface_type),
   front_right_wheel_spinning_joint_(
     FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID,
-    hardware_info.joints[FRONT_RIGHT_WHEEL_SPINNING_JOINT_ID],
-    spinning_joint_command_interface_type),
+    configuration.front_right_wheel_spinning_joint_info,
+    configuration.spinning_joint_command_interface_type),
   front_left_wheel_steering_joint_(
-    FRONT_LEFT_WHEEL_STEERING_JOINT_ID, hardware_info.joints[FRONT_LEFT_WHEEL_STEERING_JOINT_ID]),
+    FRONT_LEFT_WHEEL_STEERING_JOINT_ID, configuration.front_left_wheel_steering_joint_info),
   front_right_wheel_steering_joint_(
-    FRONT_RIGHT_WHEEL_STEERING_JOINT_ID, hardware_info.joints[FRONT_RIGHT_WHEEL_STEERING_JOINT_ID]),
+    FRONT_RIGHT_WHEEL_STEERING_JOINT_ID, configuration.front_right_wheel_steering_joint_info),
   rear_left_wheel_spinning_joint_(
     REAR_LEFT_WHEEL_SPINNING_JOINT_ID,
-    hardware_info.joints[REAR_LEFT_WHEEL_SPINNING_JOINT_ID],
-    spinning_joint_command_interface_type),
+    configuration.rear_left_wheel_spinning_joint_info,
+    configuration.spinning_joint_command_interface_type),
   rear_right_wheel_spinning_joint_(
     REAR_RIGHT_WHEEL_SPINNING_JOINT_ID,
-    hardware_info.joints[REAR_RIGHT_WHEEL_SPINNING_JOINT_ID],
-    spinning_joint_command_interface_type),
-  wheelbase_(get_wheelbase(hardware_info)),
-  front_track_(get_front_track(hardware_info)),
-  front_wheel_radius_(get_front_wheel_radius(hardware_info)),
-  front_hub_carrier_offset_(get_front_hub_carrier_offset(hardware_info)),
-  rear_track_(get_rear_track(hardware_info)),
-  rear_wheel_radius_(get_rear_wheel_radius(hardware_info)),
-  rear_hub_carrier_offset_(get_rear_hub_carrier_offset(hardware_info))
+    configuration.rear_right_wheel_spinning_joint_info,
+    configuration.spinning_joint_command_interface_type),
+  wheelbase_(configuration.wheelbase),
+  front_track_(configuration.front_track),
+  front_wheel_radius_(configuration.front_wheel_radius),
+  front_hub_carrier_offset_(configuration.front_hub_carrier_offset),
+  rear_track_(configuration.rear_track),
+  rear_wheel_radius_(configuration.rear_wheel_radius),
+  rear_hub_carrier_offset_(configuration.rear_hub_carrier_offset)
 {
+}
+
+//-----------------------------------------------------------------------------
+std::vector<hardware_interface::ComponentInfo> get_gazebo_joint_infos(
+  const SimulationInterface1FAS2FWD::Configuration & configuration)
+{
+  return {
+    make_gazebo_joint_info(
+      configuration.front_axle_steering_joint_info, hardware_interface::HW_IF_POSITION),
+    make_gazebo_joint_info(
+      configuration.front_left_wheel_spinning_joint_info,
+      configuration.spinning_joint_command_interface_type),
+    make_gazebo_joint_info(
+      configuration.front_right_wheel_spinning_joint_info,
+      configuration.spinning_joint_command_interface_type),
+    make_gazebo_joint_info(
+      configuration.rear_left_wheel_spinning_joint_info,
+      configuration.spinning_joint_command_interface_type),
+    make_gazebo_joint_info(
+      configuration.rear_right_wheel_spinning_joint_info,
+      configuration.spinning_joint_command_interface_type),
+    make_gazebo_joint_info(
+      configuration.front_left_wheel_steering_joint_info, hardware_interface::HW_IF_POSITION),
+    make_gazebo_joint_info(
+      configuration.front_right_wheel_steering_joint_info, hardware_interface::HW_IF_POSITION)};
 }
 
 //-----------------------------------------------------------------------------

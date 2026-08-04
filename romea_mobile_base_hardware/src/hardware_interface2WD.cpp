@@ -18,11 +18,29 @@
 
 // local
 #include "romea_mobile_base_hardware/hardware_interface2WD.hpp"
+#include "romea_mobile_base_utils/ros2_control/info/hardware_info_common.hpp"
 
 namespace romea
 {
 namespace ros2
 {
+
+//-----------------------------------------------------------------------------
+HardwareInterface2WD::Configuration::Configuration(
+  const hardware_interface::HardwareInfo & hardware_info,
+  const std::string & parameters_prefix)
+{
+  left_wheel_spinning_joint_info =
+    get_joint_info(hardware_info, parameters_prefix, "left_wheel_spinning_joint_name");
+  right_wheel_spinning_joint_info =
+    get_joint_info(hardware_info, parameters_prefix, "right_wheel_spinning_joint_name");
+  command_interface_type =
+    get_parameter_or<std::string>(
+      hardware_info,
+      parameters_prefix,
+      "command_interface_type",
+      hardware_interface::HW_IF_VELOCITY);
+}
 
 //-----------------------------------------------------------------------------
 HardwareInterface2WD::HardwareInterface2WD(
@@ -36,6 +54,19 @@ HardwareInterface2WD::HardwareInterface2WD(
     RIGHT_WHEEL_SPINNING_JOINT_ID,
     hardware_info.joints[RIGHT_WHEEL_SPINNING_JOINT_ID],
     command_interface_type)
+{
+}
+
+//-----------------------------------------------------------------------------
+HardwareInterface2WD::HardwareInterface2WD(const Configuration & configuration)
+: left_wheel_spinning_joint_(
+    LEFT_WHEEL_SPINNING_JOINT_ID,
+    configuration.left_wheel_spinning_joint_info,
+    configuration.command_interface_type),
+  right_wheel_spinning_joint_(
+    RIGHT_WHEEL_SPINNING_JOINT_ID,
+    configuration.right_wheel_spinning_joint_info,
+    configuration.command_interface_type)
 {
 }
 
@@ -72,7 +103,7 @@ core::HardwareCommand2WD HardwareInterface2WD::get_hardware_command() const
 }
 
 //-----------------------------------------------------------------------------
-sensor_msgs::msg::JointState HardwareInterface2WD::get_joint_state_command() const
+sensor_msgs::msg::JointState HardwareInterface2WD::get_joint_state_command()
 {
   auto joint_states = make_joint_state_msg(2);
   left_wheel_spinning_joint_.write_command(joint_states);

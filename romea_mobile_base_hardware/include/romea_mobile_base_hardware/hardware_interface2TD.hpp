@@ -21,6 +21,7 @@
 
 // romea
 #include "romea_core_mobile_base/hardware/HardwareControl2TD.hpp"
+#include "romea_mobile_base_hardware/hardware_interface_base.hpp"
 #include "romea_mobile_base_utils/ros2_control/hardware/spinning_joint_hardware_interface.hpp"
 
 namespace romea
@@ -28,9 +29,27 @@ namespace romea
 namespace ros2
 {
 
-class HardwareInterface2TD
+class HardwareInterface2TD final : public HardwareInterfaceBase
 {
 public:
+  struct Configuration
+  {
+    Configuration() = default;
+
+    Configuration(
+      const hardware_interface::HardwareInfo & hardware_info,
+      const std::string & parameters_prefix);
+
+    hardware_interface::ComponentInfo left_sprocket_wheel_spinning_joint_info;
+    hardware_interface::ComponentInfo right_sprocket_wheel_spinning_joint_info;
+    hardware_interface::ComponentInfo left_idler_wheel_spinning_joint_info;
+    hardware_interface::ComponentInfo right_idler_wheel_spinning_joint_info;
+    std::string command_interface_type;
+    double sprocket_wheel_radius;
+    double idler_wheel_radius;
+    double track_thickness;
+  };
+
   enum JointIDs
   {
     LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID = 0,
@@ -41,8 +60,10 @@ public:
     const hardware_interface::HardwareInfo & hardware_info,
     const std::string & command_interface_type);
 
+  HardwareInterface2TD(const Configuration & configuration);
+
   core::HardwareCommand2TD get_hardware_command() const;
-  sensor_msgs::msg::JointState get_joint_state_command() const;
+  sensor_msgs::msg::JointState get_joint_state_command();
 
   void set_feedback(const core::HardwareState2TD & hardware_state);
   void set_feedback(const sensor_msgs::msg::JointState & joint_states);

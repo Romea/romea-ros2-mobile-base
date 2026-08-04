@@ -13,64 +13,65 @@
 // limitations under the License.
 
 // std
+#include <algorithm>
+#include <iterator>
 #include <memory>
+#include <sstream>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
 // ros
 #include "rclcpp/rclcpp.hpp"
 
-// local
+// romea
+#include "romea_mobile_base_hardware/hardware_interface_base.hpp"
 #include "romea_mobile_base_hardware/hardware_system_interface.hpp"
+#include "romea_mobile_base_utils/ros2_control/info/hardware_info_common.hpp"
 
 namespace romea
 {
 namespace ros2
 {
 
+namespace
+{
+
+std::vector<std::string> split_interface_names(const std::string & hardware_interfaces)
+{
+  std::string normalized = hardware_interfaces;
+  std::replace(normalized.begin(), normalized.end(), ',', ' ');
+  std::replace(normalized.begin(), normalized.end(), ';', ' ');
+
+  std::stringstream stream(normalized);
+  std::vector<std::string> names;
+  std::string name;
+  while (stream >> name) {
+    names.push_back(name);
+  }
+  return names;
+}
+
+}  // namespace
+
 //-----------------------------------------------------------------------------
-template<typename HardwareInterface>
-HardwareSystemInterface<HardwareInterface>::HardwareSystemInterface(
+HardwareSystemInterface::HardwareSystemInterface(
   const std::string & hardware_interface_name)
-: hardware_interface_name_(hardware_interface_name), hardware_interface_(nullptr)
+: hardware_interface_name_(hardware_interface_name)
 {
 }
 
 //-----------------------------------------------------------------------------
-template<typename HardwareInterface>
 rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
-HardwareSystemInterface<HardwareInterface>::on_init(
-  const hardware_interface::HardwareInfo & hardware_info)
+HardwareSystemInterface::on_init(const hardware_interface::HardwareInfo & hardware_info)
 {
-  // RCLCPP_FATAL_STREAM(rclcpp::get_logger("HardwareSystemInterface"), "on_init");
-  // RCLCPP_FATAL_STREAM(rclcpp::get_logger("HardwareSystemInterface"), hardware_info.name);
-
-  // for (const auto & joint : hardware_info.joints) {
-  //   RCLCPP_FATAL_STREAM(
-  //     rclcpp::get_logger(
-  //       "HardwareSystemInterface"), joint.name << " " << joint.type);
-
-  //   RCLCPP_FATAL_STREAM(rclcpp::get_logger("HardwareSystemInterface"), "state interfaces");
-  //   for (const auto & state_interface :joint.state_interfaces) {
-  //     RCLCPP_FATAL_STREAM(
-  //       rclcpp::get_logger("HardwareSystemInterface"),
-  //       " " << state_interface.name);
-  //   }
-  //   RCLCPP_FATAL_STREAM(rclcpp::get_logger("HardwareSystemInterface"), "command interfaces");
-  //   for (const auto & command_interface :joint.command_interfaces) {
-  //     RCLCPP_FATAL_STREAM(
-  //       rclcpp::get_logger(
-  //         "HardwareSystemInterface"), " " << command_interface.name);
-  //   }
-  // }
-
   if (hardware_interface::SystemInterface::on_init(hardware_info) != CallbackReturn::SUCCESS) {
     return CallbackReturn::ERROR;
   }
 
   if (
     load_info_(hardware_info) == hardware_interface::return_type::OK &&
-    load_interface_(hardware_info) == hardware_interface::return_type::OK) {
+    load_interfaces_(hardware_info) == hardware_interface::return_type::OK) {
     return CallbackReturn::SUCCESS;
   } else {
     return CallbackReturn::ERROR;
@@ -78,117 +79,107 @@ HardwareSystemInterface<HardwareInterface>::on_init(
 }
 
 //-----------------------------------------------------------------------------
-template<typename HardwareInterface>
-hardware_interface::return_type HardwareSystemInterface<HardwareInterface>::load_info_(
+hardware_interface::return_type HardwareSystemInterface::load_info_(
   const hardware_interface::HardwareInfo & /*hardware_info*/)
 {
   return hardware_interface::return_type::OK;
 }
 
 //-----------------------------------------------------------------------------
-template<typename HardwareInterface>
-hardware_interface::return_type HardwareSystemInterface<HardwareInterface>::load_interface_(
+hardware_interface::return_type HardwareSystemInterface::load_interfaces_(
   const hardware_interface::HardwareInfo & hardware_info)
 {
   try {
-    hardware_interface_ =
-      std::make_unique<HardwareInterface>(hardware_info, hardware_interface::HW_IF_VELOCITY);
+    hardware_interface_names_ = split_interface_names(
+      get_parameter_or<std::string>(hardware_info, "hardware_interfaces", "mobile_base"));
+
+    if (hardware_interface_names_.empty()) {
+      throw std::runtime_error("hardware_interfaces parameter is empty");
+    }
+
+    for (const auto & interface_name : hardware_interface_names_) {
+      const auto interface_type = get_parameter(hardware_info, interface_name, "type");
+      const auto parameters_prefix = get_parameter_or<std::string>(
+        hardware_info, interface_name, "parameters_prefix", interface_name);
+
+      hardware_interfaces_.emplace(
+        interface_name,
+        make_hardware_interface(hardware_info, interface_type, parameters_prefix));
+    }
+
     return hardware_interface::return_type::OK;
-  } catch (std::runtime_error & e) {
-    RCLCPP_FATAL_STREAM(rclcpp::get_logger("HardwareSystemInterface"), e.what());
+  } catch (const std::exception & e) {
+    RCLCPP_FATAL_STREAM(rclcpp::get_logger(hardware_interface_name_), e.what());
     return hardware_interface::return_type::ERROR;
   }
 }
 
 //-----------------------------------------------------------------------------
-template<typename HardwareInterface>
 rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
-HardwareSystemInterface<HardwareInterface>::on_configure(
-  const rclcpp_lifecycle::State & previous_state)
+HardwareSystemInterface::on_configure(const rclcpp_lifecycle::State & previous_state)
 {
-  RCLCPP_ERROR_STREAM(
+  RCLCPP_INFO_STREAM(
     rclcpp::get_logger(hardware_interface_name_),
     "on_configure : previous state " << int(previous_state.id()) << " " << previous_state.label());
   return CallbackReturn::SUCCESS;
-
-  if (connect_() == hardware_interface::return_type::OK) {
-    return CallbackReturn::SUCCESS;
-  } else {
-    return CallbackReturn::FAILURE;
-  }
 }
 
 //-----------------------------------------------------------------------------
-template<typename HardwareInterface>
 rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
-HardwareSystemInterface<HardwareInterface>::on_cleanup(
-  const rclcpp_lifecycle::State & previous_state)
+HardwareSystemInterface::on_cleanup(const rclcpp_lifecycle::State & previous_state)
 {
-  RCLCPP_ERROR_STREAM(
+  RCLCPP_INFO_STREAM(
     rclcpp::get_logger(hardware_interface_name_),
     "on_cleanup : previous state " << int(previous_state.id()) << " " << previous_state.label());
-
   return CallbackReturn::SUCCESS;
 }
 
 //-----------------------------------------------------------------------------
-template<typename HardwareInterface>
 rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
-HardwareSystemInterface<HardwareInterface>::on_activate(
-  const rclcpp_lifecycle::State & previous_state)
+HardwareSystemInterface::on_activate(const rclcpp_lifecycle::State & previous_state)
 {
-  RCLCPP_ERROR_STREAM(
+  RCLCPP_INFO_STREAM(
     rclcpp::get_logger(hardware_interface_name_),
     "on_activate : previous state " << int(previous_state.id()) << " " << previous_state.label());
 
-  if (connect_() == hardware_interface::return_type::OK) {
-    return CallbackReturn::SUCCESS;
-  } else {
-    return CallbackReturn::FAILURE;
-  }
+  return connect_() == hardware_interface::return_type::OK ?
+         CallbackReturn::SUCCESS :
+         CallbackReturn::FAILURE;
 }
 
 //-----------------------------------------------------------------------------
-template<typename HardwareInterface>
 rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
-HardwareSystemInterface<HardwareInterface>::on_deactivate(
-  const rclcpp_lifecycle::State & previous_state)
+HardwareSystemInterface::on_deactivate(const rclcpp_lifecycle::State & previous_state)
 {
-  RCLCPP_ERROR_STREAM(
+  RCLCPP_INFO_STREAM(
     rclcpp::get_logger(hardware_interface_name_),
-    "on_deactivate : previous state" << int(previous_state.id()) << " " << previous_state.label());
+    "on_deactivate : previous state " << int(previous_state.id()) << " " << previous_state.label());
 
-  if (disconnect_() == hardware_interface::return_type::OK) {
-    return CallbackReturn::SUCCESS;
-  } else {
-    RCLCPP_ERROR_STREAM(rclcpp::get_logger(hardware_interface_name_), "on_cleanup raised error");
-    return CallbackReturn::ERROR;
-  }
+  return disconnect_() == hardware_interface::return_type::OK ?
+         CallbackReturn::SUCCESS :
+         CallbackReturn::ERROR;
 }
 
 //-----------------------------------------------------------------------------
-template<typename HardwareInterface>
 rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
-HardwareSystemInterface<HardwareInterface>::on_shutdown(
-  const rclcpp_lifecycle::State & previous_state)
+HardwareSystemInterface::on_shutdown(const rclcpp_lifecycle::State & previous_state)
 {
-  RCLCPP_ERROR_STREAM(
+  RCLCPP_INFO_STREAM(
     rclcpp::get_logger(hardware_interface_name_),
-    "on_shutdownn : previous state " << int(previous_state.id()) << " " << previous_state.label());
+    "on_shutdown : previous state " << int(previous_state.id()) << " " << previous_state.label());
 
   if (static_cast<int>(previous_state.id()) == 1) {
     return CallbackReturn::SUCCESS;
-  } else if (disconnect_() == hardware_interface::return_type::OK) {
-    return CallbackReturn::SUCCESS;
-  } else {
-    return CallbackReturn::ERROR;
   }
+
+  return disconnect_() == hardware_interface::return_type::OK ?
+         CallbackReturn::SUCCESS :
+         CallbackReturn::ERROR;
 }
 
 //-----------------------------------------------------------------------------
-template<typename HardwareInterface>
 rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
-HardwareSystemInterface<HardwareInterface>::on_error(const rclcpp_lifecycle::State & previous_state)
+HardwareSystemInterface::on_error(const rclcpp_lifecycle::State & previous_state)
 {
   RCLCPP_ERROR_STREAM(
     rclcpp::get_logger(hardware_interface_name_),
@@ -197,36 +188,49 @@ HardwareSystemInterface<HardwareInterface>::on_error(const rclcpp_lifecycle::Sta
 }
 
 //-----------------------------------------------------------------------------
-template<typename HardwareInterface>
-std::vector<hardware_interface::StateInterface>
-HardwareSystemInterface<HardwareInterface>::export_state_interfaces()
+std::vector<hardware_interface::StateInterface> HardwareSystemInterface::export_state_interfaces()
 {
-  return hardware_interface_->export_state_interfaces();
+  std::vector<hardware_interface::StateInterface> state_interfaces;
+  for (const auto & interface_name : hardware_interface_names_) {
+    auto interface_state_interfaces =
+      hardware_interfaces_.at(interface_name)->export_state_interfaces();
+    state_interfaces.reserve(state_interfaces.size() + interface_state_interfaces.size());
+    for (auto & state_interface : interface_state_interfaces) {
+      state_interfaces.push_back(std::move(state_interface));
+    }
+  }
+  return state_interfaces;
 }
 
 //-----------------------------------------------------------------------------
-template<typename HardwareInterface>
 std::vector<hardware_interface::CommandInterface>
-HardwareSystemInterface<HardwareInterface>::export_command_interfaces()
+HardwareSystemInterface::export_command_interfaces()
 {
-  return hardware_interface_->export_command_interfaces();
+  std::vector<hardware_interface::CommandInterface> command_interfaces;
+  for (const auto & interface_name : hardware_interface_names_) {
+    auto interface_command_interfaces =
+      hardware_interfaces_.at(interface_name)->export_command_interfaces();
+    command_interfaces.reserve(command_interfaces.size() + interface_command_interfaces.size());
+    for (auto & command_interface : interface_command_interfaces) {
+      command_interfaces.push_back(std::move(command_interface));
+    }
+  }
+  return command_interfaces;
 }
 
-// template class HardwareSystemInterface<HardwareInterface2WD>;
-template class HardwareSystemInterface<HardwareInterface4WD>;
-template class HardwareSystemInterface<HardwareInterface4WS4WD>;
-template class HardwareSystemInterface<HardwareInterface2FWS4WD>;
-template class HardwareSystemInterface<HardwareInterface2FWS2RWD>;
-template class HardwareSystemInterface<HardwareInterface2FWS2FWD>;
-template class HardwareSystemInterface<HardwareInterface2AS4WD>;
-template class HardwareSystemInterface<HardwareInterface2AS2FWD>;
-template class HardwareSystemInterface<HardwareInterface2AS2RWD>;
-template class HardwareSystemInterface<HardwareInterface1FAS2FWD>;
-template class HardwareSystemInterface<HardwareInterface1FAS2RWD>;
-template class HardwareSystemInterface<HardwareInterface1FAS4WD>;
-template class HardwareSystemInterface<HardwareInterface2TD>;
-template class HardwareSystemInterface<HardwareInterface2THD>;
-template class HardwareSystemInterface<HardwareInterface2TTD>;
+//-----------------------------------------------------------------------------
+HardwareInterfaceBase & HardwareSystemInterface::hardware_interface_(
+  const std::string & interface_name)
+{
+  return *hardware_interfaces_.at(interface_name);
+}
+
+//-----------------------------------------------------------------------------
+const HardwareInterfaceBase & HardwareSystemInterface::hardware_interface_(
+  const std::string & interface_name) const
+{
+  return *hardware_interfaces_.at(interface_name);
+}
 
 }  // namespace ros2
 }  // namespace romea

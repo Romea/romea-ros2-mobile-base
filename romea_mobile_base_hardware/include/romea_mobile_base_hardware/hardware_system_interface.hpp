@@ -18,34 +18,21 @@
 // std
 #include <memory>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 // ros
 #include "hardware_interface/system_interface.hpp"
 
-// local
-// #include "romea_mobile_base_hardware/hardware_interface2WD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface1FAS2FWD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface1FAS2RWD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface1FAS4WD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface2AS2FWD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface2AS2RWD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface2AS4WD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface2FWS2FWD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface2FWS2RWD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface2FWS4WD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface2TD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface2THD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface2TTD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface4WD.hpp"
-#include "romea_mobile_base_hardware/hardware_interface4WS4WD.hpp"
+// romea
+#include "romea_mobile_base_hardware/hardware_interface_base.hpp"
+#include "romea_mobile_base_hardware/hardware_system_interface_legacy.hpp"
 
 namespace romea
 {
 namespace ros2
 {
 
-template<typename HardwareInterface>
 class HardwareSystemInterface : public hardware_interface::SystemInterface
 {
 public:
@@ -53,9 +40,9 @@ public:
 
 public:
   explicit HardwareSystemInterface(
-    const std::string & hardware_interface_name = "HardwareInterface");
+    const std::string & hardware_interface_name = "HardwareSystemInterface");
 
-  virtual ~HardwareSystemInterface() = default;
+  ~HardwareSystemInterface() override = default;
 
   CallbackReturn on_init(const hardware_interface::HardwareInfo & hardware_info) override;
 
@@ -80,32 +67,33 @@ protected:
 
   virtual hardware_interface::return_type disconnect_() = 0;
 
-  virtual hardware_interface::return_type load_interface_(
-    const hardware_interface::HardwareInfo & hardware_info);
-
   virtual hardware_interface::return_type load_info_(
     const hardware_interface::HardwareInfo & hardware_info);
 
+  virtual hardware_interface::return_type load_interfaces_(
+    const hardware_interface::HardwareInfo & hardware_info);
+
+  HardwareInterfaceBase & hardware_interface_(const std::string & interface_name);
+
+  const HardwareInterfaceBase & hardware_interface_(const std::string & interface_name) const;
+
+  template<typename HardwareInterface>
+  HardwareInterface & hardware_interface(const std::string & interface_name)
+  {
+    return dynamic_cast<HardwareInterface &>(hardware_interface_(interface_name));
+  }
+
+  template<typename HardwareInterface>
+  const HardwareInterface & hardware_interface(const std::string & interface_name) const
+  {
+    return dynamic_cast<const HardwareInterface &>(hardware_interface_(interface_name));
+  }
+
 protected:
   std::string hardware_interface_name_;
-  std::unique_ptr<HardwareInterface> hardware_interface_;
+  std::vector<std::string> hardware_interface_names_;
+  std::unordered_map<std::string, std::unique_ptr<HardwareInterfaceBase>> hardware_interfaces_;
 };
-
-using HardwareSystemInterfac1FAS2FWD = HardwareSystemInterface<HardwareInterface1FAS2FWD>;
-using HardwareSystemInterfac1FAS2RWD = HardwareSystemInterface<HardwareInterface1FAS2RWD>;
-using HardwareSystemInterfac1FAS4WD = HardwareSystemInterface<HardwareInterface1FAS4WD>;
-using HardwareSystemInterface2AS4WD = HardwareSystemInterface<HardwareInterface2AS4WD>;
-using HardwareSystemInterface2AS2FWD = HardwareSystemInterface<HardwareInterface2AS2FWD>;
-using HardwareSystemInterface2AS2RWD = HardwareSystemInterface<HardwareInterface2AS2RWD>;
-using HardwareSystemInterface2FWS2FWD = HardwareSystemInterface<HardwareInterface2FWS2FWD>;
-using HardwareSystemInterface2FWS2RWD = HardwareSystemInterface<HardwareInterface2FWS2RWD>;
-using HardwareSystemInterface2FWS4WD = HardwareSystemInterface<HardwareInterface2FWS4WD>;
-// using HardwareSystemInterface2WD = HardwareSystemInterface<HardwareInterface2WD>;
-using HardwareSystemInterface4WD = HardwareSystemInterface<HardwareInterface4WD>;
-using HardwareSystemInterface4WS4WD = HardwareSystemInterface<HardwareInterface4WS4WD>;
-using HardwareSystemInterface2TD = HardwareSystemInterface<HardwareInterface2TD>;
-using HardwareSystemInterface2THD = HardwareSystemInterface<HardwareInterface2THD>;
-using HardwareSystemInterface2TTD = HardwareSystemInterface<HardwareInterface2TTD>;
 
 }  // namespace ros2
 }  // namespace romea

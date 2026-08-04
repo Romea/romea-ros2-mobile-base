@@ -39,6 +39,7 @@ add_library(${PROJECT_NAME} SHARED
     src/ros2_control/info/hardware_info1FASxxx.cpp
     src/ros2_control/info/hardware_info2ASxxx.cpp
     src/ros2_control/info/hardware_info2FWSxxx.cpp
+    src/ros2_control/info/hardware_info2FWC2RWD.cpp
     src/ros2_control/info/hardware_info2TD.cpp
     src/ros2_control/info/hardware_info2THD.cpp
     src/ros2_control/info/hardware_info2TTD.cpp
@@ -48,7 +49,8 @@ add_library(${PROJECT_NAME} SHARED
     src/ros2_control/info/joint_info.cpp
     src/ros2_control/hardware/hardware_handle.cpp
     src/ros2_control/hardware/spinning_joint_hardware_interface.cpp
-    src/ros2_control/hardware/steering_joint_hardware_interface.cpp)
+    src/ros2_control/hardware/steering_joint_hardware_interface.cpp
+    src/ros2_control/hardware/swiveling_joint_hardware_interface.cpp)
 
 ament_target_dependencies(${PROJECT_NAME}
     rclcpp

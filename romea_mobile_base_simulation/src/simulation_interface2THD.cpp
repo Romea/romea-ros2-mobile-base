@@ -29,34 +29,112 @@ namespace ros2
 SimulationInterface2THD::SimulationInterface2THD(
   const hardware_interface::HardwareInfo & hardware_info,
   const std::string & command_interface_type)
+: SimulationInterface2THD([&]() {
+    Configuration configuration;
+    configuration.left_sprocket_wheel_spinning_joint_info =
+      hardware_info.joints[LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID];
+    configuration.right_sprocket_wheel_spinning_joint_info =
+      hardware_info.joints[RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID];
+    configuration.front_left_idler_wheel_spinning_joint_info =
+      hardware_info.joints[FRONT_LEFT_IDLER_WHEEL_SPINNING_JOINT_ID];
+    configuration.front_right_idler_wheel_spinning_joint_info =
+      hardware_info.joints[FRONT_RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID];
+    configuration.rear_left_idler_wheel_spinning_joint_info =
+      hardware_info.joints[REAR_LEFT_IDLER_WHEEL_SPINNING_JOINT_ID];
+    configuration.rear_right_idler_wheel_spinning_joint_info =
+      hardware_info.joints[REAR_RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID];
+    configuration.spinning_joint_command_interface_type = command_interface_type;
+    configuration.idler_wheel_radius = get_idler_wheel_radius(hardware_info);
+    configuration.sprocket_wheel_radius = get_sprocket_wheel_radius(hardware_info);
+    configuration.track_thickness = get_track_thickness(hardware_info);
+    return configuration;
+  }())
+{
+}
+
+//-----------------------------------------------------------------------------
+SimulationInterface2THD::Configuration::Configuration(
+  const hardware_interface::HardwareInfo & hardware_info, const std::string & parameters_prefix)
+: left_sprocket_wheel_spinning_joint_info(
+    get_joint_info(hardware_info, parameters_prefix, "left_sprocket_wheel_spinning_joint_name")),
+  right_sprocket_wheel_spinning_joint_info(
+    get_joint_info(hardware_info, parameters_prefix, "right_sprocket_wheel_spinning_joint_name")),
+  front_left_idler_wheel_spinning_joint_info(
+    get_joint_info(hardware_info, parameters_prefix, "front_left_idler_wheel_spinning_joint_name")),
+  front_right_idler_wheel_spinning_joint_info(
+    get_joint_info(
+      hardware_info, parameters_prefix, "front_right_idler_wheel_spinning_joint_name")),
+  rear_left_idler_wheel_spinning_joint_info(
+    get_joint_info(hardware_info, parameters_prefix, "rear_left_idler_wheel_spinning_joint_name")),
+  rear_right_idler_wheel_spinning_joint_info(
+    get_joint_info(
+      hardware_info, parameters_prefix, "rear_right_idler_wheel_spinning_joint_name")),
+  spinning_joint_command_interface_type(
+    get_parameter_or<std::string>(
+      hardware_info, parameters_prefix, "spinning_joint_command_interface_type", "velocity")),
+  idler_wheel_radius(
+    get_parameter<double>(hardware_info, parameters_prefix, "idler_wheel_radius")),
+  sprocket_wheel_radius(
+    get_parameter<double>(hardware_info, parameters_prefix, "sprocket_wheel_radius")),
+  track_thickness(get_parameter<double>(hardware_info, parameters_prefix, "track_thickness"))
+{
+}
+
+//-----------------------------------------------------------------------------
+SimulationInterface2THD::SimulationInterface2THD(const Configuration & configuration)
 : left_sprocket_wheel_spinning_joint_(
     LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID,
-    hardware_info.joints[LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID],
-    command_interface_type),
+    configuration.left_sprocket_wheel_spinning_joint_info,
+    configuration.spinning_joint_command_interface_type),
   right_sprocket_wheel_spinning_joint_(
     RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID,
-    hardware_info.joints[RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID],
-    command_interface_type),
+    configuration.right_sprocket_wheel_spinning_joint_info,
+    configuration.spinning_joint_command_interface_type),
   front_left_idler_wheel_spinning_joint_(
     FRONT_LEFT_IDLER_WHEEL_SPINNING_JOINT_ID,
-    hardware_info.joints[FRONT_LEFT_IDLER_WHEEL_SPINNING_JOINT_ID],
-    command_interface_type),
+    configuration.front_left_idler_wheel_spinning_joint_info,
+    configuration.spinning_joint_command_interface_type),
   front_right_idler_wheel_spinning_joint_(
     FRONT_RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID,
-    hardware_info.joints[FRONT_RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID],
-    command_interface_type),
+    configuration.front_right_idler_wheel_spinning_joint_info,
+    configuration.spinning_joint_command_interface_type),
   rear_left_idler_wheel_spinning_joint_(
     REAR_LEFT_IDLER_WHEEL_SPINNING_JOINT_ID,
-    hardware_info.joints[REAR_LEFT_IDLER_WHEEL_SPINNING_JOINT_ID],
-    command_interface_type),
+    configuration.rear_left_idler_wheel_spinning_joint_info,
+    configuration.spinning_joint_command_interface_type),
   rear_right_idler_wheel_spinning_joint_(
     REAR_RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID,
-    hardware_info.joints[REAR_RIGHT_IDLER_WHEEL_SPINNING_JOINT_ID],
-    command_interface_type),
-  idler_wheel_radius_(get_idler_wheel_radius(hardware_info)),
-  sprocket_wheel_radius_(get_sprocket_wheel_radius(hardware_info)),
-  track_thickness_(get_track_thickness(hardware_info))
+    configuration.rear_right_idler_wheel_spinning_joint_info,
+    configuration.spinning_joint_command_interface_type),
+  idler_wheel_radius_(configuration.idler_wheel_radius),
+  sprocket_wheel_radius_(configuration.sprocket_wheel_radius),
+  track_thickness_(configuration.track_thickness)
 {
+}
+
+//-----------------------------------------------------------------------------
+std::vector<hardware_interface::ComponentInfo> get_gazebo_joint_infos(
+  const SimulationInterface2THD::Configuration & configuration)
+{
+  return {
+    make_gazebo_joint_info(
+      configuration.left_sprocket_wheel_spinning_joint_info,
+      configuration.spinning_joint_command_interface_type),
+    make_gazebo_joint_info(
+      configuration.right_sprocket_wheel_spinning_joint_info,
+      configuration.spinning_joint_command_interface_type),
+    make_gazebo_joint_info(
+      configuration.front_left_idler_wheel_spinning_joint_info,
+      configuration.spinning_joint_command_interface_type),
+    make_gazebo_joint_info(
+      configuration.front_right_idler_wheel_spinning_joint_info,
+      configuration.spinning_joint_command_interface_type),
+    make_gazebo_joint_info(
+      configuration.rear_left_idler_wheel_spinning_joint_info,
+      configuration.spinning_joint_command_interface_type),
+    make_gazebo_joint_info(
+      configuration.rear_right_idler_wheel_spinning_joint_info,
+      configuration.spinning_joint_command_interface_type)};
 }
 
 //-----------------------------------------------------------------------------

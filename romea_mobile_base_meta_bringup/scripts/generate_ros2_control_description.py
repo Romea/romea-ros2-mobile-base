@@ -16,7 +16,7 @@
 
 import sys
 
-from romea_common_meta_bringup import complete_mode
+from romea_common_meta_bringup.utils import complete_mode
 from romea_mobile_base_meta_bringup.meta_description import (
     generate_xml_ros2_control_description_str,
     MobileBaseMetaDescription,

@@ -1,4 +1,5 @@
-// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Copyright 2022 INRAE, French National Research Institute for Agriculture,
+// Food and Environment
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,28 +17,75 @@
 #define TEST_UTILS_HPP_
 
 // std
+#include <fstream>
+#include <sstream>
 #include <string>
+#include <vector>
+
+// gtest
+#include "gtest/gtest.h"
 
 // ros
-#include "hardware_interface/hardware_info.hpp"
+#include "hardware_interface/component_parser.hpp"
+#include "rclcpp/rclcpp.hpp"
 
 // romea
-#include "romea_common_utils/ros_versions.hpp"
+#include "romea_mobile_base_hardware/hardware_system_interface.hpp"
+#include "test_helper.h"  // NOLINT
+
+inline std::vector<hardware_interface::HardwareInfo> parse_hardware_info(
+  const std::string & xacro_name)
+{
+  const std::string xacro_file = std::string(TEST_DIR) + "/" + xacro_name;
+  const std::string urdf_file = "/tmp/" + xacro_name + ".urdf";
+  const std::string cmd = "xacro " + xacro_file + " > " + urdf_file;
+  std::system(cmd.c_str());
+
+  std::ifstream file(urdf_file.c_str());
+  std::stringstream buffer;
+  buffer << file.rdbuf();
+
+  return hardware_interface::parse_control_resources_from_urdf(buffer.str());
+}
 
 template<typename Interface>
-void check_interface_name(const Interface & interface, const std::string & expected_name)
+void expect_interface_name(const Interface & interface, const std::string & expected_name)
 {
   EXPECT_STREQ(interface.get_name().c_str(), expected_name.c_str());
 }
 
-hardware_interface::InterfaceInfo make_interface_info(
-  const std::string & name, const std::string & min, const std::string & max)
+class TestableHardwareSystemInterface : public romea::ros2::HardwareSystemInterface
 {
-  hardware_interface::InterfaceInfo info;
-  info.name = name;
-  info.min = min;
-  info.max = max;
-  return info;
-}
+public:
+  using HardwareSystemInterface::hardware_interface;
+
+  TestableHardwareSystemInterface()
+  : HardwareSystemInterface("TestableHardwareSystemInterface")
+  {
+  }
+
+private:
+  hardware_interface::return_type connect_() override
+  {
+    return hardware_interface::return_type::OK;
+  }
+
+  hardware_interface::return_type disconnect_() override
+  {
+    return hardware_interface::return_type::OK;
+  }
+
+  hardware_interface::return_type read(
+    const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/) override
+  {
+    return hardware_interface::return_type::OK;
+  }
+
+  hardware_interface::return_type write(
+    const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/) override
+  {
+    return hardware_interface::return_type::OK;
+  }
+};
 
 #endif  // TEST_UTILS_HPP_

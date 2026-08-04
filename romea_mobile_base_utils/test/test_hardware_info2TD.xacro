@@ -1,6 +1,29 @@
 <?xml version='1.0' encoding='utf-8'?>
 <robot name="robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+  <link name="robot_base_link" />
+  <link name="robot_link1" />
+  <link name="robot_link2" />
+  <link name="robot_link3" />
+  <link name="robot_link4" />
+  <link name="robot_link5" />
+  <link name="robot_link6" />
+  <link name="robot_link7" />
+  <link name="robot_link8" />
+  <link name="robot_link9" />
+  <link name="robot_link10" />
+
+  <joint name="robot_joint1" type="continuous"><parent link="robot_base_link"/><child link="robot_link1"/></joint>
+  <joint name="robot_joint2" type="continuous"><parent link="robot_base_link"/><child link="robot_link2"/></joint>
+  <joint name="robot_joint3" type="continuous"><parent link="robot_base_link"/><child link="robot_link3"/></joint>
+  <joint name="robot_joint4" type="continuous"><parent link="robot_base_link"/><child link="robot_link4"/></joint>
+  <joint name="robot_joint5" type="continuous"><parent link="robot_base_link"/><child link="robot_link5"/></joint>
+  <joint name="robot_joint6" type="continuous"><parent link="robot_base_link"/><child link="robot_link6"/></joint>
+  <joint name="robot_joint7" type="continuous"><parent link="robot_base_link"/><child link="robot_link7"/></joint>
+  <joint name="robot_joint8" type="continuous"><parent link="robot_base_link"/><child link="robot_link8"/></joint>
+  <joint name="robot_joint9" type="continuous"><parent link="robot_base_link"/><child link="robot_link9"/></joint>
+  <joint name="robot_joint10" type="continuous"><parent link="robot_base_link"/><child link="robot_link10"/></joint>
+
   <xacro:property name="prefix" value="robot_" />
   <xacro:property name="left_sprocket_wheel_spinning_joint" value="joint1" />
   <xacro:property name="right_sprocket_wheel_spinning_joint" value="joint2" />
@@ -15,6 +38,6 @@
 
   <xacro:include
     filename="$(find romea_mobile_base_description)/ros2_control/base2TD.ros2_control.xacro" />
-  <xacro:base_control mode="simulation" base_name="base" />
+  <xacro:base_control mode="simulation" base_name="base" hardware_plugin="${simulation_hardware_plugin}" />
 
 </robot>

@@ -22,15 +22,39 @@
 // romea
 #include "romea_core_mobile_base/simulation/SimulationControl2TTD.hpp"
 #include "romea_mobile_base_hardware/hardware_interface2TTD.hpp"
+#include "romea_mobile_base_simulation/simulation_interface_base.hpp"
 
 namespace romea
 {
 namespace ros2
 {
 
-class SimulationInterface2TTD
+class SimulationInterface2TTD final : public SimulationInterfaceBase
 {
 public:
+  struct Configuration
+  {
+    Configuration() = default;
+
+    Configuration(
+      const hardware_interface::HardwareInfo & hardware_info,
+      const std::string & parameters_prefix);
+
+    hardware_interface::ComponentInfo left_sprocket_wheel_spinning_joint_info;
+    hardware_interface::ComponentInfo right_sprocket_wheel_spinning_joint_info;
+    hardware_interface::ComponentInfo left_idler_wheel_spinning_joint_info;
+    hardware_interface::ComponentInfo right_idler_wheel_spinning_joint_info;
+    hardware_interface::ComponentInfo front_left_roller_wheel_spinning_joint_info;
+    hardware_interface::ComponentInfo front_right_roller_wheel_spinning_joint_info;
+    hardware_interface::ComponentInfo rear_left_roller_wheel_spinning_joint_info;
+    hardware_interface::ComponentInfo rear_right_roller_wheel_spinning_joint_info;
+    std::string spinning_joint_command_interface_type;
+    double idler_wheel_radius;
+    double roller_wheel_radius;
+    double sprocket_wheel_radius;
+    double track_thickness;
+  };
+
   enum JointIDs
   {
     LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID = 0,
@@ -47,14 +71,16 @@ public:
     const hardware_interface::HardwareInfo & hardware_info,
     const std::string & command_interface_type);
 
+  SimulationInterface2TTD(const Configuration & configuration);
+
   core::SimulationCommand2TTD get_hardware_command();
-  sensor_msgs::msg::JointState get_joint_state_command();
+  sensor_msgs::msg::JointState get_joint_state_command() override;
 
   void set_feedback(const core::SimulationState2TTD & simulation_state);
-  void set_feedback(const sensor_msgs::msg::JointState & joint_states);
+  void set_feedback(const sensor_msgs::msg::JointState & joint_states) override;
 
-  std::vector<hardware_interface::StateInterface> export_state_interfaces();
-  std::vector<hardware_interface::CommandInterface> export_command_interfaces();
+  std::vector<hardware_interface::StateInterface> export_state_interfaces() override;
+  std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
 
 private:
   SpinningJointHardwareInterface left_sprocket_wheel_spinning_joint_;
@@ -71,6 +97,9 @@ private:
   const double sprocket_wheel_radius_;
   const double track_thickness_;
 };
+
+std::vector<hardware_interface::ComponentInfo> get_gazebo_joint_infos(
+  const SimulationInterface2TTD::Configuration & configuration);
 
 }  // namespace ros2
 }  // namespace romea

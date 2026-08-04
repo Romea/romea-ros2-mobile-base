@@ -27,6 +27,33 @@ namespace ros2
 {
 
 //-----------------------------------------------------------------------------
+HardwareInterface2TD::Configuration::Configuration(
+  const hardware_interface::HardwareInfo & hardware_info,
+  const std::string & parameters_prefix)
+{
+  left_sprocket_wheel_spinning_joint_info =
+    get_joint_info(hardware_info, parameters_prefix, "left_sprocket_wheel_spinning_joint_name");
+  right_sprocket_wheel_spinning_joint_info =
+    get_joint_info(hardware_info, parameters_prefix, "right_sprocket_wheel_spinning_joint_name");
+  left_idler_wheel_spinning_joint_info =
+    get_joint_info(hardware_info, parameters_prefix, "left_idler_wheel_spinning_joint_name");
+  right_idler_wheel_spinning_joint_info =
+    get_joint_info(hardware_info, parameters_prefix, "right_idler_wheel_spinning_joint_name");
+  command_interface_type =
+    get_parameter_or<std::string>(
+      hardware_info,
+      parameters_prefix,
+      "command_interface_type",
+      hardware_interface::HW_IF_VELOCITY);
+  sprocket_wheel_radius =
+    get_parameter<double>(hardware_info, parameters_prefix, "sprocket_wheel_radius");
+  idler_wheel_radius =
+    get_parameter<double>(hardware_info, parameters_prefix, "idler_wheel_radius");
+  track_thickness =
+    get_parameter<double>(hardware_info, parameters_prefix, "track_thickness");
+}
+
+//-----------------------------------------------------------------------------
 HardwareInterface2TD::HardwareInterface2TD(
   const hardware_interface::HardwareInfo & hardware_info,
   const std::string & command_interface_type)
@@ -45,6 +72,24 @@ HardwareInterface2TD::HardwareInterface2TD(
   sprocket_wheel_radius_(get_sprocket_wheel_radius(hardware_info)),
   idler_wheel_radius_(get_idler_wheel_radius(hardware_info)),
   track_thickness_(get_track_thickness(hardware_info))
+{
+}
+
+//-----------------------------------------------------------------------------
+HardwareInterface2TD::HardwareInterface2TD(const Configuration & configuration)
+: left_sprocket_wheel_spinning_joint_(
+    LEFT_SPROCKET_WHEEL_SPINNING_JOINT_ID,
+    configuration.left_sprocket_wheel_spinning_joint_info,
+    configuration.command_interface_type),
+  right_sprocket_wheel_spinning_joint_(
+    RIGHT_SPROCKET_WHEEL_SPINNING_JOINT_ID,
+    configuration.right_sprocket_wheel_spinning_joint_info,
+    configuration.command_interface_type),
+  left_idler_wheel_spinning_joint_feedback_(configuration.left_idler_wheel_spinning_joint_info),
+  right_idler_wheel_spinning_joint_feedback_(configuration.right_idler_wheel_spinning_joint_info),
+  sprocket_wheel_radius_(configuration.sprocket_wheel_radius),
+  idler_wheel_radius_(configuration.idler_wheel_radius),
+  track_thickness_(configuration.track_thickness)
 {
 }
 
@@ -80,7 +125,7 @@ core::HardwareCommand2TD HardwareInterface2TD::get_hardware_command() const
 }
 
 //-----------------------------------------------------------------------------
-sensor_msgs::msg::JointState HardwareInterface2TD::get_joint_state_command() const
+sensor_msgs::msg::JointState HardwareInterface2TD::get_joint_state_command()
 {
   auto joint_states = make_joint_state_msg(2);
   left_sprocket_wheel_spinning_joint_.write_command(joint_states);
