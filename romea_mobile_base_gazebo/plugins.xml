@@ -72,4 +72,13 @@
     </description>
   </class>
 
+  <class
+    name="romea_mobile_base_gazebo/GazeboSystemInterface"
+    type="romea::ros2::GazeboSystemInterface"
+    base_class_type="gz_ros2_control::GazeboSimSystemInterface">
+    <description>
+      Dynamic GazeboSystemInterface for mobile base and implement interfaces
+    </description>
+  </class>
+
 </library>

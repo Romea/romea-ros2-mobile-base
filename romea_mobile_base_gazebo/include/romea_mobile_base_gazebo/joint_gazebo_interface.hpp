@@ -88,10 +88,16 @@ public:
   template<typename ComponentType>
   double get_state_() const
   {
+    auto component = ecm_->Component<ComponentType>(sim_joint_);
+    if (component == nullptr) {
+      return 0.0;
+    }
+
     if constexpr (std::is_same_v<ComponentType, gz::sim::components::JointTransmittedWrench>) {
-      return ecm_->Component<ComponentType>(sim_joint_)->Data().torque().z();
+      return component->Data().torque().z();
     } else {
-      return ecm_->Component<ComponentType>(sim_joint_)->Data()[0];
+      const auto & data = component->Data();
+      return data.empty() ? 0.0 : data[0];
     }
   }
 

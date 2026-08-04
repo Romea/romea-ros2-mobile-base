@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="simulation" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find romea_common_description)/urdf/ros2_control.xacro" />
+
+  <xacro:macro name="gazebo_ros2_control"
+    params="mode ros_prefix base_name controller_manager_config_yaml_file">
+
+      <xacro:if value="${'gazebo_classic' in  mode}">
+        <xacro:ros2_control_gazebo_plugin
+          plugin_filename="libgazebo_ros2_control.so"
+          plugin_name="gazebo_ros2_control"
+          ros_namespace="${ros_prefix}${base_name}"
+          controller_manager_config_yaml_file="${controller_manager_config_yaml_file}"/>
+      </xacro:if>
+
+      <xacro:if value="${'gazebo_classic' not in  mode}">
+        <xacro:ros2_control_gazebo_plugin
+          plugin_filename="gz_ros2_control-system"
+          plugin_name="gz_ros2_control::GazeboSimROS2ControlPlugin"
+          ros_namespace="${ros_prefix}${base_name}"
+          controller_manager_config_yaml_file="${controller_manager_config_yaml_file}"/>
+      </xacro:if>
+      
+  </xacro:macro>
+
+</robot>

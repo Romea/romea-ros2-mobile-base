@@ -1,31 +1,8 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:macro name="base_control" params="mode base_name has_hardware_options:=0">
 
-    <ros2_control name="${prefix}${base_name}" type="system">
-
-      <xacro:if value="${mode == 'live'}">
-        <hardware>
-          <plugin>${live_hardware_plugin}</plugin>
-          <param name="sprocket_wheel_radius">${sprocket_wheel_radius}</param>
-          <param name="idler_wheel_radius">${idler_wheel_radius}</param>
-          <param name="track_thickness">${track_thickness}</param>
-
-          <xacro:if value="${has_hardware_options}">
-            <xacro:insert_block name="hardware_options"/>
-          </xacro:if>
-        </hardware>
-      </xacro:if>
-
-      <xacro:if value="${'simulation' in mode}">
-        <hardware>
-          <plugin>${simulation_hardware_plugin}</plugin>
-          <param name="sprocket_wheel_radius">${sprocket_wheel_radius}</param>
-          <param name="idler_wheel_radius">${idler_wheel_radius}</param>
-          <param name="track_thickness">${track_thickness}</param>
-        </hardware>
-      </xacro:if>
+  <xacro:macro name="base_control_joints" params="mode">
 
       <joint name="${prefix}${left_sprocket_wheel_spinning_joint}">
         <command_interface name="velocity">
@@ -95,9 +72,75 @@
         <state_interface name="effort" />
       </joint>
 
+  </xacro:macro>
 
+
+  <xacro:macro name="base_control_parameters" params="interface_name">
+    <param name="sprocket_wheel_radius">${sprocket_wheel_radius}</param>
+    <param name="idler_wheel_radius">${idler_wheel_radius}</param>
+    <param name="track_thickness">${track_thickness}</param>
+    <param name="${interface_name}.type">2THD</param>
+    <param name="${interface_name}.left_sprocket_wheel_spinning_joint_name">${prefix}${left_sprocket_wheel_spinning_joint}</param>
+    <param name="${interface_name}.right_sprocket_wheel_spinning_joint_name">${prefix}${right_sprocket_wheel_spinning_joint}</param>
+    <param name="${interface_name}.front_left_idler_wheel_spinning_joint_name">${prefix}${front_left_idler_wheel_spinning_joint}</param>
+    <param name="${interface_name}.front_right_idler_wheel_spinning_joint_name">${prefix}${front_right_idler_wheel_spinning_joint}</param>
+    <param name="${interface_name}.rear_left_idler_wheel_spinning_joint_name">${prefix}${rear_left_idler_wheel_spinning_joint}</param>
+    <param name="${interface_name}.rear_right_idler_wheel_spinning_joint_name">${prefix}${rear_right_idler_wheel_spinning_joint}</param>
+    <param name="${interface_name}.command_interface_type">velocity</param>
+    <param name="${interface_name}.spinning_joint_command_interface_type">velocity</param>
+    <param name="${interface_name}.sprocket_wheel_radius">${sprocket_wheel_radius}</param>
+    <param name="${interface_name}.idler_wheel_radius">${idler_wheel_radius}</param>
+    <param name="${interface_name}.track_thickness">${track_thickness}</param>
+  </xacro:macro>
+
+  <xacro:macro name="base_control_hardware" params="hardware_plugin interface_name has_hardware_options:=0">
+    <hardware>
+      <plugin>${hardware_plugin}</plugin>
+      <param name="hardware_interfaces">${interface_name}</param>
+      <xacro:base_control_parameters interface_name="${interface_name}" />
+
+      <xacro:if value="${has_hardware_options}">
+        <xacro:insert_block name="hardware_options"/>
+      </xacro:if>
+    </hardware>
+  </xacro:macro>
+
+
+  <xacro:macro
+    name="base_control"
+    params="mode base_name hardware_plugin has_hardware_options:=0">
+
+    <ros2_control name="${prefix}${base_name}" type="system">
+      <xacro:base_control_hardware
+        hardware_plugin="${hardware_plugin}"
+        interface_name="${base_name}"
+        has_hardware_options="${has_hardware_options}" />
+
+      <xacro:base_control_joints mode="${mode}" />
     </ros2_control>
 
+  </xacro:macro>
+
+  <xacro:macro name="live_base_control" params="base_name hardware_plugin">
+    <xacro:base_control 
+      mode="live"
+      base_name="${base_name}"
+      hardware_plugin="${hardware_plugin}"/>
+  </xacro:macro>
+
+  <xacro:macro name="simulation_base_control" params="base_name mode">
+    <xacro:if value="${'gazebo' in  mode}">
+      <xacro:base_control 
+        mode="${mode}"
+        base_name="${base_name}"
+        hardware_plugin="romea_mobile_base_gazebo/GazeboSystemInterface2THD" />
+    </xacro:if>
+    <xacro:if value="${'4dv' in  mode or 'isaac' in mode}">
+      <xacro:base_control 
+        mode="${mode}"
+        base_name="${base_name}"
+        hardware_plugin="romea_mobile_base_hardware/GenericHardwareSystemInterface" />
+    </xacro:if>
   </xacro:macro>
 
 </robot>

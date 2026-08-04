@@ -57,7 +57,9 @@ if(${ROS_DISTRO} STRGREATER_EQUAL "jazzy")
     src/gazebo_interface2WD.cpp
     src/gazebo_interface4WD.cpp
     src/gazebo_interface4WS4WD.cpp
-    src/gazebo_system_interface.cpp)
+    src/generic_gazebo_interface.cpp
+    src/gazebo_system_interface.cpp
+    src/gazebo_system_interface_legacy.cpp)
 
   ament_target_dependencies(${PLUGINS_LIB_NAME}
     rclcpp
