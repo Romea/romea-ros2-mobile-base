@@ -46,8 +46,14 @@ std::vector<hardware_interface::HardwareInfo> parse_hardware_info(const std::str
   return hardware_interface::parse_control_resources_from_urdf(buffer.str());
 }
 
-void expect_interface_name(
-  const hardware_interface::Handle & interface, const std::string & expected_name)
+// void expect_interface_name(
+//   const hardware_interface::Handle & interface, const std::string & expected_name)
+// {
+//   EXPECT_EQ(interface.get_prefix_name() + "/" + interface.get_interface_name(), expected_name);
+// }
+
+template<typename InterfaceType>
+void expect_interface_name(const InterfaceType & interface, const std::string & expected_name)
 {
   EXPECT_EQ(interface.get_prefix_name() + "/" + interface.get_interface_name(), expected_name);
 }
