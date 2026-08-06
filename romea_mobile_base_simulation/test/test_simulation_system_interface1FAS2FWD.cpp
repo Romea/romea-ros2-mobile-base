@@ -63,9 +63,9 @@ TEST_F(TestSimulationInterface1FAS2FWD, checkSetCommand)
   romea::core::HardwareCommand1FAS2FWD command = {0.3, 2.2471, 2.99038};
 
   auto command_interfaces = interface->export_command_interfaces();
-  command_interfaces[0].set_value(command.frontAxleSteeringAngle);
-  command_interfaces[1].set_value(command.frontLeftWheelSpinningSetPoint);
-  command_interfaces[2].set_value(command.frontRightWheelSpinningSetPoint);
+  (void)command_interfaces[0].set_value(command.frontAxleSteeringAngle);
+  (void)command_interfaces[1].set_value(command.frontLeftWheelSpinningSetPoint);
+  (void)command_interfaces[2].set_value(command.frontRightWheelSpinningSetPoint);
   auto simulation_command = interface->get_hardware_command();
 
   EXPECT_NEAR(simulation_command.frontAxleSteeringAngle, 0.3, 0.001);
@@ -82,9 +82,9 @@ TEST_F(TestSimulationInterface1FAS2FWD, checkGetCommandUsingJointState)
   romea::core::HardwareCommand1FAS2FWD command = {0.3, 2.2471, 2.99038};
 
   auto command_interfaces = interface->export_command_interfaces();
-  command_interfaces[0].set_value(command.frontAxleSteeringAngle);
-  command_interfaces[1].set_value(command.frontLeftWheelSpinningSetPoint);
-  command_interfaces[2].set_value(command.frontRightWheelSpinningSetPoint);
+  (void)command_interfaces[0].set_value(command.frontAxleSteeringAngle);
+  (void)command_interfaces[1].set_value(command.frontLeftWheelSpinningSetPoint);
+  (void)command_interfaces[2].set_value(command.frontRightWheelSpinningSetPoint);
   auto simulation_command = interface->get_joint_state_command();
 
   EXPECT_STREQ(simulation_command.name[0].c_str(), "front_axle_steering_joint");
@@ -108,9 +108,9 @@ TEST_F(TestSimulationInterface1FAS2FWD, checkGetState)
 {
   romea::core::HardwareCommand1FAS2FWD command = {0.3, 2.2471, 2.99038};
   auto command_interfaces = interface->export_command_interfaces();
-  command_interfaces[0].set_value(command.frontAxleSteeringAngle);
-  command_interfaces[1].set_value(command.frontLeftWheelSpinningSetPoint);
-  command_interfaces[2].set_value(command.frontRightWheelSpinningSetPoint);
+  (void)command_interfaces[0].set_value(command.frontAxleSteeringAngle);
+  (void)command_interfaces[1].set_value(command.frontLeftWheelSpinningSetPoint);
+  (void)command_interfaces[2].set_value(command.frontRightWheelSpinningSetPoint);
 
   romea::core::SimulationCommand1FASxxx simulation_command = interface->get_hardware_command();
 
@@ -146,9 +146,9 @@ TEST_F(TestSimulationInterface1FAS2FWD, checkGetStateUsingJointState)
 {
   romea::core::HardwareCommand1FAS2FWD command = {0.3, 2.2471, 2.99038};
   auto command_interfaces = interface->export_command_interfaces();
-  command_interfaces[0].set_value(command.frontAxleSteeringAngle);
-  command_interfaces[1].set_value(command.frontLeftWheelSpinningSetPoint);
-  command_interfaces[2].set_value(command.frontRightWheelSpinningSetPoint);
+  (void)command_interfaces[0].set_value(command.frontAxleSteeringAngle);
+  (void)command_interfaces[1].set_value(command.frontLeftWheelSpinningSetPoint);
+  (void)command_interfaces[2].set_value(command.frontRightWheelSpinningSetPoint);
   auto simulation_command = interface->get_joint_state_command();
   interface->set_feedback(simulation_command);
 

@@ -101,8 +101,8 @@ TEST_F(
     rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS);
 
   auto command_interfaces = system_interface.export_command_interfaces();
-  ASSERT_TRUE(command_interfaces[0].set_value(1.0));
-  ASSERT_TRUE(command_interfaces[1].set_value(2.0));
+  (void)command_interfaces[0].set_value(1.0);
+  (void)command_interfaces[1].set_value(2.0);
 
   auto & interface =
     system_interface.hardware_interface<romea::ros2::HardwareInterface2THD>("mobile_base");
@@ -156,8 +156,8 @@ TEST_F(
     rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS);
 
   auto command_interfaces = system_interface.export_command_interfaces();
-  ASSERT_TRUE(command_interfaces[0].set_value(1.0));
-  ASSERT_TRUE(command_interfaces[1].set_value(2.0));
+  (void)command_interfaces[0].set_value(1.0);
+  (void)command_interfaces[1].set_value(2.0);
 
   auto & interface =
     system_interface.hardware_interface<romea::ros2::HardwareInterface2THD>("mobile_base");

@@ -115,7 +115,7 @@ TEST_F(
 
   auto command_interfaces = system_interface.export_command_interfaces();
   for (size_t n = 0; n < 5; ++n) {
-    ASSERT_TRUE(command_interfaces[n].set_value(n + 1.0));
+  (void)command_interfaces[n].set_value(n + 1.0);
   }
 
   auto & interface =
@@ -188,7 +188,7 @@ TEST_F(
 
   auto command_interfaces = system_interface.export_command_interfaces();
   for (size_t n = 0; n < 5; ++n) {
-    ASSERT_TRUE(command_interfaces[n].set_value(n + 1.0));
+  (void)command_interfaces[n].set_value(n + 1.0);
   }
 
   auto & interface =

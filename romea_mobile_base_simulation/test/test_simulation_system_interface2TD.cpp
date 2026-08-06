@@ -63,8 +63,8 @@ TEST_F(TestSimulationInterface2TD, checkGetCommand)
   romea::core::HardwareCommand2TD command = {0.611111, 1.6111};
 
   auto command_interfaces = interface->export_command_interfaces();
-  command_interfaces[0].set_value(command.leftSprocketWheelSpinningSetPoint);
-  command_interfaces[1].set_value(command.rightSprocketWheelSpinningSetPoint);
+  (void)command_interfaces[0].set_value(command.leftSprocketWheelSpinningSetPoint);
+  (void)command_interfaces[1].set_value(command.rightSprocketWheelSpinningSetPoint);
   auto simulation_command = interface->get_hardware_command();
 
   EXPECT_NEAR(
@@ -84,8 +84,8 @@ TEST_F(TestSimulationInterface2TD, checkGetCommandUsingJointState)
   romea::core::HardwareCommand2TD command = {0.611111, 1.6111};
 
   auto command_interfaces = interface->export_command_interfaces();
-  command_interfaces[0].set_value(command.leftSprocketWheelSpinningSetPoint);
-  command_interfaces[1].set_value(command.rightSprocketWheelSpinningSetPoint);
+  (void)command_interfaces[0].set_value(command.leftSprocketWheelSpinningSetPoint);
+  (void)command_interfaces[1].set_value(command.rightSprocketWheelSpinningSetPoint);
   auto simulation_command = interface->get_joint_state_command();
 
   EXPECT_STREQ(simulation_command.name[0].c_str(), "left_sprocket_wheel_spinning_joint");
@@ -104,8 +104,8 @@ TEST_F(TestSimulationInterface2TD, checkGetState)
   romea::core::HardwareCommand2TD command = {0.611111, 1.6111};
 
   auto command_interfaces = interface->export_command_interfaces();
-  command_interfaces[0].set_value(command.leftSprocketWheelSpinningSetPoint);
-  command_interfaces[1].set_value(command.rightSprocketWheelSpinningSetPoint);
+  (void)command_interfaces[0].set_value(command.leftSprocketWheelSpinningSetPoint);
+  (void)command_interfaces[1].set_value(command.rightSprocketWheelSpinningSetPoint);
   auto simulation_command = interface->get_hardware_command();
 
   romea::core::SimulationState2TD simulation_state;
@@ -135,8 +135,8 @@ TEST_F(TestSimulationInterface2TD, checkGetStateUsingJointState)
   romea::core::HardwareCommand2TD command = {0.611111, 1.6111};
 
   auto command_interfaces = interface->export_command_interfaces();
-  command_interfaces[0].set_value(command.leftSprocketWheelSpinningSetPoint);
-  command_interfaces[1].set_value(command.rightSprocketWheelSpinningSetPoint);
+  (void)command_interfaces[0].set_value(command.leftSprocketWheelSpinningSetPoint);
+  (void)command_interfaces[1].set_value(command.rightSprocketWheelSpinningSetPoint);
   auto simulation_command = interface->get_joint_state_command();
   interface->set_feedback(simulation_command);
 

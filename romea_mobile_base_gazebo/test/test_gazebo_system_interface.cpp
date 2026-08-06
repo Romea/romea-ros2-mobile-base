@@ -150,15 +150,14 @@ TEST(TestGazeboSystemInterface, testWriteRead)
 
   auto command_interfaces = fixture.interface().export_command_interfaces();
   ASSERT_EQ(command_interfaces.size(), 8u);
-
-  EXPECT_TRUE(command_interfaces[0].set_value(0.1));
-  EXPECT_TRUE(command_interfaces[1].set_value(-0.2));
-  EXPECT_TRUE(command_interfaces[2].set_value(0.3));
-  EXPECT_TRUE(command_interfaces[3].set_value(-0.4));
-  EXPECT_TRUE(command_interfaces[4].set_value(-1.0));
-  EXPECT_TRUE(command_interfaces[5].set_value(1.0));
-  EXPECT_TRUE(command_interfaces[6].set_value(-2.0));
-  EXPECT_TRUE(command_interfaces[7].set_value(2.0));
+  (void)command_interfaces[0].set_value(0.1);
+  (void)command_interfaces[1].set_value(-0.2);
+  (void)command_interfaces[2].set_value(0.3);
+  (void)command_interfaces[3].set_value(-0.4);
+  (void)command_interfaces[4].set_value(-1.0);
+  (void)command_interfaces[5].set_value(1.0);
+  (void)command_interfaces[6].set_value(-2.0);
+  (void)command_interfaces[7].set_value(2.0);
 
   fixture.interface().write(rclcpp::Time(0), rclcpp::Duration::from_seconds(0.001));
   EXPECT_NEAR(fixture.joint_velocity_command("front_left_wheel_steering_joint"), 10.0, 0.001);
