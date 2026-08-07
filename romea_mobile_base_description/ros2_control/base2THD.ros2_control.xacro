@@ -133,7 +133,7 @@
       <xacro:base_control 
         mode="${mode}"
         base_name="${base_name}"
-        hardware_plugin="romea_mobile_base_gazebo/GazeboSystemInterface2THD" />
+        hardware_plugin="romea_mobile_base_gazebo/GazeboSystemInterface" />
     </xacro:if>
     <xacro:if value="${'4dv' in  mode or 'isaac' in mode}">
       <xacro:base_control 
