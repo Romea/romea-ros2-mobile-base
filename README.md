@@ -1,50 +1,43 @@
-# romea_ros2_mobile_base #
+# romea_ros2_mobile_base
 
-This project contains multiple ROS2 packages designed to control mobile robot bases, suitable for both real-world applications and simulations. For detailed information on each package, please refer to the README files within individual packages.
+## Overview
 
-## **Extension model**
+`romea_ros2_mobile_base` groups the ROS2 packages used to describe, launch, command, control and simulate mobile bases in the ROMEA ecosystem.
 
-`romea_mobile_base` defines the generic ROS2 mobile base abstraction used in the ROMEA ecosystem.
+This repository-level README gives a map of the stack. Detailed information about each package can be found in the corresponding package README.
 
-Robot-specific packages extend this abstraction mainly through:
+## Packages
 
-- `<robot>_description` → extends `romea_mobile_base_description` with robot-specific geometry, inertia, URDF and ros2_control descriptions
-- `<robot>_hardware` → extends `romea_mobile_base_hardware` with robot-specific hardware communication and control interfaces
-- `<robot>_bringup` → connects these robot-specific extensions to the generic `romea_mobile_base_meta_bringup` workflow
+| Package | Role |
+| --- | --- |
+| `romea_mobile_base` | Metapackage that groups the mobile base ROMEA ROS2 packages. |
+| `romea_mobile_base_description` | Shared description layer for mobile base configurations, URDF generation and ros2_control descriptions. |
+| `romea_mobile_base_meta_bringup` | Main integration entry point for generating mobile base configuration files, URDF descriptions and launch files from a meta-description. |
+| `romea_mobile_base_msgs` | ROS2 messages used to exchange mobile base commands and motion measurements. |
+| `romea_mobile_base_utils` | Shared utilities for mobile base parameters, command types, measures, conversions and topic naming. |
+| `romea_mobile_base_controllers` | `ros2_control` controller plugins for the supported mobile base architectures. |
+| `romea_mobile_base_hardware` | Reusable `ros2_control` hardware abstractions used by robot-specific hardware packages. |
+| `romea_mobile_base_teleop` | Joystick teleoperation nodes and configuration helpers for mobile base command families. |
+| `romea_mobile_base_simulation` | Generic simulation adaptation layer between controller-side mobile base architectures and simulator-side joint layouts. |
+| `romea_mobile_base_gazebo` | Gazebo integration for mobile base simulation through `gz_ros2_control`. |
+| `romea_mobile_base_gazebo_classic` | Gazebo Classic integration for mobile base simulation through `gazebo_ros2_control`. |
 
-This structure allows different mobile robots to share the same control, teleoperation, simulation and meta-bringup conventions while keeping platform-specific code isolated in robot packages.
+## Usage
 
-## **Usage**
+In most cases, start with `romea_mobile_base_meta_bringup`. It is the user-facing entry point of the stack. A mobile base meta-description selects the concrete robot model and delegates platform-specific configuration, URDF generation and launch generation to the corresponding `<robot_name>_bringup` package.
 
-1. create a ROS workspace
-2. cd worskpace
-3. mkdir src
-4. wget https://raw.githubusercontent.com/Romea/romea-ros2-mobile-base/refs/heads/main/romea_mobile_base_public.repos
-5. vcs import src < romea_mobile_base_public.repos
-6. colcon build
-7. see bringup package to launch a mobile base
+The mobile base stack does not describe one complete robot by itself. It provides the common description, controlllers, hardware, simulation, teleoperation and message layers shared by robot-specific packages.
 
-## **Contributing**
+Robot-specific packages extend this stack through their own description, hardware and bringup packages. For example, a `<robot_name>_description` package provides the concrete geometry and ros2_control description, a `<robot_name>_hardware` package provides the real robot communication layer, and a `<robot_name>_bringup` package connects them to the generic `romea_mobile_base_meta_bringup` workflow.
 
-If you'd like to contribute to this project, here are some guidelines:
+## License
 
-1. Fork the repository.
-2. Create a new branch for your changes.
-3. Make your changes.
-4. Write tests to cover your changes.
-5. Run the tests to ensure they pass.
-6. Commit your changes.
-7. Push your changes to your forked repository.
-8. Submit a pull request.
+This project is released under the Apache License 2.0. See the `LICENSE` file for details.
 
-## **License**
+## Authors
 
-This project is released under the Apache License 2.0. See the LICENSE file for details.
+The `romea_ros2_mobile_base` project was developed by Jean Laneurit in the context of ROMEA projects involving the TSCF research unit.
 
-## **Authors**
+## Contact
 
- The `romea_ros2_mobile_base` project was developed by **Jean Laneurit** in the context of various projects in which the TSCF research unit at INRAE has been involved.
-
-**Contact**
-
-If you have any questions or comments about romea_ros2_mobile_base project, please contact **[Jean Laneurit](mailto:jean.laneurit@inrae.fr)** 
+For questions or comments about this project, please contact [Jean Laneurit](mailto:jean.laneurit@inrae.fr).
