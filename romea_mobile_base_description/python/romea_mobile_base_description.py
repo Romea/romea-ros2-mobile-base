@@ -23,7 +23,7 @@ def get_type(base_description):
 
 def get_kinematic_type(base_description):
     vehicle_type = get_type(base_description)
-    if vehicle_type == "2WD" or vehicle_type == "4WD" or "2T" in vehicle_type:
+    if vehicle_type in ("2WD", "4WD", "2FWC2RWD") or "2T" in vehicle_type:
         return "skid_steering"
     elif "1FAS" in vehicle_type:
         return "one_axle_steering"
@@ -109,6 +109,9 @@ def get_track(base_description):
                 )
 
                 track = base_description["geometry"]["front_axle"]["wheels_distance"]
+
+        elif "rear_wheels_speed_control" in base_description:
+            track = base_description["geometry"]["rear_axle"]["wheels_distance"]
 
         if "tracks_speed_control" in base_description:
             track = base_description["geometry"]["tracks_distance"]

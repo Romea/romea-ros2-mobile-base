@@ -80,6 +80,14 @@
      </description>
    </class>
 
+   <class name="romea_mobile_base_controllers/MobileBaseController2FWC2RWD"
+          type="romea::ros2::MobileBaseController2FWC2RWD"
+          base_class_type="controller_interface::ControllerInterface">
+     <description>
+       Controller for 2FWC2RWD vehicle
+     </description>
+   </class>
+
    <class name="romea_mobile_base_controllers/MobileBaseController2TD"
           type="romea::ros2::MobileBaseController2TD"
           base_class_type="controller_interface::ControllerInterface">

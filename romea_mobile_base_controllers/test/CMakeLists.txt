@@ -15,6 +15,9 @@ target_link_libraries(${PROJECT_NAME}_test_controller_interface2FWS2FWD ${PROJEC
 ament_add_gtest(${PROJECT_NAME}_test_controller_interface2FWS2RWD test_controller_interface2FWS2RWD.cpp)
 target_link_libraries(${PROJECT_NAME}_test_controller_interface2FWS2RWD ${PROJECT_NAME})
 
+ament_add_gtest(${PROJECT_NAME}_test_controller_interface2FWC2RWD test_controller_interface2FWC2RWD.cpp)
+target_link_libraries(${PROJECT_NAME}_test_controller_interface2FWC2RWD ${PROJECT_NAME})
+
 ament_add_gtest(${PROJECT_NAME}_test_controller_interface2FWS4WD test_controller_interface2FWS4WD.cpp)
 target_link_libraries(${PROJECT_NAME}_test_controller_interface2FWS4WD ${PROJECT_NAME})
 

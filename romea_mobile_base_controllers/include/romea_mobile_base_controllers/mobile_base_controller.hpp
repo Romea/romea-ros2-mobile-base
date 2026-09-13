@@ -171,6 +171,8 @@ using MobileBaseController2FWS2RWD =
   MobileBaseController<ControllerInterface2FWS2RWD, core::TwoWheelSteeringKinematic>;
 using MobileBaseController2FWS4WD =
   MobileBaseController<ControllerInterface2FWS4WD, core::TwoWheelSteeringKinematic>;
+using MobileBaseController2FWC2RWD =
+  MobileBaseController<ControllerInterface2FWC2RWD, core::SkidSteeringKinematic>;
 using MobileBaseController2WD =
   MobileBaseController<ControllerInterface2WD, core::SkidSteeringKinematic>;
 using MobileBaseController2TD =

@@ -52,6 +52,7 @@
 #include "romea_mobile_base_controllers/interfaces/controller_interface2FWS2FWD.hpp"
 #include "romea_mobile_base_controllers/interfaces/controller_interface2FWS2RWD.hpp"
 #include "romea_mobile_base_controllers/interfaces/controller_interface2FWS4WD.hpp"
+#include "romea_mobile_base_controllers/interfaces/controller_interface2FWC2RWD.hpp"
 #include "romea_mobile_base_controllers/interfaces/controller_interface2TD.hpp"
 #include "romea_mobile_base_controllers/interfaces/controller_interface2WD.hpp"
 #include "romea_mobile_base_controllers/interfaces/controller_interface4WD.hpp"
@@ -149,6 +150,20 @@ struct MobileBaseControllerTraits<ControllerInterface2FWS4WD, core::TwoWheelStee
   using OdometryMeasure = core::OneAxleSteeringMeasure;
   using OdometryMeasureMsg = romea_mobile_base_msgs::msg::OneAxleSteeringMeasureStamped;
   using MobileBaseInfo = core::MobileBaseInfo2FWS4WD;
+};
+
+template<>
+struct MobileBaseControllerTraits<ControllerInterface2FWC2RWD, core::SkidSteeringKinematic>
+{
+  using Kinematic = core::SkidSteeringKinematic;
+  using Command = core::SkidSteeringCommand;
+  using CommandMsg = romea_mobile_base_msgs::msg::SkidSteeringCommand;
+  using CommandRosMsg = geometry_msgs::msg::Twist;
+  using CommandLimits = core::SkidSteeringCommandLimits;
+  using OdometryFrame = core::OdometryFrame2WD;
+  using OdometryMeasure = core::SkidSteeringMeasure;
+  using OdometryMeasureMsg = romea_mobile_base_msgs::msg::SkidSteeringMeasureStamped;
+  using MobileBaseInfo = core::MobileBaseInfo2FWC2RWD;
 };
 
 template<>

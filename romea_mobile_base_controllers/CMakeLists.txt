@@ -41,6 +41,7 @@ add_library(${PROJECT_NAME} SHARED
   src/interfaces/controller_interface2FWS2FWD.cpp
   src/interfaces/controller_interface2FWS2RWD.cpp
   src/interfaces/controller_interface2FWS4WD.cpp
+  src/interfaces/controller_interface2FWC2RWD.cpp
   src/interfaces/controller_interface2TD.cpp
   src/interfaces/controller_interface2WD.cpp
   src/interfaces/controller_interface4WD.cpp
@@ -117,6 +118,5 @@ endif()
 pluginlib_export_plugin_description_file(controller_interface plugins.xml)
 
 ament_package()
-
 
 

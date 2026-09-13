@@ -5,7 +5,7 @@
   <xacro:include filename="$(find romea_mobile_base_description)/urdf/wheel_steered.xacro" />
 
   <xacro:macro name="chassis"
-    params="*visual_chassis 
+    params="**chassis_visuals 
             *visual_front_left_steering 
             *visual_front_right_steering 
             *visual_rear_left_steering 
@@ -16,7 +16,9 @@
             *visual_rear_right_wheel">
 
     <xacro:common>
-      <xacro:insert_block name="visual_chassis" />
+      <chassis_visuals>
+        <xacro:insert_block name="chassis_visuals" />
+      </chassis_visuals>
     </xacro:common>
 
     <xacro:wheel_steered parent_link="${base_link}"

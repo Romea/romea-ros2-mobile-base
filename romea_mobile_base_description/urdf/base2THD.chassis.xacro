@@ -5,14 +5,16 @@
   <xacro:include filename="$(find romea_mobile_base_description)/urdf/wheel.xacro" />
 
   <xacro:macro name="chassis"
-    params="*visual_chassis 
+    params="**chassis_visuals 
             *visual_left_sprocket_wheel 
             *visual_right_sprocket_wheel 
             *visual_left_idler_wheel
             *visual_right_idler_wheel">
 
     <xacro:common>
-      <xacro:insert_block name="visual_chassis" />
+      <chassis_visuals>
+        <xacro:insert_block name="chassis_visuals" />
+      </chassis_visuals>
     </xacro:common>
 
     <xacro:wheel parent_link="${base_link}"
