@@ -37,7 +37,6 @@
 
   <xacro:include
     filename="$(find romea_mobile_base_description)/ros2_control/base4WS4WD.ros2_control.xacro" />
-  <xacro:base_control_model/>
 
     <xacro:base_control mode="live" base_name="base" hardware_plugin="${live_hardware_plugin}" />
 

@@ -18,49 +18,14 @@
   <xacro:property name="rear_wheel_radius" value="0.6" />
   <xacro:property name="maximal_wheel_speed" value="1.0" />
 
-  <link name="robot_base_link" />
-  <link name="robot_link1" />
-  <link name="robot_link2" />
-  <link name="robot_link3" />
-  <link name="robot_link4" />
-  <link name="robot_link5" />
-  <link name="robot_link6" />
-
-  <joint name="robot_joint1" type="continuous">
-    <parent link="robot_base_link" />
-    <child link="robot_link1" />
-    <axis xyz="0 0 1" />
-  </joint>
-
-  <joint name="robot_joint2" type="continuous">
-    <parent link="robot_base_link" />
-    <child link="robot_link2" />
-    <axis xyz="0 0 1" />
-  </joint>
-
-  <joint name="robot_joint3" type="continuous">
-    <parent link="robot_link1" />
-    <child link="robot_link3" />
-    <axis xyz="0 1 0" />
-  </joint>
-
-  <joint name="robot_joint4" type="continuous">
-    <parent link="robot_link2" />
-    <child link="robot_link4" />
-    <axis xyz="0 1 0" />
-  </joint>
-
-  <joint name="robot_joint5" type="continuous">
-    <parent link="robot_base_link" />
-    <child link="robot_link5" />
-    <axis xyz="0 1 0" />
-  </joint>
-
-  <joint name="robot_joint6" type="continuous">
-    <parent link="robot_base_link" />
-    <child link="robot_link6" />
-    <axis xyz="0 1 0" />
-  </joint>
+  <xacro:property name="base_link" value="base_link" />
+  <xacro:property name="front_left_wheel_swiveling_link" value="front_left_wheel_swiveling_link" />
+  <xacro:property name="front_right_wheel_swiveling_link" value="front_right_wheel_swiveling_link" />
+  <xacro:property name="front_left_wheel_spinning_link" value="front_left_wheel_spinning_link" />
+  <xacro:property name="front_right_wheel_spinning_link" value="front_right_wheel_spinning_link" />
+  <xacro:property name="rear_left_wheel_spinning_link" value="rear_left_wheel_spinning_link" />
+  <xacro:property name="rear_right_wheel_spinning_link" value="rear_right_wheel_spinning_link" />
+  <xacro:property name="maximal_wheel_torque" value="10000000" />
 
   <xacro:include
     filename="$(find romea_mobile_base_description)/ros2_control/base2FWC2RWD.ros2_control.xacro" />

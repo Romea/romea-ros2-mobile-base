@@ -18,6 +18,7 @@
 // std
 #include <map>
 #include <memory>
+#include <optional>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -78,6 +79,7 @@ private:
   std::vector<std::string> interface_names_;
   std::unordered_map<std::string, std::unique_ptr<SimulationInterfaceBase>> simulation_interfaces_;
   std::unordered_map<std::string, std::unique_ptr<GenericGazeboInterface>> gazebo_interfaces_;
+  std::optional<rclcpp::Time> previous_write_time_;
 };
 
 }  // namespace ros2

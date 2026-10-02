@@ -2,13 +2,11 @@
 <robot name="robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <xacro:property name="prefix" value="robot_" />
-  <xacro:property name="base_footprint_link" value="base_footprint" />
   <xacro:property name="base_link" value="base_link" />
   <xacro:property name="left_sprocket_wheel_spinning_link" value="left_sprocket_wheel_spinning_link" />
   <xacro:property name="right_sprocket_wheel_spinning_link" value="right_sprocket_wheel_spinning_link" />
   <xacro:property name="left_idler_wheel_spinning_link" value="left_idler_wheel_spinning_link" />
   <xacro:property name="right_idler_wheel_spinning_link" value="right_idler_wheel_spinning_link" />
-  <xacro:property name="base_footprint_joint" value="base_footprint_joint" />
   <xacro:property name="left_sprocket_wheel_spinning_joint" value="joint1" />
   <xacro:property name="right_sprocket_wheel_spinning_joint" value="joint2" />
   <xacro:property name="left_idler_wheel_spinning_joint" value="joint3" />
@@ -22,7 +20,6 @@
   <xacro:property name="maximal_wheel_torque" value="10000000" />
 
   <xacro:include filename="$(find romea_mobile_base_description)/ros2_control/base2TD.ros2_control.xacro" />
-  <xacro:base_control_model />
   <xacro:base_control mode="live" base_name="base" hardware_plugin="${live_hardware_plugin}" />
 
 </robot>
