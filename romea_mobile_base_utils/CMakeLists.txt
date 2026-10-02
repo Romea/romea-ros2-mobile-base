@@ -48,6 +48,8 @@ add_library(${PROJECT_NAME} SHARED
     src/ros2_control/info/interface_info.cpp
     src/ros2_control/info/joint_info.cpp
     src/ros2_control/hardware/hardware_handle.cpp
+    src/ros2_control/hardware/prismatic_joint_hardware_interface.cpp
+    src/ros2_control/hardware/revolute_joint_hardware_interface.cpp
     src/ros2_control/hardware/spinning_joint_hardware_interface.cpp
     src/ros2_control/hardware/steering_joint_hardware_interface.cpp
     src/ros2_control/hardware/swiveling_joint_hardware_interface.cpp)
