@@ -86,7 +86,7 @@ HardwareStateInterface::HardwareStateInterface(
 //-----------------------------------------------------------------------------
 HardwareStateInterface::HardwareStateInterface(
   const hardware_interface::InterfaceInfo & interface_info, const std::string & joint_name)
-: state_(0.0),
+: state_(interface_info.initial_value.empty() ? 0.0 : std::stod(interface_info.initial_value)),
   state_min_(get_min(interface_info)),
   state_max_(get_max(interface_info)),
   joint_name_(joint_name),
