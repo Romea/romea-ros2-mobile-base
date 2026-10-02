@@ -9,6 +9,16 @@
   <xacro:property name="rear_left_wheel_spinning_joint" value="joint5" />
   <xacro:property name="rear_right_wheel_spinning_joint" value="joint6" />
 
+  <xacro:property name="base_link" value="base_link" />
+  <xacro:property name="front_left_wheel_steering_link" value="front_left_wheel_steering_link" />
+  <xacro:property name="front_right_wheel_steering_link" value="front_right_wheel_steering_link" />
+  <xacro:property name="front_left_wheel_spinning_link" value="front_left_wheel_spinning_link" />
+  <xacro:property name="front_right_wheel_spinning_link" value="front_right_wheel_spinning_link" />
+  <xacro:property name="rear_left_wheel_spinning_link" value="rear_left_wheel_spinning_link" />
+  <xacro:property name="rear_right_wheel_spinning_link" value="rear_right_wheel_spinning_link" />
+  <xacro:property name="maximal_wheel_steering_angular_speed" value="1000000" />
+  <xacro:property name="maximal_wheel_steering_torque" value="10000000" />
+  <xacro:property name="maximal_wheel_torque" value="10000000" />
   <xacro:property name="simulation_hardware_plugin" value="foo" />
   <xacro:property name="wheelbase" value="1.2" />
   <xacro:property name="front_track" value="1.4" />

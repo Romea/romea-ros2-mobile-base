@@ -164,7 +164,8 @@ core::SimulationCommand2FWS2FWD SimulationInterface2FWS2FWD::get_hardware_comman
 }
 
 //-----------------------------------------------------------------------------
-sensor_msgs::msg::JointState SimulationInterface2FWS2FWD::get_joint_state_command()
+sensor_msgs::msg::JointState SimulationInterface2FWS2FWD::get_joint_state_command(
+  double /* elapsed_time */)
 {
   auto hardware_command = get_hardware_command();
 

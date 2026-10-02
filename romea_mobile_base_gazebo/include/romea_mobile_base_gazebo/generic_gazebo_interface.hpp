@@ -28,6 +28,7 @@
 #include <gz/sim/System.hh>
 #include <gz/sim/components/JointForceCmd.hh>
 #include <gz/sim/components/JointPosition.hh>
+#include <gz/sim/components/JointPositionReset.hh>
 #include <gz/sim/components/JointTransmittedWrench.hh>
 #include <gz/sim/components/JointVelocity.hh>
 #include <gz/sim/components/JointVelocityCmd.hh>

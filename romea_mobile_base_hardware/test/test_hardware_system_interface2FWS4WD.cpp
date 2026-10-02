@@ -122,7 +122,7 @@ TEST_F(
 
   auto & interface =
     system_interface.hardware_interface<romea::ros2::HardwareInterface2FWS4WD>("mobile_base");
-  auto command = interface.get_joint_state_command();
+  auto command = interface.get_joint_state_command(0.0);
 
   ASSERT_EQ(command.name.size(), 6u);
   EXPECT_EQ(command.name[0], "front_left_wheel_steering_joint");

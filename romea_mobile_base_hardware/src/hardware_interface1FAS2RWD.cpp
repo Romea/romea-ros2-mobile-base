@@ -28,8 +28,7 @@ namespace ros2
 
 //-----------------------------------------------------------------------------
 HardwareInterface1FAS2RWD::Configuration::Configuration(
-  const hardware_interface::HardwareInfo & hardware_info,
-  const std::string & parameters_prefix)
+  const hardware_interface::HardwareInfo & hardware_info, const std::string & parameters_prefix)
 {
   front_axle_steering_joint_info =
     get_joint_info(hardware_info, parameters_prefix, "front_axle_steering_joint_name");
@@ -45,22 +44,18 @@ HardwareInterface1FAS2RWD::Configuration::Configuration(
     get_joint_info(hardware_info, parameters_prefix, "front_left_wheel_spinning_joint_name");
   front_right_wheel_spinning_joint_info =
     get_joint_info(hardware_info, parameters_prefix, "front_right_wheel_spinning_joint_name");
-  spinning_joint_command_interface_type =
-    get_parameter_or<std::string>(
-      hardware_info,
-      parameters_prefix,
-      "spinning_joint_command_interface_type",
-      hardware_interface::HW_IF_VELOCITY);
-  wheelbase =
-    get_parameter<double>(hardware_info, parameters_prefix, "wheelbase");
-  front_track =
-    get_parameter<double>(hardware_info, parameters_prefix, "front_track");
+  spinning_joint_command_interface_type = get_parameter_or<std::string>(
+    hardware_info,
+    parameters_prefix,
+    "spinning_joint_command_interface_type",
+    hardware_interface::HW_IF_VELOCITY);
+  wheelbase = get_parameter<double>(hardware_info, parameters_prefix, "wheelbase");
+  front_track = get_parameter<double>(hardware_info, parameters_prefix, "front_track");
   front_wheel_radius =
     get_parameter<double>(hardware_info, parameters_prefix, "front_wheel_radius");
   front_hub_carrier_offset =
     get_parameter<double>(hardware_info, parameters_prefix, "front_hub_carrier_offset");
-  rear_wheel_radius =
-    get_parameter<double>(hardware_info, parameters_prefix, "rear_wheel_radius");
+  rear_wheel_radius = get_parameter<double>(hardware_info, parameters_prefix, "rear_wheel_radius");
 }
 
 //-----------------------------------------------------------------------------
@@ -159,7 +154,8 @@ core::HardwareCommand1FAS2RWD HardwareInterface1FAS2RWD::get_hardware_command() 
 }
 
 //-----------------------------------------------------------------------------
-sensor_msgs::msg::JointState HardwareInterface1FAS2RWD::get_joint_state_command()
+sensor_msgs::msg::JointState HardwareInterface1FAS2RWD::get_joint_state_command(
+  double /* elapsed_time */)
 {
   auto joint_states = make_joint_state_msg(3);
   front_axle_steering_joint_.write_command(joint_states);

@@ -44,7 +44,7 @@ public:
 
   std::vector<std::string> get_joint_names();
 
-  virtual sensor_msgs::msg::JointState get_joint_state_command() = 0;
+  virtual sensor_msgs::msg::JointState get_joint_state_command(double elapsed_time) = 0;
 
   virtual void set_feedback(const sensor_msgs::msg::JointState & joint_states) = 0;
 };

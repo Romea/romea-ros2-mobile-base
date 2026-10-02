@@ -68,9 +68,12 @@
   <xacro:property name="rear_wheel_mass" value="5" />
   <xacro:property name="chassis_height" value="0.2" />
   <xacro:property name="maximal_wheel_speed" value="2.0" />
+  <xacro:property name="maximal_wheel_torque" value="10000000" />
 
   <!-- Steering Properties -->
   <xacro:property name="maximal_axle_steering_angle" value="1.0" />
+  <xacro:property name="maximal_axle_steering_angular_speed"
+    value="1000000" />
   <xacro:property name="maximal_wheel_steering_angle"
     value="${atan(tan(maximal_axle_steering_angle)/(1-tan(maximal_axle_steering_angle)*front_track/(2*wheelbase)))}" />
   <xacro:property name="minimal_axle_steering_angle" value="${-maximal_axle_steering_angle}" />
@@ -80,6 +83,8 @@
     value="${-maximal_axle_steering_angle}" />
   <xacro:property name="minimal_wheel_steering_angle"
     value="${-maximal_wheel_steering_angle} " />
+  <xacro:property name="maximal_wheel_steering_angular_speed"
+    value="100000" />
 
   <xacro:property name="front_axle_steering_link_mass" value="1" />
   <xacro:property name="front_axle_steering_link_x" value="0.05" />

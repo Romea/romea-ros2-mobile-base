@@ -90,7 +90,7 @@ TEST_F(TestSimulationInterface2TTD, checkGetCommandUsingJointState)
   auto command_interfaces = interface->export_command_interfaces();
   (void)command_interfaces[0].set_value(command.leftSprocketWheelSpinningSetPoint);
   (void)command_interfaces[1].set_value(command.rightSprocketWheelSpinningSetPoint);
-  auto simulation_command = interface->get_joint_state_command();
+  auto simulation_command = interface->get_joint_state_command(0.0);
 
   EXPECT_STREQ(simulation_command.name[0].c_str(), "left_sprocket_wheel_spinning_joint");
   EXPECT_STREQ(simulation_command.name[1].c_str(), "right_sprocket_wheel_spinning_joint");
@@ -173,7 +173,7 @@ TEST_F(TestSimulationInterface2TTD, checkGetStateUsingJointState)
   auto command_interfaces = interface->export_command_interfaces();
   (void)command_interfaces[0].set_value(command.leftSprocketWheelSpinningSetPoint);
   (void)command_interfaces[1].set_value(command.rightSprocketWheelSpinningSetPoint);
-  auto simulation_command = interface->get_joint_state_command();
+  auto simulation_command = interface->get_joint_state_command(0.0);
   interface->set_feedback(simulation_command);
 
   auto state_interfaces = interface->export_state_interfaces();

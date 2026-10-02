@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find romea_mobile_base_description)/ros2_control/base_control_joints.xacro" />
+
+  <xacro:macro name="base_control_model">
+    <link name="${prefix}${base_link}"/>
+
+    <xacro:base_control_revolute_joint
+      parent_link="${base_link}"
+      child_link="${front_axle_steering_link}"
+      joint_name="${front_axle_steering_joint}"
+      velocity="${maximal_axle_steering_angular_speed}"
+      effort="${maximal_axle_steering_torque}"
+      lower="${-maximal_axle_steering_angle}"
+      upper="${maximal_axle_steering_angle}"/>
+
+    <xacro:base_control_revolute_joint
+      parent_link="${base_link}"
+      child_link="${front_left_wheel_steering_link}"
+      joint_name="${front_left_wheel_steering_joint}"
+      velocity="${maximal_wheel_steering_angular_speed}"
+      effort="${maximal_wheel_steering_torque}"
+      lower="${-maximal_wheel_steering_angle}"
+      upper="${maximal_wheel_steering_angle}"/>
+
+    <xacro:base_control_revolute_joint
+      parent_link="${base_link}"
+      child_link="${front_right_wheel_steering_link}"
+      joint_name="${front_right_wheel_steering_joint}"
+      velocity="${maximal_wheel_steering_angular_speed}"
+      effort="${maximal_wheel_steering_torque}"
+      lower="${-maximal_wheel_steering_angle}"
+      upper="${maximal_wheel_steering_angle}"/>
+
+    <xacro:base_control_continuous_joint
+      parent_link="${front_left_wheel_steering_link}"
+      child_link="${front_left_wheel_spinning_link}"
+      joint_name="${front_left_wheel_spinning_joint}"
+      velocity="${maximal_wheel_speed/front_wheel_radius}"
+      effort="${maximal_wheel_torque}"/>
+
+    <xacro:base_control_continuous_joint
+      parent_link="${front_right_wheel_steering_link}"
+      child_link="${front_right_wheel_spinning_link}"
+      joint_name="${front_right_wheel_spinning_joint}"
+      velocity="${maximal_wheel_speed/front_wheel_radius}"
+      effort="${maximal_wheel_torque}"/>
+
+    <xacro:base_control_continuous_joint
+      parent_link="${base_link}"
+      child_link="${rear_left_wheel_spinning_link}"
+      joint_name="${rear_left_wheel_spinning_joint}"
+      velocity="${maximal_wheel_speed/rear_wheel_radius}"
+      effort="${maximal_wheel_torque}"/>
+
+    <xacro:base_control_continuous_joint
+      parent_link="${base_link}"
+      child_link="${rear_right_wheel_spinning_link}"
+      joint_name="${rear_right_wheel_spinning_joint}"
+      velocity="${maximal_wheel_speed/rear_wheel_radius}"
+      effort="${maximal_wheel_torque}"/>
+  </xacro:macro>
+
+</robot>

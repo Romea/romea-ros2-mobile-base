@@ -44,7 +44,7 @@ namespace ros2
 //-----------------------------------------------------------------------------
 std::vector<std::string> HardwareInterfaceBase::get_joint_names()
 {
-  return get_joint_state_command().name;
+  return get_joint_state_command(0.0).name;
 }
 
 //-----------------------------------------------------------------------------

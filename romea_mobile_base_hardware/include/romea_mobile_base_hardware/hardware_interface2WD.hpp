@@ -60,7 +60,7 @@ public:
   void set_state(const core::HardwareState2WD & hardware_state);
 
   core::HardwareCommand2WD get_hardware_command() const;
-  sensor_msgs::msg::JointState get_joint_state_command();
+  sensor_msgs::msg::JointState get_joint_state_command(double /* elapsed_time */);
 
   void set_feedback(const core::HardwareState2WD & hardware_state);
   void set_feedback(const sensor_msgs::msg::JointState & joint_states);

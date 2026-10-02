@@ -86,7 +86,7 @@ TEST_F(TestSimulationInterface2FWS2FWD, checkGetCommandUsingJointState)
   (void)command_interfaces[1].set_value(command.frontRightWheelSteeringAngle);
   (void)command_interfaces[2].set_value(command.frontLeftWheelSpinningSetPoint);
   (void)command_interfaces[3].set_value(command.frontRightWheelSpinningSetPoint);
-  auto simulation_command = interface->get_joint_state_command();
+  auto simulation_command = interface->get_joint_state_command(0.0);
 
   EXPECT_STREQ(simulation_command.name[0].c_str(), "front_left_wheel_steering_joint");
   EXPECT_STREQ(simulation_command.name[1].c_str(), "front_right_wheel_steering_joint");
@@ -147,7 +147,7 @@ TEST_F(TestSimulationInterface2FWS2FWD, checkGetStateUsingJointState)
   (void)command_interfaces[1].set_value(command.frontRightWheelSteeringAngle);
   (void)command_interfaces[2].set_value(command.frontLeftWheelSpinningSetPoint);
   (void)command_interfaces[3].set_value(command.frontRightWheelSpinningSetPoint);
-  auto simulation_command = interface->get_joint_state_command();
+  auto simulation_command = interface->get_joint_state_command(0.0);
   interface->set_feedback(simulation_command);
 
   auto state_interfaces = interface->export_state_interfaces();

@@ -1,5 +1,9 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find romea_mobile_base_description)/ros2_control/base1FASxxx.ros2_control.xacro" />
+
+
+
 
   <xacro:macro name="base_control_parameters" params="interface_name">
     <param name="wheelbase">${wheelbase}</param>
@@ -104,7 +108,7 @@
     <joint name="${prefix}${rear_right_wheel_spinning_joint}">
       <command_interface name="velocity">
         <param name="min">${-maximal_wheel_speed/rear_wheel_radius}</param>
-        <param name="max">${-maximal_wheel_speed/rear_wheel_radius}</param>
+        <param name="max">${maximal_wheel_speed/rear_wheel_radius}</param>
       </command_interface>
       <state_interface name="position" />
       <state_interface name="velocity" />
@@ -114,7 +118,10 @@
 
   <xacro:macro
     name="base_control"
-    params="mode base_name hardware_plugin has_hardware_options:=0">
+    params="mode base_name hardware_plugin has_hardware_options:=0
+            prefix:=^|''">
+
+    <xacro:base_control_model/>
 
     <ros2_control name="${prefix}${base_name}" type="system">
       <xacro:base_control_hardware

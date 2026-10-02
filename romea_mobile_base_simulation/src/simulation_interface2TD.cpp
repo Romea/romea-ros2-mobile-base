@@ -126,7 +126,8 @@ core::SimulationCommand2TD SimulationInterface2TD::get_hardware_command()
 }
 
 //-----------------------------------------------------------------------------
-sensor_msgs::msg::JointState SimulationInterface2TD::get_joint_state_command()
+sensor_msgs::msg::JointState SimulationInterface2TD::get_joint_state_command(
+  double /* elapsed_time */)
 {
   auto hardware_command = get_hardware_command();
   left_idler_wheel_spinning_joint_.set_command(hardware_command.leftIdlerWheelSpinningSetPoint);

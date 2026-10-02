@@ -160,7 +160,8 @@ core::HardwareCommand2FWS4WD HardwareInterface2FWS4WD::get_hardware_command() co
 }
 
 //-----------------------------------------------------------------------------
-sensor_msgs::msg::JointState HardwareInterface2FWS4WD::get_joint_state_command()
+sensor_msgs::msg::JointState HardwareInterface2FWS4WD::get_joint_state_command(
+  double /* elapsed_time */)
 {
   auto joint_states = make_joint_state_msg(6);
   front_left_wheel_steering_joint_.write_command(joint_states);

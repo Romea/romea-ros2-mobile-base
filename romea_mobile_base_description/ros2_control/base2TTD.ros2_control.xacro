@@ -1,6 +1,73 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+  <xacro:include filename="$(find romea_mobile_base_description)/ros2_control/base_control_joints.xacro" />
+
+  <xacro:macro name="base_control_model">
+    <link name="${prefix}${base_footprint_link}" />
+    <link name="${prefix}${base_link}" />
+    <joint name="${prefix}${base_footprint_joint}" type="fixed">
+      <parent link="${prefix}${base_footprint_link}" />
+      <child link="${prefix}${base_link}" />
+    </joint>
+
+    <xacro:base_control_continuous_joint
+      parent_link="${base_link}"
+      child_link="${left_sprocket_wheel_spinning_link}"
+      joint_name="${left_sprocket_wheel_spinning_joint}"
+      velocity="${maximal_wheel_speed/(sprocket_wheel_radius+track_thickness)}"
+      effort="${maximal_wheel_torque}" />
+
+    <xacro:base_control_continuous_joint
+      parent_link="${base_link}"
+      child_link="${right_sprocket_wheel_spinning_link}"
+      joint_name="${right_sprocket_wheel_spinning_joint}"
+      velocity="${maximal_wheel_speed/(sprocket_wheel_radius+track_thickness)}"
+      effort="${maximal_wheel_torque}" />
+
+    <xacro:base_control_continuous_joint
+      parent_link="${base_link}"
+      child_link="${left_idler_wheel_spinning_link}"
+      joint_name="${left_idler_wheel_spinning_joint}"
+      velocity="${maximal_wheel_speed/(idler_wheel_radius+track_thickness)}"
+      effort="${maximal_wheel_torque}" />
+
+    <xacro:base_control_continuous_joint
+      parent_link="${base_link}"
+      child_link="${right_idler_wheel_spinning_link}"
+      joint_name="${right_idler_wheel_spinning_joint}"
+      velocity="${maximal_wheel_speed/(idler_wheel_radius+track_thickness)}"
+      effort="${maximal_wheel_torque}" />
+
+    <xacro:base_control_continuous_joint
+      parent_link="${base_link}"
+      child_link="${front_left_roller_wheel_spinning_link}"
+      joint_name="${front_left_roller_wheel_spinning_joint}"
+      velocity="${maximal_wheel_speed/(roller_wheel_radius+track_thickness)}"
+      effort="${maximal_wheel_torque}" />
+
+    <xacro:base_control_continuous_joint
+      parent_link="${base_link}"
+      child_link="${front_right_roller_wheel_spinning_link}"
+      joint_name="${front_right_roller_wheel_spinning_joint}"
+      velocity="${maximal_wheel_speed/(roller_wheel_radius+track_thickness)}"
+      effort="${maximal_wheel_torque}" />
+
+    <xacro:base_control_continuous_joint
+      parent_link="${base_link}"
+      child_link="${rear_left_roller_wheel_spinning_link}"
+      joint_name="${rear_left_roller_wheel_spinning_joint}"
+      velocity="${maximal_wheel_speed/(roller_wheel_radius+track_thickness)}"
+      effort="${maximal_wheel_torque}" />
+
+    <xacro:base_control_continuous_joint
+      parent_link="${base_link}"
+      child_link="${rear_right_roller_wheel_spinning_link}"
+      joint_name="${rear_right_roller_wheel_spinning_joint}"
+      velocity="${maximal_wheel_speed/(roller_wheel_radius+track_thickness)}"
+      effort="${maximal_wheel_torque}" />
+  </xacro:macro>
+
   <xacro:macro name="base_control_parameters" params="interface_name">
     <param name="sprocket_wheel_radius">${sprocket_wheel_radius}</param>
     <param name="roller_wheel_radius">${roller_wheel_radius}</param>
@@ -134,6 +201,8 @@
   <xacro:macro
     name="base_control"
     params="mode base_name hardware_plugin has_hardware_options:=0">
+
+    <xacro:base_control_model/>
 
     <ros2_control name="${prefix}${base_name}" type="system">
       <xacro:base_control_hardware

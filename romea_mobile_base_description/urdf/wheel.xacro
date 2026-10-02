@@ -8,7 +8,7 @@
       <material>Gazebo/Black</material>
     </gazebo>
 
-    <xacro:property name="maximal_angular_speed" value="${maximal_wheel_speed/wheel_radius}" />
+    <xacro:property name="maximal_wheel_angular_speed" value="${maximal_wheel_speed/wheel_radius}" />
     <xacro:property name="radius" value="${wheel_radius}" />
     <xacro:property name="width" value="${wheel_width}" />
     <xacro:property name="mass" value="${wheel_mass}" />
@@ -64,7 +64,9 @@
     </gazebo>
 
     <joint name="${prefix}${wheel_spinning_joint}" type="continuous">
-      <limit effort="10000000" velocity="${maximal_angular_speed}" />
+      <limit 
+        effort="${maximal_wheel_torque}" 
+        velocity="${maximal_wheel_angular_speed}" />
       <parent link="${prefix}${parent_link}" />
       <child link="${prefix}${wheel_spinning_link}" />
       <xacro:insert_block name="joint_origin" />

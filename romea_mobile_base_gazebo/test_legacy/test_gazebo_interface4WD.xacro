@@ -57,6 +57,7 @@
   <xacro:property name="mass_center_z" value="0.188" />
 
   <xacro:property name="maximal_wheel_speed" value="3.0" />
+  <xacro:property name="maximal_wheel_torque" value="10000000" />
   <xacro:property name="body_reference_x" value="0.0" />
 
   <!-- Wheel Properties -->

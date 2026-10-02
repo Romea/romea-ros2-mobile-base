@@ -167,7 +167,8 @@ core::HardwareCommand4WS4WD HardwareInterface4WS4WD::get_hardware_command() cons
 }
 
 //-----------------------------------------------------------------------------
-sensor_msgs::msg::JointState HardwareInterface4WS4WD::get_joint_state_command()
+sensor_msgs::msg::JointState HardwareInterface4WS4WD::get_joint_state_command(
+  double /* elapsed_time */)
 {
   auto joint_states = make_joint_state_msg(8);
   front_left_wheel_steering_joint_.write_command(joint_states);

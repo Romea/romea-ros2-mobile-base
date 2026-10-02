@@ -40,6 +40,7 @@
     <xacro:property name="mass_center_z" value="${props['inertia']['center'][2]}" />
 
     <xacro:property name="maximal_wheel_speed" value="${props['wheels_speed_control']['command']['maximal_speed']}"/>
+    <xacro:property name="maximal_wheel_torque" value="10000000" />
     <xacro:property name="body_reference_x" value="${props['control_point'][0]}" />
 
     <!-- Wheel Properties -->

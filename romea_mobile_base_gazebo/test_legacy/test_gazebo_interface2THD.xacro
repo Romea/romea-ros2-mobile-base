@@ -75,6 +75,7 @@
 
   <xacro:property name="maximal_track_speed" value="2.0" />
   <xacro:property name="maximal_wheel_speed" value="${maximal_track_speed}" />
+  <xacro:property name="maximal_wheel_torque" value="10000000" />
   <xacro:property name="chassis_height" value="${idler_wheel_radius}" />
 
   <xacro:chassis>

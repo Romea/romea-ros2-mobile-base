@@ -10,6 +10,19 @@
   <xacro:property name="rear_left_wheel_spinning_joint" value="joint6" />
   <xacro:property name="rear_right_wheel_spinning_joint" value="joint7" />
 
+  <xacro:property name="base_link" value="base_link" />
+  <xacro:property name="front_axle_steering_link" value="front_axle_steering_link" />
+  <xacro:property name="front_left_wheel_steering_link" value="front_left_wheel_steering_link" />
+  <xacro:property name="front_right_wheel_steering_link" value="front_right_wheel_steering_link" />
+  <xacro:property name="front_left_wheel_spinning_link" value="front_left_wheel_spinning_link" />
+  <xacro:property name="front_right_wheel_spinning_link" value="front_right_wheel_spinning_link" />
+  <xacro:property name="rear_left_wheel_spinning_link" value="rear_left_wheel_spinning_link" />
+  <xacro:property name="rear_right_wheel_spinning_link" value="rear_right_wheel_spinning_link" />
+  <xacro:property name="maximal_axle_steering_angular_speed" value="1000000" />
+  <xacro:property name="maximal_axle_steering_torque" value="10000000" />
+  <xacro:property name="maximal_wheel_steering_angular_speed" value="1000000" />
+  <xacro:property name="maximal_wheel_steering_torque" value="10000000" />
+  <xacro:property name="maximal_wheel_torque" value="10000000" />
   <xacro:property name="live_hardware_plugin" value="foo" />
   <xacro:property name="wheelbase" value="1.4" />
   <xacro:property name="front_track" value="1.2" />
@@ -21,50 +34,6 @@
   <xacro:property name="maximal_axle_steering_angle" value="0.50" />
   <xacro:property name="maximal_wheel_steering_angle" value="1.00" />
   <xacro:property name="maximal_wheel_speed" value="1.0" />
-
-  <link name="${prefix}base_link" />
-  <link name="${prefix}front_axle_steering_link" />
-  <link name="${prefix}front_left_wheel_spinning_link" />
-  <link name="${prefix}front_right_wheel_spinning_link" />
-  <link name="${prefix}front_left_wheel_steering_link" />
-  <link name="${prefix}front_right_wheel_steering_link" />
-  <link name="${prefix}rear_left_wheel_spinning_link" />
-  <link name="${prefix}rear_right_wheel_spinning_link" />
-
-  <joint name="${prefix}${front_axle_steering_joint}" type="revolute">
-    <parent link="${prefix}base_link" />
-    <child link="${prefix}front_axle_steering_link" />
-    <limit lower="${-maximal_axle_steering_angle}" upper="${maximal_axle_steering_angle}"
-      effort="10000000" velocity="1000000" />
-  </joint>
-  <joint name="${prefix}${front_left_wheel_spinning_joint}" type="continuous">
-    <parent link="${prefix}base_link" />
-    <child link="${prefix}front_left_wheel_spinning_link" />
-  </joint>
-  <joint name="${prefix}${front_right_wheel_spinning_joint}" type="continuous">
-    <parent link="${prefix}base_link" />
-    <child link="${prefix}front_right_wheel_spinning_link" />
-  </joint>
-  <joint name="${prefix}${front_left_wheel_steering_joint}" type="revolute">
-    <parent link="${prefix}base_link" />
-    <child link="${prefix}front_left_wheel_steering_link" />
-    <limit lower="${-maximal_wheel_steering_angle}" upper="${maximal_wheel_steering_angle}"
-      effort="10000000" velocity="1000000" />
-  </joint>
-  <joint name="${prefix}${front_right_wheel_steering_joint}" type="revolute">
-    <parent link="${prefix}base_link" />
-    <child link="${prefix}front_right_wheel_steering_link" />
-    <limit lower="${-maximal_wheel_steering_angle}" upper="${maximal_wheel_steering_angle}"
-      effort="10000000" velocity="1000000" />
-  </joint>
-  <joint name="${prefix}${rear_left_wheel_spinning_joint}" type="continuous">
-    <parent link="${prefix}base_link" />
-    <child link="${prefix}rear_left_wheel_spinning_link" />
-  </joint>
-  <joint name="${prefix}${rear_right_wheel_spinning_joint}" type="continuous">
-    <parent link="${prefix}base_link" />
-    <child link="${prefix}rear_right_wheel_spinning_link" />
-  </joint>
 
   <xacro:include
     filename="$(find romea_mobile_base_description)/ros2_control/base1FAS2FWD.ros2_control.xacro" />

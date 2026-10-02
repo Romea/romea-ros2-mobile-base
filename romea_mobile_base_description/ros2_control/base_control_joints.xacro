@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Minimal links and joints for controller-manager-only robot descriptions. -->
+  <xacro:macro name="base_control_revolute_joint"
+    params="parent_link child_link joint_name velocity effort lower upper">
+    <link name="${prefix}${child_link}"/>
+    <joint name="${prefix}${joint_name}" type="revolute">
+      <parent link="${prefix}${parent_link}"/>
+      <child link="${prefix}${child_link}"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="${lower}" upper="${upper}" effort="${effort}" velocity="${velocity}"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:macro name="base_control_continuous_joint"
+    params="parent_link child_link joint_name velocity effort">
+    <link name="${prefix}${child_link}"/>
+    <joint name="${prefix}${joint_name}" type="continuous">
+      <parent link="${prefix}${parent_link}"/>
+      <child link="${prefix}${child_link}"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="${effort}" velocity="${velocity}"/>
+    </joint>
+  </xacro:macro>
+
+
+
+
+</robot>

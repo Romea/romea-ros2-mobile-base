@@ -127,7 +127,7 @@ TEST_F(
 
   auto & interface =
     system_interface.hardware_interface<romea::ros2::HardwareInterface4WS4WD>("mobile_base");
-  auto command = interface.get_joint_state_command();
+  auto command = interface.get_joint_state_command(0.0);
 
   ASSERT_EQ(command.name.size(), 8u);
   EXPECT_DOUBLE_EQ(command.position[0], 1.0);

@@ -84,7 +84,7 @@ TEST_F(TestSimulationInterface2TD, checkGetCommandUsingJointState)
   auto command_interfaces = interface->export_command_interfaces();
   command_interfaces[0].set_value(command.leftSprocketWheelSpinningSetPoint);
   command_interfaces[1].set_value(command.rightSprocketWheelSpinningSetPoint);
-  auto simulation_command = interface->get_joint_state_command();
+  auto simulation_command = interface->get_joint_state_command(0.0);
 
   EXPECT_STREQ(simulation_command.name[0].c_str(), "robot_joint1");
   EXPECT_STREQ(simulation_command.name[1].c_str(), "robot_joint2");
@@ -135,7 +135,7 @@ TEST_F(TestSimulationInterface2TD, checkGetStateUsingJointState)
   auto command_interfaces = interface->export_command_interfaces();
   command_interfaces[0].set_value(command.leftSprocketWheelSpinningSetPoint);
   command_interfaces[1].set_value(command.rightSprocketWheelSpinningSetPoint);
-  auto simulation_command = interface->get_joint_state_command();
+  auto simulation_command = interface->get_joint_state_command(0.0);
   interface->set_feedback(simulation_command);
 
   auto state_interfaces = interface->export_state_interfaces();

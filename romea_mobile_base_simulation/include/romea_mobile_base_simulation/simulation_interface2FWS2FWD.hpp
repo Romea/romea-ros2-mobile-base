@@ -73,7 +73,7 @@ public:
   SimulationInterface2FWS2FWD(const Configuration & configuration);
 
   core::SimulationCommand2FWS2FWD get_hardware_command();
-  sensor_msgs::msg::JointState get_joint_state_command() override;
+  sensor_msgs::msg::JointState get_joint_state_command(double /* elapsed_time */) override;
 
   void set_feedback(const core::SimulationState2FWS2FWD & simulation_state);
   void set_feedback(const sensor_msgs::msg::JointState & joint_states) override;

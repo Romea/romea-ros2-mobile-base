@@ -65,7 +65,7 @@ public:
   SimulationInterface2TD(const Configuration & configuration);
 
   core::SimulationCommand2TD get_hardware_command();
-  sensor_msgs::msg::JointState get_joint_state_command() override;
+  sensor_msgs::msg::JointState get_joint_state_command(double /* elapsed_time */) override;
 
   void set_feedback(const core::SimulationState2TD & simulation_state);
   void set_feedback(const sensor_msgs::msg::JointState & joint_states) override;

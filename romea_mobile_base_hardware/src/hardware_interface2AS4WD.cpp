@@ -199,7 +199,8 @@ core::HardwareCommand2AS4WD HardwareInterface2AS4WD::get_hardware_command() cons
 }
 
 //-----------------------------------------------------------------------------
-sensor_msgs::msg::JointState HardwareInterface2AS4WD::get_joint_state_command()
+sensor_msgs::msg::JointState HardwareInterface2AS4WD::get_joint_state_command(
+  double /* elapsed_time */)
 {
   auto joint_states = make_joint_state_msg(6);
   front_axle_steering_joint_.write_command(joint_states);

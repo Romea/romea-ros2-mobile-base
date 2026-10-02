@@ -202,7 +202,7 @@ TEST_F(TestHarwareInterface2FWS2FWD, checkGetCommandUsingJointState)
     command_interfaces[i].set_value(i + 1.0);
   }
 
-  auto command = interface->get_joint_state_command();
+  auto command = interface->get_joint_state_command(0.0);
   EXPECT_EQ(command.name.size(), 4u);
   EXPECT_STREQ(command.name[0].c_str(), "robot_joint1");
   EXPECT_STREQ(command.name[1].c_str(), "robot_joint2");

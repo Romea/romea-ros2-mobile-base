@@ -25,6 +25,7 @@
 #include <gz/sim/World.hh>
 #include <gz/sim/components/Joint.hh>
 #include <gz/sim/components/JointPosition.hh>
+#include <gz/sim/components/JointPositionReset.hh>
 #include <gz/sim/components/JointVelocity.hh>
 #include <gz/sim/components/JointVelocityCmd.hh>
 #include <gz/sim/components/Name.hh>
@@ -117,6 +118,13 @@ public:
     return command->Data()[0];
   }
 
+  double joint_position_reset(const std::string & joint_name) const
+  {
+    const auto * reset =
+      ecm_->Component<gz::sim::components::JointPositionReset>(joints_.at(joint_name));
+    return reset->Data()[0];
+  }
+
   void set_joint_velocity(const std::string & joint_name, const double & velocity)
   {
     ecm_->SetComponentData<gz::sim::components::JointVelocity>(joints_.at(joint_name), {velocity});
@@ -148,6 +156,9 @@ TEST(TestGazeboSystemInterface, testWriteRead)
   TestGazeboSystemInterfaceFixture fixture(world, urdf);
   fixture.Simulator();
 
+  EXPECT_DOUBLE_EQ(
+    fixture.joint_position_reset("front_left_wheel_steering_joint"), 0.25);
+
   auto command_interfaces = fixture.interface().export_command_interfaces();
   ASSERT_EQ(command_interfaces.size(), 8u);
   (void)command_interfaces[0].set_value(0.1);
@@ -160,7 +171,7 @@ TEST(TestGazeboSystemInterface, testWriteRead)
   (void)command_interfaces[7].set_value(2.0);
 
   fixture.interface().write(rclcpp::Time(0), rclcpp::Duration::from_seconds(0.001));
-  EXPECT_NEAR(fixture.joint_velocity_command("front_left_wheel_steering_joint"), 10.0, 0.001);
+  EXPECT_NEAR(fixture.joint_velocity_command("front_left_wheel_steering_joint"), -15.0, 0.001);
   EXPECT_NEAR(fixture.joint_velocity_command("front_right_wheel_steering_joint"), -20.0, 0.001);
   EXPECT_NEAR(fixture.joint_velocity_command("rear_left_wheel_steering_joint"), 30.0, 0.001);
   EXPECT_NEAR(fixture.joint_velocity_command("rear_right_wheel_steering_joint"), -40.0, 0.001);

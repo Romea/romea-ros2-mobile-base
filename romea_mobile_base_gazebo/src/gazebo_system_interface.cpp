@@ -82,6 +82,7 @@ GazeboSystemInterface::on_init(const hardware_interface::HardwareInfo & hardware
 rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
 GazeboSystemInterface::on_activate(const rclcpp_lifecycle::State & /*previous_state*/)
 {
+  previous_write_time_.reset();
   return CallbackReturn::SUCCESS;
 }
 
@@ -178,10 +179,17 @@ hardware_interface::return_type GazeboSystemInterface::read(
 
 //-----------------------------------------------------------------------------
 hardware_interface::return_type GazeboSystemInterface::write(
-  const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
+  const rclcpp::Time & time, const rclcpp::Duration & /*period*/)
 {
+  double elapsed_time = 0.0;
+  if (previous_write_time_) {
+    elapsed_time = std::max(0.0, (time - *previous_write_time_).seconds());
+  }
+  previous_write_time_ = time;
+
   for (const auto & interface_name : interface_names_) {
-    const auto command = simulation_interfaces_.at(interface_name)->get_joint_state_command();
+    const auto command =
+      simulation_interfaces_.at(interface_name)->get_joint_state_command(elapsed_time);
     gazebo_interfaces_.at(interface_name)->set_command(command);
   }
   return hardware_interface::return_type::OK;

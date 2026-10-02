@@ -106,7 +106,7 @@ TEST_F(
 
   auto & interface =
     system_interface.hardware_interface<romea::ros2::HardwareInterface2THD>("mobile_base");
-  auto command = interface.get_joint_state_command();
+  auto command = interface.get_joint_state_command(0.0);
 
   ASSERT_EQ(command.name.size(), 2u);
   EXPECT_EQ(command.name[0], "left_sprocket_wheel_spinning_joint");

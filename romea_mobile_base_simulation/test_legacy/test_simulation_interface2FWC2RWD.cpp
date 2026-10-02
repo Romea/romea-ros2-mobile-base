@@ -77,7 +77,7 @@ TEST_F(TestSimulationInterface2FWC2RWD, checkGetCommandUsingJointState)
   command_interfaces[0].set_value(2.22829);
   command_interfaces[1].set_value(3.21196);
 
-  auto simulation_command = interface->get_joint_state_command();
+  auto simulation_command = interface->get_joint_state_command(0.0);
   ASSERT_EQ(simulation_command.name.size(), 2u);
   EXPECT_STREQ(simulation_command.name[0].c_str(), "robot_joint5");
   EXPECT_STREQ(simulation_command.name[1].c_str(), "robot_joint6");

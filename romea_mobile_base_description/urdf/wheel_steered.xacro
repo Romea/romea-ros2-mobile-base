@@ -6,10 +6,27 @@
   <xacro:include filename="$(find romea_mobile_base_description)/urdf/wheel.xacro" />
 
   <xacro:macro name="wheel_steered"
-    params="parent_link wheel_steering_link wheel_steering_joint  steering_link_mass steering_link_xz steering_link_y wheel_spinning_link wheel_spinning_joint wheel_origin_x wheel_origin_y wheel_mass wheel_width wheel_radius left_right *joint_origin *visual_steering *visual_wheel">
+    params="parent_link
+            wheel_steering_link
+            wheel_steering_joint
+            steering_link_mass
+            steering_link_xz
+            steering_link_y
+            wheel_spinning_link
+            wheel_spinning_joint
+            wheel_origin_x
+            wheel_origin_y
+            wheel_mass
+            wheel_width
+            wheel_radius
+            left_right
+            *joint_origin
+            *visual_steering
+            *visual_wheel">
 
     <link name="${prefix}${wheel_steering_link}">
       <xacro:insert_block name="visual_steering" />
+
       <!-- <visual>
         <origin xyz="0 0 0" rpy="0 0 ${left_right * M_PI/2 - M_PI/2}" />
         <geometry>
@@ -19,12 +36,14 @@
           <color rgba="0.2 0.2 0.6 1" />
         </material>
       </visual> -->
+
       <inertial>
         <mass value="${steering_link_mass}" />
         <origin xyz="0 0 0" />
         <inertia
           ixx="${steering_link_mass/12.0 * (steering_link_y*steering_link_y + steering_link_xz*steering_link_xz)}"
-          ixy="0" ixz="0"
+          ixy="0"
+          ixz="0"
           iyy="${steering_link_mass/12.0 * (steering_link_xz*steering_link_xz + steering_link_xz*steering_link_xz)}"
           iyz="0"
           izz="${steering_link_mass/12.0 * (steering_link_y*steering_link_y + steering_link_xz*steering_link_xz)}" />
@@ -32,8 +51,12 @@
     </link>
 
     <joint name="${prefix}${wheel_steering_joint}" type="revolute">
-      <limit lower="${minimal_wheel_steering_angle}" upper="${maximal_wheel_steering_angle}"
-        effort="10000000" velocity="1000000" />
+      <limit
+        lower="${minimal_wheel_steering_angle}"
+        upper="${maximal_wheel_steering_angle}"
+        velocity="${maximal_wheel_steering_angular_speed}" 
+        effort="${maximal_wheel_steering_torque}"/>
+        <!-- effort="10000000 -->
       <axis xyz="0 0 1" />
       <parent link="${prefix}${parent_link}" />
       <child link="${prefix}${wheel_steering_link}" />
@@ -51,7 +74,8 @@
       </joint>
     </transmission>
 
-    <xacro:wheel parent_link="${wheel_steering_link}"
+    <xacro:wheel
+      parent_link="${wheel_steering_link}"
       wheel_spinning_link="${wheel_spinning_link}"
       wheel_spinning_joint="${wheel_spinning_joint}"
       wheel_mass="${wheel_mass}"
@@ -61,6 +85,7 @@
       <origin xyz="${wheel_origin_x} ${wheel_origin_y} 0" rpy="${-M_PI/2} 0 0" />
       <xacro:insert_block name="visual_wheel" />
     </xacro:wheel>
+
   </xacro:macro>
 
 </robot>

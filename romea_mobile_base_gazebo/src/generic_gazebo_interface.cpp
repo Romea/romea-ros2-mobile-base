@@ -23,6 +23,7 @@
 // romea
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
 #include "romea_common_utils/joint_states.hpp"
+#include "romea_mobile_base_utils/ros2_control/info/joint_info.hpp"
 
 // local
 #include "romea_mobile_base_gazebo/generic_gazebo_interface.hpp"
@@ -86,6 +87,12 @@ GenericGazeboInterface::GenericGazeboInterface(
     joint_command_interface_types_.push_back(command_interface_type);
     sim_joints_.push_back(joint->second);
     position_gains_.push_back(get_parameter_or(joint_info, "position_gain", 100.0));
+
+    const double initial_position =
+      get_initial_value(joint_info, hardware_interface::HW_IF_POSITION);
+    positions_[sim_joints_.size() - 1] = initial_position;
+    ecm_->CreateComponent(
+      joint->second, gz::sim::components::JointPositionReset({initial_position}));
 
     create_state_gazebo_component_<gz::sim::components::JointPosition>(joint->second);
     create_state_gazebo_component_<gz::sim::components::JointVelocity>(joint->second);

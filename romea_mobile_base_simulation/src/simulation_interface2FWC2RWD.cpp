@@ -135,7 +135,8 @@ core::SimulationCommand2FWC2RWD SimulationInterface2FWC2RWD::get_hardware_comman
 }
 
 //-----------------------------------------------------------------------------
-sensor_msgs::msg::JointState SimulationInterface2FWC2RWD::get_joint_state_command()
+sensor_msgs::msg::JointState SimulationInterface2FWC2RWD::get_joint_state_command(
+  double /* elapsed_time */)
 {
   auto joint_state_command = make_joint_state_msg(2);
   rear_left_wheel_spinning_joint_.write_command(joint_state_command);

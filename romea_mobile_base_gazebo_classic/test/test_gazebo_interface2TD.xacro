@@ -67,6 +67,7 @@
   <xacro:property name="body_reference_x" value="0.0" />
   <xacro:property name="maximal_track_speed" value="3.0" />
   <xacro:property name="maximal_wheel_speed" value="${maximal_track_speed}" />
+  <xacro:property name="maximal_wheel_torque" value="10000000" />
   <xacro:property name="chassis_height" value="${min(sprocket_wheel_radius,idler_wheel_radius)}" />
 
   <xacro:chassis>
@@ -77,6 +78,6 @@
     <visual />
   </xacro:chassis>
 
-  <xacro:base_control mode="test" base_name="base" />
+  <xacro:base_control mode="test" base_name="base" hardware_plugin="foo" />
 
 </robot>

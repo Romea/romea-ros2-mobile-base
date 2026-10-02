@@ -174,7 +174,8 @@ core::SimulationCommand2AS4WD SimulationInterface2AS4WD::get_hardware_command()
 }
 
 //-----------------------------------------------------------------------------
-sensor_msgs::msg::JointState SimulationInterface2AS4WD::get_joint_state_command()
+sensor_msgs::msg::JointState SimulationInterface2AS4WD::get_joint_state_command(
+  double /* elapsed_time */)
 {
   auto hardware_command = get_hardware_command();
 

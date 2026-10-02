@@ -125,7 +125,8 @@ core::HardwareCommand4WD HardwareInterface4WD::get_hardware_command() const
 }
 
 //-----------------------------------------------------------------------------
-sensor_msgs::msg::JointState HardwareInterface4WD::get_joint_state_command()
+sensor_msgs::msg::JointState HardwareInterface4WD::get_joint_state_command(
+  double /* elapsed_time */)
 {
   auto joint_states = make_joint_state_msg(4);
   front_left_wheel_spinning_joint_.write_command(joint_states);

@@ -203,11 +203,13 @@ hardware_interface::return_type GenericSimulationSystemInterface::read(
 
 //-----------------------------------------------------------------------------
 hardware_interface::return_type GenericSimulationSystemInterface::write(
-  const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
+  const rclcpp::Time & /*time*/, const rclcpp::Duration & period)
 {
   for (const auto & interface_name : simulation_interface_names_) {
-    joint_state_pubs_.at(interface_name)
-      ->publish(simulation_interfaces_.at(interface_name)->get_joint_state_command());
+    const auto command =
+      simulation_interfaces_.at(interface_name)->get_joint_state_command(
+        period.seconds());
+    joint_state_pubs_.at(interface_name)->publish(command);
   }
 
   return hardware_interface::return_type::OK;

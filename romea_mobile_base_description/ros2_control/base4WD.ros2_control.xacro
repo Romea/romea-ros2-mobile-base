@@ -1,6 +1,40 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+  <xacro:include filename="$(find romea_mobile_base_description)/ros2_control/base_control_joints.xacro" />
+
+  <xacro:macro name="base_control_model">
+    <link name="${prefix}${base_link}"/>
+
+    <xacro:base_control_continuous_joint
+      parent_link="${base_link}"
+      child_link="${front_left_wheel_spinning_link}"
+      joint_name="${front_left_wheel_spinning_joint}"
+      velocity="${maximal_wheel_speed/front_wheel_radius}"
+      effort="${maximal_wheel_torque}"/>
+
+    <xacro:base_control_continuous_joint
+      parent_link="${base_link}"
+      child_link="${front_right_wheel_spinning_link}"
+      joint_name="${front_right_wheel_spinning_joint}"
+      velocity="${maximal_wheel_speed/front_wheel_radius}"
+      effort="${maximal_wheel_torque}"/>
+
+    <xacro:base_control_continuous_joint
+      parent_link="${base_link}"
+      child_link="${rear_left_wheel_spinning_link}"
+      joint_name="${rear_left_wheel_spinning_joint}"
+      velocity="${maximal_wheel_speed/rear_wheel_radius}"
+      effort="${maximal_wheel_torque}"/>
+
+    <xacro:base_control_continuous_joint
+      parent_link="${base_link}"
+      child_link="${rear_right_wheel_spinning_link}"
+      joint_name="${rear_right_wheel_spinning_joint}"
+      velocity="${maximal_wheel_speed/rear_wheel_radius}"
+      effort="${maximal_wheel_torque}"/>
+  </xacro:macro>
+
   <xacro:macro name="base_control_parameters" params="interface_name">
     <param name="wheelbase">${wheelbase}</param>
     <param name="front_wheel_radius">${front_wheel_radius}</param>
@@ -79,6 +113,8 @@
   <xacro:macro
     name="base_control"
     params="mode base_name hardware_plugin has_hardware_options:=0">
+
+    <xacro:base_control_model/>
 
     <ros2_control name="${prefix}${base_name}" type="system">
       <xacro:base_control_hardware

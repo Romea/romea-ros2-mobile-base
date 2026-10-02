@@ -83,7 +83,7 @@ TEST_F(TestSimulationInterface1FAS2FWD, checkGetCommandUsingJointState)
   command_interfaces[0].set_value(command.frontAxleSteeringAngle);
   command_interfaces[1].set_value(command.frontLeftWheelSpinningSetPoint);
   command_interfaces[2].set_value(command.frontRightWheelSpinningSetPoint);
-  auto simulation_command = interface->get_joint_state_command();
+  auto simulation_command = interface->get_joint_state_command(0.0);
 
   EXPECT_STREQ(simulation_command.name[0].c_str(), "robot_joint1");
   EXPECT_STREQ(simulation_command.name[1].c_str(), "robot_joint2");
@@ -147,7 +147,7 @@ TEST_F(TestSimulationInterface1FAS2FWD, checkGetStateUsingJointState)
   command_interfaces[0].set_value(command.frontAxleSteeringAngle);
   command_interfaces[1].set_value(command.frontLeftWheelSpinningSetPoint);
   command_interfaces[2].set_value(command.frontRightWheelSpinningSetPoint);
-  auto simulation_command = interface->get_joint_state_command();
+  auto simulation_command = interface->get_joint_state_command(0.0);
   interface->set_feedback(simulation_command);
 
   auto state_interfaces = interface->export_state_interfaces();

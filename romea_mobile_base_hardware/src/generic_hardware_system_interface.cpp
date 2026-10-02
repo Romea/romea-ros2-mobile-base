@@ -87,11 +87,11 @@ hardware_interface::return_type GenericHardwareSystemInterface::read(
 
 //-----------------------------------------------------------------------------
 hardware_interface::return_type GenericHardwareSystemInterface::write(
-  const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
+  const rclcpp::Time & /*time*/, const rclcpp::Duration & period)
 {
   for (const auto & interface_name : hardware_interface_names_) {
     joint_state_pubs_.at(interface_name)->publish(
-      hardware_interfaces_.at(interface_name)->get_joint_state_command());
+      hardware_interfaces_.at(interface_name)->get_joint_state_command(period.seconds()));
   }
 
   return hardware_interface::return_type::OK;
