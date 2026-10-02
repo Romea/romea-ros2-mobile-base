@@ -25,6 +25,9 @@ target_link_libraries(${PROJECT_NAME}_test_two_axle_steering_command_publisher $
 ament_add_gtest(${PROJECT_NAME}_test_mobile_base_control_parameters test_mobile_base_control_parameters.cpp)
 target_link_libraries(${PROJECT_NAME}_test_mobile_base_control_parameters ${PROJECT_NAME})
 
+ament_add_gtest(${PROJECT_NAME}_test_three_point_hitch_parameters test_three_point_hitch_parameters.cpp)
+target_link_libraries(${PROJECT_NAME}_test_three_point_hitch_parameters ${PROJECT_NAME})
+
 ament_add_gtest(${PROJECT_NAME}_test_mobile_base_iniertia_parameters test_mobile_base_inertia_parameters.cpp)
 target_link_libraries(${PROJECT_NAME}_test_mobile_base_iniertia_parameters ${PROJECT_NAME})
 

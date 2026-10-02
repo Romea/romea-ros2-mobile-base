@@ -28,6 +28,7 @@
 #include "../test/test_helper.h"
 #include "romea_mobile_base_utils/ros2_control/hardware/hardware_handle.hpp"
 #include "romea_mobile_base_utils/ros2_control/info/hardware_info_common.hpp"
+#include "romea_mobile_base_utils/ros2_control/info/joint_info.hpp"
 
 class TestHardwareInterfaceHandle : public ::testing::Test
 {
@@ -73,6 +74,9 @@ protected:
     </joint>
     <joint name="joint2">
       <command_interface name="velocity"/>
+      <state_interface name="position">
+        <param name="initial_value">0.5</param>
+      </state_interface>
       <state_interface name="effort">
          <min>-1.</min>
          <min> 1.</min>
@@ -113,6 +117,21 @@ TEST_F(TestHardwareInterfaceHandle, checkMakeHardwareStateInterface)
 
 TEST_F(TestHardwareInterfaceHandle, failedToMakeHardwareStateInterface)
 {
-  auto joint_info = romea::ros2::get_joint_info(info, "joint2");
+  auto joint_info = romea::ros2::get_joint_info(info, "joint1");
   EXPECT_THROW(romea::ros2::HardwareStateInterface(joint_info, "position"), std::runtime_error);
+}
+
+TEST_F(TestHardwareInterfaceHandle, UsesStateInterfaceInitialValue)
+{
+  auto joint_info = romea::ros2::get_joint_info(info, "joint2");
+  auto interface = romea::ros2::HardwareStateInterface(joint_info, "position");
+
+  EXPECT_DOUBLE_EQ(interface.get(), 0.5);
+  EXPECT_DOUBLE_EQ(
+    romea::ros2::get_initial_value(joint_info, hardware_interface::HW_IF_POSITION), 0.5);
+
+  romea::ros2::set_initial_value(
+    joint_info, hardware_interface::HW_IF_POSITION, 0.75);
+  EXPECT_DOUBLE_EQ(
+    romea::ros2::get_initial_value(joint_info, hardware_interface::HW_IF_POSITION), 0.75);
 }
