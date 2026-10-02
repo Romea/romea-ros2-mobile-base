@@ -4,12 +4,7 @@
   <xacro:include filename="$(find romea_mobile_base_description)/ros2_control/base_control_joints.xacro" />
 
   <xacro:macro name="base_control_model">
-    <link name="${prefix}${base_footprint_link}" />
     <link name="${prefix}${base_link}" />
-    <joint name="${prefix}${base_footprint_joint}" type="fixed">
-      <parent link="${prefix}${base_footprint_link}" />
-      <child link="${prefix}${base_link}" />
-    </joint>
 
     <xacro:base_control_continuous_joint
       parent_link="${base_link}"
