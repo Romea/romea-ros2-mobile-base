@@ -14,6 +14,7 @@
 
 // std
 #include <algorithm>
+#include <iomanip>
 #include <limits>
 #include <sstream>
 #include <string>
@@ -69,6 +70,42 @@ const hardware_interface::InterfaceInfo & get_state_interface_info(
   const hardware_interface::ComponentInfo & joint_info, const std::string & interface_name)
 {
   return get_interface_info(joint_info.state_interfaces, joint_info.name, "state", interface_name);
+}
+
+//-----------------------------------------------------------------------------
+double get_initial_value(
+  const hardware_interface::ComponentInfo & joint_info, const std::string & interface_name)
+{
+  const auto & interface_info = get_state_interface_info(joint_info, interface_name);
+
+  return interface_info.initial_value.empty() ? 0.0 : std::stod(interface_info.initial_value);
+}
+
+//-----------------------------------------------------------------------------
+void set_initial_value(
+  hardware_interface::ComponentInfo & joint_info,
+  const std::string & interface_name,
+  const double initial_value)
+{
+  const auto interface_info = std::find_if(
+    joint_info.state_interfaces.begin(),
+    joint_info.state_interfaces.end(),
+    [&interface_name](const auto & interface) {
+      return interface.name == interface_name;
+    });
+
+  if (interface_info == joint_info.state_interfaces.end()) {
+    std::stringstream ss;
+    ss << "Unable to set initial value of ";
+    ss << interface_name;
+    ss << " state interface for joint ";
+    ss << joint_info.name;
+    throw std::runtime_error(ss.str());
+  }
+
+  std::ostringstream value;
+  value << std::setprecision(std::numeric_limits<double>::max_digits10) << initial_value;
+  interface_info->initial_value = value.str();
 }
 
 }  // namespace ros2

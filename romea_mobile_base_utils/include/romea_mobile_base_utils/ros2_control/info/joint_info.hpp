@@ -32,6 +32,14 @@ const hardware_interface::InterfaceInfo & get_command_interface_info(
 const hardware_interface::InterfaceInfo & get_state_interface_info(
   const hardware_interface::ComponentInfo & joint_info, const std::string & interface_name);
 
+double get_initial_value(
+  const hardware_interface::ComponentInfo & joint_info, const std::string & interface_name);
+
+void set_initial_value(
+  hardware_interface::ComponentInfo & joint_info,
+  const std::string & interface_name,
+  const double initial_value);
+
 }  // namespace ros2
 }  // namespace romea
 
