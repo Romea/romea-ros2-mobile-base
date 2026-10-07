@@ -1,5 +1,6 @@
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument
+from launch.actions import DeclareLaunchArgument, LogInfo
+from launch.conditions import IfCondition
 from launch.substitutions import (
     Command,
     FindExecutable,
@@ -28,9 +29,17 @@ def generate_launch_description():
         )
     )
 
+    # Optional logging of robot description, enabled by default
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "print_urdf", default_value="false", description="Output the robot_description."
+        )
+    )
+
     # Initialize Arguments
     urdf_file = LaunchConfiguration("urdf_file")
     prefix = LaunchConfiguration("prefix")
+    log_robot_description = LaunchConfiguration("print_urdf")
 
     # Get URDF via xacro
     robot_description_content = Command(
@@ -69,6 +78,16 @@ def generate_launch_description():
         arguments=["-d", rviz_config_file],
     )
 
-    nodes = [joint_state_publisher_node, robot_state_publisher_node, rviz_node]
+    robot_description_log = LogInfo(
+        msg=robot_description_content, 
+        condition=IfCondition(log_robot_description)
+    )
+
+    nodes = [
+        joint_state_publisher_node,
+        robot_state_publisher_node,
+        rviz_node,
+        robot_description_log,
+    ]
 
     return LaunchDescription(declared_arguments + nodes)
