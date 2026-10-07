@@ -37,7 +37,7 @@
       wheel_radius="${front_wheel_radius}"
       left_right="-1">
       <origin
-        xyz="${wheelbase/2-body_reference_x} ${front_track/2} ${front_wheel_radius - chassis_height}"
+        xyz="${wheelbase - body_reference_x} ${front_track/2} ${front_wheel_radius - chassis_height}"
         rpy="0 0 0" />
       <xacro:insert_block name="visual_front_left_caster" />
       <xacro:insert_block name="visual_front_left_wheel" />
@@ -58,7 +58,7 @@
       wheel_radius="${front_wheel_radius}"
       left_right="1">
       <origin
-        xyz="${wheelbase/2-body_reference_x} ${-front_track/2} ${front_wheel_radius - chassis_height}"
+        xyz="${wheelbase - body_reference_x} ${-front_track/2} ${front_wheel_radius - chassis_height}"
         rpy="0 0 0" />
       <xacro:insert_block name="visual_front_right_caster" />
       <xacro:insert_block name="visual_front_right_wheel" />
@@ -72,7 +72,7 @@
       wheel_radius="${rear_wheel_radius}"
       left_right="-1">
       <origin
-        xyz="${-wheelbase/2-body_reference_x} ${rear_track/2} ${rear_wheel_radius - chassis_height}"
+        xyz="${-body_reference_x} ${rear_track/2} ${rear_wheel_radius - chassis_height}"
         rpy="${-M_PI/2} 0 0" />
       <xacro:insert_block name="visual_rear_left_wheel" />
     </xacro:wheel>
@@ -85,7 +85,7 @@
       wheel_radius="${rear_wheel_radius}"
       left_right="1">
       <origin
-        xyz="${-wheelbase/2-body_reference_x} ${-rear_track/2} ${rear_wheel_radius - chassis_height}"
+        xyz="${-body_reference_x} ${-rear_track/2} ${rear_wheel_radius - chassis_height}"
         rpy="${-M_PI/2} 0 0" />
       <xacro:insert_block name="visual_rear_right_wheel" />
     </xacro:wheel>
