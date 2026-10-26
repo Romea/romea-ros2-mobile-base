@@ -219,6 +219,7 @@ template class HardwareSystemInterfaceLegacy<HardwareInterface4WS4WD>;
 template class HardwareSystemInterfaceLegacy<HardwareInterface2FWS4WD>;
 template class HardwareSystemInterfaceLegacy<HardwareInterface2FWS2RWD>;
 template class HardwareSystemInterfaceLegacy<HardwareInterface2FWS2FWD>;
+template class HardwareSystemInterfaceLegacy<HardwareInterface2FWC2RWD>;
 template class HardwareSystemInterfaceLegacy<HardwareInterface2AS4WD>;
 template class HardwareSystemInterfaceLegacy<HardwareInterface2AS2FWD>;
 template class HardwareSystemInterfaceLegacy<HardwareInterface2AS2RWD>;
